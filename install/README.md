@@ -4,4 +4,4 @@
 
 현재 제공되는 설치 방법은 총 1가지입니다.
 
-1. [Hypercloud](./kubernetes)
+1. [Hypercloud](./hypercloud)
