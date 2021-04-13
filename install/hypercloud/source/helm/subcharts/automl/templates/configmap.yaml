@@ -1,0 +1,288 @@
+apiVersion: v1
+data:
+  automl_default_pvc.yaml: |
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: {{ .Release.Name }}-automl-pvc
+    spec:
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 1Gi
+
+  http_config.yaml: |
+    hyperdata_addr: {{ include "hyperdataAddr" . }}
+
+  automl_pl_config.yaml: |
+    webserver_addr: {{ include "backendAddr" . }}
+
+    namespace: {{ .Release.Namespace }}
+    cluster_ip: {{ include "kfservingAddr" . }}
+    secret_name: {{ .Values.registry.secret }}
+    pipeline_prefix: {{ .Release.Name }}-automl-pipeline-
+    inference_prefix: {{ .Release.Name }}-automl-inference-
+    serving_prefix: {{ .Release.Name }}-automl-serving-
+
+    # every pipeline images share pvc
+    pvc_info:
+      mount_path: /pvc/mnt
+      volume_name: automl-storage
+
+    images:
+      automl:
+        doloader:
+          name: "dataobject-loading"
+          image: {{ .Values.image.doloader }}
+          image_pull_policy: "Always"
+          type: "doloader"
+          cpu: 1
+          memory: 1G
+
+        fe:
+          name: "feature-engineering"
+          image: {{ .Values.image.fe }}
+          image_pull_policy: "Always"
+          type: "fe"
+          after:
+          - "doloader"
+          cpu: 1
+          memory: 1G
+
+        xgboost-modeling:
+          name: "xgboost-modeling"
+          image: {{ .Values.image.xgb }}
+          image_pull_policy: "Always"
+          type: "model"
+          after:
+          - "fe"
+          cpu: 1
+          memory: 1G
+     
+        randomforest-modeling:
+          name: "randomforest-modeling"
+          image: {{ .Values.image.rf }}
+          image_pull_policy: "Always"
+          type: "model"
+          after:
+          - "fe"
+          cpu: 1
+          memory: 1G
+
+        downloader:
+          name: "model-downloading"
+          image: {{ .Values.image.downloader }}
+          image_pull_policy: "Always"
+          type: "downloader"
+          cpu: 0.01
+          memory: 100M
+
+      scheduling:
+        scheduler:
+          name: "automl-scheduler"
+          image: {{ .Values.image.scheduler }}
+          image_pull_policy: "Always"
+          type: "schduler"
+          cpu: 0.01
+          memory: 100M
+
+      inference:
+        doloader:
+          name: "dataobject-loading"
+          image: {{ .Values.image.doloader }}
+          image_pull_policy: "Always"
+          type: "doloader"
+          cpu: 1
+          memory: 1G
+
+        fe:
+          name: "feature-engineering"
+          image: {{ .Values.image.fe }}
+          image_pull_policy: "Always"
+          type: "fe"
+          after:
+          - "doloader"
+          cpu: 1
+          memory: 1G
+
+        xgboost-modeling:
+          name: "xgboost-modeling"
+          image: {{ .Values.image.xgb }}
+          image_pull_policy: "Always"
+          type: "model"
+          after:
+          - "fe"
+          cpu: 1
+          memory: 1G
+
+        randomforest-modeling:
+          name: "randomforest-modeling"
+          image: {{ .Values.image.rf }}
+          image_pull_policy: "Always"
+          type: "model"
+          after:
+          - "fe"
+          cpu: 1
+          memory: 1G
+
+  predefinedai_default_pvc.yaml: |
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: {{ .Release.Name }}-predefined-ai-pvc
+    spec:
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 10Gi
+
+  predefinedai_pl_config.yaml: |
+    webserver_addr: {{ include "backendAddr" . }}
+    namespace: {{ .Release.Namespace }}
+    cluster_ip: {{ include "kfservingAddr" . }}
+    secret_name: {{ .Values.registry.secret }}
+    pipeline_prefix: {{ .Release.Name }}-predefinedai-pipeline-
+    inference_prefix: {{ .Release.Name }}-predefinedai-inference-
+    serving_prefix: {{ .Release.Name }}-predefinedai-serving-
+
+    # every pipeline images share pvc
+    pvc_info:
+      mount_path: /pvc/mnt
+      volume_name: predefined-ai-storage
+
+    images:
+      woori_classification:
+        doloader:
+          name: "dataobject-loading"
+          image: {{ .Values.image.doloader }}
+          image_pull_policy: "Always"
+          type: "doloader"
+          cpu: 1
+          memory: 1G
+
+
+        text-classification-modeling:
+          name: "text-classification-modeling"
+          image: {{ .Values.image.woori }}
+          image_pull_policy: "Always"
+          type: "model"
+          after:
+          - "doloader"
+          cpu: 4
+          memory: 8G
+
+        resultuploader:
+          name: "result-uploading"
+          image: {{ .Values.image.resultuploader }}
+          image_pull_policy: "Always"
+          type: "uploader"
+          after:
+          - "text-classification-modeling"
+          cpu: 0.1
+          memory: 1G
+
+        downloader:
+          name: "model-downloading"
+          image: {{ .Values.image.downloader }}
+          image_pull_policy: "Always"
+          type: "downloader"
+          cpu: 0.01
+          memory: 100M
+
+      domain_classification:
+        doloader:
+          name: "dataobject-loading"
+          image: {{ .Values.image.doloader }}
+          image_pull_policy: "Always"
+          type: "doloader"
+          cpu: 1
+          memory: 1G
+
+        preprocess:
+          name: "split-data"
+          image: {{ .Values.image.woori }}
+          image_pull_policy: "Always"
+          type: "preprocess"
+          after:
+          - "doloader"
+          cpu: 1
+          memory: 1G
+
+        domain-classification-modeling:
+          name: "domain-classification-modeling"
+          image: {{ .Values.image.woori }}
+          image_pull_policy: "Always"
+          type: "model"
+          after:
+          - "preprocess"
+          cpu: 4
+          memory: 8G
+
+        resultuploader:
+          name: "result-uploading"
+          image: {{ .Values.image.resultuploader }}
+          image_pull_policy: "Always"
+          type: "uploader"
+          after:
+          - "domain-classification-modeling"
+          cpu: 0.1
+          memory: 1G
+
+        downloader:
+          name: "model-downloading"
+          image: {{ .Values.image.downloader }}
+          image_pull_policy: "Always"
+          type: "downloader"
+          cpu: 0.01
+          memory: 100M      
+
+      scheduling:
+        scheduler:
+          name: "predefinedai-scheduler"
+          image: {{ .Values.image.scheduler }}
+          image_pull_policy: "Always"
+          type: "schduler"
+          cpu: 0.01
+          memory: 100M
+
+      inference:
+        doloader:
+          name: "dataobject-loading"
+          image: {{ .Values.image.doloader }}
+          image_pull_policy: "Always"
+          type: "doloader"
+          cpu: 1
+          memory: 1G
+
+        classification-modeling:
+          name: "classification-modeling"
+          image: {{ .Values.image.woori }}
+          image_pull_policy: "Always"
+          type: "model"
+          after:
+          - "doloader"
+          cpu: 2
+          memory: 8G
+
+        resultuploader:
+          name: "result-uploading"
+          image: {{ .Values.image.resultuploader }}
+          image_pull_policy: "Always"
+          type: "uploader"
+          after:
+          - "classification-modeling"
+          cpu: 0.1
+          memory: 1G
+      
+    serving:
+      text-classification-modeling:
+        image: {{ .Values.image.wooriserving }}
+      domain-classification-modeling:
+        image: {{ .Values.image.domainserving }}
+
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  namespace: {{ .Release.Namespace }}

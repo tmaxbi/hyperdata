@@ -1,0 +1,8 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Release.Namespace }}-svc-db
+spec:
+  selector:
+    lb: {{ .Release.Namespace }}-db
+  clusterIP: None

@@ -1,0 +1,15 @@
+dependencies:
+- name: tibero
+  repository: file://subcharts/tibero
+  version: 0.1.0
+- name: nginx
+  repository: file://subcharts/nginx
+  version: 3.23.0
+- name: hyperdata
+  repository: file://subcharts/hyperdata
+  version: 0.1.0
+- name: automl
+  repository: file://subcharts/automl
+  version: 0.1.0
+digest: sha256:d6e5766c90f6929f6ad7de9967c76975a7d1c55433cffa3b0174ac3fd24d26c9
+generated: "2021-04-07T15:32:15.993773293+09:00"

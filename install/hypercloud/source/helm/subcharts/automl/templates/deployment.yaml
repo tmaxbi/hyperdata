@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-deployment
+    spec:
+      serviceAccountName: {{ .Release.Name }}-sa
+      containers:
+        - name: automl-deploy
+          image: {{ .Values.image.automl }}
+          imagePullPolicy: Always
+          env:
+            - name: REACT_APP_SERVER
+              value: {{ include "backendAddr" . }}
+            - name: REACT_APP_SUB_DIRECTORY
+              value: {{ .Values.frontendSubDir }}/
+            - name: REACT_APP_FULL_URL
+              value: {{ include "frontendAddr" . }}/
+            - name: REACT_FULL_URL
+              value: {{ include "frontendAddr" . }}/
+          ports:
+            - containerPort: 5000
+              name: backend-port
+            - containerPort: 3000
+              name: frontend-port
+          volumeMounts:
+            - name: config
+              mountPath: "/src/backend/config"
+              readOnly: true
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: 1
+            limits:
+              memory: "2Gi"
+              cpu: 1
+      imagePullSecrets:
+        - name: {{ .Values.registry.secret }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+            - key: "automl_default_pvc.yaml"
+              path: "automl_default_pvc.yaml"
+            - key: "http_config.yaml"
+              path: "http_config.yaml"
+            - key: "automl_pl_config.yaml"
+              path: "automl_pl_config.yaml"
+            - key: "predefinedai_default_pvc.yaml"
+              path: "predefinedai_default_pvc.yaml"
+            - key: "predefinedai_pl_config.yaml"
+              path: "predefinedai_pl_config.yaml"
+

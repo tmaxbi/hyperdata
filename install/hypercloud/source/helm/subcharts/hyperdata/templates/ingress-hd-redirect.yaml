@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Namespace }}-hd-redirect-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    {{ if .Values.https.enabled }}
+    nginx.ingress.kubernetes.io/rewrite-target: https://{{ .Values.global.ip }}:{{ .Values.global.port }}/hyperdata8/
+    {{ else }}
+    nginx.ingress.kubernetes.io/rewrite-target: http://{{ .Values.global.ip }}:{{ .Values.global.port }}/hyperdata8/
+    {{ end }}
+spec:
+  tls:
+    - secretName: istio.{{ .Release.Namespace }}-nginx-ingress-nginx
+  rules:
+   -  http:
+        paths:
+        - path: /hyperdata8
+          backend:
+            serviceName: {{ .Release.Namespace }}-svc-hd
+            servicePort: 8080
