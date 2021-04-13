@@ -1,9 +1,11 @@
-namespace: hyperdata-dev20-mansu
+namespace: <YOUR NAMESPACE>
 
 # docker registry
 registry:
-  ip: 192.168.158.62
-  port: 5000
+  # ex) 172.17.0.1
+  ip: <YOUR REGISTRY IP>
+  # ex) 5000
+  port: <YOUR PORT>
   secret: no-secret
 
 #
@@ -18,7 +20,8 @@ loadbalancer:
 
 # if loadbalancer enabled, ip uses as loadbalancer external ip
 # if loadbalancer disable, **please assign ip to master node ip**
-ip: 192.168.157.22
+# ex. 172.17.0.1
+ip: <YOUR EXTERNAL_IP or MASTER NODE's IP>
 
 # tibero option
 tibero:
@@ -44,8 +47,8 @@ hyperdata:
     timeout: 1800
 
 kubeflow:
-  # master node ip
-  ip: 192.168.157.11
+  # ex. 172.17.0.1
+  ip: <YOUR ISTIO_Ingress gateway IP or master node's IP>
   ports:
     notebook: 31380
     kfserving: 32380

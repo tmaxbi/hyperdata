@@ -5,7 +5,7 @@ export $(grep -v '^#' image_config.properties | xargs -d '\n')
 
 # REMOTE_REGISTRY가 설정되어 있을 경우, remote_registry에서 가져오도록 주소 맨뒤에 /를 추가
 # 설정되어있지 않을 경우, empty string으로 설정하여 dockerhub에서 가져오도록 설정
-# ex. REMOTE_REGISTRY=192.168.158.62:5000 => docker pull 192.168.158.62:5000/hyperdata8.3_tb:20210230_v1
+# ex. REMOTE_REGISTRY=172.17.0.1:5000 => docker pull 172.17.0.1:5000/hyperdata8.3_tb:20210230_v1
 # ex. REMOTE_REGISTRY="" => docker pull hyperdata8.3_tb:20210230_v1
 if [ -z "${REMOTE_REGISTRY}" ]; then
   REMOTE_REGISTRY=""

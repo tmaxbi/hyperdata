@@ -1,7 +1,7 @@
-image: 192.168.158.62:5000/hyperdata8.3_hd:20210310_v4h
+image: 172.17.0.1:5000/hyperdata8.3_hd:20210310_v4h
 
 registry:
-  ip: 192.168.158.62
+  ip: 172.17.0.1
   port: 5000
   secret: "no-secret"
 

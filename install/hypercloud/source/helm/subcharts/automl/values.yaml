@@ -1,6 +1,6 @@
 # For deployment
 registry:
-  ip: 192.168.158.62
+  ip: 172.17.0.1
   port: 5000
   secret: "no-secret"
 

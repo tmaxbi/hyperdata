@@ -1,5 +1,5 @@
-image: 192.168.158.62:5000/hyperdata8.3_tb:20210203_v1
+image: hyperdata8.3_tb:20210203_v1
 
 loadbalancer:
   enabled: true
-  ip: 192.168.157.22
+  ip: 172.17.0.1
