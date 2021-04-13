@@ -11,8 +11,7 @@
     ```bash
     $ vi image_config.properties
     # 이미지를 가져올 docker registry
-    REMOTE_REGISTRY=**${YOUR_REMOTE_REGISTRY_IP}:${YOUR_REMOTE_REGISTRY_POR
-    T}**
+    REMOTE_REGISTRY=**${YOUR_REMOTE_REGISTRY_IP}:${YOUR_REMOTE_REGISTRY_PORT}**
     # 이미지를 옮길 docker registry
     LOCAL_REGISTRY=**${YOUR_LOCAL_REGISTRY_IP}:${YOUR_LOCAL_REGISTRY_PORT}
 
@@ -26,7 +25,7 @@
     $ bash docker_pull_and_save.sh
     # 다운받아진 이미지들 확인
     $ ls images
-    automl_downloader_v20210230.tar.gz automl_.tar ...
+    automl_downloader_v20210230.tar.gz automl_domainserving_20201223_v1.tar.gz ...
     ````
 
 3. 이미지 tar 파일들을 폐쇄망 환경으로 이동(USB, ftp...)
@@ -42,7 +41,7 @@
     ```bash
     $ vi /etc/docker/daemon.json
     {
-    "insecure-registries": ["${YOUR DOCKER REGISTRY ADDRESS}"]
+      "insecure-registries": ["${YOUR DOCKER REGISTRY ADDRESS}"]
     }
     ```
 
