@@ -1,9 +1,6 @@
 # Hyperdata 인스톨러
 
-본 문서에서는 하이퍼데이터를 설치하기 위해 필요한 두 yaml을 설정하는 가이드를 제공합니다.
-
-- 쿠버네티스 환경에서 하이퍼데이터 설정을 관리하는 Configmap인 installer_configmap.yaml
-- Configmap에 설정된 옵션들을 기반으로 하이퍼데이터를 설치하는 installer_pod.yaml
+본 문서에서는 하이퍼데이터를 설치하기 위해 필요한 installer.yaml을 생성하고 설치하는 가이드를 제공합니다.
 
 ## Prerequisites
 
