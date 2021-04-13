@@ -1,14 +1,12 @@
-FROM python:3.7-buster
+FROM python:3.7-alpine
 
-WORKDIR /root/hyperdata-installer/prerequisites
+WORKDIR /root
 
 # install helm
-COPY ./prerequisites .
-RUN tar -zxvf helm-v3.4.2-linux-amd64.tar.gz
-RUN mv linux-amd64/helm /usr/local/bin/helm
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 \
+    && chmod +x get_helm.sh && ./get_helm.sh
 
 # install python package
-RUN pip install --user ./python_packages/kubernetes-12.0.1.tar.gz
+RUN pip install -r requirements.txt
 
-WORKDIR /root/hyperdata-installer/helm
 COPY ./helm .
