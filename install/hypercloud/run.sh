@@ -1,2 +1,0 @@
-export KUBECONFIG=/home/mansu/projects/hyperdata-installer/.kube/config
-python full_install.py --namespace hyperdata-dev20-mansu --https --loadbalancer --master-node-ip 192.168.157.11 --external-ip 192.168.157.22 --nginx-port 8080
