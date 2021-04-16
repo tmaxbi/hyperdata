@@ -5,8 +5,12 @@ metadata:
     lb: {{ .Release.Namespace }}-hd
   name: {{ .Release.Namespace }}-pod-hd-hd
 spec:
-  containers:
-  - env:
+  initContainers:
+  - image: {{ .Values.image }}
+    name: {{ .Release.Namespace }}-initcon-hd-hd
+    command: ["bash", "init_container.sh"]
+    imagePullPolicy: Always
+    env:
     - name: WEBSERVER_IP
       value: {{ .Values.webserver.ip }}
     - name: WEBSERVER_PORT
@@ -27,20 +31,15 @@ spec:
       value: root
     - name: KUBEFLOW_PW
       value: tibero
+    # hyperdata uses this name as DNS
     - name: TB_IP
-      value: 10.244.48.110
+      value: tiberolocaldns
     - name: HLADMIN_IP
       value: 10.244.184.122
     - name: RECOMMEND_SERVER_IP
       value: 10.244.170.209
-#    - name: SKIP_RECREATE_SCHEMA
-#      value: "Y"
-#    - name: SKIP_RECREATE_ROLE_AND_PERMISSION
-#      value: "Y"
-#    - name: SKIP_RECREATE_ADMIN
-#      value: "Y"
-#    - name: USE_REALTIME
-#      value: "Y"
+    - name: USE_REALTIME
+      value: "Y"
     - name: SSH_PORT
       value: "22"
     - name: IS_PRIVATE_DOCKER
@@ -73,9 +72,78 @@ spec:
       value: ""
     - name: SSL_CERT_IP_ADDRESS
       value: ""
-    image: {{ .Values.image }}
-    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: tz-seoul
+      mountPath: /etc/localtime
+    - name: pv-storage
+      mountPath: {{ .Values.tiberoMountVolume }}
+  containers:
+  - image: {{ .Values.image }}
+    command: ["supervisord", "-c", "supervisord.conf"]
+    imagePullPolicy: Always
     name: {{ .Release.Namespace }}-con-hd-hd
+    env:
+    - name: WEBSERVER_IP
+      value: {{ .Values.webserver.ip }}
+    - name: WEBSERVER_PORT
+      value: "{{ .Values.webserver.port }}"
+    - name: TB_PORT
+      value: "8629"
+    - name: TB_SID
+      value: "tibero"
+    - name: HLADMIN_PORT
+      value: "23000"
+    - name: KUBEFLOW_PORT
+      value: "{{ .Values.kubeflow.ports.notebook }}"
+    - name: RECOMMEND_SERVER_PORT
+      value: "5000"
+    - name: KUBEFLOW_IP
+      value: {{ .Values.kubeflow.ip }}
+    - name: KUBEFLOW_USER
+      value: root
+    - name: KUBEFLOW_PW
+      value: tibero
+    # hyperdata uses this name as DNS
+    - name: TB_IP
+      value: {{ .Release.Namespace }}-svc-db
+    - name: HLADMIN_IP
+      value: 10.244.184.122
+    - name: RECOMMEND_SERVER_IP
+      value: 10.244.170.209
+    - name: USE_REALTIME
+      value: "Y"
+    - name: SSH_PORT
+      value: "22"
+    - name: IS_PRIVATE_DOCKER
+      value: "true"
+    - name: IS_HYPER_CLOUD
+      value: "false"
+    - name: PRIVATE_DOCKER_IP
+      value: {{ .Values.registry.ip }}
+    - name: PRIVATE_DOCKER_PORT
+      value: "{{ .Values.registry.port }}"
+    - name: SECRET_NAME
+      value: {{ .Values.registry.secret }}
+    - name: AUTOML_FRONTEND
+      value: {{ .Values.automl.frontend }}
+    - name: AUTOML_BACKEND
+      value: {{ .Values.automl.backend }}
+    - name: AUTOML_NAMESPACE
+      value: {{ .Release.Namespace }}
+    - name: HADOOP_ALIAS
+      value: "127.0.0.1 alias1 alias2"
+    - name: IS_HTTPS
+      value: "{{ .Values.https.enabled }}"
+    - name: USE_MQTT_LB
+      value: "Y"
+    - name: MQTT_BROKER_IP
+      value: {{ .Values.webserver.ip }}
+    - name: MQTT_BROKER_PORT
+      value: "{{ .Values.webserver.port }}"
+    - name: MQTT_BROKER_WS_PORT
+      value: ""
+    - name: SSL_CERT_IP_ADDRESS
+      value: ""
     ports:
     - containerPort: 20
       name: hd-ftp1
@@ -111,8 +179,8 @@ spec:
     volumeMounts:
     - name: tz-seoul
       mountPath: /etc/localtime
-    - mountPath: /db
-      name: pv-storage
+    - name: pv-storage
+      mountPath: {{ .Values.tiberoMountVolume }}
   volumes:
   - name: tz-seoul
     hostPath:
