@@ -1,3 +1,4 @@
+#!/bin/bash
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 export $(grep -v '^#' image_config.properties | xargs -d '\n')
