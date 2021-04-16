@@ -11,9 +11,9 @@
     ```bash
     $ vi image_config.properties
     # 이미지를 가져올 docker registry
-    REMOTE_REGISTRY=**${YOUR_REMOTE_REGISTRY_IP}:${YOUR_REMOTE_REGISTRY_PORT}**
+    REMOTE_REGISTRY=${YOUR_REMOTE_REGISTRY_IP}:${YOUR_REMOTE_REGISTRY_PORT}
     # 이미지를 옮길 docker registry
-    LOCAL_REGISTRY=**${YOUR_LOCAL_REGISTRY_IP}:${YOUR_LOCAL_REGISTRY_PORT}
+    LOCAL_REGISTRY=${YOUR_LOCAL_REGISTRY_IP}:${YOUR_LOCAL_REGISTRY_PORT}
 
     # 기본적으로 image tag들은 버전에 맞게 설정되어 있습니다.
     TB_TAG=${YOUR_TIBERO_TAG}
