@@ -7,7 +7,7 @@
     {
       "insecure-registries": ["${YOUR DOCKER REGISTRY ADDRESS}"]
     }
-    ```  
+    ```
 
 ## Usage
 http://:5000/buildHyperdataImage/{hdVersion}/{commitId}/{registryIP}
