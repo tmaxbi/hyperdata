@@ -2,21 +2,21 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    lb: {{ .Release.Namespace }}-db
-  name: {{ .Release.Namespace }}-pod-db-hd
+    lb: {{ .Release.Name }}-db
+  name: {{ .Release.Name }}-pod-db-hd
 spec:
   hostname: tibero
-  subdomain: {{ .Release.Namespace }}-svc-db
+  subdomain: {{ .Release.Name }}-svc-db
   containers:
   - env:
     - name: TB_PORT
       value: "8629"
     - name: MAX_SESSION_COUNT
-      value: "100"
+      value: "40"
     - name: TOTAL_SHM_SIZE
-      value: "8"
+      value: "2"
     - name: MEMORY_TARGET
-      value: "16"
+      value: "4"
     - name: LOG_BUFFER
       value: "300M"
     - name: LOG_GROUP
@@ -34,7 +34,7 @@ spec:
     - name: DB_CHARACTER_SET
       value: "UTF8"
     image: {{ .Values.image }}
-    name: {{ .Release.Namespace }}-con-db-hd
+    name: {{ .Release.Name }}-con-db-hd
     ports:
     - containerPort: 8629
       name: tb-lsnr
@@ -59,12 +59,12 @@ spec:
       protocol: TCP
     resources:
       limits:
-        cpu: "8"
-        memory: 16Gi
+        cpu: "2"
+        memory: 4Gi
         nvidia.com/gpu: "0"
       requests:
-        cpu: "8"
-        memory: 16Gi
+        cpu: "2"
+        memory: 4Gi
         nvidia.com/gpu: "0"
     volumeMounts:
     - mountPath: /db
@@ -78,7 +78,7 @@ spec:
   volumes:
   - name: pv-storage
     persistentVolumeClaim:
-      claimName: {{ .Release.Namespace }}-pvc-db
+      claimName: {{ .Release.Name }}-pvc-db
   - name: tz-seoul
     hostPath:
       path: /usr/share/zoneinfo/Asia/Seoul

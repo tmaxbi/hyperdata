@@ -7,5 +7,5 @@ metadata:
   name: tiberolocaldns
 spec:
   selector:
-    lb: {{ .Release.Namespace }}-db
+    lb: {{ .Release.Name }}-db
   clusterIP: None

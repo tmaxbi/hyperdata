@@ -2,4 +2,4 @@ image: hyperdata8.3_tb:20210203_v1
 
 loadbalancer:
   enabled: true
-  ip: 172.17.0.1
+  ip: <YOUR EXTERNAL_IP or MASTER NODE's IP>
