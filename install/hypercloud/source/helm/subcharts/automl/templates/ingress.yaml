@@ -10,7 +10,7 @@ metadata:
 spec:
   {{ if .Values.https.enabled }}
   tls:
-    - secretName: istio.{{ .Release.Namespace }}-nginx-ingress-nginx
+    - secretName: istio.{{ .Release.Name }}-nginx-ingress-nginx
   {{ end }}
   rules:
    -  http:
