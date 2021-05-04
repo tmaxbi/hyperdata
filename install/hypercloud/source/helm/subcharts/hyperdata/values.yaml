@@ -1,8 +1,8 @@
-image: 172.17.0.1:5000/hyperdata8.3_hd:20210310_v4h
+image: <YOUR REGISTRY IP>:<YOUR PORT>/hyperdata8.3_hd:20210310_v4h
 
 registry:
-  ip: 172.17.0.1
-  port: 5000
+  ip: <YOUR REGISTRY IP>
+  port: <YOUR PORT>
   secret: "no-secret"
 
 https:
@@ -14,17 +14,20 @@ proxy:
   timeout: 1800
 
 webserver:
-  ip: 192.168.157.22
+  ip: <YOUR EXTERNAL_IP or MASTER NODE's IP>
   port: 8080
 
 automl:
-  frontend: 192.168.157.22:8080/automl/frontend
-  backend: 192.168.157.22:8080/automl/backend
+  frontend: <YOUR EXTERNAL_IP or MASTER NODE's IP>:8080/automl/frontend
+  backend: <YOUR EXTERNAL_IP or MASTER NODE's IP>:8080/automl/backend
 
 kubeflow:
-  ip: 192.168.157.11
+  ip: <YOUR ISTIO_Ingress gateway IP or master node's IP>
   ports:
     notebook: 31380
 
 loadbalancer:
   enabled: true
+
+tbMountVolume: /db
+hdMountVolume: /hyperdata

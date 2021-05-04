@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Release.Namespace }}-mqtt-ingress
+  name: {{ .Release.Name }}-mqtt-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: "{{ .Values.proxy.bodysize }}"
@@ -12,11 +12,11 @@ metadata:
       proxy_set_header Connection "Upgrade";
 spec:
   tls:
-    - secretName: istio.{{ .Release.Namespace }}-nginx-ingress-nginx
+    - secretName: istio.{{ .Release.Name }}-nginx-ingress-nginx
   rules:
    -  http:
        paths:
        - path: /mqtt
          backend:
-           serviceName: {{ .Release.Namespace }}-svc-hd
+           serviceName: {{ .Release.Name }}-svc-hd
            servicePort: 2883

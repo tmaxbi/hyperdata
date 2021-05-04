@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: {{ .Release.Name }}-hd
+  name: {{ .Release.Name }}-pvc-hd
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 40Gi
+  storageClassName: csi-cephfs
+  volumeMode: Filesystem

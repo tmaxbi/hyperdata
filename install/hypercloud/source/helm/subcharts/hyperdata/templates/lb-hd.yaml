@@ -1,9 +1,9 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Release.Namespace }}-lb-hd
+  name: {{ .Release.Name }}-lb-hd
   labels:
-    lb: {{ .Release.Namespace }}-lb
+    lb: {{ .Release.Name }}-lb
   {{ if .Values.loadbalancer.enabled }}
   annotations:
     metallb.universe.tf/allow-shared-ip: top
@@ -39,7 +39,7 @@ spec:
       protocol: TCP
       targetPort: 1408
   selector:
-    lb: {{ .Release.Namespace }}-hd
+    lb: {{ .Release.Name }}-hd
   {{ if .Values.loadbalancer.enabled }}
   type: LoadBalancer
   sessionAffinity: None

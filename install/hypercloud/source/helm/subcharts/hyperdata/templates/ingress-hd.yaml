@@ -1,22 +1,22 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Release.Namespace }}-hd-ingress
+  name: {{ .Release.Name }}-hd-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
   tls:
-    - secretName: istio.{{ .Release.Namespace }}-nginx-ingress-nginx
+    - secretName: istio.{{ .Release.Name }}-nginx-ingress-nginx
   rules:
    -  http:
        paths:
        - path: /hyperdata8/(.*)
          backend:
-           serviceName: {{ .Release.Namespace }}-svc-hd
+           serviceName: {{ .Release.Name }}-svc-hd
            servicePort: 8080
    -  http:
         paths:
         - path: /hyperdata(/|$)(.*)
           backend:
-            serviceName: {{ .Release.Namespace }}-svc-hd
+            serviceName: {{ .Release.Name }}-svc-hd
             servicePort: 8080

@@ -1,0 +1,245 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-hd-hd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+        app: {{ .Release.Name }}-hd
+  template:
+    metadata:
+      labels:
+        lb: {{ .Release.Name }}-hd
+        app: {{ .Release.Name }}-hd
+    spec:
+      initContainers:
+      - image: {{ .Values.image }}
+        name: {{ .Release.Name }}-initcon-hd-hd
+        command: ["bash", "/root/init_container.sh"]
+        imagePullPolicy: Always
+        env:
+        # Tibero Options
+        - name: TB_PORT
+          value: "8629"
+        - name: TB_SID
+          value: "tibero"
+
+        # other hyperdata modules. this modules will working as pod
+        - name: HLADMIN_IP
+          value: 10.244.184.122
+        - name: RECOMMEND_SERVER_IP
+          value: 10.244.170.209
+        - name: HLADMIN_PORT
+          value: "23000"
+        - name: RECOMMEND_SERVER_PORT
+          value: "5000"
+
+        # Kubeflow Options
+        - name: KUBEFLOW_IP
+          value: {{ .Values.kubeflow.ip }}
+        - name: KUBEFLOW_PORT
+          value: "{{ .Values.kubeflow.ports.notebook }}"
+        - name: KUBEFLOW_USER
+          value: root
+        - name: KUBEFLOW_PW
+          value: tibero
+
+        ## hyperdata uses this name as DNS
+        - name: TB_IP
+          value: tiberolocaldns
+        - name: USE_REALTIME
+          value: "Y"
+        - name: SSH_PORT
+          value: "22"
+
+        # Docker Options
+        - name: IS_PRIVATE_DOCKER
+          value: "true"
+        - name: IS_HYPER_CLOUD
+          value: "false"
+        - name: PRIVATE_DOCKER_IP
+          value: {{ .Values.registry.ip }}
+        - name: PRIVATE_DOCKER_PORT
+          value: "{{ .Values.registry.port }}"
+        - name: SECRET_NAME
+          value: {{ .Values.registry.secret }}
+
+        # AutoML Options
+        - name: AUTOML_FRONTEND
+          value: {{ .Values.automl.frontend }}
+        - name: AUTOML_BACKEND
+          value: {{ .Values.automl.backend }}
+        - name: AUTOML_NAMESPACE
+          value: {{ .Release.Namespace }}
+
+        # Hadoop Options
+        - name: HADOOP_ALIAS
+          value: "127.0.0.1 alias1 alias2"
+
+        ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+        - name: IS_HTTPS
+          value: "{{ .Values.https.enabled }}"
+
+        # MQTT Options
+        - name: USE_MQTT_LB
+          value: "Y"
+        - name: NOTIFICATION_BROKER_IP
+          value: {{ .Values.webserver.ip }}
+        - name: NOTIFICATION_BROKER_PORT
+          value: "{{ .Values.webserver.port }}"
+        - name: NOTIFICATION_BROKER_WS_PORT
+          value: ""
+        ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+        ##- name: SSL_CERT_IP_ADDRESS
+        ##  value: ""
+
+        # PV(Persistent Volume) paths
+        - name: HD_MOUNT_VOLUME_PATH
+          value: {{ .Values.hdMountVolume }}
+        ## tibero pv created in tibero helm chart
+        - name: TB_MOUNT_VOLUME_PATH
+          value: {{ .Values.tbMountVolume }}
+        volumeMounts:
+        - name: tz-seoul
+          mountPath: /etc/localtime
+        - name: pv-storage-tb
+          mountPath: {{ .Values.tbMountVolume }}
+        - name: pv-storage-hd
+          mountPath: {{ .Values.hdMountVolume }}
+      containers:
+      - image: {{ .Values.image }}
+        command: ["supervisord", "-c", "/root/supervisord.conf"]
+        imagePullPolicy: Always
+        name: {{ .Release.Name }}-con-hd-hd
+        env:
+        # Tibero Options
+        - name: TB_PORT
+          value: "8629"
+        - name: TB_SID
+          value: "tibero"
+
+        # other hyperdata modules. this modules will working as pod
+        - name: HLADMIN_IP
+          value: 10.244.184.122
+        - name: RECOMMEND_SERVER_IP
+          value: 10.244.170.209
+        - name: HLADMIN_PORT
+          value: "23000"
+        - name: RECOMMEND_SERVER_PORT
+          value: "5000"
+
+        # Kubeflow Options
+        - name: KUBEFLOW_IP
+          value: {{ .Values.kubeflow.ip }}
+        - name: KUBEFLOW_PORT
+          value: "{{ .Values.kubeflow.ports.notebook }}"
+        - name: KUBEFLOW_USER
+          value: root
+        - name: KUBEFLOW_PW
+          value: tibero
+
+        ## hyperdata uses this name as DNS
+        - name: TB_IP
+          value: tiberolocaldns
+        - name: USE_REALTIME
+          value: "Y"
+        - name: SSH_PORT
+          value: "22"
+
+        # Docker Options
+        - name: IS_PRIVATE_DOCKER
+          value: "true"
+        - name: IS_HYPER_CLOUD
+          value: "false"
+        - name: PRIVATE_DOCKER_IP
+          value: {{ .Values.registry.ip }}
+        - name: PRIVATE_DOCKER_PORT
+          value: "{{ .Values.registry.port }}"
+        - name: SECRET_NAME
+          value: {{ .Values.registry.secret }}
+
+        # AutoML Options
+        - name: AUTOML_FRONTEND
+          value: {{ .Values.automl.frontend }}
+        - name: AUTOML_BACKEND
+          value: {{ .Values.automl.backend }}
+        - name: AUTOML_NAMESPACE
+          value: {{ .Release.Namespace }}
+
+        # Hadoop Options
+        - name: HADOOP_ALIAS
+          value: "127.0.0.1 alias1 alias2"
+
+        ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+        - name: IS_HTTPS
+          value: "{{ .Values.https.enabled }}"
+
+        # MQTT Options
+        - name: USE_MQTT_LB
+          value: "Y"
+        - name: NOTIFICATION_BROKER_IP
+          value: {{ .Values.webserver.ip }}
+        - name: NOTIFICATION_BROKER_PORT
+          value: "{{ .Values.webserver.port }}"
+        - name: NOTIFICATION_BROKER_WS_PORT
+          value: ""
+        ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+        ##- name: SSL_CERT_IP_ADDRESS
+        ##  value: ""
+
+        # PV(Persistent Volume) paths
+        - name: HD_MOUNT_VOLUME_PATH
+          value: {{ .Values.hdMountVolume }}
+        ## tibero pv created in tibero helm chart
+        - name: TB_MOUNT_VOLUME_PATH
+          value: {{ .Values.tbMountVolume }}
+        ports:
+        - containerPort: 20
+          name: hd-ftp1
+          protocol: TCP
+        - containerPort: 21
+          name: hd-ftp2
+          protocol: TCP
+        - containerPort: 22
+          name: hd-ssh
+          protocol: TCP
+        - containerPort: 9736
+          name: jeus-http
+          protocol: TCP
+        - containerPort: 8080
+          name: hd-http
+          protocol: TCP
+        - containerPort: 1883
+          name: msqt-lsnr1
+          protocol: TCP
+        - containerPort: 2883
+          name: msqt-lsnr2
+          protocol: TCP
+        - containerPort: 1408
+          name: hd-web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "4"
+            memory: "8Gi"
+          requests:
+            cpu: "4"
+            memory: "8Gi"
+        volumeMounts:
+        - name: tz-seoul
+          mountPath: /etc/localtime
+        - name: pv-storage-tb
+          mountPath: {{ .Values.tbMountVolume }}
+        - name: pv-storage-hd
+          mountPath: {{ .Values.hdMountVolume }}
+      volumes:
+      - name: tz-seoul
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Seoul
+      - name: pv-storage-tb
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-pvc-db
+      - name: pv-storage-hd
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-pvc-hd

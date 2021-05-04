@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Release.Namespace }}-svc-hd
+  name: {{ .Release.Name }}-svc-hd
 spec:
   ports:
     - name: hd-http
@@ -17,5 +17,5 @@ spec:
       targetPort: 2883
       protocol: TCP
   selector:
-    lb: {{ .Release.Namespace }}-hd
+    lb: {{ .Release.Name }}-hd
   type: ClusterIP
