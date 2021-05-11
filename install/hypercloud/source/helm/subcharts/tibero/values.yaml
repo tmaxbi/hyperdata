@@ -3,3 +3,5 @@ image: hyperdata8.3_tb:20210203_v1
 loadbalancer:
   enabled: true
   ip: <YOUR EXTERNAL_IP or MASTER NODE's IP>
+
+tbMountVolume: /db

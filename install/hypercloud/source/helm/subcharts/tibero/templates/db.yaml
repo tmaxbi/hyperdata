@@ -67,7 +67,7 @@ spec:
         memory: 4Gi
         nvidia.com/gpu: "0"
     volumeMounts:
-    - mountPath: /db
+    - mountPath: {{ .Values.tbMountVolume }}
       name: pv-storage
     - name: tz-seoul
       mountPath: /etc/localtime
