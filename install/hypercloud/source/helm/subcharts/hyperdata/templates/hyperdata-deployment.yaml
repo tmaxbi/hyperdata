@@ -80,8 +80,8 @@ spec:
 
         # Hyperdata Webserver Options
         ## hyperdata uses this path as SAM FILE upload location
-        - name: DS_FILE_PATH
-          value: {{ .Values.tbMountVolume }}
+        - name: FILE_INPUT_DIR
+          value: {{ .Values.tbMountVolume }}/input
 
         ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
         - name: IS_HTTPS
@@ -182,8 +182,8 @@ spec:
 
         # Hyperdata Webserver Options
         ## hyperdata uses this path as SAM FILE upload location
-        - name: DS_FILE_PATH
-          value: {{ .Values.tbMountVolume }}
+        - name: FILE_INPUT_DIR
+          value: {{ .Values.tbMountVolume }}/input
 
         ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
         - name: IS_HTTPS
