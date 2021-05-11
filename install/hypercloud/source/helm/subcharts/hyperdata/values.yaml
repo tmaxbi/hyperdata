@@ -30,4 +30,3 @@ loadbalancer:
   enabled: true
 
 tbMountVolume: /db
-hdMountVolume: /hyperdata
