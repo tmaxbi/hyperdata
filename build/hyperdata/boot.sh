@@ -15,6 +15,7 @@ ant install
 export SKIP_RECREATE_SCHEMA="Y"
 export SKIP_RECREATE_ROLE_AND_PERMISSION="Y"
 export SKIP_RECREATE_ADMIN="Y"
+bash $HD_HOME/config/gen_hd_config.sh
 bash $HD_HOME/scripts/install_interactive.sh <<EOF
 1
 y
