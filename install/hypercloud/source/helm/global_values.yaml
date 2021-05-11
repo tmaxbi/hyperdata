@@ -36,6 +36,7 @@ nginx:
   controller:
     image: ingress-nginx/controller:v0.44.0
   admissionWebhooks:
+    enabled: false
     image: jettech/kube-webhook-certgen:v1.5.1
 
 hyperdata:
