@@ -6,7 +6,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-        app: {{ .Release.Name }}-hd
+      app: {{ .Release.Name }}-hd
   template:
     metadata:
       labels:
@@ -16,7 +16,8 @@ spec:
       initContainers:
       - image: {{ .Values.image }}
         name: {{ .Release.Name }}-initcon-hd-hd
-        command: ["bash", "/root/init_container.sh"]
+        command: ["/bin/bash", "-c"]
+        args: ["/root/init_container.sh 2>&1 | tee /root/cmdlog"]
         imagePullPolicy: Always
         env:
         # Tibero Options
@@ -77,6 +78,11 @@ spec:
         - name: HADOOP_ALIAS
           value: "127.0.0.1 alias1 alias2"
 
+        # Hyperdata Webserver Options
+        ## hyperdata uses this path as SAM FILE upload location
+        - name: DS_FILE_PATH
+          value: {{ .Values.tbMountVolume }}
+
         ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
         - name: IS_HTTPS
           value: "{{ .Values.https.enabled }}"
@@ -94,22 +100,25 @@ spec:
         ##- name: SSL_CERT_IP_ADDRESS
         ##  value: ""
 
-        # PV(Persistent Volume) paths
-        - name: HD_MOUNT_VOLUME_PATH
-          value: {{ .Values.hdMountVolume }}
         ## tibero pv created in tibero helm chart
         - name: TB_MOUNT_VOLUME_PATH
           value: {{ .Values.tbMountVolume }}
+        resources:
+          limits:
+            cpu: "4"
+            memory: "8Gi"
+          requests:
+            cpu: "4"
+            memory: "8Gi"
         volumeMounts:
         - name: tz-seoul
           mountPath: /etc/localtime
         - name: pv-storage-tb
           mountPath: {{ .Values.tbMountVolume }}
-        - name: pv-storage-hd
-          mountPath: {{ .Values.hdMountVolume }}
       containers:
       - image: {{ .Values.image }}
-        command: ["supervisord", "-c", "/root/supervisord.conf"]
+        command: ["/bin/bash", "-c"]
+        args: ["/root/boot.sh 2>&1 | tee /root/cmdlog"]
         imagePullPolicy: Always
         name: {{ .Release.Name }}-con-hd-hd
         env:
@@ -171,6 +180,11 @@ spec:
         - name: HADOOP_ALIAS
           value: "127.0.0.1 alias1 alias2"
 
+        # Hyperdata Webserver Options
+        ## hyperdata uses this path as SAM FILE upload location
+        - name: DS_FILE_PATH
+          value: {{ .Values.tbMountVolume }}
+
         ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
         - name: IS_HTTPS
           value: "{{ .Values.https.enabled }}"
@@ -188,9 +202,6 @@ spec:
         ##- name: SSL_CERT_IP_ADDRESS
         ##  value: ""
 
-        # PV(Persistent Volume) paths
-        - name: HD_MOUNT_VOLUME_PATH
-          value: {{ .Values.hdMountVolume }}
         ## tibero pv created in tibero helm chart
         - name: TB_MOUNT_VOLUME_PATH
           value: {{ .Values.tbMountVolume }}
@@ -231,8 +242,6 @@ spec:
           mountPath: /etc/localtime
         - name: pv-storage-tb
           mountPath: {{ .Values.tbMountVolume }}
-        - name: pv-storage-hd
-          mountPath: {{ .Values.hdMountVolume }}
       volumes:
       - name: tz-seoul
         hostPath:
@@ -240,6 +249,3 @@ spec:
       - name: pv-storage-tb
         persistentVolumeClaim:
           claimName: {{ .Release.Name }}-pvc-db
-      - name: pv-storage-hd
-        persistentVolumeClaim:
-          claimName: {{ .Release.Name }}-pvc-hd
