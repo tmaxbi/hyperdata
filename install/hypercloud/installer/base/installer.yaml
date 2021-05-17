@@ -117,11 +117,14 @@ spec:
   - name: installer
     image: ${LOCAL_REGISTRY}hyperdata_installer:v8.3.4
     imagePullPolicy: Always
-    command: [ "/bin/bash", "-c", "--" ]
-    args: [ "while true; do sleep 30; done;" ]
+    command: [ "/bin/bash", "-c" ]
+    args: 
+      - python gen_config.py;
+        helm dep update;
+        helm install -n hyperdata-dev42-mansu hyperdata .;
     volumeMounts:
     - name: hyperdata-installer-configmap
-      mountPath: /root/hyperdata-installer/helm/global_values.yaml
+      mountPath: /root/hyperdata_installer/global_values.yaml
       subPath: global_values.yaml
     env:
     - name: NAMESPACE
