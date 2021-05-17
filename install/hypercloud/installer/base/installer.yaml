@@ -129,6 +129,7 @@ spec:
     env:
     - name: NAMESPACE
       value: ${NAMESPACE}
+  restartPolicy: Never
   volumes:
     - name: hyperdata-installer-configmap
       configMap:
