@@ -1,4 +1,4 @@
-# Hyperdata Guide
+# Hyperdata
 
 본 문서는 Hyperdata 종합 가이드입니다.
 

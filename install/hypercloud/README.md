@@ -1,4 +1,4 @@
-# Hyperdata 설치 가이드
+# Hyperdata On Hypercloud 설치 가이드
 
 본 문서는 하이퍼클라우드에 하이퍼데이터를 설치하기 위한 가이드 문서입니다.
 

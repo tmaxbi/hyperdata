@@ -1,4 +1,4 @@
-# Hyperdata Install Guide
+# Hyperdata 설치 가이드
 
 본 문서는 Hyperdata를 설치하기 위한 가이드 문서입니다.
 
