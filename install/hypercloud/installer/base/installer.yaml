@@ -40,7 +40,7 @@ data:
         image: jettech/kube-webhook-certgen:${NGINX_CERTGEN_TAG}
 
     hyperdata:
-      image: hyperdata8.3_hd:${HD_TAG}
+      image: hyperdata8.3_hd_${INSTALLER_TAG}:${HD_TAG}
 
       proxy:
         bodysize: ${HYPERDATA_PROXY_BODYSIZE}
@@ -115,13 +115,14 @@ metadata:
 spec:
   containers:
   - name: installer
-    image: ${LOCAL_REGISTRY}hyperdata_installer:v8.3.4
+    image: ${LOCAL_REGISTRY}hyperdata_installer:${INSTALLER_TAG}
     imagePullPolicy: Always
     command: [ "/bin/bash", "-c" ]
     args: 
       - python gen_config.py;
         helm dep update;
-        helm install -n hyperdata-dev42-mansu hyperdata .;
+        helm install -n ${NAMESPACE} hyperdata .;
+        sleep infinity;
     volumeMounts:
     - name: hyperdata-installer-configmap
       mountPath: /root/hyperdata_installer/global_values.yaml
@@ -129,6 +130,8 @@ spec:
     env:
     - name: NAMESPACE
       value: ${NAMESPACE}
+  imagePullSecrets:
+  - name: ${LOCAL_REGISTRY_SECRET}
   restartPolicy: Never
   volumes:
     - name: hyperdata-installer-configmap
