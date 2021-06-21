@@ -9,6 +9,10 @@ def create_tibero_values(
   enable_loadbalancer = global_values["loadbalancer"]["enabled"]
   registry_ip = global_values["registry"]["ip"]
   registry_port = global_values["registry"]["port"]
+  registry_repository = global_values["registry"]["repository"]["base"]
+  if registry_repository:
+    registry_repository += "/"
+  
   ip = global_values["ip"]
 
   # tibero option
@@ -16,7 +20,7 @@ def create_tibero_values(
 
   tibero_options = {
     "tibero": {
-      "image": f"{registry_ip}:{registry_port}/{tibero_image}",
+      "image": f"{registry_ip}:{registry_port}/{registry_repository}{tibero_image}",
       "loadbalancer": {
         "enabled": enable_loadbalancer,
         "ip": ip
@@ -35,6 +39,10 @@ def create_nginx_values(
   enable_https = global_values["https"]["enabled"]
   registry_ip = global_values["registry"]["ip"]
   registry_port = global_values["registry"]["port"]
+  registry_repository = global_values["registry"]["repository"]["base"]
+  if registry_repository:
+    registry_repository += "/"
+
   ip = global_values["ip"]
 
   # nginx option
@@ -54,7 +62,7 @@ def create_nginx_values(
           "namespace": namespace
         },
         "image": {
-          "name": f"{registry_ip}:{registry_port}/{nginx_controller_image}"
+          "name": f"{registry_ip}:{registry_port}/{registry_repository}{nginx_controller_image}"
         },
         "service": {
           "ports": {}
@@ -117,6 +125,11 @@ def create_hyperdata_values(
   enable_https = global_values["https"]["enabled"]
   registry_ip = global_values["registry"]["ip"]
   registry_port = global_values["registry"]["port"]
+  registry_repository = global_values["registry"]["repository"]["base"]
+  if registry_repository:
+    registry_repository += "/"
+
+  mllab_repository =  global_values["registry"]["repository"]["mllab"]
   registry_secret = global_values["registry"]["secret"]
   ip = global_values["ip"]
   kubeflow_ip = global_values["kubeflow"]["ip"]
@@ -142,7 +155,7 @@ def create_hyperdata_values(
 
   hyperdata_options = {
     "hyperdata": {
-      "image": f"{registry_ip}:{registry_port}/{hyperdata_image}",
+      "image": f"{registry_ip}:{registry_port}/{registry_repository}{hyperdata_image}",
       "registry": {
         "enabled": "true",
         "ip": registry_ip,
@@ -188,9 +201,13 @@ def create_automl_values(
   enable_https = global_values["https"]["enabled"]
   registry_ip = global_values["registry"]["ip"]
   registry_port = global_values["registry"]["port"]
+  registry_repository = global_values["registry"]["repository"]["base"]
+  if registry_repository:
+    registry_repository += "/"
+
   registry_secret = global_values["registry"]["secret"]
   ip = global_values["ip"]
-  registry_prefix = f"{registry_ip}:{registry_port}/"
+  registry_prefix = f"{registry_ip}:{registry_port}/{registry_repository}"
   kubeflow_ip = global_values["kubeflow"]["ip"]
   kfserving_port = global_values["kubeflow"]["ports"]["kfserving"]
 

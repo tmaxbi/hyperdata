@@ -8,6 +8,9 @@ data:
     registry:
       ip: ${LOCAL_REGISTRY_IP}
       port: ${LOCAL_REGISTRY_PORT}
+      repository:
+        base: ${LOCAL_REGISTRY_REPOSITORY}
+        mllab: hdml
       secret: ${LOCAL_REGISTRY_SECRET}
 
     # enabled: true => https, enabled: false => http

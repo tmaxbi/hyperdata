@@ -6,6 +6,9 @@ registry:
   ip: <YOUR REGISTRY IP>
   # ex) 5000
   port: <YOUR PORT>
+  repository:
+    base: hyperdata
+    mllab: hdml
   secret: no-secret
 
 #
