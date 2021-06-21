@@ -5,3 +5,8 @@ loadbalancer:
   ip: <YOUR EXTERNAL_IP or MASTER NODE's IP>
 
 tbMountVolume: /db
+
+resources:
+  cpu: 2
+  memory: 4Gi
+  storage: 40Gi

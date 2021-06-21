@@ -11,6 +11,6 @@ spec:
   - ReadWriteMany
   resources:
     requests:
-      storage: 40Gi
-  storageClassName: csi-cephfs
+      storage: {{ .Values.resources.storage }}
+  # storageClassName: csi-cephfs
   volumeMode: Filesystem

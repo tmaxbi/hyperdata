@@ -14,9 +14,9 @@ spec:
     - name: MAX_SESSION_COUNT
       value: "40"
     - name: TOTAL_SHM_SIZE
-      value: "2"
+      value: "{{ .Values.resources.cpu }}"
     - name: MEMORY_TARGET
-      value: "4"
+      value: "{{ .Values.resources.memory | replace "Gi" "" }}"
     - name: LOG_BUFFER
       value: "300M"
     - name: LOG_GROUP
@@ -59,12 +59,12 @@ spec:
       protocol: TCP
     resources:
       limits:
-        cpu: "2"
-        memory: 4Gi
+        cpu: {{ .Values.resources.cpu }}
+        memory: {{ .Values.resources.memory }}
         nvidia.com/gpu: "0"
       requests:
-        cpu: "2"
-        memory: 4Gi
+        cpu: {{ .Values.resources.cpu }}
+        memory: {{ .Values.resources.memory }}
         nvidia.com/gpu: "0"
     volumeMounts:
     - mountPath: {{ .Values.tbMountVolume }}
