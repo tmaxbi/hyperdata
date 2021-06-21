@@ -31,3 +31,7 @@ kubeflow:
   ip: <YOUR ISTIO_Ingress gateway IP or master node's IP>
   ports:
     kfserving: 32380
+
+resources:
+  cpu: 1
+  memory: 2Gi

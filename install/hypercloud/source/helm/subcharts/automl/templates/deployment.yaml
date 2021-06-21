@@ -37,12 +37,12 @@ spec:
               mountPath: "/src/backend/config"
               readOnly: true
           resources:
-            requests:
-              memory: "2Gi"
-              cpu: 1
             limits:
-              memory: "2Gi"
-              cpu: 1
+              cpu: {{ .Values.resources.cpu }}
+              memory: {{ .Values.resources.memory }}
+            requests:
+              cpu: {{ .Values.resources.cpu }}
+              memory: {{ .Values.resources.memory }}
       imagePullSecrets:
         - name: {{ .Values.registry.secret }}
       volumes:
