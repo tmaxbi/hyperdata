@@ -105,11 +105,11 @@ spec:
           value: {{ .Values.tbMountVolume }}
         resources:
           limits:
-            cpu: "4"
-            memory: "8Gi"
+            cpu: {{ .Values.resources.cpu }}
+            memory: {{ .Values.resources.memory }}
           requests:
-            cpu: "4"
-            memory: "8Gi"
+            cpu: {{ .Values.resources.cpu }}
+            memory: {{ .Values.resources.memory }}
         volumeMounts:
         - name: tz-seoul
           mountPath: /etc/localtime
@@ -232,11 +232,11 @@ spec:
           protocol: TCP
         resources:
           limits:
-            cpu: "4"
-            memory: "8Gi"
+            cpu: {{ .Values.resources.cpu }}
+            memory: {{ .Values.resources.memory }}
           requests:
-            cpu: "4"
-            memory: "8Gi"
+            cpu: {{ .Values.resources.cpu }}
+            memory: {{ .Values.resources.memory }}
         volumeMounts:
         - name: tz-seoul
           mountPath: /etc/localtime

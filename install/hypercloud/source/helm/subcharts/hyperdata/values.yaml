@@ -30,3 +30,7 @@ loadbalancer:
   enabled: true
 
 tbMountVolume: /db
+
+resources:
+  cpu: 2
+  memory: 4Gi
