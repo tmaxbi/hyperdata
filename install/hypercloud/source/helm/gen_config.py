@@ -91,8 +91,14 @@ def create_nginx_values(
           #}
         },
         "resources": {
-          "cpu": nginx_controller_cpu,
-          "memory": nginx_controller_memory
+          "requests": {
+            "cpu": nginx_controller_cpu,
+            "memory": nginx_controller_memory
+          },
+          "limits": {
+            "cpu": nginx_controller_cpu,
+            "memory": nginx_controller_memory
+          }
         }
       }
     }
