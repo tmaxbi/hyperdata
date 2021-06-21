@@ -29,6 +29,10 @@ ip: <YOUR EXTERNAL_IP or MASTER NODE's IP>
 # tibero option
 tibero:
   image: "hyperdata8.3_tb:20210203_v1"
+  resources:
+    cpu: 2
+    memory: 4Gi
+    storage: 40Gi
 
 nginx:
   # if https enabled is true,  nginx uses https and this port number
@@ -38,17 +42,22 @@ nginx:
   port: 8080
   controller:
     image: ingress-nginx/controller:v0.44.0
+    resources:
+      cpu: 1
+      memory: 1Gi
   admissionWebhooks:
     enabled: false
     image: jettech/kube-webhook-certgen:v1.5.1
 
 hyperdata:
   image: hyperdata8.3_hd:20210310_v4h
-
   proxy:
     bodysize: 1024m
     # minutes
     timeout: 1800
+  resources:
+    cpu: 2
+    memory: 4Gi
 
 kubeflow:
   # ex. 172.17.0.1
@@ -60,7 +69,6 @@ kubeflow:
 automl:
   backendSubDir: /automl/backend
   frontendSubDir: /automl/frontend
-
   # For deployment
   image:
     automl: hyperdata8.3_automl:20210310_v1
@@ -74,5 +82,7 @@ automl:
     resultuploader: hyperdata8.3_predefinedai_woori_text_classification_resultuploader:20210205_v1
     domainserving: hyperdata8.3_predefinedai_text_classification_serving:20201223_v1
     wooriserving: hyperdata8.3_predefinedai_woori_text_classification_serving:20201223_v1
-
+  resources:
+    cpu: 1
+    memory: 2Gi
   kfservingAddr: 192.1.4.247:32380

@@ -17,6 +17,9 @@ def create_tibero_values(
 
   # tibero option
   tibero_image = global_values["tibero"]["image"]
+  tibero_cpu = global_values["tibero"]["resources"]["cpu"]
+  tibero_memory = global_values["tibero"]["resources"]["memory"]
+  tibero_storage = global_values["tibero"]["resources"]["storage"]
 
   tibero_options = {
     "tibero": {
@@ -24,6 +27,11 @@ def create_tibero_values(
       "loadbalancer": {
         "enabled": enable_loadbalancer,
         "ip": ip
+      },
+      "resources": {
+        "cpu": tibero_cpu,
+        "memory": tibero_memory,
+        "storage": tibero_storage
       }
     }
   }
@@ -49,6 +57,8 @@ def create_nginx_values(
   port = global_values["nginx"]["port"]
   nginx_controller_image = global_values["nginx"]["controller"]["image"]
   nginx_admissionwebhook_image = global_values["nginx"]["admissionWebhooks"]["image"]
+  nginx_controller_cpu = global_values["nginx"]["controller"]["resources"]["cpu"]
+  nginx_controller_memory = global_values["nginx"]["controller"]["resources"]["memory"]
 
   nginx_options = {
     "nginx": {
@@ -79,6 +89,10 @@ def create_nginx_values(
           #    "name": f"{registry_ip}:{registry_port}/{nginx_admissionwebhook_image}"
           #  }
           #}
+        },
+        "resources": {
+          "cpu": nginx_controller_cpu,
+          "memory": nginx_controller_memory
         }
       }
     }
@@ -139,6 +153,8 @@ def create_hyperdata_values(
   hyperdata_image = global_values["hyperdata"]["image"]
   proxy_bodysize = global_values["hyperdata"]["proxy"]["bodysize"]
   proxy_timeout = global_values["hyperdata"]["proxy"]["timeout"]
+  hyperdata_cpu = global_values["hyperdata"]["resources"]["cpu"]
+  hyperdata_memory = global_values["hyperdata"]["resources"]["memory"]
 
   # nginx option
   webserver_port = global_values["nginx"]["port"]
@@ -185,6 +201,10 @@ def create_hyperdata_values(
       },
       "loadbalancer": {
         "enabled": "true" if enable_loadbalancer else "false"
+      },
+      "resources": {
+        "cpu": hyperdata_cpu,
+        "memory": hyperdata_memory,
       }
     }
   }
@@ -217,6 +237,8 @@ def create_automl_values(
   # automl options
   automl_frontend_subdir = global_values["automl"]["frontendSubDir"]
   automl_backend_subdir = global_values["automl"]["backendSubDir"]
+  automl_cpu = global_values["automl"]["resources"]["cpu"]
+  automl_memory = global_values["automl"]["resources"]["memory"]
 
   automl_options = {
     "automl": {
@@ -252,6 +274,10 @@ def create_automl_values(
         "ports": {
           "kfserving": kfserving_port
         }
+      },
+      "resources": {
+        "cpu": automl_cpu,
+        "memory": automl_memory,
       }
     }
   }  
