@@ -30,6 +30,7 @@ data:
     # tibero option
     tibero:
       image: "hyperdata8.3_tb:${TB_TAG}"
+      shmSize: ${TIBERO_SHM_SIZE}
       resources:
         cpu: ${TIBERO_CPU}
         memory: ${TIBERO_MEMORY}

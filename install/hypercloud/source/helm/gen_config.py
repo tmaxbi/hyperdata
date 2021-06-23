@@ -20,6 +20,7 @@ def create_tibero_values(
   tibero_cpu = global_values["tibero"]["resources"]["cpu"]
   tibero_memory = global_values["tibero"]["resources"]["memory"]
   tibero_storage = global_values["tibero"]["resources"]["storage"]
+  tibero_shm_size = global_values["tibero"]["shmSize"]
 
   tibero_options = {
     "tibero": {
@@ -32,7 +33,8 @@ def create_tibero_values(
         "cpu": tibero_cpu,
         "memory": tibero_memory,
         "storage": tibero_storage
-      }
+      },
+      "shmSize": tibero_shm_size
     }
   }
   return tibero_options

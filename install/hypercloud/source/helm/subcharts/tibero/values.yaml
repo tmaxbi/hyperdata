@@ -6,6 +6,8 @@ loadbalancer:
 
 tbMountVolume: /db
 
+shmSize: 2Gi
+
 resources:
   cpu: 2
   memory: 4Gi

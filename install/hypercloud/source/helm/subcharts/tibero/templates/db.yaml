@@ -14,7 +14,7 @@ spec:
     - name: MAX_SESSION_COUNT
       value: "40"
     - name: TOTAL_SHM_SIZE
-      value: "{{ .Values.resources.cpu }}"
+      value: "{{ .Values.shmSize | replace "Gi" "" }}"
     - name: MEMORY_TARGET
       value: "{{ .Values.resources.memory | replace "Gi" "" }}"
     - name: LOG_BUFFER

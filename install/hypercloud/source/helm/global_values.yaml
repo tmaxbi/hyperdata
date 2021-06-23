@@ -29,6 +29,7 @@ ip: <YOUR EXTERNAL_IP or MASTER NODE's IP>
 # tibero option
 tibero:
   image: "hyperdata8.3_tb:20210203_v1"
+  shmSize: 2Gi
   resources:
     cpu: 2
     memory: 4Gi
