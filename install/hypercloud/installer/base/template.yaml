@@ -1,0 +1,157 @@
+apiVersion: tmax.io/v1
+kind: Template
+metadata:
+  name: hyperdata-installer-template
+  namespace: ${NAMESPACE}
+urlDescription: https://github.com/tmaxbi/hyperdata
+parameters:
+  - name: NAMESPACE
+    value: ${NAMESPACE}
+objects:
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: hyperdata-installer-configmap
+      namespace: ${NAMESPACE}
+    data:
+      global_values.yaml: |
+        # 설치할 namespace
+        namespace: ${NAMESPACE}
+
+        # 이미지 registry
+        registry:
+          ip: ${LOCAL_REGISTRY_IP}
+          port: ${LOCAL_REGISTRY_PORT}
+          repository:
+            base: ${LOCAL_REGISTRY_REPOSITORY}
+            mllab: hdml
+          secret: ${LOCAL_REGISTRY_SECRET}
+
+        # enabled: true => https, enabled: false => http
+        https:
+          enabled: ${ENABLE_HTTPS}
+
+        # for service type loadbalancer
+        # if enabled,  service uses type: LoadBalancer
+        # if disabled, service uses type: NodePort
+        loadbalancer:
+          enabled: ${ENABLE_LOADBALANCER}
+
+        # if loadbalancer enabled, ip uses as loadbalancer external ip
+        # if loadbalancer disable, **please assign ip to master node ip**
+        ip: ${IP}
+
+        # tibero option
+        tibero:
+          image: "hyperdata8.3_tb:${TB_TAG}"
+          resources:
+            cpu: ${TIBERO_CPU}
+            memory: ${TIBERO_MEMORY}
+            storage: ${TIBERO_STORAGE}
+
+        nginx:
+          # if https enabled is true,  nginx uses https and this port number
+          # if https enabled is false, nginx uses http and this port number
+          # if loadbalancer is false, port uses as nodeport. So port must be set between 30000~32767
+          # recommend remove port setting if loadbalancer is false,
+          port: ${NGINX_PORT}
+          controller:
+            image: ingress-nginx/controller:${NGINX_CONTROLLER_TAG}
+            resources:
+              cpu: ${NGINX_CPU}
+              memory: ${NGINX_MEMORY}
+          admissionWebhooks:
+            image: jettech/kube-webhook-certgen:${NGINX_CERTGEN_TAG}
+
+        hyperdata:
+          image: hyperdata8.3_hd_${INSTALLER_TAG}:${HD_TAG}
+          proxy:
+            bodysize: ${HYPERDATA_PROXY_BODYSIZE}
+            # minutes
+            timeout: ${HYPERDATA_PROXY_TIMEOUT}
+          resources:
+            cpu: ${HYPERDATA_CPU}
+            memory: ${HYPERDATA_MEMORY}
+
+        kubeflow:
+          # master node ip
+          ip: ${KUBEFLOW_IP}
+          ports:
+            notebook: ${KUBEFLOW_NOTEBOOK_PORT}
+            kfserving: ${KUBEFLOW_KFSERVING_PORT}
+
+        automl:
+          backendSubDir: /automl/backend
+          frontendSubDir: /automl/frontend
+          # For deployment
+          image:
+            automl: hyperdata8.3_automl:${AUTOML_TAG}
+            doloader: hyperdata8.3_automl_doloader:${DOLOADER_TAG}
+            fe: hyperdata8.3_automl_fe:${FE_TAG}
+            xgb: hyperdata8.3_automl_hpb_xgb:${XGB_TAG}
+            rf: hyperdata8.3_automl_hpb_rf:${RF_TAG}
+            downloader: hyperdata8.3_automl_downloader:${DOWNLOADER_TAG}
+            scheduler: hyperdata8.3_automl_scheduler:${SCHEDULER_TAG}
+            woori: hyperdata8.3_predefinedai_woori_text_classifiation_train:${WOORI_TAG}
+            resultuploader: hyperdata8.3_predefinedai_woori_text_classification_resultuploader:${RESULTUPLOADER_TAG}
+            domainserving: hyperdata8.3_predefinedai_text_classification_serving:${DOMAINSERVING_TAG}
+            wooriserving: hyperdata8.3_predefinedai_woori_text_classification_serving:${WOORISERVING_TAG}
+          resources:
+            cpu: ${AUTOML_CPU}
+            memory: ${AUTOML_MEMORY}
+          kfservingAddr: ${KUBEFLOW_IP}:${KUBEFLOW_KFSERVING_PORT}
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      name: hyperdata-installer-role
+      namespace: ${NAMESPACE}
+    rules:
+      - apiGroups:
+          - '*'
+        resources:
+          - '*'
+        verbs:
+          - '*'
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      name: hyperdata-installer-rolebinding
+      namespace: ${NAMESPACE}
+    roleRef:
+      kind: Role
+      apiGroup: rbac.authorization.k8s.io
+      name: hyperdata-installer-role
+    subjects:
+      - kind: ServiceAccount
+        apiGroup: ''
+        name: default
+  - apiVersion: v1
+    kind: Pod
+    metadata:
+      name: hyperdata-installer-pod
+      namespace: ${NAMESPACE}
+    spec:
+      containers:
+      - name: installer
+        image: ${LOCAL_REGISTRY}hyperdata_installer:${INSTALLER_TAG}
+        imagePullPolicy: Always
+        command: [ "/bin/bash", "-c" ]
+        args: 
+          - python gen_config.py;
+            helm dep update;
+            helm install -n ${NAMESPACE} hyperdata .;
+            sleep infinity;
+        volumeMounts:
+        - name: hyperdata-installer-configmap
+          mountPath: /root/hyperdata_installer/global_values.yaml
+          subPath: global_values.yaml
+        env:
+        - name: NAMESPACE
+          value: ${NAMESPACE}
+      imagePullSecrets:
+      - name: ${LOCAL_REGISTRY_SECRET}
+      restartPolicy: Never
+      volumes:
+        - name: hyperdata-installer-configmap
+          configMap:
+            name: hyperdata-installer-configmap
