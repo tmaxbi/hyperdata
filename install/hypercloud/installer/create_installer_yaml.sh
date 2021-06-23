@@ -56,5 +56,14 @@ sed 's/${NAMESPACE}/'${NAMESPACE}'/g;'\
 's/${WOORI_TAG}/'${WOORI_TAG}'/g;'\
 's/${RESULTUPLOADER_TAG}/'${RESULTUPLOADER_TAG}'/g;'\
 's/${DOMAINSERVING_TAG}/'${DOMAINSERVING_TAG}'/g;'\
-'s/${WOORISERVING_TAG}/'${WOORISERVING_TAG}'/g;' \
+'s/${WOORISERVING_TAG}/'${WOORISERVING_TAG}'/g;'\
+'s/${TIBERO_CPU}/'${TIBERO_CPU}'/g;'\
+'s/${TIBERO_MEMORY}/'${TIBERO_MEMORY}'/g;'\
+'s/${TIBERO_STORAGE}/'${TIBERO_STORAGE}'/g;'\
+'s/${NGINX_CPU}/'${NGINX_CPU}'/g;'\
+'s/${NGINX_MEMORY}/'${NGINX_MEMORY}'/g;'\
+'s/${HYPERDATA_CPU}/'${HYPERDATA_CPU}'/g;'\
+'s/${HYPERDATA_MEMORY}/'${HYPERDATA_MEMORY}'/g;'\
+'s/${AUTOML_CPU}/'${AUTOML_CPU}'/g;'\
+'s/${AUTOML_MEMORY}/'${AUTOML_MEMORY}'/g;' \
 ./base/installer.yaml > installer.yaml
