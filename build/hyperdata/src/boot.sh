@@ -11,6 +11,13 @@ chmod -R 755 $JEUS_HOME/lib/etc/ant/bin
 cd $JEUS_HOME/setup
 ant install
 
+## make tbsql client
+mkdir $TB_HOME
+cd $HD_HOME/dist/war
+mv tibero-client.tar.gz $TB_HOME
+cd $TB_HOME
+tar -zxvf tibero-client.tar.gz
+
 ## run hyperdata
 export SKIP_RECREATE_SCHEMA="Y"
 export SKIP_RECREATE_ROLE_AND_PERMISSION="Y"

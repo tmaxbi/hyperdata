@@ -37,7 +37,7 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 export LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH
 
 ## hyperdata env
-export HD_HOME=$ROOT_HOME/hyperdata8.3
+export HD_HOME=$ROOT_HOME/hyperdata20
 export SCHEMA_VERSION_FILE=$HD_HOME/HD_SCHEMA_VERSION
-export HD_VERSION=8
-export HD_SCHEMA_VERSION=8.3.4hotpatch
+export HD_VERSION=20
+export HD_SCHEMA_VERSION=20.4.0
