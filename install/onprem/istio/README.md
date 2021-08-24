@@ -13,7 +13,7 @@ helm install -n istio-system istio-base base
 3. install istio-control
 ```
 helm install -n istio-system istio-discovery istio-control/istio-discovery \
---set pilot.image=192.168.179.44:5000/istio/pilot:1.9.7 \
+--set pilot.image=istio/pilot:1.9.7 \
 --set global.proxy.image=istio/proxyv2:1.9.7 \
 --set global.jwtPolicy=first-party-jwt
 ```
