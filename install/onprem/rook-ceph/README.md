@@ -9,7 +9,7 @@ rook-ceph는 노드간 time이 동기화되어 있지 않는 경우, 정상동�
 
 ntp를 통해 서버간 시간을 동기화하는 것을 추천드립니다.
 
-ntp 설정하는 방법은 troubleshooting.md(./troubleshooting.md)를 참조해주시길 바랍니다.
+ntp 설정하는 방법은 [troubleshooting.md](./troubleshooting.md)를 참조해주시길 바랍니다.
 
 ## Install
 
