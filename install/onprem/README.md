@@ -54,7 +54,7 @@ helm install -n metallb-system metallb metallb \
     - "kernel.sem"</b>
     ...
 
-$ systemctl restart kubelet
+    $ systemctl restart kubelet
 </pre>
 
 ## Install Order
