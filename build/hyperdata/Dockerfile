@@ -2,8 +2,9 @@ FROM ubuntu:16.04
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
 #==================== 1) Install Package ====================
-RUN cd /etc/apt && \
-    sed -i 's/archive.ubuntu.com/ftp.daumkakao.com/g' sources.list
+RUN cd /etc/apt 
+#RUN cd /etc/apt && \
+#    sed -i 's/archive.ubuntu.com/ftp.daumkakao.com/g' sources.list
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
@@ -30,6 +31,7 @@ RUN add-apt-repository universe
 RUN apt-get install -y supervisor
 RUN apt-get install -y apt-transport-https
 RUN apt-get install -y  net-tools
+RUN apt-get install -y  netcat
 RUN apt-get install -y  expect
 
 RUN apt-get install -y language-pack-ko
@@ -74,7 +76,7 @@ COPY src/jeus $DEPLOY_HOME/jeus8
 COPY src/hadoop $DEPLOY_HOME/hadoop
 
 #==================== 6) Move Hyperdata Env ====================
-COPY src/hyperdata $DEPLOY_HOME/hyperdata8.3
+COPY src/hyperdata $DEPLOY_HOME/hyperdata20
 
 #==================== 7) Move Hyperdata related Files ====================
 COPY src/set_envs.sh /root/set_envs.sh
