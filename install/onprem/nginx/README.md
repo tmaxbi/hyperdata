@@ -1,0 +1,47 @@
+# nginx
+
+1. create namespace for hyperdata if not exist
+```
+kubectl create namespace hyperdata
+```
+
+2. create nginx
+
+    2.1. metallb loadbalancer로 설치할 경우
+    ```
+    helm install -n hyperdata nginx-ingress nginx-ingress \
+    --set controller.image.name=nginx/nginx-ingress:1.12.0 \
+    --set controller.watchNamespace=hyperdata \
+    --set rbac.create=true \
+    --set controller.service.type=LoadBalancer \
+    --set controller.service.httpPort.enabled=false \
+    --set controller.service.httpsPort.enabled=true \
+    --set controller.service.annotations."metallb\.universe\.tf/allow-shared-ip"=top \
+    --set controller.service.loadBalancerIP=${NGINX_IP} \
+    --set controller.service.sessionAffinity=None \
+    --set controller.service.externalTrafficPolicy=Cluster
+    ```
+
+    2.2. nodePort로 설치할 경우(현재 nodePort로 설치할 경우, mlplatform 미동작)
+    ```
+    helm install -n hyperdata nginx-ingress nginx-ingress \
+    --set controller.image.name=nginx/nginx-ingress:1.12.0 \
+    --set controller.watchNamespace=hyperdata \
+    --set rbac.create=true \
+    --set controller.service.type=NodePort \
+    --set controller.service.httpPort.enabled=false \
+    --set controller.service.httpsPort.enabled=true \
+    --set controller.service.httpsPort.nodePort=31370
+    ```
+
+    **nginx는 clusterrole을 사용하고 있습니다. 여러 개의 nginx를 사용하려할 경우, 서로 다른 namespace라도 같은 이름으로 생성할 시 이름 중복 에러가 뜰 수 있으므로 서로 다른 이름으로 chart를 생성해서 사용하여야 합니다.**
+    
+
+## ref
+
+## reproduce chart
+```
+helm repo add nginx-stable https://helm.nginx.com/stable
+helm repo update
+helm pull nginx-stable/nginx-ingress --untar
+```

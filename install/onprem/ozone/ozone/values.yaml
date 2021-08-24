@@ -1,0 +1,64 @@
+image:
+  name: apache/ozone
+  version: 1.1.0
+
+security:
+  enabled: false
+  authentication: kerberos
+
+  # used when authentication is kerberos
+  kerberos:
+    server: krb-server
+    realm: EXAMPLE.COM
+
+  securityContext:
+    fsGroup: 1000
+
+om:
+  replicas: 1
+  volume:
+    storage: 2Gi
+  security:
+    kerberos:
+      keytab:
+        path: /etc/security/keytabs/om.keytab
+  service:
+    type: NodePort
+    # if service type is NodePort, use nodePort
+    nodePort: 32090
+
+scm:
+  replicas: 1
+  volume:
+    storage: 2Gi
+  security:
+    kerberos:
+      keytab:
+        path: /etc/security/keytabs/scm.keytab
+  container:
+    size: 1GB
+
+  pipeline:
+    owner:
+      container:
+        count: 1
+
+  # hdds
+  safemode:
+    min:
+      datanode: 1 # must be less than or equal to datanode replicas.
+
+s3g:
+  replicas: 1
+
+datanode:
+  replicas: 1
+  volume:
+    storage: 2Gi
+  pipeline:
+    limit: 1 # must be less than or equal to datanode replicas.
+# datanode uses scm keytab
+#  security:
+#    kerberos:
+#      keytab:
+#        path: /etc/security/keytabs/datanode.keytab

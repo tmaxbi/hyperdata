@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlplatform-frontend-deploy-{{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: mlplatform-frontend-deploy-{{ .Release.Name }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mlplatform-frontend-deploy-{{ .Release.Name }}
+    spec:
+      containers:
+      - name: mlplatform-frontend-con
+        image: "{{ .Values.registry.address }}/{{ .Values.frontend.image.name }}:{{ .Values.frontend.image.tag }}"
+        imagePullPolicy: {{ .Values.frontend.image.imagePullPolicy }}
+        command: ["/bin/sh", "-c"]
+        args:
+          - "sed -i 's/172.17.0.1:18080/mlplatform-backend-svc-{{ .Release.Name }}:18080/g' /etc/nginx/conf.d/nginx.conf && nginx -g 'daemon off;'"
+        ports:
+        - containerPort: 80
+          name: server-port
+        resources:
+          limits:
+            cpu: {{ .Values.frontend.resources.limits.cpu }}
+            memory: {{ .Values.backend.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.frontend.resources.requests.cpu }}
+            memory: {{ .Values.frontend.resources.requests.memory }}
+      imagePullSecrets:
+      - name: {{ .Values.registry.secret }}

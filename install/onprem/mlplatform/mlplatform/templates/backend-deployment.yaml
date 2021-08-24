@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlplatform-backend-deploy-{{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: mlplatform-backend-deploy-{{ .Release.Name }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mlplatform-backend-deploy-{{ .Release.Name }}
+    spec:
+      serviceAccountName: mlplatform-backend-sa-{{ .Release.Name }}
+      containers:
+      - name: mlplatform-backend-con
+        image: "{{ .Values.registry.address }}/{{ .Values.backend.image.name }}:{{ .Values.backend.image.tag }}"
+        imagePullPolicy: {{ .Values.backend.image.imagePullPolicy }}
+        ports:
+        - containerPort: 18080
+          name: server-port
+        resources:
+          limits:
+            cpu: {{ .Values.backend.resources.limits.cpu }}
+            memory: {{ .Values.backend.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.backend.resources.requests.cpu }}
+            memory: {{ .Values.backend.resources.requests.memory }}
+        volumeMounts:
+        - name: application-prod-config
+          mountPath: /src/usr/app/classes
+          subPath: application-prod.properties
+        - name: mlplatform-backend-pvc
+          mountPath: {{ .Values.backend.volume.mountPath }}
+      imagePullSecrets:
+      - name: {{ .Values.registry.secret }}
+      volumes:
+      - name: application-prod-config
+        configMap:
+          name: mlplatform-backend-deploy-configmap-{{ .Release.Name }}
+          items:
+          - key: "application-prod.properties"
+            path: "application-prod.properties"
+      - name: mlplatform-backend-pvc
+        persistentVolumeClaim:
+          claimName: mlplatform-backend-pvc-{{ .Release.Name }}

@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: tibero-lb-db
+  labels:
+    lb: tibero-db
+  {{ if .Values.loadbalancer.enabled }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: top
+  {{ end }}
+spec:
+  ports:
+    - name: tb-lsnr
+      port: 8629
+      protocol: TCP
+      targetPort: 8629
+  selector:
+    lb: tibero-db
+  {{ if .Values.loadbalancer.enabled }}
+  type: LoadBalancer
+  sessionAffinity: None
+  loadBalancerIP: {{ .Values.loadbalancer.ip }}
+  externalTrafficPolicy: Cluster
+  {{ else }}
+  type: NodePort
+  {{ end }}

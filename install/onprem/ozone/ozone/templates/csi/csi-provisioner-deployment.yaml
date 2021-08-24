@@ -1,0 +1,99 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: csi-provisioner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: csi-provisioner
+  template:
+    metadata:
+      labels:
+        app: csi-provisioner
+    spec:
+      serviceAccount: csi-ozone
+      containers:
+      - name: csi-provisioner
+        image: quay.io/k8scsi/csi-provisioner:v1.0.1
+        args:
+        - --csi-address=/var/lib/csi/csi.sock
+        volumeMounts:
+        - name: socket-dir
+          mountPath: /var/lib/csi/
+      - name: ozone-csi
+        image: '{{ .Values.image.name }}:{{ .Values.image.version }}'
+        volumeMounts:
+        - name: socket-dir
+          mountPath: /var/lib/csi/
+        - name: config
+          mountPath: /opt/hadoop/etc/hadoop/ozone-site.xml
+          subPath: ozone-site.xml
+        - name: config
+          mountPath: /opt/hadoop/etc/hadoop/core-site.xml
+          subPath: core-site.xml
+        - name: config
+          mountPath: /opt/hadoop/etc/hadoop/hdfs-site.xml
+          subPath: hdfs-site.xml
+        - name: config
+          mountPath: /opt/hadoop/etc/hadoop/log4j.properties
+          subPath: log4j.properties
+        {{- if and .Values.security.enabled (eq .Values.security.authentication "kerberos") }}
+        - name: om-keytab
+          mountPath: {{ dir .Values.om.security.kerberos.keytab.path }}
+        - name: krb5-conf
+          mountPath: /etc/krb5.conf
+          subPath: krb5.conf
+        {{- end }}
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh", "-c"]
+        args:
+        {{- if and .Values.security.enabled (eq .Values.security.authentication "kerberos") }}
+        # Even if security is enabled, it seems that Kerberos login is not done by default.
+        - kinit -kt {{ .Values.om.security.kerberos.keytab.path }} om/{{ .Values.security.kerberos.server }}.{{ .Release.Namespace }}.svc.cluster.local;
+          ozone csi;
+        {{- else }}
+        - ozone csi;
+        {{- end }}
+      volumes:
+      - name: socket-dir
+        emptyDir: {}
+      - name: config
+        configMap:
+          name: config
+          items:
+          - key: "ozone-site.xml"
+            path: "ozone-site.xml"
+          - key: "core-site.xml"
+            path: "core-site.xml"
+          - key: "hdfs-site.xml"
+            path: "hdfs-site.xml"
+          - key: "log4j.properties"
+            path: "log4j.properties"
+      {{- if and .Values.security.enabled (eq .Values.security.authentication "kerberos") }}
+      - name: om-keytab
+        secret:
+          secretName: om-keytab
+          items:
+          - key: {{ base .Values.om.security.kerberos.keytab.path }}
+            path: {{ base .Values.om.security.kerberos.keytab.path }}
+      - name: krb5-conf
+        configMap:
+          name: krb5-conf
+      {{- end }}

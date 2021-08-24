@@ -1,0 +1,191 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hyperdata-hd-hd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hyperdata-hd
+  template:
+    metadata:
+      labels:
+        lb: hyperdata-hd
+        app: hyperdata-hd
+    spec:
+      initContainers:
+      - image: {{ .Values.image }}
+        name: hyperdata-initcon-hd-hd
+        command: ["/bin/bash", "-c"]
+        args: ["/root/init_container.sh 2>&1 | tee /root/cmdlog; exit ${PIPESTATUS[0]}"]
+        imagePullPolicy: Always
+        env:
+        # Tibero Options
+        - name: TB_PORT
+          value: "8629"
+        - name: TB_SID
+          value: "tibero"
+
+        # other hyperdata modules. this modules will working as pod
+        - name: HLADMIN_IP
+          value: 10.244.184.122
+        - name: RECOMMEND_SERVER_IP
+          value: 10.244.170.209
+        - name: HLADMIN_PORT
+          value: "23000"
+        - name: RECOMMEND_SERVER_PORT
+          value: "5000"
+
+        ## hyperdata uses this name as DNS
+        - name: TB_IP
+          value: tiberolocaldns
+        - name: USE_REALTIME
+          value: "Y"
+        - name: SSH_PORT
+          value: "22"
+
+        # Hadoop Options
+        - name: HADOOP_ALIAS
+          value: "127.0.0.1 alias1 alias2"
+
+        # Hyperdata Webserver Options
+        ## hyperdata uses this path as SAM FILE upload location
+        - name: FILE_INPUT_DIR
+          value: {{ .Values.db.mountPath }}/input
+
+        ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+        - name: IS_HTTPS
+          value: "{{ .Values.https.enabled }}"
+
+        # MQTT Options
+        - name: USE_MQTT_LB
+          value: "Y"
+        - name: NOTIFICATION_BROKER_IP
+          value: {{ .Values.webserver.ip }}
+        - name: NOTIFICATION_BROKER_PORT
+          value: "{{ .Values.webserver.port }}"
+        - name: NOTIFICATION_BROKER_WS_PORT
+          value: ""
+        ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+        ##- name: SSL_CERT_IP_ADDRESS
+        ##  value: ""
+
+        ## tibero pv created in tibero helm chart
+        - name: TB_MOUNT_VOLUME_PATH
+          value: {{ .Values.db.mountPath }}
+        resources:
+          limits:
+            cpu: {{ .Values.resources.cpu }}
+            memory: {{ .Values.resources.memory }}
+          requests:
+            cpu: {{ .Values.resources.cpu }}
+            memory: {{ .Values.resources.memory }}
+        volumeMounts:
+        - name: tz-seoul
+          mountPath: /etc/localtime
+        - name: pv-storage-tb
+          mountPath: {{ .Values.db.mountPath }}
+      containers:
+      - image: {{ .Values.image }}
+        command: ["/bin/bash", "-c"]
+        args: ["/root/boot.sh 2>&1 | tee /root/cmdlog; exit ${PIPESTATUS[0]}"]
+        imagePullPolicy: Always
+        name: hyperdata-con-hd-hd
+        env:
+        # Tibero Options
+        - name: TB_PORT
+          value: "8629"
+        - name: TB_SID
+          value: "tibero"
+
+        # other hyperdata modules. this modules will working as pod
+        - name: HLADMIN_IP
+          value: 10.244.184.122
+        - name: RECOMMEND_SERVER_IP
+          value: 10.244.170.209
+        - name: HLADMIN_PORT
+          value: "23000"
+        - name: RECOMMEND_SERVER_PORT
+          value: "5000"
+
+        ## hyperdata uses this name as DNS
+        - name: TB_IP
+          value: tiberolocaldns
+        - name: USE_REALTIME
+          value: "Y"
+        - name: SSH_PORT
+          value: "22"
+
+        # Hadoop Options
+        - name: HADOOP_ALIAS
+          value: "127.0.0.1 alias1 alias2"
+
+        # Hyperdata Webserver Options
+        ## hyperdata uses this path as SAM FILE upload location
+        - name: FILE_INPUT_DIR
+          value: {{ .Values.db.mountPath }}/input
+
+        ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+        - name: IS_HTTPS
+          value: "{{ .Values.https.enabled }}"
+
+        # MQTT Options
+        - name: USE_MQTT_LB
+          value: "Y"
+        - name: NOTIFICATION_BROKER_IP
+          value: {{ .Values.webserver.ip }}
+        - name: NOTIFICATION_BROKER_PORT
+          value: "{{ .Values.webserver.port }}"
+        - name: NOTIFICATION_BROKER_WS_PORT
+          value: ""
+        ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+        ##- name: SSL_CERT_IP_ADDRESS
+        ##  value: ""
+
+        ## tibero pv created in tibero helm chart
+        - name: TB_MOUNT_VOLUME_PATH
+          value: {{ .Values.db.mountPath }}
+        ports:
+        - containerPort: 20
+          name: hd-ftp1
+          protocol: TCP
+        - containerPort: 21
+          name: hd-ftp2
+          protocol: TCP
+        - containerPort: 22
+          name: hd-ssh
+          protocol: TCP
+        - containerPort: 9736
+          name: jeus-http
+          protocol: TCP
+        - containerPort: 8080
+          name: hd-http
+          protocol: TCP
+        - containerPort: 1883
+          name: msqt-lsnr1
+          protocol: TCP
+        - containerPort: 2883
+          name: msqt-lsnr2
+          protocol: TCP
+        - containerPort: 1408
+          name: hd-web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .Values.resources.cpu }}
+            memory: {{ .Values.resources.memory }}
+          requests:
+            cpu: {{ .Values.resources.cpu }}
+            memory: {{ .Values.resources.memory }}
+        volumeMounts:
+        - name: tz-seoul
+          mountPath: /etc/localtime
+        - name: pv-storage-tb
+          mountPath: {{ .Values.db.mountPath }}
+      volumes:
+      - name: tz-seoul
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Seoul
+      - name: pv-storage-tb
+        persistentVolumeClaim:
+          claimName: {{ .Values.db.persistentVolumeClaimName }}

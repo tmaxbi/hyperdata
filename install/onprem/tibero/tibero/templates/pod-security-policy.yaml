@@ -1,0 +1,15 @@
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+ name: tibero-security-policy
+spec:
+  allowedUnsafeSysctls:
+    -kernel.sem
+  seLinux:
+    rule: 'RunAsAny'
+  runAsUser:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'RunAsAny'
+  fsGroup:
+    rule: 'RunAsAny'

@@ -1,0 +1,111 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: om
+  labels:
+    app.kubernetes.io/component: ozone
+spec:
+  selector:
+    matchLabels:
+      app: ozone
+      component: om
+  serviceName: om
+  replicas: {{ .Values.om.replicas }}
+  template:
+    metadata:
+      labels:
+        app: ozone
+        component: om
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9874"
+        prometheus.io/path: /prom
+    spec:
+      securityContext:
+        fsGroup: {{ .Values.security.securityContext.fsGroup }}
+      containers:
+      - name: om
+        image: '{{ .Values.image.name }}:{{ .Values.image.version }}'
+        args:
+        - ozone
+        - om
+        env:
+        - name: WAITFOR
+          value: scm-0.scm:9876
+        - name: ENSURE_OM_INITIALIZED
+          value: /data/metadata/om/current/VERSION
+        livenessProbe:
+          tcpSocket:
+            port: 9862
+          initialDelaySeconds: 30
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /opt/hadoop/etc/hadoop/ozone-site.xml
+          subPath: ozone-site.xml
+        - name: config
+          mountPath: /opt/hadoop/etc/hadoop/core-site.xml
+          subPath: core-site.xml
+        - name: config
+          mountPath: /opt/hadoop/etc/hadoop/hdfs-site.xml
+          subPath: hdfs-site.xml
+        - name: config
+          mountPath: /opt/hadoop/etc/hadoop/log4j.properties
+          subPath: log4j.properties          
+        {{- if and .Values.security.enabled (eq .Values.security.authentication "kerberos") }}
+        - name: om-keytab
+          mountPath: {{ dir .Values.om.security.kerberos.keytab.path }}
+        - name: krb5-conf
+          mountPath: /etc/krb5.conf
+          subPath: krb5.conf
+        {{- end }}
+      volumes:
+      {{- if and .Values.security.enabled (eq .Values.security.authentication "kerberos") }}
+      - name: om-keytab
+        secret:
+          secretName: om-keytab
+          items:
+          - key: {{ base .Values.om.security.kerberos.keytab.path }}
+            path: {{ base .Values.om.security.kerberos.keytab.path }}
+      - name: krb5-conf
+        configMap:
+          name: krb5-conf
+      {{- end }}
+      - name: config
+        configMap:
+          name: config
+          items:
+          - key: "ozone-site.xml"
+            path: "ozone-site.xml"
+          - key: "core-site.xml"
+            path: "core-site.xml"
+          - key: "hdfs-site.xml"
+            path: "hdfs-site.xml"
+          - key: "log4j.properties"
+            path: "log4j.properties"      
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ .Values.om.volume.storage }}

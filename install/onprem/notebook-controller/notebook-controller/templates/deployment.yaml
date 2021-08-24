@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notebook-controller-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notebook-controller
+  template:
+    metadata:
+      labels:
+        app: notebook-controller
+    spec:
+      containers:
+      - name: manager
+        image: {{ .Values.image }}
+        command:
+          - /manager
+        env:
+          - name: USE_ISTIO
+            value: "{{ .Values.istio.enabled }}"
+          - name: ISTIO_GATEWAY
+            value: "{{ .Values.istio.gateway }}"
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+      serviceAccountName: notebook-controller-service-account

@@ -1,0 +1,52 @@
+registry:
+  address: 192.168.99.100:30500/mlplatform
+  secret: mlplatform-harbor-regcred
+
+
+hyperdata:
+  address: http://192.1.9.50:8000
+
+
+kubernetes:
+  istio:
+    ingressgateway:
+      ip: 192.168.179.31
+      port: 31380
+
+
+backend:
+  image:
+    name: hyperdata20.4_mlplatform_backend
+    tag: 20210820_v1
+    imagePullPolicy: Always
+  resources:
+    requests:
+      cpu: 1
+      memory: 1G
+    limits:
+      cpu: 1
+      memory: 1G
+  volume:
+    storageClass: standard
+    size: 10Gi
+    mountPath: /mlplatform
+  
+
+frontend:
+  image:
+    name: hyperdata20.4_mlplatform_frontend
+    tag: 20210820_v1
+    imagePullPolicy: Always
+  service:
+    type: ClusterIP
+    nodePort: ""
+  resources:
+    requests:
+      cpu: 1
+      memory: 1G
+    limits:
+      cpu: 1
+      memory: 1G
+  ingress:
+    enabled: true
+    path: /mlplatform

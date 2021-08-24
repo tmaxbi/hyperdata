@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hyperdata-svc-hd
+spec:
+  ports:
+    - name: hd-http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+    - name: msqt-lsnr1
+      port: 1883
+      targetPort: 1883
+      protocol: TCP
+    - name: msqt-lsnr2
+      port: 2883
+      targetPort: 2883
+      protocol: TCP
+  selector:
+    lb: hyperdata-hd
+  type: ClusterIP

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    helm.sh/resource-policy: keep
+  labels:
+    app: tibero-hd
+  name: {{ .Values.db.persistentVolumeClaimName }}
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.resources.storage }}
+  # storageClassName: csi-cephfs
+  volumeMode: Filesystem

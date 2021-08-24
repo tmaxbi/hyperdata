@@ -1,0 +1,70 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+## ozone default HADOOP_CONF_DIR = /etc/hadoop
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+data:
+  ozone-site.xml: |
+    <configuration>
+    <property><name>ozone.security.enabled</name><value>{{ .Values.security.enabled }}</value></property>
+    {{- if .Values.security.enabled }}
+    <property><name>ozone.administrators</name><value>*</value></property>
+    {{- if eq .Values.security.authentication "kerberos" }}
+    <property><name>hdds.scm.kerberos.principal</name><value>scm/{{ .Values.security.kerberos.server }}.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.security.kerberos.realm }}</value></property>
+    <property><name>hdds.scm.kerberos.keytab.file</name><value>{{ .Values.scm.security.kerberos.keytab.path }}</value></property>
+    <property><name>ozone.om.kerberos.principal</name><value>om/{{ .Values.security.kerberos.server }}.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.security.kerberos.realm }}</value></property>
+    <property><name>ozone.om.kerberos.keytab.file</name><value>{{ .Values.om.security.kerberos.keytab.path }}</value></property>
+    {{- end }}
+    {{- end }}
+    <property><name>ozone.replication</name><value>{{ .Values.om.replicas }}</value></property>
+    <property><name>ozone.datanode.pipeline.limit</name><value>{{ .Values.datanode.pipeline.limit }}</value></property>
+    <property><name>ozone.scm.container.size</name><value>{{ .Values.scm.container.size }}</value></property>
+    <property><name>hdds.datanode.dir</name><value>/data/storage</value></property>
+    <property><name>ozone.scm.datanode.id.dir</name><value>/data</value></property>
+    <property><name>ozone.metadata.dirs</name><value>/data/metadata</value></property>
+    <property><name>ozone.scm.block.client.address</name><value>scm</value></property>
+    <property><name>ozone.om.address</name><value>om</value></property>
+    <property><name>ozone.scm.client.address</name><value>scm</value></property>
+    <property><name>ozone.scm.names</name><value>scm</value></property>
+    <property><name>ozone.scm.pipeline.owner.container.count</name><value>{{ .Values.scm.pipeline.owner.container.count }}</value></property>
+    <property><name>hdds.scm.safemode.min.datanode</name><value>{{ .Values.scm.safemode.min.datanode }}</value></property>
+    <property><name>ozone.csi.s3g.address</name><value>http://s3g:9878</value></property>
+    <property><name>ozone.csi.socket</name><value>/var/lib/csi/csi.sock</value></property>
+    <property><name>ozone.csi.owner</name><value>hadoop</value></property>
+    </configuration>
+  core-site.xml: |
+    <configuration>
+    {{- if .Values.security.enabled }}
+    <property><name>hadoop.security.authentication</name><value>{{ .Values.security.authentication }}</value></property>
+    {{- end }}
+    </configuration>
+  hdfs-site.xml: |
+    <configuration>
+    {{- if .Values.security.enabled }}
+    {{- if eq .Values.security.authentication "kerberos" }}
+    <property><name>dfs.datanode.kerberos.principal</name><value>scm/{{ .Values.security.kerberos.server }}.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.security.kerberos.realm }}</value></property>
+    <property><name>dfs.datanode.keytab.file</name><value>{{ .Values.scm.security.kerberos.keytab.path }}</value></property>
+    {{- end }}
+    {{- end }}
+    </configuration>
+  log4j.properties: |
+    log4j.rootLogger: INFO, stdout
+    log4j.appender.stdout: org.apache.log4j.ConsoleAppender
+    log4j.appender.stdout.layout: org.apache.log4j.PatternLayout
+    log4j.appender.stdout.layout.ConversionPattern: '%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n'

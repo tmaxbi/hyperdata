@@ -1,0 +1,24 @@
+image: 192.168.179.44:5000/hyperdata20.4_hd:20210820182035
+
+https:
+  enabled: true
+
+proxy:
+  bodysize: 1024m
+  # minutes
+  timeout: 1800
+
+webserver:
+  ip: 192.168.99.100
+  port: 31370
+
+loadbalancer:
+  enabled: true
+
+db:
+  persistentVolumeClaimName: tibero-pvc-db
+  mountPath: /db
+
+resources:
+  cpu: 2
+  memory: 4Gi
