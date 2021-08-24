@@ -40,6 +40,7 @@ helm install -n metallb-system metallb metallb \
 </pre>
 
 3. tibero의 경우, sysctl의 kernel.sem을 사용하므로 kubeadm 설치 시 allow해주어야 합니다.
+
 3.1. kubeadm 설치 시 옵션을 추가해줍니다.
 ```
 kubeadm init --allowed-unsafe-sysctls 'kernel.sem'
