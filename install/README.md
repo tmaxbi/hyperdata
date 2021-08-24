@@ -5,4 +5,4 @@
 현재 제공되는 설치 방법은 아래와 같습니다.
 
 1. [Hypercloud](./hypercloud)
-2. [Onprem])(./onprem)
+2. [Onprem](./onprem)
