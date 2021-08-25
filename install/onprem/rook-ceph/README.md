@@ -52,10 +52,10 @@ helm install --wait -n rook-ceph rook-ceph-cluster rook-ceph-cluster \
 --set cephClusterSpec.resources.mgr.limits.memory=1Gi
 ```
 
-4. set rook-ceph storageclass as default
+4. set ceph-filesystem storageclass as default
 ```
 kubectl patch storageclass ceph-block -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
-kubectl patch storageclass ceph-filesystem -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+kubectl patch storageclass ceph-filesystem -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
 ## ref
