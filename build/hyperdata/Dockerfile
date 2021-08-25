@@ -30,9 +30,11 @@ RUN apt-get install -y python-software-properties
 RUN add-apt-repository universe
 RUN apt-get install -y supervisor
 RUN apt-get install -y apt-transport-https
-RUN apt-get install -y  net-tools
-RUN apt-get install -y  netcat
-RUN apt-get install -y  expect
+RUN apt-get install -y net-tools
+RUN apt-get install -y netcat
+RUN apt-get install -y expect
+RUN apt-get install -y nodejs
+RUN apt-get install -y acl
 
 RUN apt-get install -y language-pack-ko
 RUN locale-gen ko_KR.UTF-8
@@ -44,12 +46,11 @@ RUN apt-get install -y krb5-config krb5-user
 
 RUN apt-get update -y
 RUN apt-get install -y jq
+RUN apt-get install -y maven
 
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
-RUN echo 'deb http://apt.kubernetes.io/ kubernetes-xenial main' >> /etc/apt/sources.list.d/kubernetes.list 
 RUN apt-add-repository ppa:mosquitto-dev/mosquitto-ppa -y
 RUN apt update
-RUN apt-get -qy install kubectl=1.5.3-00
 RUN apt-get -y install mosquitto
 
 RUN echo "listener 1883" >> /etc/mosquitto/mosquitto.conf
@@ -58,30 +59,46 @@ RUN echo "allow_anonymous true" >> /etc/mosquitto/mosquitto.conf
 RUN echo "listener 2883" >> /etc/mosquitto/mosquitto.conf
 RUN echo "allow_anonymous true" >> /etc/mosquitto/mosquitto.conf
 RUN echo "protocol websockets" >> /etc/mosquitto/mosquitto.conf
-
-RUN service mosquitto restart
+RUN echo "pid_file /var/run/mosquitto/mosquitto.pid" >> /etc/mosquitto/mosquitto.conf
 
 RUN echo "Asia/Seoul" > /etc/timezone
 
-#==================== 2) Set Global ENV ====================
-ENV DEPLOY_HOME=/deploy_src
+#==================== 2) Add Hyperdata User ====================
+RUN mkdir -p /home/hyperdata
+RUN useradd -d /home/hyperdata -s /bin/bash hyperdata
+RUN chown -R hyperdata:hyperdata /home/hyperdata
+RUN echo "hyperdata:hyperdata1234!" | chpasswd
+RUN echo "root:hyperdata1234!" | chpasswd
 
-#==================== 3) Add Java Files ====================
-COPY src/java $DEPLOY_HOME/java
+RUN usermod -a -G hyperdata mosquitto
+RUN chown -R hyperdata:hyperdata /etc/mosquitto
+RUN chown hyperdata:hyperdata /usr/sbin/mosquitto
+RUN chown mosquitto:hyperdata /var/run/mosquitto
+#RUN chmod -R 777 /var/run/mosquitto
+#RUN service mosquitto start
+#RUN chown -R hyperdata:hyperdata /var/run/mosquitto.pid
 
-#==================== 4) Add Jeus Files ====================
-COPY src/jeus $DEPLOY_HOME/jeus8
+#==================== 3) Set Global ENV ====================
+ENV DEPLOY_HOME=/home/hyperdata
 
-#==================== 5) Move Hadoop Env ====================
-COPY src/hadoop $DEPLOY_HOME/hadoop
+#==================== 4) Add Java Files ====================
+COPY --chown=hyperdata:hyperdata src/java $DEPLOY_HOME/java
 
-#==================== 6) Move Hyperdata Env ====================
-COPY src/hyperdata $DEPLOY_HOME/hyperdata20
+#==================== 5) Add Jeus Files ====================
+COPY --chown=hyperdata:hyperdata src/jeus $DEPLOY_HOME/jeus8
 
-#==================== 7) Move Hyperdata related Files ====================
-COPY src/set_envs.sh /root/set_envs.sh
-COPY src/boot.sh /root/boot.sh
-COPY src/init_container.sh /root/init_container.sh
+#==================== 7) Move Hadoop Env ====================
+COPY --chown=hyperdata:hyperdata src/hadoop $DEPLOY_HOME/hadoop
 
-WORKDIR /root
+#==================== 8) Move Hyperdata Env ====================
+COPY --chown=hyperdata:hyperdata src/hyperdata $DEPLOY_HOME/hyperdata20
 
+#==================== 9) Move Hyperdata related Files ====================
+COPY --chown=hyperdata:hyperdata src/set_envs.sh $DEPLOY_HOME/set_envs.sh
+COPY --chown=hyperdata:hyperdata src/init $DEPLOY_HOME/init
+COPY --chown=hyperdata:hyperdata src/boot $DEPLOY_HOME/boot
+COPY --chown=hyperdata:hyperdata src/init_container.sh $DEPLOY_HOME/init_container.sh
+COPY --chown=hyperdata:hyperdata src/boot.sh $DEPLOY_HOME/boot.sh
+
+USER hyperdata
+WORKDIR $DEPLOY_HOME

@@ -1,51 +1,17 @@
 #!/bin/bash
+set +e
 
 ## TODO: install_interactive.sh를 매번 돌리지 않아도 정상적으로 수행되도록 수정
 
 # set envs
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-. $parent_path/set_envs.sh
+. $DEPLOY_HOME/set_envs.sh
 
-## create jeus binary
-chmod -R 755 $JEUS_HOME/lib/etc/ant/bin
-cd $JEUS_HOME/setup
-ant install
+# 1. boot jeus
+# jeus에서 set +e를 설정해서 터지면, boot.sh에 set -e 설정되있을 시 터져버림
+bash $DEPLOY_HOME/boot/jeus.sh
 
-## make tbsql client
-mkdir $TB_HOME
-cd $HD_HOME/dist/war
-mv tibero-client.tar.gz $TB_HOME
-cd $TB_HOME
-tar -zxvf tibero-client.tar.gz
-
-## run hyperdata
-export SKIP_RECREATE_SCHEMA="Y"
-export SKIP_RECREATE_ROLE_AND_PERMISSION="Y"
-export SKIP_RECREATE_ADMIN="Y"
-bash $HD_HOME/config/gen_hd_config.sh
-bash $HD_HOME/scripts/install_interactive.sh <<EOF
-1
-y
-y
-y
-y
-y
-y
-n
-n
-n
-n
-EOF
-
-## start ssh
-service ssh restart
-
-## start mosquitto
-service mosquitto restart
-
-# backup sh and change sh to bash
-mv /bin/sh /bin/sh.bak
-ln -s bash /bin/sh
+# 2. boot hyperdata
+bash $DEPLOY_HOME/boot/hyperdata.sh
 
 # if all boot process working, do inifinity loop. it makes the pod keep running.
 while true; do sleep 30; done; 
