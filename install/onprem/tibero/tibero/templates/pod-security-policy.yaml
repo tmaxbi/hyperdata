@@ -4,7 +4,7 @@ metadata:
  name: tibero-security-policy
 spec:
   allowedUnsafeSysctls:
-    -kernel.sem
+  - kernel.sem
   seLinux:
     rule: 'RunAsAny'
   runAsUser:
