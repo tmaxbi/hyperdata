@@ -9,24 +9,33 @@ kubectl create namespace hyperdata
 
     2.1. metallb loadbalancer로 설치할 경우
     ```
-    helm install -n hyperdata nginx-ingress nginx-ingress \
-    --set controller.image.name=nginx/nginx-ingress:1.12.0 \
-    --set controller.watchNamespace=hyperdata \
+    helm install -n hyperdata ingress-nginx ingress-nginx \
+    --set controller.image.registry=k8s.gcr.io \
+    --set controller.image.image=ingress-nginx/controller \
+    --set controller.image.tag=v1.0.0 \
+    --set controller.image.digest="" \
+    --set controller.scope.enabled=true \
+    --set controller.scope.namespace=hyperdata \
     --set rbac.create=true \
     --set controller.service.type=LoadBalancer \
+    --set controller.service.annotations."metallb\.universe\.tf/allow-shared-ip"=top \
+    --set controller.service.sessionAffinity=None \
+    --set controller.service.externalTrafficPolicy=Cluster \
     --set controller.service.httpPort.enabled=false \
     --set controller.service.httpsPort.enabled=true \
-    --set controller.service.annotations."metallb\.universe\.tf/allow-shared-ip"=top \
-    --set controller.service.loadBalancerIP=${NGINX_IP} \
-    --set controller.service.sessionAffinity=None \
-    --set controller.service.externalTrafficPolicy=Cluster
+    --set controller.service.httpsPort.port=8080 \
+    --set controller.service.loadBalancerIP=${NGINX_IP}
     ```
 
     2.2. nodePort로 설치할 경우(현재 nodePort로 설치할 경우, mlplatform 미동작)
     ```
-    helm install -n hyperdata nginx-ingress nginx-ingress \
-    --set controller.image.name=nginx/nginx-ingress:1.12.0 \
-    --set controller.watchNamespace=hyperdata \
+    helm install -n hyperdata ingress-nginx ingress-nginx \
+    --set controller.image.registry=k8s.gcr.io \
+    --set controller.image.image=ingress-nginx/controller \
+    --set controller.image.tag=v1.0.0 \
+    --set controller.image.digest="" \
+    --set controller.scope.enabled=true \
+    --set controller.scope.namespace=hyperdata \
     --set rbac.create=true \
     --set controller.service.type=NodePort \
     --set controller.service.httpPort.enabled=false \
@@ -41,7 +50,7 @@ kubectl create namespace hyperdata
 
 ## reproduce chart
 ```
-helm repo add nginx-stable https://helm.nginx.com/stable
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
-helm pull nginx-stable/nginx-ingress --untar
+helm pull ingress-nginx/ingress-nginx --untar
 ```
