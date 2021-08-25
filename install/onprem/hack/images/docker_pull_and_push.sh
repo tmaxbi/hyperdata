@@ -76,7 +76,7 @@ pull_and_push gcr.io/kubeflow-images-public/notebook-controller:${NOTEBOOK_CONTR
 pull_and_push argoproj/workflow-controller:${ARGO_WORKFLOW_CONTROLLER} ${REMOTE_REGISTRY}/argoproj/workflow-controller:${ARGO_WORKFLOW_CONTROLLER}
 
 # nginx
-pull_and_push nginx/nginx-ingress:${NGINX_INGRESS} ${REMOTE_REGISTRY}/nginx/nginx-ingress:${NGINX_INGRESS}
+pull_and_push k8s.gcr.io/ingress-nginx/controller:${INGRESS_NGINX} ${REMOTE_REGISTRY}/ingress-nginx/controller:${INGRESS_NGINX}
 
 # hyperdata
 #pull_and_push ${HYPERDATA_REGISTRY}/hyperdata/hyperdata8.3_tb:${TIBERO} ${REMOTE_REGISTRY}/hyperdata/hyperdata8.3_tb:${TIBERO}
