@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hyperdata-hd-configmap
+data:
+  # hyperdata uses this name as DNS
+  TB_IP: {{ .Values.db.address }}
+  TB_PORT: "8629"
+  TB_SID: tibero
+
+  # HLADMIN_IP:
+  # HLADMIN_PORT: "23000"
+  
+  # RECOMMENDSERVER_IP:
+  # RECOMMENDSERVER_PORT:
+
+  # true or false
+  HD_AI_ON: "true"
+
+  # Hadoop Options
+  # HADOOP_ALIAS: 127.0.0.1 alias1 alias2
+
+  # Hyperdata Webserver Options
+  ## hyperdata uses this path as SAM FILE upload location
+  FILE_INPUT_DIR: {{ .Values.db.mountPath }}/input
+
+  ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+  IS_HTTPS: "false"
+
+  # MQTT Options
+  USE_MQTT_LB: Y
+  NOTIFICATION_BROKER_IP: {{ .Values.webserver.ip }}
+  NOTIFICATION_BROKER_PORT: "{{ .Values.webserver.port }}"
+  NOTIFICATION_BROKER_WS_PORT: ""
+  ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+  ## SSL_CERT_IP_ADDRESS: ""
+
+  ## tibero pv created in tibero helm chart
+  TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}

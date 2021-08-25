@@ -16,6 +16,7 @@ loadbalancer:
   enabled: true
 
 db:
+  address: tiberolocaldns
   persistentVolumeClaimName: tibero-pvc-db
   mountPath: /db
 
