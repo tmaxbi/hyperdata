@@ -21,9 +21,9 @@ kubectl create namespace hyperdata
     --set controller.service.annotations."metallb\.universe\.tf/allow-shared-ip"=top \
     --set controller.service.sessionAffinity=None \
     --set controller.service.externalTrafficPolicy=Cluster \
-    --set controller.service.httpPort.enabled=false \
-    --set controller.service.httpsPort.enabled=true \
-    --set controller.service.httpsPort.port=8080 \
+    --set controller.service.enableHttp=false \
+    --set controller.service.enableHttps=true \
+    --set controller.service.ports.https=8080 \
     --set controller.service.loadBalancerIP=${NGINX_IP}
     ```
 
@@ -38,9 +38,9 @@ kubectl create namespace hyperdata
     --set controller.scope.namespace=hyperdata \
     --set rbac.create=true \
     --set controller.service.type=NodePort \
-    --set controller.service.httpPort.enabled=false \
-    --set controller.service.httpsPort.enabled=true \
-    --set controller.service.httpsPort.nodePort=31370
+    --set controller.service.enableHttp=false \
+    --set controller.service.enableHttps=true \
+    --set controller.service.ports.https=8080
     ```
 
     **nginx는 clusterrole을 사용하고 있습니다. 여러 개의 nginx를 사용하려할 경우, 서로 다른 namespace라도 같은 이름으로 생성할 시 이름 중복 에러가 뜰 수 있으므로 서로 다른 이름으로 chart를 생성해서 사용하여야 합니다.**
