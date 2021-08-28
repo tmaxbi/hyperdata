@@ -10,7 +10,7 @@ spec:
   rules:
    -  http:
        paths:
-       - path: /hyperdata8/(.*)
+       - path: /hyperdata{{ .Values.version.major }}/(.*)
          backend:
            serviceName: hyperdata-svc-hd
            servicePort: 8080

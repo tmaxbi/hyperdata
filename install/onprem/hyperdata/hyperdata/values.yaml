@@ -1,4 +1,6 @@
 image: 192.168.179.44:5000/hyperdata20.4_hd:20210820182035
+version:
+  major: 20
 
 https:
   enabled: true
