@@ -2,42 +2,57 @@ apiVersion: v1
 data:
   application-prod.properties: |
     # This Options will be changed by helm configmap
+    ##################
+    # spring options #
+    ##################
+    logging.level.root=info
+
     ####################
     # database options #
     ####################
     spring.datasource.url=jdbc:sqlite:{{ .Values.backend.volume.mountPath }}/prod.db
 
+    ###############
+    # jpa options #
+    ###############
+    spring.jpa.show-sql=false
+    spring.jpa.hibernate.ddl-auto=none
+
+    ######################
+    # mlplatform options #
+    ######################
+    mlplatform.server.addr=http://mlplatform-backend-svc:18080
+    mlplatform.server.base-path={{ .Values.backend.volume.mountPath }}
+
     #####################
     # hyperdata options #
     #####################
-    # hyperdata address는 pod에서도 사용하는 정보입니다.
-    # pod는 localhost로 address 접근을 하지 못하기 때문에
-    # 자기 자신의 IP를 등록해주어야 합니다.
-    # ex) 127.0.0.1:18080 => 192.1.9.50:18080
-    hyperdata.mlplatform-addr=http://mlplatform-backend-pvc-{{ .Release.Name }}:18080
-    hyperdata.base-path={{ .Values.backend.volume.mountPath }}
     hyperdata.server.addr={{ .Values.hyperdata.address }}
-    hyperdata.auth.addr={{ .Values.hyperdata.address }}
     # ishttps는 현재 사용하지 않는 변수입니다.
     hyperdata.server.ishttps=false
     hyperdata.image.private.repository={{ .Values.registry.address }}
     hyperdata.image.private.secret={{ .Values.registry.secret }}
 
+    ###################
+    # proAuth options #
+    ###################
+    proAuth.server.addr={{ .Values.proauth.address }}
+
     ######################
     # kubernetes options #
     ######################
     kubernetes.config.type=kubernetes
-    kubernetes.config.ip={{ .Values.istio.ingressgateway.ip }}
-    kubernetes.config.port={{ .Values.istio.ingressgateway.port }}
+    kubernetes.config.ip={{ .Values.kubernetes.istio.ingressgateway.ip }}
+    kubernetes.config.port={{ .Values.kubernetes.istio.ingressgateway.port }}
     kubernetes.config.namespace={{ .Release.Namespace }}
-    kubernetes.config.serviceaccount-name=mlplatform-backend-sa-{{ .Release.Name }}
+    kubernetes.config.serviceaccount-name=mlplatform-backend-sa
     kubernetes.config.storageclass={{ .Values.backend.volume.storageClass }}
 
     #######################
     # predefinedai option #
     #######################
-    predefinedai.template.path=/src/usr/app/python/predefinedai_template/source
+    predefinedai.template.path=/home/mlplatform/python/predefinedai_template/source
 
 kind: ConfigMap
 metadata:
-  name: mlplatform-backend-deploy-configmap-{{ .Release.Name }}
+  name: mlplatform-backend-deploy-configmap

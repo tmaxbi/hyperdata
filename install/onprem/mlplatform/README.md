@@ -17,11 +17,13 @@ kubectl apply -f -
 helm install -n hyperdata mlplatform mlplatform \
 --set registry.address=192.168.179.44:5000 \
 --set backend.image.name=hyperdata20.4_mlplatform_backend \
---set backend.image.tag=20210820_v1 \
+--set backend.image.tag=20210830_v1 \
 --set frontend.image.name=hyperdata20.4_mlplatform_frontend \
---set frontend.image.tag=20210820_v1 \
---set backend.volume.storageClass=csi-cephfs \
---set hyperdata.address=http://192.168.179.44:5000 \
---set kubernetes.istio.ingressgateway.ip=${MASTER NODE'S IP} \
+--set frontend.image.tag=20210830_v1 \
+--set models.recommendation.image.name=hyperdata20.4_mlplatform_recommendation \
+--set models.recommendation.image.tag=20210827_v1 \
+--set hyperdata.address=http://hyperdata-svc-hd:8080 \
+--set proauth.address=http://hyperdata-lb-hd:28080 \
+--set kubernetes.istio.ingressgateway.ip=192.168.179.31 \
 --set kubernetes.istio.ingressgateway.port=31380
 ```

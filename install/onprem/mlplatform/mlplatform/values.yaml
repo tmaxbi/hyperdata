@@ -1,11 +1,14 @@
 registry:
-  address: 192.168.99.100:30500/mlplatform
+  address: 192.168.179.44:5000
   secret: mlplatform-harbor-regcred
 
 
 hyperdata:
-  address: http://192.1.9.50:8000
+  address: http://hyperdata-svc-hd:8000
 
+
+proauth:
+  address: http://hyperdata-lb-hd:28080
 
 kubernetes:
   istio:
@@ -27,10 +30,9 @@ backend:
       cpu: 1
       memory: 1G
   volume:
-    storageClass: standard
+    storageClass:
     size: 10Gi
     mountPath: /mlplatform
-  
 
 frontend:
   image:
@@ -47,6 +49,10 @@ frontend:
     limits:
       cpu: 1
       memory: 1G
-  ingress:
-    enabled: true
-    path: /mlplatform
+
+models:
+  recommendation:
+    image:
+      name: hyperdata20.4_mlplatform_recommendation
+      tag: 20210827_v1
+      imagePullPolicy: Always

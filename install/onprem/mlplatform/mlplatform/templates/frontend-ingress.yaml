@@ -1,10 +1,9 @@
-{{ if .Values.frontend.ingress.enabled }}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: mlplatform-frontend-ingress-{{ .Release.Name }}
+  name: mlplatform-frontend-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # nginx.ingress.kubernetes.io/rewrite-target: /$2
     kubernetes.io/ingress.class: nginx
 spec:
   tls:
@@ -12,8 +11,7 @@ spec:
   rules:
    -  http:
         paths:
-        - path: {{ .Values.frontend.ingress.path }}(/|$)(.*)
+        - path: /mlplatform(/|$)(.*)
           backend:
-            serviceName: mlplatform-frontend-svc-{{ .Release.Name }}
+            serviceName: mlplatform-frontend-svc
             servicePort: 80
-{{ end }}

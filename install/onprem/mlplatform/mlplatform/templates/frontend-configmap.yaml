@@ -1,0 +1,39 @@
+apiVersion: v1
+data:
+  nginx.conf: |
+    upstream Frontend {
+        server 127.0.0.1;
+    }
+
+    upstream Backend {
+        server mlplatform-backend-svc:18080;
+    }
+
+    server {
+        listen 80;
+        server_name localhost;
+        root /app/dist;
+
+        location /mlplatform {
+          proxy_pass http://Frontend/;
+        }
+    }
+
+    server {
+        server_name Frontend;
+        root /app/dist;
+        index index.html;
+
+        location / {
+        }
+
+        location /api {
+            rewrite /api/(.*) /$1 break;
+            proxy_pass http://Backend/;
+        }
+    }
+
+
+kind: ConfigMap
+metadata:
+  name: mlplatform-frontend-deploy-configmap
