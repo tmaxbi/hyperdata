@@ -1,4 +1,4 @@
-# Hyperdata OnPrem 설치 가이드 (Not Yet Completed)
+# Hyperdata OnPrem 설치 가이드
 
 ## version
 
