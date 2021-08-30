@@ -1,7 +1,9 @@
 #!/bin/bash
-set -e
+set +e
 
 . $DEPLOY_HOME/set_envs.sh
+
+service mosquitto restart
 
 export SKIP_RECREATE_SCHEMA="Y"
 export SKIP_RECREATE_ROLE_AND_PERMISSION="Y"
@@ -21,11 +23,5 @@ n
 n
 EOF
 
-## start ssh
-service ssh restart
-
-## start mosquitto
-service mosquitto restart
-
-# start spring
-java -jar $HD_HOME/dist/spring/hyperdata-spring8.4.0.jar
+# run as daemon
+java -jar $HD_HOME/dist/spring/hyperdata-spring8.4.0.jar &
