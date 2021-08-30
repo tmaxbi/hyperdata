@@ -302,6 +302,7 @@ metadata:
   annotations:
     knative.dev/example-checksum: "604cb513"
 data:
+  scale-to-zero-grace-period: {{ .Values.autoscaler.config.scaleToZeroGracePeriod }}
   _example: |
     ################################
     #                              #

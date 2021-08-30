@@ -20,14 +20,12 @@ helm install -n knative-serving knative-serving knative-serving \
 --set queueProxy.image=gcr.io/knative-releases/knative.dev/serving/cmd/queue:v0.22.0 \
 --set activator.image=gcr.io/knative-releases/knative.dev/serving/cmd/activator:v0.22.0 \
 --set autoscaler.image=gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler:v0.22.0 \
+--set autoscaler.config.scaleToZeroGracePeriod="60s" \
 --set controller.image=gcr.io/knative-releases/knative.dev/serving/cmd/controller:v0.22.0 \
 --set webhook.image=gcr.io/knative-releases/knative.dev/serving/cmd/webhook:v0.22.0 \
 --set istioWebhook.image=gcr.io/knative-releases/knative.dev/net-istio/cmd/webhook:v0.22.0 \
 --set istioNetworking.image=gcr.io/knative-releases/knative.dev/net-istio/cmd/controller:v0.22.0
 ```
-
-## ref
-- https://github.com/knative/serving/tree/v0.22.0
 
 ## reproduce chart
 ```
