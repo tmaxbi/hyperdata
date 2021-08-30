@@ -9,11 +9,12 @@ kubectl create namespace hyperdata
 
     2.1. metallb loadbalancer로 설치할 경우
     ```
-    helm install -n hyperdata ingress-nginx ingress-nginx \
+    helm install -n hyperdata-dev42-mansu ingress-nginx ingress-nginx \
     --set controller.image.registry=k8s.gcr.io \
     --set controller.image.image=ingress-nginx/controller \
     --set controller.image.tag=v1.0.0 \
     --set controller.image.digest="" \
+    --set controller.config.use-http2="false" \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=hyperdata \
     --set rbac.create=true \
@@ -34,6 +35,7 @@ kubectl create namespace hyperdata
     --set controller.image.image=ingress-nginx/controller \
     --set controller.image.tag=v1.0.0 \
     --set controller.image.digest="" \
+    --set controller.config.use-http2="false" \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=hyperdata \
     --set rbac.create=true \
