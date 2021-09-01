@@ -11,8 +11,8 @@ data:
   # HLADMIN_IP:
   # HLADMIN_PORT: "23000"
   
-  # RECOMMENDSERVER_IP:
-  # RECOMMENDSERVER_PORT:
+  RECOMMEND_SERVER_IP: svc-kca
+  RECOMMEND_SERVER_PORT: 5000
 
   # true or false
   HD_AI_ON: "true"

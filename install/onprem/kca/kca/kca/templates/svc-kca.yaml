@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-kca
+spec:
+  ports:
+    - name: kca-http
+      port: 5000
+      targetPort: 5000
+      protocol: TCP
+  selector:
+    lb: hyperdata-kca
+  type: ClusterIP

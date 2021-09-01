@@ -1,0 +1,5 @@
+image: kyeungseokkang/autoeda:8.3.6
+
+resources:
+  cpu: 1
+  memory: 1G

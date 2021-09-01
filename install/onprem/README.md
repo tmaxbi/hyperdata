@@ -70,4 +70,5 @@ helm install -n metallb-system metallb metallb \
 10. [ozone](./ozone)(Not yet stable. Please Skip)
 11. [tibero](./tibero)
 12. [hyperdata](./hyperdata)
-13. [mlplatform](./mlplatform)
+13. [kca](./kca)
+14. [mlplatform](./mlplatform)
