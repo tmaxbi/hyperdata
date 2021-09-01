@@ -30,7 +30,7 @@ backend:
       cpu: 1
       memory: 1G
   volume:
-    storageClass:
+    storageClass: ceph-filesystem
     size: 10Gi
     mountPath: /mlplatform
 

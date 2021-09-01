@@ -14,7 +14,7 @@ data:
         server_name localhost;
         root /app/dist;
 
-        location /mlplatform {
+        location ~ ^/mlplatform/?(.*)?$ {
           proxy_pass http://Frontend/;
         }
     }
@@ -29,7 +29,7 @@ data:
 
         location /api {
             rewrite /api/(.*) /$1 break;
-            proxy_pass http://Backend/;
+            proxy_pass http://Backend;
         }
     }
 
