@@ -9,6 +9,10 @@ data:
         server mlplatform-backend-svc:18080;
     }
 
+    upstream IstioIngressGateway {
+        server {{ .kubernetes.istio.ingressgateway.ip }}: {{ .kubernetes.istio.ingressgateway.port }}
+    }
+
     server {
         listen 80;
         server_name localhost;
@@ -30,6 +34,16 @@ data:
         location /api {
             rewrite /api/(.*) /$1 break;
             proxy_pass http://Backend;
+        }
+
+        location /serving {
+            # nginx는 header값을 사용할 시,
+            # $http_{header key 이름}형태로 접근하며, header key를 lower_case, dash(-)를 underscore(_)로 변형함
+            # header = { "Serving-Host": ~~ } => $http_serving_host
+            proxy_set_header Host $http_serving_host;
+            proxy_http_version 1.1;
+            rewrite /serving/(.*) /$1 break;
+            proxy_pass http://IstioIngressGateway;
         }
     }
 
