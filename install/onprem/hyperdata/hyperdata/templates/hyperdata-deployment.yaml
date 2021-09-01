@@ -59,6 +59,9 @@ spec:
         - containerPort: 8080
           name: hd-http
           protocol: TCP
+        - containerPort: 8081
+          name: spring
+          protocol: TCP
         - containerPort: 1883
           name: msqt-lsnr1
           protocol: TCP
