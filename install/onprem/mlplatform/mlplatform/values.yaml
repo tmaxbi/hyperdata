@@ -56,3 +56,8 @@ models:
       name: hyperdata20.4_mlplatform_recommendation
       tag: 20210827_v1
       imagePullPolicy: Always
+
+automl:
+  image:
+    name: hyperdata20.4_automl
+    tag: 20210827_v1

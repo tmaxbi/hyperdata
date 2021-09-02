@@ -2,10 +2,11 @@ apiVersion: v1
 data:
   application-prod.properties: |
     # This Options will be changed by helm configmap
-    ##################
-    # spring options #
-    ##################
-    logging.level.root=info
+    ###############
+    # log options #
+    ###############
+    logging.config=/home/mlplatform/logback-prod.xml
+    logging.file.path={{ .Values.backend.volume.mountPath }}/log
 
     ####################
     # database options #
@@ -52,6 +53,11 @@ data:
     # predefinedai option #
     #######################
     predefinedai.template.path=/home/mlplatform/python/predefinedai_template/source
+
+    #################
+    # automl option #
+    #################
+    automl.image.name={{ .Values.automl.image.name }}:{{ .Values.automl.image.tag }}
 
 kind: ConfigMap
 metadata:
