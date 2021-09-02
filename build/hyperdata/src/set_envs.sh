@@ -71,7 +71,7 @@ export VA_DASHBAORD_DOWNLOAD_TABLE_LIMITATION=50
 
 ## Alias
 alias hdboot='startDomainAdminServer -u jeus -p jeus;startManagedServer -server hyperdata -u jeus -p jeus;startManagedServer -server ProAuth -u jeus -p jeus;'
-alias polog='tail -f /hyperdata/proobject7/logs/ProObject.log'
-alias tlog='tail -f /db/tibero6/instance/tibero/log/slog/sys.log'
+alias polog='tail -f $PROOBEJCT_HOME/logs/ProObject.log'
+alias tlog='tail -f $TB_HOME/instance/tibero/log/slog/sys.log'
 alias jeuswebon='jeusadmin -u jeus -p jeus "enable-webadmin"'
 alias jeusweboff='jeusadmin -u jeus -p jeus "disable-webadmin"'
