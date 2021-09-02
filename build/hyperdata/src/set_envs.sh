@@ -68,3 +68,10 @@ export HD_SCHEMA_VERSION=20.4.0
 export SSH_PORT=22
 export VA_DASHBOARD_DOWNLOAD_ROW_LIMITATION=1000000
 export VA_DASHBAORD_DOWNLOAD_TABLE_LIMITATION=50
+
+## Alias
+alias hdboot='startDomainAdminServer -u jeus -p jeus;startManagedServer -server hyperdata -u jeus -p jeus;startManagedServer -server ProAuth -u jeus -p jeus;'
+alias polog='tail -f /hyperdata/proobject7/logs/ProObject.log'
+alias tlog='tail -f /db/tibero6/instance/tibero/log/slog/sys.log'
+alias jeuswebon='jeusadmin -u jeus -p jeus "enable-webadmin"'
+alias jeusweboff='jeusadmin -u jeus -p jeus "disable-webadmin"'
