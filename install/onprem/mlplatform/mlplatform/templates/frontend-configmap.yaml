@@ -10,7 +10,7 @@ data:
     }
 
     upstream IstioIngressGateway {
-        server {{ .kubernetes.istio.ingressgateway.ip }}: {{ .kubernetes.istio.ingressgateway.port }}
+        server {{ .Values.kubernetes.istio.ingressgateway.ip }}:{{ .Values.kubernetes.istio.ingressgateway.port }};
     }
 
     server {
