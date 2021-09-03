@@ -1,7 +1,7 @@
 registry:
   address: 192.168.179.44:5000
-  # image pull secret을 사용하지 않을 시, 값을 주어서는 안된다.
-  secret:
+  # imagePullSecret이 존재하지 않을 경우, knaive-serving은 동작하지 않는다.
+  secret: mlplatform-backend-secret
 
 
 hyperdata:
