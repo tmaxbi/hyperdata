@@ -40,9 +40,21 @@ rules:
   - delete
 
 - apiGroups:
-  - kubeflow.org
+  - serving.kubeflow.org
   resources:
   - inferenceservices
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - delete
+  - patch
+  - update
+
+- apiGroups:
+  - notebook.kubeflow.org
+  resources:
   - notebooks
   verbs:
   - get
@@ -50,6 +62,5 @@ rules:
   - watch
   - create
   - delete
-  - deletecollection
   - patch
   - update

@@ -1,6 +1,7 @@
 registry:
   address: 192.168.179.44:5000
-  secret: mlplatform-harbor-regcred
+  # image pull secret을 사용하지 않을 시, 값을 주어서는 안된다.
+  secret:
 
 
 hyperdata:

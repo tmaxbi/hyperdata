@@ -14,7 +14,7 @@ kubectl apply -f -
 
 3. install mlplatform
 ```
-helm install -n hyperdata-dev42-mansu mlplatform mlplatform \
+helm install -n hyperdata mlplatform mlplatform \
 --set registry.address=192.168.179.44:5000 \
 --set backend.image.name=hyperdata20.4_mlplatform_backend \
 --set backend.image.tag=20210902_v1 \
