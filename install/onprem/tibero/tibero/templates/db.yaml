@@ -51,7 +51,7 @@ spec:
     - containerPort: 9093
       name: iq-gw
       protocol: TCP
-    - containerPort: 9094
+    - containerPort: 9091
       name: ase-gw
       protocol: TCP
     - containerPort: 9777
