@@ -17,9 +17,9 @@ kubectl apply -f -
 helm install -n hyperdata mlplatform mlplatform \
 --set registry.address=192.168.179.44:5000 \
 --set backend.image.name=hyperdata20.4_mlplatform_backend \
---set backend.image.tag=20210902_v1 \
+--set backend.image.tag=20210906_v1 \
 --set frontend.image.name=hyperdata20.4_mlplatform_frontend \
---set frontend.image.tag=20210902_v1 \
+--set frontend.image.tag=20210906_v1 \
 --set automl.image.name=hyperdata20.4_mlplatform_automl \
 --set automl.image.tag=20210827_v1 \
 --set models.recommendation.image.name=hyperdata20.4_mlplatform_recommendation \
