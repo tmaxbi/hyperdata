@@ -5,7 +5,7 @@ registry:
 
 
 hyperdata:
-  address: http://hyperdata-svc-hd:8000
+  address: http://hyperdata-svc-hd:8080
 
 
 proauth:
