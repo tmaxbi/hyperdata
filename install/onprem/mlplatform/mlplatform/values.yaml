@@ -63,5 +63,5 @@ models:
 
 automl:
   image:
-    name: hyperdata20.4_automl
+    name: hyperdata20.4_mlplatform_automl
     tag: 20210827_v1
