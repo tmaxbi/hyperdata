@@ -48,6 +48,7 @@ data:
     kubernetes.config.namespace={{ .Release.Namespace }}
     kubernetes.config.serviceaccount-name=mlplatform-backend-sa
     kubernetes.config.storageclass={{ .Values.backend.volume.storageClass }}
+    kubernetes.config.pvc-mount-path={{ .Values.backend.volume.mountPath }}
 
     #################
     # automl option #
