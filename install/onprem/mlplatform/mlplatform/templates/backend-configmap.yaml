@@ -23,7 +23,7 @@ data:
     # mlplatform options #
     ######################
     mlplatform.server.addr=http://mlplatform-backend-svc:18080
-    mlplatform.server.base-path={{ .Values.backend.volume.mountPath }}
+    mlplatform.server.base-path=/home/mlplatform
 
     #####################
     # hyperdata options #
@@ -48,11 +48,6 @@ data:
     kubernetes.config.namespace={{ .Release.Namespace }}
     kubernetes.config.serviceaccount-name=mlplatform-backend-sa
     kubernetes.config.storageclass={{ .Values.backend.volume.storageClass }}
-
-    #######################
-    # predefinedai option #
-    #######################
-    predefinedai.template.path=/home/mlplatform/python/predefinedai_template/source
 
     #################
     # automl option #
