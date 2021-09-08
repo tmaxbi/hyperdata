@@ -19,7 +19,7 @@ data:
         root /app/dist;
 
         location ~ ^/mlplatform/?(.*)?$ {
-          proxy_pass http://Frontend/;
+          proxy_pass http://Frontend/$1$is_args$args;
         }
     }
 
