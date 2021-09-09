@@ -61,7 +61,7 @@ rules:
   - update
 
 - apiGroups:
-  - notebook.kubeflow.org
+  - kubeflow.org
   resources:
   - notebooks
   verbs:
