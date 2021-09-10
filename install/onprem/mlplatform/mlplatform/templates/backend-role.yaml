@@ -9,6 +9,8 @@ rules:
   - pods
   - pods/status
   - pods/log
+  - resourcequotas
+  - limitranges
   verbs:
   - get
   - list
