@@ -46,13 +46,13 @@ scm:
   # hdds
   safemode:
     min:
-      datanode: 1 # must be less than or equal to datanode replicas.
+      datanode: 3 # must be less than or equal to datanode replicas.
 
 s3g:
   replicas: 1
 
 datanode:
-  replicas: 1
+  replicas: 3
   volume:
     storage: 2Gi
   pipeline:
