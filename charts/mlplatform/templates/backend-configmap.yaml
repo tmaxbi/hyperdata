@@ -12,6 +12,7 @@ data:
     # database options #
     ####################
     spring.datasource.url=jdbc:sqlite:{{ .Values.backend.volume.mountPath }}/prod.db
+    spring.datasource.hikari.maximum-pool-size=1
 
     ###############
     # jpa options #
