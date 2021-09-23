@@ -1,0 +1,61 @@
+apiVersion: v1
+entries:
+  hyperdata:
+  - apiVersion: v1
+    appVersion: v8.4.0
+    created: "2021-09-23T15:22:45.378984882+09:00"
+    description: Hyperdata Helm chart for Kubernetes
+    digest: f5346b4f3dce48476cb38ab0ddaf654d845ea54d1fff9e5bfa75239e4b1de1a0
+    name: hyperdata
+    urls:
+    - https://github.com/tmaxbi/hyperdata/releases/download/hyperdata-0.1.0/hyperdata-0.1.0.tgz
+    version: 0.1.0
+  ingress-nginx:
+  - annotations:
+      artifacthub.io/changes: |
+        - Support for Ingress object v1 and drop support for v1beta1
+        - Update to go 1.17
+        - Fix some bugs
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-09-23T15:22:45.381015874+09:00"
+    description: Ingress controller for Kubernetes using NGINX as a reverse proxy
+      and load balancer
+    digest: 9b72b080d1086f251653c5accbfa3d7b73a37418095c16a54a4c85364a5fb192
+    home: https://github.com/kubernetes/ingress-nginx
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/500px-Nginx_logo.svg.png
+    keywords:
+    - ingress
+    - nginx
+    kubeVersion: '>=1.19.0-0'
+    maintainers:
+    - name: ChiefAlexander
+    name: ingress-nginx
+    sources:
+    - https://github.com/kubernetes/ingress-nginx
+    type: application
+    urls:
+    - https://github.com/tmaxbi/hyperdata/releases/download/ingress-nginx-4.0.1/ingress-nginx-4.0.1.tgz
+    version: 4.0.1
+  mlplatform:
+  - apiVersion: v1
+    appVersion: v8.4.0
+    created: "2021-09-23T15:22:45.381477283+09:00"
+    description: mlplatform helm chart for kubernetes
+    digest: f3f0f127ac9abe7478b1702dd2d3d16db1e6e20d4453a1b458a03be24d6ffdf2
+    name: mlplatform
+    urls:
+    - https://github.com/tmaxbi/hyperdata/releases/download/mlplatform-0.1.0/mlplatform-0.1.0.tgz
+    version: 0.1.0
+  tibero:
+  - apiVersion: v1
+    appVersion: v8.4.0
+    created: "2021-09-23T15:22:45.381684219+09:00"
+    description: Tibero Helm chart for Kubernetes
+    digest: f9752f9318d59273c26c2fdb66e195b678c9409fc5a55a55403c3345da00ebaa
+    name: tibero
+    urls:
+    - https://github.com/tmaxbi/hyperdata/releases/download/tibero-0.1.0/tibero-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-09-23T15:22:45.378599025+09:00"
