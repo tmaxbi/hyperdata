@@ -12,6 +12,8 @@ spec:
       labels:
         app: mlplatform-backend-deploy
     spec:
+      securityContext:
+        fsGroup: 1000
       serviceAccountName: mlplatform-backend-sa
       containers:
       - name: mlplatform-backend-con
