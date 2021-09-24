@@ -28,7 +28,7 @@ data:
   IS_HTTPS: "false"
 
   # MQTT Options
-  USE_MQTT_LB: Y
+  USE_MQTT_LB: "Y"
   NOTIFICATION_BROKER_IP: {{ .Values.webserver.ip }}
   NOTIFICATION_BROKER_PORT: "{{ .Values.webserver.port }}"
   NOTIFICATION_BROKER_WS_PORT: ""
