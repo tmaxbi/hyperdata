@@ -32,8 +32,8 @@ data:
     hyperdata.server.addr={{ .Values.hyperdata.address }}
     # ishttps는 현재 사용하지 않는 변수입니다.
     hyperdata.server.ishttps=false
-    hyperdata.image.private.repository={{ .Values.registry.address }}
-    hyperdata.image.private.secret={{ .Values.registry.secret }}
+    hyperdata.image.private.repository={{ .Values.global.registry.address }}
+    hyperdata.image.private.secret=mlplatform-backend-secret
 
     ###################
     # proAuth options #

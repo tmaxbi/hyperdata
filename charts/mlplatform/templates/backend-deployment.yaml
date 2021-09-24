@@ -15,8 +15,8 @@ spec:
       serviceAccountName: mlplatform-backend-sa
       containers:
       - name: mlplatform-backend-con
-        image: "{{ .Values.registry.address }}/{{ .Values.backend.image.name }}:{{ .Values.backend.image.tag }}"
-        imagePullPolicy: {{ .Values.backend.image.imagePullPolicy }}
+        image: "{{ .Values.global.registry.address }}/{{ .Values.backend.image.name }}:{{ .Values.backend.image.tag }}"
+        imagePullPolicy: Always
         ports:
         - containerPort: 18080
           name: server-port
@@ -36,7 +36,7 @@ spec:
         - name: mlplatform-model-recommendation-configmap
           mountPath: /home/mlplatform/python/predefinedai_template/source/recommendation/config
       imagePullSecrets:
-      - name: {{ .Values.registry.secret }}
+      - name: {{ .Values.global.registry.imagePullSecret }}
       volumes:
       - name: application-prod-config
         configMap:

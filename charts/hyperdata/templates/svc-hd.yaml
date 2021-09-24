@@ -22,4 +22,8 @@ spec:
       protocol: TCP
   selector:
     lb: hyperdata-hd
+  {{- if .Values.global.loadbalancer.enabled }}
   type: ClusterIP
+  {{- else }}
+  type: NodePort
+  {{- end }}

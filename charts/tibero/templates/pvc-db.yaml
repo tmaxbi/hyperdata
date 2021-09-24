@@ -5,7 +5,7 @@ metadata:
     helm.sh/resource-policy: keep
   labels:
     app: tibero-hd
-  name: {{ .Values.db.persistentVolumeClaimName }}
+  name: {{ .Values.global.db.persistentVolumeClaimName }}
 spec:
   accessModes:
   - ReadWriteMany

@@ -1,3 +1,6 @@
 .kube
 .vscode
 __pycache__
+/charts/*/charts
+/charts/*/requirements.lock
+/charts/*/Chart.lock

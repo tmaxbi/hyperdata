@@ -9,7 +9,7 @@ kubectl create namespace hyperdata
 
     2.1. metallb loadbalancer로 설치할 경우
     ```
-    helm install -n hyperdata ingress-nginx ingress-nginx \
+    helm install -n hyperdata ingress-nginx . --values ./values.yaml --values ./custom-values.yaml \
     --set fullnameOverride=hyperdata \
     --set controller.ingressClassResource.name=hyperdata-nginx \
     --set controller.image.registry=k8s.gcr.io \
@@ -32,7 +32,7 @@ kubectl create namespace hyperdata
 
     2.2. nodePort로 설치할 경우(현재 nodePort로 설치할 경우, mlplatform 미동작)
     ```
-    helm install -n hyperdata ingress-nginx ingress-nginx \
+    helm install -n hyperdata ingress-nginx ingress-nginx --values ./values.yaml --values ./custom-values.yaml \
     --set fullnameOverride=hyperdata \
     --set controller.ingressClassResource.name=hyperdata-nginx \
     --set controller.image.registry=k8s.gcr.io \

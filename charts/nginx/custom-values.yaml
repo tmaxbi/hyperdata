@@ -1,0 +1,40 @@
+global:
+  registry:
+    address: &registry-address k8s.gcr.io
+    imagePullSecret: &image-pull-secret ""
+
+  loadbalancer:
+    enabled: true
+    ip: &loadbalancer-ip 192.168.179.39
+    port: &loadbalancer-port 8080
+    isHttps: &loadbalancer-ishttps true
+
+fullnameOverride: hyperdata
+imagePullSecrets: *image-pull-secret
+controller:
+  ingressClassResource:
+    name: hyperdata-nginx
+  image:
+    registry: *registry-address
+    image: ingress-nginx/controller
+    tag: v1.0.0
+    digest: ""
+  config:
+    use-http2: false
+  scope:
+    enabled: true
+    namespace: hyperdata
+  service:
+    type: loadBalancer
+    annotations:
+      metallb.universe.tf/allow-shared-ip: top
+    sessionAffinity: None
+    externalTrafficPolicy: Cluster
+    enableHttp: true
+    enableHttps: *loadbalancer-ishttps
+    ports:
+      https: *loadbalancer-port
+    loadBalancerIP: *loadbalancer-ip
+
+rbac:
+  create: true

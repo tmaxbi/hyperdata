@@ -33,8 +33,8 @@ spec:
       value: "5G"
     - name: DB_CHARACTER_SET
       value: "UTF8"
-    image: {{ .Values.image }}
-    name: {{ .Release.Name }}-con-db-hd
+    image: {{ .Values.global.registry.address }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+    name: tibero-con-db-hd
     ports:
     - containerPort: 8629
       name: tb-lsnr
@@ -67,7 +67,7 @@ spec:
         memory: {{ .Values.resources.memory }}
         nvidia.com/gpu: "0"
     volumeMounts:
-    - mountPath: {{ .Values.db.mountPath }}
+    - mountPath: {{ .Values.global.db.mountPath }}
       name: pv-storage
     - name: tz-seoul
       mountPath: /etc/localtime
@@ -78,7 +78,7 @@ spec:
   volumes:
   - name: pv-storage
     persistentVolumeClaim:
-      claimName: {{ .Release.Name }}-pvc-db
+      claimName: {{ .Values.global.db.persistentVolumeClaimName }}
   - name: tz-seoul
     hostPath:
       path: /usr/share/zoneinfo/Asia/Seoul

@@ -14,7 +14,7 @@ spec:
         app: hyperdata-hd
     spec:
       initContainers:
-      - image: {{ .Values.image }}
+      - image: {{ .Values.global.registry.address }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
         name: hyperdata-initcon-hd-hd
         command: ["/bin/bash", "-c"]
         args: ["${DEPLOY_HOME}/init_container.sh 2>&1 | tee ${TB_MOUNT_VOLUME_PATH}/cmdlog; exit ${PIPESTATUS[0]}"]
@@ -33,9 +33,9 @@ spec:
         - name: tz-seoul
           mountPath: /etc/localtime
         - name: pv-storage-tb
-          mountPath: {{ .Values.db.mountPath }}
+          mountPath: {{ .Values.global.db.mountPath }}
       containers:
-      - image: {{ .Values.image }}
+      - image: {{ .Values.global.registry.address }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
         command: ["/bin/bash", "-c"]
         args: ["${DEPLOY_HOME}/boot.sh 2>&1 | tee ${TB_MOUNT_VOLUME_PATH}/cmdlog; exit ${PIPESTATUS[0]}"]
         imagePullPolicy: Always
@@ -82,11 +82,15 @@ spec:
         - name: tz-seoul
           mountPath: /etc/localtime
         - name: pv-storage-tb
-          mountPath: {{ .Values.db.mountPath }}
+          mountPath: {{ .Values.global.db.mountPath }}
+      {{- if .Values.global.registry.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.global.registry.imagePullSecret }}
+      {{- end }}
       volumes:
       - name: tz-seoul
         hostPath:
           path: /usr/share/zoneinfo/Asia/Seoul
       - name: pv-storage-tb
         persistentVolumeClaim:
-          claimName: {{ .Values.db.persistentVolumeClaimName }}
+          claimName: {{ .Values.global.db.persistentVolumeClaimName }}

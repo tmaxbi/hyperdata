@@ -4,15 +4,15 @@ metadata:
   name: hyperdata-hd-configmap
 data:
   # hyperdata uses this name as DNS
-  TB_IP: {{ .Values.db.address }}
-  TB_PORT: "8629"
+  TB_IP: {{ .Values.global.db.address }}
+  TB_PORT: "{{ .Values.global.db.port }}"
   TB_SID: tibero
 
   # HLADMIN_IP:
   # HLADMIN_PORT: "23000"
   
-  RECOMMEND_SERVER_IP: svc-kca
-  RECOMMEND_SERVER_PORT: "5000"
+  RECOMMEND_SERVER_IP: {{ .Values.kca.address }}
+  RECOMMEND_SERVER_PORT: "{{ .Values.kca.port }}"
 
   # true or false
   HD_AI_ON: "true"
@@ -22,18 +22,26 @@ data:
 
   # Hyperdata Webserver Options
   ## hyperdata uses this path as SAM FILE upload location
-  FILE_INPUT_DIR: {{ .Values.db.mountPath }}/input
+  FILE_INPUT_DIR: {{ .Values.global.db.mountPath }}/input
 
   ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+  {{- if and .Values.global.loadbalancer.enabled .Values.global.loadbalancer.isHttps }}
+  IS_HTTPS: "true"
+  {{- else }}
   IS_HTTPS: "false"
+  {{- end }}
 
   # MQTT Options
+  {{- if .Values.global.loadbalancer.enabled }}
   USE_MQTT_LB: "Y"
-  NOTIFICATION_BROKER_IP: {{ .Values.webserver.ip }}
-  NOTIFICATION_BROKER_PORT: "{{ .Values.webserver.port }}"
+  {{- else }}
+  USE_MQTT_LB: "N"
+  {{- end }}
+  NOTIFICATION_BROKER_IP: {{ .Values.global.loadbalancer.ip }}
+  NOTIFICATION_BROKER_PORT: "{{ .Values.global.loadbalancer.port }}"
   NOTIFICATION_BROKER_WS_PORT: ""
   ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
   ## SSL_CERT_IP_ADDRESS: ""
 
   ## tibero pv created in tibero helm chart
-  TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}
+  TB_MOUNT_VOLUME_PATH: {{ .Values.global.db.mountPath }}

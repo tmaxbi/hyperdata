@@ -4,14 +4,14 @@ metadata:
   name: tibero-lb-db
   labels:
     lb: tibero-db
-  {{ if .Values.loadbalancer.enabled }}
+  {{ if .Values.global.loadbalancer.enabled }}
   annotations:
     metallb.universe.tf/allow-shared-ip: top
   {{ end }}
 spec:
   ports:
     - name: tb-lsnr
-      port: 8629
+      port: {{ .Values.global.db.port }}
       protocol: TCP
       targetPort: 8629
     - name: ora-gw
@@ -40,10 +40,10 @@ spec:
       targetPort: 9097      
   selector:
     lb: tibero-db
-  {{ if .Values.loadbalancer.enabled }}
+  {{ if .Values.global.loadbalancer.enabled }}
   type: LoadBalancer
   sessionAffinity: None
-  loadBalancerIP: {{ .Values.loadbalancer.ip }}
+  loadBalancerIP: {{ .Values.global.loadbalancer.ip }}
   externalTrafficPolicy: Cluster
   {{ else }}
   type: NodePort

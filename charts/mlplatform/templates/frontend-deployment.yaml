@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: mlplatform-frontend-con
-        image: "{{ .Values.registry.address }}/{{ .Values.frontend.image.name }}:{{ .Values.frontend.image.tag }}"
-        imagePullPolicy: {{ .Values.frontend.image.imagePullPolicy }}
+        image: "{{ .Values.global.registry.address }}/{{ .Values.frontend.image.name }}:{{ .Values.frontend.image.tag }}"
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
           name: server-port
@@ -38,4 +38,4 @@ spec:
           - key: "nginx.conf"
             path: "nginx.conf"      
       imagePullSecrets:
-      - name: {{ .Values.registry.secret }}
+      - name: {{ .Values.global.registry.imagePullSecret }}

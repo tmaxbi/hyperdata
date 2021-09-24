@@ -4,7 +4,7 @@ metadata:
   # tibero cannot use dns name if name has minus sign.
   # kubernetes DNS name only use alphabet, number, minus sign(-)
   # DO NOT USE minus sign in here!
-  name: tiberolocaldns
+  name: {{ .Values.global.db.address }}
 spec:
   selector:
     lb: tibero-db
