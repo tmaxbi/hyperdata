@@ -58,6 +58,15 @@ entries:
   mlplatform:
   - apiVersion: v1
     appVersion: v8.4.0
+    created: "2021-09-24T10:42:54.579807951Z"
+    description: mlplatform helm chart for kubernetes
+    digest: 5f5a1d70179d810080a516550622c8969cc7d0f3ac77938fd192af9c56feb4a1
+    name: mlplatform
+    urls:
+    - https://github.com/tmaxbi/hyperdata/releases/download/mlplatform-0.1.2/mlplatform-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    appVersion: v8.4.0
     created: "2021-09-23T15:22:45.381477283+09:00"
     description: mlplatform helm chart for kubernetes
     digest: f3f0f127ac9abe7478b1702dd2d3d16db1e6e20d4453a1b458a03be24d6ffdf2
@@ -66,15 +75,6 @@ entries:
     - https://github.com/tmaxbi/hyperdata/releases/download/mlplatform-0.1.0/mlplatform-0.1.0.tgz
     version: 0.1.0
   tibero:
-  - apiVersion: v1
-    appVersion: v8.4.0
-    created: "2021-09-24T10:42:04.260428408Z"
-    description: Tibero Helm chart for Kubernetes
-    digest: ec7bcd7ae361ecd3d12492fe763b4e0e3899e5f626d96c8ea75b727d50ac4552
-    name: tibero
-    urls:
-    - https://github.com/tmaxbi/hyperdata/releases/download/tibero-0.1.2/tibero-0.1.2.tgz
-    version: 0.1.2
   - apiVersion: v1
     appVersion: v8.4.0
     created: "2021-09-23T15:22:45.381684219+09:00"
