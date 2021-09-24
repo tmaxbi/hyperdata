@@ -68,6 +68,15 @@ entries:
   tibero:
   - apiVersion: v1
     appVersion: v8.4.0
+    created: "2021-09-24T10:42:04.260428408Z"
+    description: Tibero Helm chart for Kubernetes
+    digest: ec7bcd7ae361ecd3d12492fe763b4e0e3899e5f626d96c8ea75b727d50ac4552
+    name: tibero
+    urls:
+    - https://github.com/tmaxbi/hyperdata/releases/download/tibero-0.1.2/tibero-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
+    appVersion: v8.4.0
     created: "2021-09-23T15:22:45.381684219+09:00"
     description: Tibero Helm chart for Kubernetes
     digest: f9752f9318d59273c26c2fdb66e195b678c9409fc5a55a55403c3345da00ebaa
