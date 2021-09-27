@@ -5,7 +5,7 @@
 
 1.1. worker node에서 ntp 확인
 <pre>
-[root@worker1]# datetimectl
+[root@worker1]# timedatectl
       Local time: 화 2021-08-24 17:21:45 KST
   Universal time: 화 2021-08-24 08:21:45 UTC
         RTC time: 화 2021-08-24 08:21:45
