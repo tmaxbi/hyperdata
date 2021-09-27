@@ -20,6 +20,7 @@ helm install -n metallb-system metallb metallb \
 --set configInline.address-pools[0].protocol=layer2 \
 --set configInline.address-pools[0].addresses[0]=192.168.179.37-192.168.179.39
 ```
+**address-pools의 addresses에 사용하고 있는 서버의 IP를 넣을 시, 해당 서버의 네트워크가 정상동작하지 않을 수 있습니다.**
 
 
 ## reproduce chart
