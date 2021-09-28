@@ -72,3 +72,6 @@ helm install -n metallb-system metallb metallb \
 12. [hyperdata](./hyperdata)
 13. [kca](./kca)
 14. [mlplatform](./mlplatform)
+
+## Optional
+- [gpu-operator](./gpu-operator)
