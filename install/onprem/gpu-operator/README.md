@@ -1,11 +1,11 @@
-# argo
+# gpu-operator
 
-1. create argo namespace
+1. create gpu-operator namespace
 ```
 kubectl create namespace gpu-operator-resources
 ```
 
-2. install argo
+2. install gpu-operator
 - docker 사용시 operator.defaultRuntime=docker, cri-o 사용 시 operator.defaultRuntime=crio로 설정
 - driver 버전은 반드시 ""를 포함해서 입력
 - driver 버전은 반드시 설치하려하는 노드에 존재하는 gpu의 종류와 호환되는 버전을 선택
