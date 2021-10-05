@@ -33,7 +33,7 @@ entries:
     appVersion: 8.4.0
     created: "2021-09-24T10:50:56.574983856Z"
     description: Hyperdata Stack Helm chart for Kubernetes
-    digest: sha256:f34a1529570b37ef6d0928cc72811790755b3c63674c357ddfb95e17bc31b351
+    digest: f34a1529570b37ef6d0928cc72811790755b3c63674c357ddfb95e17bc31b351
     name: hyperdata-stack
     type: application
     urls:
