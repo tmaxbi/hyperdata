@@ -2,7 +2,7 @@ apiVersion: v1
 name: hyperdata-stack
 description: Hyperdata Stack Helm chart for Kubernetes
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: 8.4.0
 dependencies:
 - name: tibero
