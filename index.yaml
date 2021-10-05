@@ -31,6 +31,16 @@ entries:
   hyperdata-stack:
   - apiVersion: v1
     appVersion: 8.4.0
+    created: "2021-10-05T05:19:59.597472035Z"
+    description: Hyperdata Stack Helm chart for Kubernetes
+    digest: 9a7c4647c9cefcf5eb5cfafe32fa62881aa0368bddda02af6a6d04b86d859a8c
+    name: hyperdata-stack
+    type: application
+    urls:
+    - https://github.com/tmaxbi/hyperdata/releases/download/hyperdata-stack-0.1.1/hyperdata-stack-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: 8.4.0
     created: "2021-09-24T10:50:56.574983856Z"
     description: Hyperdata Stack Helm chart for Kubernetes
     digest: f34a1529570b37ef6d0928cc72811790755b3c63674c357ddfb95e17bc31b351
