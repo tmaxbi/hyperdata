@@ -29,6 +29,34 @@ entries:
     - https://github.com/tmaxbi/hyperdata/releases/download/hyperdata-0.1.1/hyperdata-0.1.1.tgz
     version: 0.1.1
   hyperdata-stack:
+  - apiVersion: v2
+    appVersion: 8.4.0
+    created: "2021-10-05T05:37:08.773422325Z"
+    dependencies:
+    - condition: tibero.enabled
+      name: tibero
+      repository: https://tmaxbi.github.io/hyperdata
+      version: 0.1.2
+    - alias: nginx
+      condition: nginx.enabled
+      name: ingress-nginx
+      repository: https://tmaxbi.github.io/hyperdata
+      version: 4.0.1
+    - condition: hyperdata.enabled
+      name: hyperdata
+      repository: https://tmaxbi.github.io/hyperdata
+      version: 0.1.4
+    - condition: automl.enabled
+      name: mlplatform
+      repository: https://tmaxbi.github.io/hyperdata
+      version: 0.1.2
+    description: Hyperdata Stack Helm chart for Kubernetes
+    digest: 31ef02763894feb6c70cfbe19bbe742e896bfa8d95e6a20f048da2a8e9e4c135
+    name: hyperdata-stack
+    type: application
+    urls:
+    - https://github.com/tmaxbi/hyperdata/releases/download/hyperdata-stack-0.1.2/hyperdata-stack-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v1
     appVersion: 8.4.0
     created: "2021-10-05T05:19:59.597472035Z"
