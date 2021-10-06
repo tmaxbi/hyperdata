@@ -1,4 +1,4 @@
 ## Append samples you want in your CSV to this file as resources ##
 resources:
-- demo_v1alpha1_nginx.yaml
+- hyperdata_v1alpha1_hyperdata.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

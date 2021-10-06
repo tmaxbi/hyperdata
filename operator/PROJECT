@@ -1,4 +1,4 @@
-domain: example.com
+domain: tmax.io
 layout:
 - helm.sdk.operatorframework.io/v1
 plugins:
@@ -10,8 +10,8 @@ resources:
 - api:
     crdVersion: v1
     namespaced: true
-  domain: example.com
-  group: demo
-  kind: Nginx
+  domain: tmax.io
+  group: hyperdata
+  kind: Hyperdata
   version: v1alpha1
 version: "3"

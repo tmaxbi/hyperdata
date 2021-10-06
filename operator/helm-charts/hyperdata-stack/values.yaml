@@ -1,0 +1,150 @@
+global:
+  namespace: &namespace hyperdata
+
+  registry:
+    ## 이미지 저장소 주소 (ip:port)
+    ## http:// 또는 https://를 붙이면 정상동작하지 않음
+    address: &registry-address 192.168.179.44:5000
+    ## 이미지 저장소 인증이 필요할 경우, imagePullSecret 생성 필요
+    ## ref. https://kubernetes.io/ko/docs/tasks/configure-pod-container/pull-image-private-registry/
+    imagePullSecret: &image-pull-secret ""
+
+  ## 현재 구현체들은 loadbalancer가 metallb를 사용하는 것을 가정하고 구현되어 있음
+  ## 따라서, loadbalancer가 enabled일 시, metallb 사용에 필요한 annotation 및 service 옵션들이 세팅됨
+  ## ref. https://metallb.universe.tf/configuration/
+  loadbalancer:
+    ## loadbalancer enabled일 경우, nginx를 설치하고 reverse proxy로 사용
+    ## loadbalancer false일 경우, 각 서버는 nodeport로 설치
+    ## warn: 현재 mlplatform의 경우, loadbalancer.enabled가 false일 시 동작하지 않음
+    enabled: &loadbalancer-enabled true
+    ## loadbalancer로 사용할 ip. 현재 loadbalancer ip는 metallb의 address pool에 존재하여야 함
+    ip: &loadbalancer-ip 192.168.179.39
+    ## nginx의 port
+    port: &loadbalancer-port 8080
+    ## nginx가 https인지 아닌지 세팅
+    isHttps: &loadbalancer-ishttps true
+
+  ## 현재 db는 tibero
+  db:
+    ## kubernetes dns로 사용할 tibero service 이름
+    ## !영문및 -만 작성 가능(특수문자, 한글 사용 불가능)
+    address: tiberolocaldns
+    ## tibero port   
+    port: 8629
+    ## tibero pvc name
+    persistentVolumeClaimName: tibero-pvc-db
+    ## tibero를 사용하는 모듈들이 mount할 위치
+    mountPath: /db
+
+
+nginx:
+  enabled: *loadbalancer-enabled
+  fullnameOverride: *namespace
+  imagePullSecrets: *image-pull-secret
+  controller:
+    ingressClassResource:
+      name: hyperdata-nginx
+    image:
+      registry: *registry-address
+      image: ingress-nginx/controller
+      tag: v1.0.0
+      digest: ""
+    config:
+      use-http2: false
+    scope:
+      enabled: true
+      namespace: *namespace
+    service:
+      type: loadBalancer
+      annotations:
+        metallb.universe.tf/allow-shared-ip: top
+      sessionAffinity: None
+      externalTrafficPolicy: Cluster
+      enableHttp: true
+      enableHttps: *loadbalancer-ishttps
+      ports:
+        https: *loadbalancer-port
+      loadBalancerIP: *loadbalancer-ip
+  rbac:
+    create: true
+
+
+tibero:
+  enabled: true
+  image:
+    name: hyperdata8.3_tb
+    tag: 20210811_v1
+  shmSize: 2Gi
+  resources:
+    cpu: 2
+    memory: 4Gi
+    storage: 40Gi
+
+
+hyperdata:
+  enabled: true
+  image:
+    name: hyperdata20.4_hd
+    tag: 20210820182035
+  version:
+    major: 20
+  proxy:
+    bodysize: 1024m
+    # minutes
+    timeout: 1800
+  resources:
+    cpu: 2
+    memory: 4Gi
+
+
+mlplatform:
+  hyperdata:
+    address: http://hyperdata-svc-hd:8080
+  proauth:
+    address: http://hyperdata-lb-hd:28080
+  kubernetes:
+    istio:
+      ingressgateway:
+        ip: 192.168.179.31
+        port: 31380
+        namespace: istio-system
+        service:
+          name: istio-ingressgateway
+  backend:
+    image:
+      name: hyperdata20.4_mlplatform_backend
+      tag: 20210820_v1
+    resources:
+      requests:
+        cpu: 1
+        memory: 1G
+      limits:
+        cpu: 1
+        memory: 1G
+    volume:
+      storageClass: ceph-filesystem
+      size: 10Gi
+      mountPath: /mlplatform
+  frontend:
+    image:
+      name: hyperdata20.4_mlplatform_frontend
+      tag: 20210820_v1
+    service:
+      type: ClusterIP
+      nodePort: ""
+    resources:
+      requests:
+        cpu: 1
+        memory: 1G
+      limits:
+        cpu: 1
+        memory: 1G
+  models:
+    recommendation:
+      image:
+        name: hyperdata20.4_mlplatform_recommendation
+        tag: 20210827_v1
+  automl:
+    image:
+      name: hyperdata20.4_mlplatform_automl
+      tag: 20210827_v1

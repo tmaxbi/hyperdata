@@ -29,14 +29,14 @@ rules:
   - create
 
 ##
-## Rules for demo.example.com/v1alpha1, Kind: Nginx
+## Rules for hyperdata.tmax.io/v1alpha1, Kind: Hyperdata
 ##
 - apiGroups:
-  - demo.example.com
+  - hyperdata.tmax.io
   resources:
-  - nginxes
-  - nginxes/status
-  - nginxes/finalizers
+  - hyperdata
+  - hyperdata/status
+  - hyperdata/finalizers
   verbs:
   - create
   - delete
@@ -48,15 +48,57 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "clusterrolebindings"
+  - "clusterroles"
+- verbs:
+  - "*"
+  apiGroups:
+  - "networking.k8s.io"
+  resources:
+  - "ingressclasses"
+- verbs:
+  - "*"
+  apiGroups:
+  - "admissionregistration.k8s.io"
+  resources:
+  - "validatingwebhookconfigurations"
+- verbs:
+  - "*"
+  apiGroups:
+  - "policy"
+  resources:
+  - "podsecuritypolicies"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
+  - "configmaps"
+  - "persistentvolumeclaims"
+  - "pods"
+  - "secrets"
   - "serviceaccounts"
   - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
+  - "roles"
 - verbs:
   - "*"
   apiGroups:
   - "apps"
   resources:
   - "deployments"
+- verbs:
+  - "*"
+  apiGroups:
+  - "networking.k8s.io"
+  resources:
+  - "ingresses"
 
 #+kubebuilder:scaffold:rules

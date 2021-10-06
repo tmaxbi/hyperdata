@@ -1,6 +1,6 @@
 # Use the 'create api' subcommand to add watches to this file.
-- group: demo.example.com
+- group: hyperdata.tmax.io
   version: v1alpha1
-  kind: Nginx
-  chart: helm-charts/nginx
+  kind: Hyperdata
+  chart: helm-charts/hyperdata-stack
 #+kubebuilder:scaffold:watch

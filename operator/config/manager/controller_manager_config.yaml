@@ -7,4 +7,4 @@ metrics:
 
 leaderElection:
   leaderElect: true
-  resourceName: 811c9dc5.example.com
+  resourceName: 811c9dc5.tmax.io

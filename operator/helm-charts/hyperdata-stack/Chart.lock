@@ -1,0 +1,15 @@
+dependencies:
+- name: tibero
+  repository: https://tmaxbi.github.io/hyperdata
+  version: 0.1.2
+- name: ingress-nginx
+  repository: https://tmaxbi.github.io/hyperdata
+  version: 4.0.1
+- name: hyperdata
+  repository: https://tmaxbi.github.io/hyperdata
+  version: 0.1.4
+- name: mlplatform
+  repository: https://tmaxbi.github.io/hyperdata
+  version: 0.1.2
+digest: sha256:f34a1529570b37ef6d0928cc72811790755b3c63674c357ddfb95e17bc31b351
+generated: "2021-10-05T14:37:57.396838675+09:00"

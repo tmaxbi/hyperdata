@@ -1,0 +1,24 @@
+apiVersion: v2
+appVersion: 8.4.0
+dependencies:
+- condition: tibero.enabled
+  name: tibero
+  repository: https://tmaxbi.github.io/hyperdata
+  version: 0.1.2
+- alias: nginx
+  condition: nginx.enabled
+  name: ingress-nginx
+  repository: https://tmaxbi.github.io/hyperdata
+  version: 4.0.1
+- condition: hyperdata.enabled
+  name: hyperdata
+  repository: https://tmaxbi.github.io/hyperdata
+  version: 0.1.4
+- condition: automl.enabled
+  name: mlplatform
+  repository: https://tmaxbi.github.io/hyperdata
+  version: 0.1.2
+description: Hyperdata Stack Helm chart for Kubernetes
+name: hyperdata-stack
+type: application
+version: 0.1.2

@@ -1,13 +1,13 @@
-# permissions for end users to edit nginxes.
+# permissions for end users to edit hyperdata.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: nginx-editor-role
+  name: hyperdata-editor-role
 rules:
 - apiGroups:
-  - demo.example.com
+  - hyperdata.tmax.io
   resources:
-  - nginxes
+  - hyperdata
   verbs:
   - create
   - delete
@@ -17,8 +17,8 @@ rules:
   - update
   - watch
 - apiGroups:
-  - demo.example.com
+  - hyperdata.tmax.io
   resources:
-  - nginxes/status
+  - hyperdata/status
   verbs:
   - get
