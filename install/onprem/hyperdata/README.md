@@ -7,3 +7,7 @@ helm install -n hyperdata hyperdata hyperdata \
 --set webserver.ip=192.168.179.39 \
 --set webserver.port=8080
 ```
+2. Uninstall hyperdata
+```
+helm uninstall -n hyperdata hyperdata hyperdata
+```
