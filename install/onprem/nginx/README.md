@@ -53,7 +53,8 @@ kubectl create namespace hyperdata
 '''
 helm uninstall -n hyperdata ingress-nginx ingress-nginx
 '''
-    **nginx는 clusterrole 및 ingressClass를 사용하고 있습니다. 하나의 쿠버클러스터에 여러 개의 nginx를 사용하려할 경우, fullnameOverride 및 controller.ingressClassResource.name를 서로 다르게 수정해주어야 합니다.**
+
+**nginx는 clusterrole 및 ingressClass를 사용하고 있습니다. 하나의 쿠버클러스터에 여러 개의 nginx를 사용하려할 경우, fullnameOverride 및 controller.ingressClassResource.name를 서로 다르게 수정해주어야 합니다.**
     
 
 ## ref
