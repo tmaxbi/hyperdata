@@ -29,3 +29,8 @@ helm install -n hyperdata mlplatform mlplatform \
 --set kubernetes.istio.ingressgateway.ip=192.168.179.31 \
 --set kubernetes.istio.ingressgateway.port=31380
 ```
+
+4. Uninstall mlplatform
+```
+helm uninstall -n hyperdata mlplatform mlplatform
+```
