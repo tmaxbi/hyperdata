@@ -59,4 +59,7 @@ kubectl create namespace hyperdata
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 helm pull ingress-nginx/ingress-nginx --untar
+
+## Uninstall
+helm uninstall -n hyperdata ingress-nginx ingress-nginx
 ```
