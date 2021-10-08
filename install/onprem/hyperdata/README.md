@@ -2,7 +2,7 @@
 
 1. install hyperdata
 
-    1.1 LoadBalancer
+    1.1 LoadBalancer 사용시
     ```
     helm install -n hyperdata hyperdata hyperdata \
     --set image=192.168.179.44:5000/hyperdata/hyperdata20.4_hd_test:20210825_v1 \
@@ -10,7 +10,7 @@
     --set webserver.port=8080
     ```
     
-    1.2 NodePort
+    1.2 NodePort 사용시
     ```
     helm install -n hyperdata hyperdata hyperdata \
     --set image=192.168.179.44:5000/hyperdata/hyperdata20.4_hd_test:20210825_v1 \
