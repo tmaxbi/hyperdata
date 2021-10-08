@@ -1,0 +1,195 @@
+{{- $saName := print (include "neo4j.fullname" .) "-sa" -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "{{ template "neo4j.fullname" . }}"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "neo4j.labels" . | nindent 4 }}
+spec:
+  podManagementPolicy: Parallel
+  serviceName: {{ template "neo4j.fullname" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name | quote }}
+      app.kubernetes.io/name: {{ template "neo4j.name" . }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        app.kubernetes.io/name: {{ template "neo4j.name" . }}
+        {{-  range $key, $value := .Values.podLabels }}
+        {{ $key }}: "{{ $value }}"
+        {{- end }}
+      {{- if .Values.podAnnotations }}
+      annotations:
+        {{-  range $key, $value := .Values.podAnnotations }}
+        {{ $key }}: "{{ $value }}"
+        {{- end }}
+      {{- end }}
+    spec:
+      serviceAccountName: {{ default $saName .Values.serviceAccount.name }}
+      # High value permits checkpointing on Neo4j shutdown.  See: https://neo4j.com/developer/kb/checkpointing-and-log-pruning-interactions/
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      containers:
+{{- if .Values.exporters.jmx.enabled }}
+      - name: jmx-exporter
+        image: "{{ .Values.exporters.jmx.image.repository }}:{{ .Values.exporters.jmx.image.tag }}"
+        imagePullPolicy: {{ .Values.exporters.jmx.image.pullPolicy }}
+        args: ["{{ .Values.exporters.jmx.ports.jmxxp.containerPort}}", "/opt/jmx_exporter/config.yml"]
+        ports:
+  {{- range $key, $port := .Values.exporters.jmx.ports }}
+          - name: {{ $key }}
+{{ toYaml $port | indent 12 }}
+  {{- end }}
+        livenessProbe:
+{{ toYaml .Values.exporters.jmx.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.exporters.jmx.readinessProbe | indent 10 }}
+        env:
+          - name: SERVICE_PORT
+            value: {{ .Values.exporters.jmx.ports.jmxxp.containerPort | quote }}
+        {{- with .Values.exporters.jmx.env }}
+          {{- range $key, $value := . }}
+          - name: {{ $key | upper | replace "." "_" }}
+            value: {{ $value | quote }}
+          {{- end }}
+        {{- end }}
+        resources:
+{{ toYaml .Values.exporters.jmx.resources | indent 10 }}
+        volumeMounts:
+          - name: config-jmx-exporter
+            mountPath: /opt/jmx_exporter/config.yml
+            subPath: config.yml
+{{- end }}
+      - name: {{ template "neo4j.fullname" . }}
+        image: "{{ .Values.image }}:{{ .Values.imageTag | default .Chart.AppVersion }}"
+        imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+        env:
+          {{- if .Values.authEnabled }}
+          - name: AUTH_ENABLED
+            value: "{{ .Values.authEnabled }}"
+          - name: NEO4J_SECRETS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                {{- if .Values.existingPasswordSecret }}
+                name: {{ .Values.existingPasswordSecret }}
+                {{- else }}
+                name: {{ template "neo4j.secrets.fullname" . }}
+                {{- end}}
+                key: {{ template "neo4j.secrets.key" . }}
+          {{- end }}
+        {{- range .Values.extraVars }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+        {{- end }}
+          - name: dbms_jvm_additional
+            value: -Dcom.sun.management.jmxremote=true
+              -Dcom.sun.management.jmxremote.authenticate=false
+              -Dcom.sun.management.jmxremote.ssl=false
+              -Djava.rmi.server.hostname=localhost
+              -Dcom.sun.management.jmxremote.local.only=false
+              -Dcom.sun.management.jmxremote.rmi.port={{ .Values.env.JMXPORT }}
+              -Dcom.sun.management.jmxremote.port={{ .Values.env.JMXPORT }}
+        command:
+          - "/bin/bash"
+          - "-c"
+          - |
+            if [ "${AUTH_ENABLED:-}" == "true" ]; then
+              export NEO4J_AUTH="neo4j/${NEO4J_SECRETS_PASSWORD}"
+            else
+              export NEO4J_AUTH="none"
+            fi
+            # Once passed through to auth, unset this so Neo4j doesn't misinterpret it as config.
+            unset NEO4J_SECRETS_PASSWORD
+            exec /docker-entrypoint.sh "neo4j"
+        ports:
+        - containerPort: 7474
+          name: tcp-browser
+        - containerPort: 7687
+          name: tcp-bolt
+        volumeMounts:
+        - name: datadir
+          mountPath: "{{ .Values.persistentVolume.mountPath }}"
+          {{- if .Values.persistentVolume.subPath }}
+          subPath: {{ .Values.persistentVolume.subPath }}
+          {{- end }}
+        - name: plugins
+          mountPath: /plugins
+        {{- if .Values.additionalVolumeMounts }}
+{{ toYaml .Values.additionalVolumeMounts | indent 8}}
+        {{- end }}
+        readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 10 }}
+        livenessProbe:
+{{ toYaml .Values.livenessProbe | indent 10 }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+{{- if .Values.sidecarContainers }}
+{{ toYaml .Values.sidecarContainers | indent 6 }}
+{{- end }}
+{{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret }}
+{{- end }}
+{{- if .Values.initContainers }}
+      initContainers:
+{{ toYaml .Values.initContainers | indent 6 }}
+{{- end }}
+      securityContext:
+{{ toYaml .Values.securityContext | indent 8 }}
+      volumes:
+        {{- if not .Values.persistentVolume.enabled }}
+        - name: datadir
+          emptyDir: {}
+        {{- end }}
+        - name: plugins
+          emptyDir: {}
+        {{- if .Values.exporters.jmx.enabled }}
+        - name: config-jmx-exporter
+          configMap:
+            name: neo4j-config-jmx-exporter
+        {{- end }}
+        {{- if .Values.additionalVolumes }}
+{{ toYaml .Values.additionalVolumes | indent 8}}
+        {{- end }}
+{{- if .Values.serviceAccountName }}
+      serviceAccountName: {{ .Values.serviceAccountName }}
+{{- end }}
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}
+{{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+{{- end }}
+{{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+{{- end }}
+  {{- if .Values.persistentVolume.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: datadir
+        annotations:
+        {{- if .Values.persistentVolume.annotations }}
+{{ toYaml .Values.persistentVolume.annotations | indent 12 }}
+        {{- end }}
+      spec:
+        accessModes:
+          - ReadWriteOnce
+      {{- if .Values.persistentVolume.storageClass }}
+      {{- if (eq "-" .Values.persistentVolume.storageClass) }}
+        storageClassName: ""
+      {{- else }}
+        storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+      {{- end }}
+      {{- end }}
+        resources:
+          requests:
+            storage: "{{ .Values.persistentVolume.size }}"
+  {{- end }}
