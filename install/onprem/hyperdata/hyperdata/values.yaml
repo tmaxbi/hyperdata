@@ -16,6 +16,7 @@ webserver:
 
 loadbalancer:
   enabled: true
+  SUPERVDB_UCS_PORT: 9994
 
 db:
   address: tiberolocaldns
