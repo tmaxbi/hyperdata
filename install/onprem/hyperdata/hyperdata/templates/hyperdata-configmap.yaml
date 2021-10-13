@@ -34,6 +34,16 @@ data:
   NOTIFICATION_BROKER_WS_PORT: ""
   ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
   ## SSL_CERT_IP_ADDRESS: ""
+  
+  ## NEO4J
+  NEO4J_USERNAME: {{ .Values.neo4j.username }}
+  NEO4J_PASSWORD: {{ .Values.neo4j.password }}
+  NEO4J_IP: {{ .Values.neo4j.ip }}
 
   ## tibero pv created in tibero helm chart
   TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}
+  
+  ## SUPERVDB_UCS_PORT
+  SUPERVDB_PO_HOME: "/db/supervdb_po_home"
+  SUPERVDB_PO_IP: "{{ .Values.webserver.ip }}"
+  SUPERVDB_UCS_PORT: "{{ .Values.loadbalancer.SUPERVDB_UCS_PORT }}"
