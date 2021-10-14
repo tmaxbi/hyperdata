@@ -37,6 +37,7 @@ backend:
     storageClass: ceph-filesystem
     size: 10Gi
     mountPath: /mlplatform
+  private: flase  
 
 frontend:
   image:
