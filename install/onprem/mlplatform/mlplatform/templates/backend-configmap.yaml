@@ -24,6 +24,7 @@ data:
     ######################
     mlplatform.server.addr=http://mlplatform-backend-svc:18080
     mlplatform.server.base-path=/home/mlplatform
+    mlplatform.server.private-mode={{ .Values.backend.private }}
 
     #####################
     # hyperdata options #
