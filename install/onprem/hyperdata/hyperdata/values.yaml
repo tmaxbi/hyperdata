@@ -16,6 +16,12 @@ webserver:
 
 loadbalancer:
   enabled: true
+  SUPERVDB_UCS_PORT: 9994
+  
+neo4j:
+  ip: localhost
+  password: tmax
+  username: neo4j
 
 neo4j:
   ip: neo4j-hd-gdb:7687/bolt
