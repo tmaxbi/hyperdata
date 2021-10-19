@@ -1,0 +1,20 @@
+{{- if .Values.exporters.jmx.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: neo4j-config-jmx-exporter
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app: {{ template "neo4j.name" . }}
+data:
+  config.yml: |-
+    hostPort: localhost:{{ .Values.env.JMXPORT }}
+    lowercaseOutputName: {{ .Values.exporters.jmx.config.lowercaseOutputName }}
+    lowercaseOutputLabelNames: true
+    rules:
+{{ .Values.exporters.jmx.config.rules | toYaml | indent 6 }}
+    ssl: false
+    startDelaySeconds: {{ .Values.exporters.jmx.config.startDelaySeconds }}
+{{- end }}

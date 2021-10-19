@@ -40,6 +40,10 @@ data:
   NEO4J_PASSWORD: {{ .Values.neo4j.password }}
   NEO4J_IP: {{ .Values.neo4j.ip }}
 
+  NEO4J_USERNAME: {{ .Values.neo4j.username }}
+  NEO4J_PASSWORD: {{ .Values.neo4j.password }}
+  NEO4J_IP: {{ .Values.neo4j.ip }}
+
   ## tibero pv created in tibero helm chart
   TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}
   
