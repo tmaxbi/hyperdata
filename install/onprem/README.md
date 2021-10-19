@@ -71,7 +71,8 @@ helm install -n metallb-system metallb metallb \
 11. [tibero](./tibero)
 12. [hyperdata](./hyperdata)
 13. [kca](./kca)
-14. [mlplatform](./mlplatform)
+14. [neo4j](./neo4j)
+15. [mlplatform](./mlplatform)
 
 ## Optional
 - [gpu-operator](./gpu-operator)
