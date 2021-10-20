@@ -55,6 +55,14 @@ data:
     # automl option #
     #################
     automl.image.name={{ .Values.automl.image.name }}:{{ .Values.automl.image.tag }}
+    
+    #################
+    # mllab option #
+    #################
+    mllab.image.tensorflow1-tag={{ .Values.mllab.image.tensorflow1.tag }}
+    mllab.image.tensorflow2-tag={{ .Values.mllab.image.tensorflow2.tag }}
+    mllab.image.pytorch-tag={{ .Values.mllab.image.pytorch.tag }}
+    mllab.image.statistic-analysis-tag={{ .Values.mllab.image.statistic-analysis.tag }}
 
 kind: ConfigMap
 metadata:
