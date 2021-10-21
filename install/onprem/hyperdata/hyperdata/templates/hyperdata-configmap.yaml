@@ -47,3 +47,8 @@ data:
   SUPERVDB_PO_HOME: "/db/supervdb_po_home"
   SUPERVDB_PO_IP: "{{ .Values.webserver.ip }}"
   SUPERVDB_UCS_PORT: "{{ .Values.loadbalancer.SUPERVDB_UCS_PORT }}"
+  
+  ## ML PLATFORM
+  ML_PLATFORM_IP: {{ .Values.mlplatform.ip }}
+  ML_PLATFORM_PORT: {{ .Values.mlplatform.port }}
+
