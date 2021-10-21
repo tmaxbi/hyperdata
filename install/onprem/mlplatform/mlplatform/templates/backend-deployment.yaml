@@ -36,7 +36,8 @@ spec:
         - name: mlplatform-backend-pvc
           mountPath: {{ .Values.backend.volume.mountPath }}
         - name: mlplatform-model-recommendation-configmap
-          mountPath: /home/mlplatform/python/predefinedai_template/source/recommendation/config
+          mountPath: /home/mlplatform/python/predefinedai_template/source/recommendation/config/image_config.yaml
+          subPath: image_config.yaml
       imagePullSecrets:
       - name: {{ .Values.registry.secret }}
       volumes:
@@ -49,6 +50,9 @@ spec:
       - name: mlplatform-model-recommendation-configmap
         configMap:
           name: mlplatform-model-recommendation-configmap
+          items:
+          - key: "image_config.yaml"
+            path: "image_ocnfig.yaml"
       - name: mlplatform-backend-pvc
         persistentVolumeClaim:
           claimName: mlplatform-backend-pvc

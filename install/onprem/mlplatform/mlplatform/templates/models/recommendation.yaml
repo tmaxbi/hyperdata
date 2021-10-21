@@ -78,32 +78,6 @@ data:
             description: "review-column"
         envs:
 
-  README.md: |
-    # Recommendation
-
-    |              |                          |
-    | ------------ | --------------------     |
-    | contributor  | seunghyun_yoo            |
-    | phone number |                          |
-    | email        | seunghyun_yoo@tmax.co.kr |
-
-    train_input_example:
-      columns:
-      data:
-
-    inference_input_example:
-      columns:
-      data:
-
-    inference_output_example:
-      columns:
-      data:
-
-  ui_config.yaml: |
-    header: "Recommendation"
-    title: "Recommendation"
-    subtitle: "Recommendation"
-    description: "Recommendation"
 
 kind: ConfigMap
 metadata:
