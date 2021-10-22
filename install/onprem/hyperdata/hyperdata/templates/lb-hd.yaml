@@ -38,6 +38,14 @@ spec:
       port: 1408
       protocol: TCP
       targetPort: 1408
+    - name: supervdb
+      port: 48080
+      protocol: TCP
+      targetPort: 48080
+    - name: svdb-dblink
+      port: 9994
+      protocol: TCP
+      targetPort: 9994
   selector:
     lb: hyperdata-hd
   {{ if .Values.loadbalancer.enabled }}
