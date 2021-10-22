@@ -57,6 +57,9 @@ spec:
     - containerPort: 9777
       name: my-gw
       protocol: TCP
+    - containerPort: 9089
+      name: svdb-gw
+      protocol: TCP
     resources:
       limits:
         cpu: {{ .Values.resources.cpu }}
