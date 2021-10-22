@@ -52,7 +52,7 @@ spec:
           name: mlplatform-model-recommendation-configmap
           items:
           - key: "image_config.yaml"
-            path: "image_ocnfig.yaml"
+            path: "image_config.yaml"
       - name: mlplatform-backend-pvc
         persistentVolumeClaim:
           claimName: mlplatform-backend-pvc
