@@ -37,7 +37,11 @@ spec:
     - name: gp-gw
       port: 9097
       protocol: TCP
-      targetPort: 9097      
+      targetPort: 9097   
+    - name: svdb-gw
+      port: 9089
+      protocol: TCP
+      targetPort: 9089
   selector:
     lb: tibero-db
   {{ if .Values.loadbalancer.enabled }}
