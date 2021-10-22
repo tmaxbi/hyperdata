@@ -71,6 +71,9 @@ spec:
         - containerPort: 1408
           name: hd-web
           protocol: TCP
+        - containerPort: 9994
+          name: svdb-dblink
+          protocol: TCP
         resources:
           limits:
             cpu: {{ .Values.resources.cpu }}
