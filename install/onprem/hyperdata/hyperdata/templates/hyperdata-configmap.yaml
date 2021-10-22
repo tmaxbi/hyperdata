@@ -49,6 +49,6 @@ data:
   SUPERVDB_UCS_PORT: "{{ .Values.loadbalancer.SUPERVDB_UCS_PORT }}"
   
   ## ML PLATFORM
-  ML_PLATFORM_IP: {{ .Values.mlplatform.ip }}
-  ML_PLATFORM_PORT: {{ .Values.mlplatform.port }}
+  ML_PLATFORM_IP: "{{ .Values.mlplatform.ip }}"
+  ML_PLATFORM_PORT: "{{ .Values.mlplatform.port }}"
 
