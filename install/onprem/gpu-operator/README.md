@@ -10,6 +10,7 @@ kubectl create namespace gpu-operator-resources
 - driver 버전은 반드시 ""를 포함해서 입력
 - driver 버전은 반드시 설치하려하는 노드에 존재하는 gpu의 종류와 호환되는 버전을 선택
 
+
 ```
 helm install -n gpu-operator-resources gpu-operator gpu-operator \
 --set operator.defaultRuntime=docker \
@@ -43,6 +44,19 @@ helm install -n gpu-operator-resources gpu-operator gpu-operator \
 --set dcgmExporter.repository=nvcr.io/nvidia/k8s \
 --set dcgmExporter.image=dcgm-exporter \
 --set dcgmExporter.version=2.2.9-2.4.0-ubuntu20.04
+```
+
+### operator.defaultRuntime=crio 일 경우
+operator.defaultRuntime=crio일 경우, 모든 쿠버네티스 노드들의 crio hook을 변경하여야 합니다.
+```diff
+# git issue https://github.com/NVIDIA/gpu-operator/issues/172
+vi /etc/crio/crio.conf
+...
+hooks_dir = [
+    "/usr/share/containers/oci/hooks.d",
++   "/run/containers/oci/hooks.d",
+]
+...
 ```
 
 ## ref
