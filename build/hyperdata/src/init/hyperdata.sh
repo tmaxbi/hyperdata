@@ -19,6 +19,11 @@ y
 y
 EOF
 
+bash $HD_HOME/scripts/install_interactive.sh <<EOF
+16
+y
+EOF
+
 ## create hyperdata dataobject directory
 tbsql hyperdata_ex/tmax@"(INSTANCE=(HOST=$TB_IP)(PORT=$TB_PORT)(DB_NAME=$TB_SID))" <<EOF
 CREATE OR REPLACE DIRECTORY FILE_DIR AS '$TB_VOLUME/input';
