@@ -16,9 +16,14 @@ y
 y
 y
 y
-y
 n
 n
+n
+n
+EOF
+
+bash $HD_HOME/scripts/install_interactive.sh <<EOF
+16
 n
 n
 EOF
