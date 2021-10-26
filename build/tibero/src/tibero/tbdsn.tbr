@@ -1,0 +1,27 @@
+tibero=(
+    (INSTANCE=(HOST=localhost)
+              (PORT=8629)
+              (DB_NAME=tibero)
+    )
+)
+
+nz=(
+       (GATEWAY=(LISTENER=(HOST=192.168.000.000)
+        (PORT=9093))
+        (TARGET=192.168.000.000:5480:SYSTEM)
+        (TX_MODE=LOCAL))
+)
+
+ase=(
+    (GATEWAY=(LISTENER=(HOST=192.168.000.000)
+    (PORT=9193))
+    (TARGET=192.168.000.000:15000:master)
+    (TX_MODE=LOCAL))
+)
+
+iq=(
+    (GATEWAY=(LISTENER=(HOST=192.168.000.000)
+    (PORT=9293))
+    (TARGET=192.168.000.000:5800:master)
+    (TX_MODE=LOCAL))
+)
