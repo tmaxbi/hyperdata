@@ -40,6 +40,10 @@ data:
   NEO4J_PASSWORD: {{ .Values.neo4j.password }}
   NEO4J_IP: {{ .Values.neo4j.ip }}
 
+  ## SSVR5
+  SSVR5_LISTENER_PORT: "{{ .Values.ssvr5.SSVR5_LISTENER_PORT }}"
+  SSVR5_JAVA_AGENT_PORT: "{{ .Values.ssvr5.SSVR5_JAVA_AGENT_PORT }}"
+
   ## tibero pv created in tibero helm chart
   TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}
   
