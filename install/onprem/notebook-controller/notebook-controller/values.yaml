@@ -2,4 +2,4 @@ image: gcr.io/kubeflow-images-public/notebook-controller:v1.0.0-gcd65ce25
 
 istio:
   enabled: true
-  gateway: istio-system/istio-ingressgateway
+  gateway: istio-system/ingressgateway
