@@ -28,7 +28,11 @@ helm install -n hyperdata mlplatform mlplatform \
 --set hyperdata.address=http://hyperdata-svc-hd:8080 \
 --set proauth.address=http://hyperdata-lb-hd:28080 \
 --set kubernetes.istio.ingressgateway.ip=192.168.179.31 \
---set kubernetes.istio.ingressgateway.port=31380
+--set kubernetes.istio.ingressgateway.port=31380 \
+--set mllab.image.tensorflow1.tag=20211026_v1 \
+--set mllab.image.tensorflow2.tag=20211026_v1 \
+--set mllab.image.pytorch.tag=20211026_v1 \
+--set mllab.image.statisticAnalysis.tag=latest
 ```
 
 ※ 폐쇄망 설치시 backend.private=True로 설정
