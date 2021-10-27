@@ -20,7 +20,7 @@ y
 EOF
 
 bash $HD_HOME/scripts/install_interactive.sh <<EOF
-16
+14
 y
 EOF
 
