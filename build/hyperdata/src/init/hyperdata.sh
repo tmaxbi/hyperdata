@@ -22,6 +22,7 @@ EOF
 bash $HD_HOME/scripts/install_interactive.sh <<EOF
 14
 y
+y
 EOF
 
 ## create hyperdata dataobject directory
