@@ -26,6 +26,8 @@ bash $HD_HOME/scripts/install_interactive.sh <<EOF
 14
 n
 n
+n
+n
 EOF
 
 # run as daemon
