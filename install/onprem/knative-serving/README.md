@@ -27,6 +27,13 @@ helm install -n knative-serving knative-serving knative-serving \
 --set istioNetworking.image=gcr.io/knative-releases/knative.dev/net-istio/cmd/controller:v0.22.0
 ```
 
+4. configure registriesSkippingTagResolving
+<pre>
+kubectl get cm -n knative-serving config-deployment -o yaml | \
+sed -z "s/\ndata:\n/\ndata:\n  registriesSkippingTagResolving: \"<b>${PRIVATE_DOCKER_REGISTRY_ADDRESS}(ex. 192.168.179.44:5000)</b>\"\n/g" | \
+kubectl apply -f -
+</pre>
+
 ## reproduce chart
 ```
 kubectl apply --filename https://github.com/knative/serving/releases/download/v0.22.0/serving-crds.yaml
