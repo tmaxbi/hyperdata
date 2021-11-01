@@ -17,6 +17,13 @@ helm install -n kfserving-system kfserving kfserving \
 --set manager.image=gcr.io/kubebuilder/kube-rbac-proxy:v0.4.0
 ```
 
+3. enable kfserving
+
+hyperdata 및 mlplatform을 설치할 namespace에 해당 label을 추가하여야 serving을 사용할 수 있습니다.
+```
+kubectl label --overwrite namespaces hyperdata serving.kubeflow.org/inferenceservice=enabled
+```
+
 ## ref
 - https://github.com/knative/serving/tree/v0.22.0
 
