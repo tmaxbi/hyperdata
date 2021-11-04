@@ -22,7 +22,7 @@ spec:
         resources:
           limits:
             cpu: {{ .Values.frontend.resources.limits.cpu }}
-            memory: {{ .Values.backend.resources.limits.memory }}
+            memory: {{ .Values.frontend.resources.limits.memory }}
           requests:
             cpu: {{ .Values.frontend.resources.requests.cpu }}
             memory: {{ .Values.frontend.resources.requests.memory }}
