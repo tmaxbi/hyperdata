@@ -80,6 +80,10 @@ COPY --chown=hyperdata:hyperdata src/jeus $DEPLOY_HOME/jeus8
 #==================== 7) Move Hadoop Env ====================
 COPY --chown=hyperdata:hyperdata src/hadoop $DEPLOY_HOME/hadoop
 
+#==================== 7-1) Set Hadoop Symbolic Link =============
+RUN rm -rf /etc/krb5.conf
+RUN ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
+
 #==================== 8) Move Hyperdata Env ====================
 COPY --chown=hyperdata:hyperdata src/hyperdata $DEPLOY_HOME/hyperdata20
 COPY --chown=hyperdata:hyperdata src/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
