@@ -23,6 +23,7 @@ data:
   # Hyperdata Webserver Options
   ## hyperdata uses this path as SAM FILE upload location
   FILE_INPUT_DIR: {{ .Values.db.mountPath }}/input
+  FILE_OUTPUT_DIR: {{ .Values.db.mountPath }}/output
 
   ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
   IS_HTTPS: "false"
@@ -55,4 +56,11 @@ data:
   ## ML PLATFORM
   ML_PLATFORM_IP: "{{ .Values.mlplatform.ip }}"
   ML_PLATFORM_PORT: "{{ .Values.mlplatform.port }}"
+
+  # Y or N
+  {{- if .Values.sqlEditor.enable }}
+  SQL_EDITOR_ENABLE: "Y"
+  {{- else }}
+  SQL_EDITOR_ENABLE: "N"
+  {{- end }}
 
