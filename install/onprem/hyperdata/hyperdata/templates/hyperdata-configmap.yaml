@@ -49,7 +49,7 @@ data:
   TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}
   
   ## SUPERVDB_UCS_PORT
-  SUPERVDB_PO_HOME: "/db/supervdb_po_home"
+  SUPERVDB_PO_HOME: {{ .Values.db.mountPath }}/supervdb_po_home
   SUPERVDB_PO_IP: "{{ .Values.webserver.ip }}"
   SUPERVDB_UCS_PORT: "{{ .Values.loadbalancer.SUPERVDB_UCS_PORT }}"
   
