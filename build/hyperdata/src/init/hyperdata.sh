@@ -25,13 +25,13 @@ y
 y
 EOF
 
+# create tibero directory
+mkdir -p $TB_VOLUME/input
+mkdir -p $TB_VOLUME/output
+mkdir -p $TB_VOLUME/meta
+
 ## create hyperdata dataobject directory
 tbsql hyperdata_ex/tmax@"(INSTANCE=(HOST=$TB_IP)(PORT=$TB_PORT)(DB_NAME=$TB_SID))" <<EOF
 CREATE OR REPLACE DIRECTORY FILE_DIR AS '$TB_VOLUME/input';
 exit;
 EOF
-
-# create tibero directory
-mkdir -p $TB_VOLUME/input
-mkdir -p $TB_VOLUME/output
-mkdir -p $TB_VOLUME/meta
