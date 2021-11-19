@@ -34,3 +34,4 @@ EOF
 # create tibero directory
 mkdir -p $TB_VOLUME/input
 mkdir -p $TB_VOLUME/output
+mkdir -p $TB_VOLUME/meta
