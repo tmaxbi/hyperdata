@@ -41,4 +41,4 @@ mlplatform:
   port: 18080
 
 sqlEditor:
-  enable: false
+  enabled: false
