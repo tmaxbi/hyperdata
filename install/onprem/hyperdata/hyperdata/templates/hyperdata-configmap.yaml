@@ -24,7 +24,8 @@ data:
   ## hyperdata uses this path as SAM FILE upload location
   FILE_INPUT_DIR: {{ .Values.db.mountPath }}/input
   FILE_OUTPUT_DIR: {{ .Values.db.mountPath }}/output
-
+  FILE_CONTAINER_DIR: {{ .Values.db.mountPath }}/meta
+  
   ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
   IS_HTTPS: "false"
 
