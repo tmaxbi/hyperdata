@@ -58,11 +58,6 @@ find $TB_HOME/bin/ -name "tbctl" -exec sed -i "s/temp_next_size=10M/temp_next_si
 find $TB_HOME/bin/ -name "tbctl" -exec sed -i "s/undo_next_size=10M/undo_next_size=100M/g" {} \;
 find $TB_HOME/bin/ -name "tbctl" -exec sed -i "s/usr_next_size=10M/usr_next_size=100M/g" {} \;
 
-
-
-mkdir /db/input
-mkdir /db/output
-
 if [ $DB_CHARACTER_SET ];then 
 sh $TB_HOME/bin/tb_create_db.sh -ch $DB_CHARACTER_SET
 else
