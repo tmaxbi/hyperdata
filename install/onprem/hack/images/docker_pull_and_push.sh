@@ -14,7 +14,7 @@ function pull_and_push {
 
 # metallb
 pull_and_push quay.io/metallb/controller:${METALLB_CONTROLLER} ${REMOTE_REGISTRY}/metallb/controller:${METALLB_CONTROLLER}
-pull_and_push quay.io/metallb/speaker:${METALLB_CONTROLLER} ${REMOTE_REGISTRY}/metallb/speaker:${METALLB_CONTROLLER}
+pull_and_push quay.io/metallb/speaker:${METALLB_SPEAKER} ${REMOTE_REGISTRY}/metallb/speaker:${METALLB_SPEAKER}
 
 # rook-ceph
 pull_and_push quay.io/cephcsi/cephcsi:${ROOK_CEPH_CSI} ${REMOTE_REGISTRY}/cephcsi/cephcsi:${ROOK_CEPH_CSI}
