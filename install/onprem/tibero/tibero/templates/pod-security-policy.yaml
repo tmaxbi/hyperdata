@@ -1,4 +1,4 @@
-{{ if not (lookup "v1" "PodSecurityPolicy" "" "tibero-security-policy") }}
+{{ if not (lookup "policy/v1beta1" "PodSecurityPolicy" "" "tibero-security-policy") }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
