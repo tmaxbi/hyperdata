@@ -22,9 +22,7 @@ spec:
   ports:
   - port: 9876
     name: ui
-  - port: 9961
-    name: secure-port
-  clusterIP: None
+  type: {{ .Values.scm.service.type }}
   selector:
     app: ozone
     component: scm

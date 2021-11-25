@@ -38,10 +38,11 @@ spec:
         prometheus.io/path: /prom
     spec:
       securityContext:
-        fsGroup: {{ .Values.security.securityContext.fsGroup }}
+        fsGroup: 1000
       containers:
       - name: om
-        image: '{{ .Values.image.name }}:{{ .Values.image.version }}'
+        image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
         args:
         - ozone
         - om
@@ -54,52 +55,22 @@ spec:
           tcpSocket:
             port: 9862
           initialDelaySeconds: 30
+        envFrom:
+        - configMapRef:
+            name: config
         volumeMounts:
         - name: data
           mountPath: /data
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/ozone-site.xml
-          subPath: ozone-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/core-site.xml
-          subPath: core-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/hdfs-site.xml
-          subPath: hdfs-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/log4j.properties
-          subPath: log4j.properties          
-        {{- if and .Values.security.enabled (eq .Values.security.authentication "kerberos") }}
-        - name: om-keytab
-          mountPath: {{ dir .Values.om.security.kerberos.keytab.path }}
-        - name: krb5-conf
-          mountPath: /etc/krb5.conf
-          subPath: krb5.conf
-        {{- end }}
-      volumes:
-      {{- if and .Values.security.enabled (eq .Values.security.authentication "kerberos") }}
-      - name: om-keytab
-        secret:
-          secretName: om-keytab
-          items:
-          - key: {{ base .Values.om.security.kerberos.keytab.path }}
-            path: {{ base .Values.om.security.kerberos.keytab.path }}
-      - name: krb5-conf
-        configMap:
-          name: krb5-conf
-      {{- end }}
-      - name: config
-        configMap:
-          name: config
-          items:
-          - key: "ozone-site.xml"
-            path: "ozone-site.xml"
-          - key: "core-site.xml"
-            path: "core-site.xml"
-          - key: "hdfs-site.xml"
-            path: "hdfs-site.xml"
-          - key: "log4j.properties"
-            path: "log4j.properties"      
+        resources:
+          limits:
+            cpu: {{ .Values.om.resources.limits.cpu }}
+            memory: {{ .Values.om.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.om.resources.requests.cpu }}
+            memory: {{ .Values.om.resources.requests.memory }}
+      volumes: []
+#      nodeSelector:
+#        kubernetes.io/hostname: kubemaster
   volumeClaimTemplates:
   - metadata:
       name: data
@@ -108,4 +79,4 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: {{ .Values.om.volume.storage }}
+          storage: {{ .Values.om.storage.size }}

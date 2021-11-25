@@ -22,7 +22,7 @@ spec:
   ports:
   - port: 9878
     name: rest
-  clusterIP: None
+  type: {{ .Values.s3g.service.type }}
   selector:
     app: ozone
     component: s3g

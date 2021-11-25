@@ -23,8 +23,8 @@ spec:
   - port: 9874
     name: ui
   - port: 9862
-    name: livenessprobe
-  clusterIP: None
+    name: rpc
+  type: {{ .Values.om.service.type }}
   selector:
     app: ozone
     component: om

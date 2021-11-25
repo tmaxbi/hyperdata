@@ -1,64 +1,62 @@
-image:
-  name: apache/ozone
-  version: 1.1.0
+image: apache/ozone:1.0.0
 
-security:
-  enabled: false
-  authentication: kerberos
-
-  # used when authentication is kerberos
-  kerberos:
-    server: krb-server
-    realm: EXAMPLE.COM
-
-  securityContext:
-    fsGroup: 1000
+#csi:
+#  registrar:
+#    image: quay.io/k8scsi/csi-node-driver-registrar:v1.0.2
+#  provisioner:
+#    image: quay.io/k8scsi/csi-provisioner:v1.0.1
 
 om:
   replicas: 1
-  volume:
-    storage: 2Gi
-  security:
-    kerberos:
-      keytab:
-        path: /etc/security/keytabs/om.keytab
+  resources:
+    limits:
+      cpu: "4000m"
+      memory: "4000Mi"
+    requests:
+      cpu: "1000m"
+      memory: "500Mi"
+  storage:
+    size: 2Gi
   service:
     type: NodePort
-    # if service type is NodePort, use nodePort
-    nodePort: 32090
 
 scm:
   replicas: 1
-  volume:
-    storage: 2Gi
-  security:
-    kerberos:
-      keytab:
-        path: /etc/security/keytabs/scm.keytab
-  container:
-    size: 1GB
-
-  pipeline:
-    owner:
-      container:
-        count: 1
-
-  # hdds
-  safemode:
-    min:
-      datanode: 3 # must be less than or equal to datanode replicas.
-
-s3g:
-  replicas: 1
+  resources:
+    limits:
+      cpu: "4000m"
+      memory: "4000Mi"
+    requests:
+      cpu: "1000m"
+      memory: "500Mi"
+  storage:
+    size: 2Gi
+  service:
+    type: NodePort
 
 datanode:
   replicas: 3
-  volume:
-    storage: 2Gi
-  pipeline:
-    limit: 1 # must be less than or equal to datanode replicas.
-# datanode uses scm keytab
-#  security:
-#    kerberos:
-#      keytab:
-#        path: /etc/security/keytabs/datanode.keytab
+  resources:
+    limits:
+      cpu: "4000m"
+      memory: "4000Mi"
+    requests:
+      cpu: "1000m"
+      memory: "500Mi"
+  storage:
+    size: 2Gi
+
+s3g:
+  replicas: 1
+  resources:
+    limits:
+      cpu: "4000m"
+      memory: "4000Mi"
+    requests:
+      cpu: "1000m"
+      memory: "500Mi"
+  storage:
+    size: 2Gi
+  service:
+    type: NodePort
+

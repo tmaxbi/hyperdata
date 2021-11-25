@@ -35,7 +35,8 @@ spec:
     spec:
       containers:
       - name: s3g
-        image: '{{ .Values.image.name }}:{{ .Values.image.version }}'
+        image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
         args:
         - ozone
         - s3g
@@ -44,34 +45,21 @@ spec:
             path: /
             port: 9878
           initialDelaySeconds: 30
+        envFrom:
+        - configMapRef:
+            name: config
         volumeMounts:
         - name: data
           mountPath: /data
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/ozone-site.xml
-          subPath: ozone-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/core-site.xml
-          subPath: core-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/hdfs-site.xml
-          subPath: hdfs-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/log4j.properties
-          subPath: log4j.properties          
-      volumes:
-      - name: config
-        configMap:
-          name: config
-          items:
-          - key: "ozone-site.xml"
-            path: "ozone-site.xml"
-          - key: "core-site.xml"
-            path: "core-site.xml"
-          - key: "hdfs-site.xml"
-            path: "hdfs-site.xml"
-          - key: "log4j.properties"
-            path: "log4j.properties"      
+        resources:
+          limits:
+            cpu: {{ .Values.s3g.resources.limits.cpu }}
+            memory: {{ .Values.s3g.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.s3g.resources.requests.cpu }}
+            memory: {{ .Values.s3g.resources.requests.memory }}
+      #nodeSelector:
+      #  kubernetes.io/hostname: kubemaster
   volumeClaimTemplates:
   - metadata:
       name: data
@@ -80,4 +68,4 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 2Gi
+          storage: {{ .Values.s3g.storage.size }}

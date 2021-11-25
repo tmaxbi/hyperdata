@@ -38,36 +38,25 @@ spec:
         prometheus.io/path: /prom
     spec:
       securityContext:
-        fsGroup: {{ .Values.security.securityContext.fsGroup }}
+        fsGroup: 1000
       initContainers:
       - name: init
-        image: '{{ .Values.image.name }}:{{ .Values.image.version }}'
+        image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
         args:
         - ozone
         - scm
         - --init
+        envFrom:
+        - configMapRef:
+            name: config
         volumeMounts:
         - name: data
           mountPath: /data
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/ozone-site.xml
-          subPath: ozone-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/core-site.xml
-          subPath: core-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/hdfs-site.xml
-          subPath: hdfs-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/log4j.properties
-          subPath: log4j.properties
       containers:
       - name: scm
-        image: '{{ .Values.image.name }}:{{ .Values.image.version }}'
-        #command: ["/bin/bash", "-c", "--"]
-        #args: [ "while true; do sleep 10000; done;"]
-        ports:
-        - containerPort: 9961
+        image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
         args:
         - ozone
         - scm
@@ -75,52 +64,21 @@ spec:
           tcpSocket:
             port: 9861
           initialDelaySeconds: 30
+        envFrom:
+        - configMapRef:
+            name: config
         volumeMounts:
         - name: data
           mountPath: /data
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/ozone-site.xml
-          subPath: ozone-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/core-site.xml
-          subPath: core-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/hdfs-site.xml
-          subPath: hdfs-site.xml
-        - name: config
-          mountPath: /opt/hadoop/etc/hadoop/log4j.properties
-          subPath: log4j.properties
-        {{- if and .Values.security.enabled (eq .Values.security.authentication "kerberos") }}
-        - name: scm-keytab
-          mountPath: {{ dir .Values.scm.security.kerberos.keytab.path }}
-        - name: krb5-conf
-          mountPath: /etc/krb5.conf
-          subPath: krb5.conf
-        {{- end }}
-      volumes:
-      {{- if and .Values.security.enabled (eq .Values.security.authentication "kerberos") }}
-      - name: scm-keytab
-        secret:
-          secretName: scm-keytab
-          items:
-          - key: {{ base .Values.scm.security.kerberos.keytab.path }}
-            path: {{ base .Values.scm.security.kerberos.keytab.path }}
-      - name: krb5-conf
-        configMap:
-          name: krb5-conf
-      {{- end }}
-      - name: config
-        configMap:
-          name: config
-          items:
-          - key: "ozone-site.xml"
-            path: "ozone-site.xml"
-          - key: "core-site.xml"
-            path: "core-site.xml"
-          - key: "hdfs-site.xml"
-            path: "hdfs-site.xml"
-          - key: "log4j.properties"
-            path: "log4j.properties"
+        resources:
+          limits:
+            cpu: {{ .Values.scm.resources.limits.cpu }}
+            memory: {{ .Values.scm.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.scm.resources.requests.cpu }}
+            memory: {{ .Values.scm.resources.requests.memory }}
+#      nodeSelector:
+#        kubernetes.io/hostname: kubemaster
   volumeClaimTemplates:
   - metadata:
       name: data
@@ -129,4 +87,4 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: {{ .Values.scm.volume.storage }}
+          storage: {{ .Values.scm.storage.size }}

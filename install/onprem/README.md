@@ -67,7 +67,7 @@ helm install -n metallb-system metallb metallb \
 7. [notebook-controller](./notebook-controller)(Optional for mlplatform)
 8. [argo](./argo)(Optional for mlplatform)
 9. [nginx](./nginx)
-10. [ozone](./ozone)(Not yet stable. Please Skip)
+10. [ozone](./ozone)
 11. [tibero](./tibero)
 12. [hyperdata](./hyperdata)
 13. [kca](./kca)
