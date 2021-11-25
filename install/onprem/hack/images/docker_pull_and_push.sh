@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
@@ -68,7 +69,6 @@ pull_and_push gcr.io/kfserving/kfserving-controller:${KFSERVING_CONTROLLER} ${RE
 
 pull_and_push gcr.io/kubebuilder/kube-rbac-proxy:${KFSERVING_KUBE_RBAC_PROXY} ${REMOTE_REGISTRY}/kubebuilder/kube-rbac-proxy:${KFSERVING_KUBE_RBAC_PROXY}
 
-
 # notebook
 pull_and_push gcr.io/kubeflow-images-public/notebook-controller:${NOTEBOOK_CONTROLLER} ${REMOTE_REGISTRY}/kubeflow-images-public/notebook-controller:${NOTEBOOK_CONTROLLER}
 
@@ -77,6 +77,9 @@ pull_and_push argoproj/workflow-controller:${ARGO_WORKFLOW_CONTROLLER} ${REMOTE_
 
 # nginx
 pull_and_push k8s.gcr.io/ingress-nginx/controller:${INGRESS_NGINX} ${REMOTE_REGISTRY}/ingress-nginx/controller:${INGRESS_NGINX}
+
+# neo4j
+pull_and_push neo4j:${NEO4J_TAG} ${REMOTE_REGISTRY}/neto4j:${NEO4J_TAG}
 
 # hyperdata
 #pull_and_push ${HYPERDATA_REGISTRY}/hyperdata/hyperdata8.3_tb:${TIBERO} ${REMOTE_REGISTRY}/hyperdata/hyperdata8.3_tb:${TIBERO}
