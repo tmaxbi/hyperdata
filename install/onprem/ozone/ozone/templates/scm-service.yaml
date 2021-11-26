@@ -22,6 +22,8 @@ spec:
   ports:
   - port: 9876
     name: ui
+  - port: 9860
+    name: scm-port
   type: {{ .Values.scm.service.type }}
   selector:
     app: ozone

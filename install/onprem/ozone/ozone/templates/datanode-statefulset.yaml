@@ -58,9 +58,13 @@ spec:
       - name: datanode
         image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
-        args:
-        - ozone
-        - datanode
+        command: ["/bin/bash", "-c"]
+        args: ["bash /opt/hadoop/boot.sh & /usr/local/bin/start-ozone-all.sh ozone datanode"]
+        env:
+        - name: IS_DATANODE
+          value: "Y"
+        - name: OM_POD_IP
+          value: om-0.om
         envFrom:
         - configMapRef:
             name: config

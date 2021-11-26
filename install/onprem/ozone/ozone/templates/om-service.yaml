@@ -23,7 +23,13 @@ spec:
   - port: 9874
     name: ui
   - port: 9862
-    name: rpc
+    name: om-port
+  - port: 25100
+    name: ssvr-lsnr
+  - port: 15000
+    name: coordinator
+  - port: 2000
+    name: java-agent
   type: {{ .Values.om.service.type }}
   selector:
     app: ozone
