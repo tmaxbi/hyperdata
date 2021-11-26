@@ -17,7 +17,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: config
+  name: ozone-config
 data:
   OZONE-SITE.XML_hdds.datanode.dir: /data/storage
   OZONE-SITE.XML_ozone.scm.datanode.id.dir: /data

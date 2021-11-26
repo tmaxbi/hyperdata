@@ -22,6 +22,8 @@ spec:
   ports:
   - port: 9870
     name: rpc
+  - port: 16000
+    name: dn-agent
   clusterIP: None
   selector:
     app: ozone

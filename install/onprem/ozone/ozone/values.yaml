@@ -19,6 +19,11 @@ om:
     size: 2Gi
   service:
     type: NodePort
+    # om의 service type이 nodeport일 경우, 아래 nodeport를 사용
+    nodePorts:
+      om: 31906
+      ssvrListener: 32301
+      javaAgent: 30441
 
 scm:
   replicas: 1
