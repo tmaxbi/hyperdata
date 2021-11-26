@@ -44,7 +44,7 @@ spec:
         image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
         command: ["/bin/bash", "-c"]
-        args: ["bash /opt/hadoop/boot.sh & /usr/local/bin/start-ozone-all.sh ozone om"]
+        args: ["(sleep 180; bash /opt/hadoop/boot.sh) & /opt/hadoop/libexec/entrypoint.sh ozone om"]
         env:
         - name: WAITFOR
           value: scm-0.scm:9876

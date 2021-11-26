@@ -24,10 +24,10 @@ scm:
   replicas: 1
   resources:
     limits:
-      cpu: "4000m"
+      cpu: "1000m"
       memory: "4000Mi"
     requests:
-      cpu: "1000m"
+      cpu: "500m"
       memory: "500Mi"
   storage:
     size: 2Gi
@@ -50,10 +50,10 @@ s3g:
   replicas: 1
   resources:
     limits:
-      cpu: "4000m"
-      memory: "4000Mi"
+      cpu: "500m"
+      memory: "2000Mi"
     requests:
-      cpu: "1000m"
+      cpu: "200m"
       memory: "500Mi"
   storage:
     size: 2Gi
