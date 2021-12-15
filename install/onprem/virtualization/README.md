@@ -27,7 +27,7 @@
    --set db.port=8629 \
    --set hyperdata.address=svc-hd-dev41 \
    --set hyperdata.port=8080 \
-   --set loadBalancer.enabled=false 
+   --set loadBalancer.enabled=false \
    --set pvc.name=pvc-db-dev41 \
    --set pvc.mountpath=/db \
    --set logging.path=virtualization/logs
