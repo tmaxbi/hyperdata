@@ -2,7 +2,6 @@ image: 192.168.179.44:5000/hyperdata8.3_virtualization:20211210_v1
 
 db:
   address: tiberolocaldns
-  mountPath: /db
   port: 8629
   sid: tibero
 

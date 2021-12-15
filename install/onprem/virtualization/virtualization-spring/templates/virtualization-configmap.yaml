@@ -8,9 +8,9 @@ data:
     ###
     ##### Web Server Config ########################################
     ws:
-      filepath: {{ .Values.db.mountPath }}/input
-      saveoutput_filepath: {{ .Values.db.mountPath }}/output
-      saveoutput_temp_filepath: {{ .Values.db.mountPath }}/temp
+      filepath: {{ .Values.pvc.mountPath }}/input
+      saveoutput_filepath: {{ .Values.pvc.mountPath }}/output
+      saveoutput_temp_filepath: {{ .Values.pvc.mountPath }}/temp
     ### TIBERO
     tibero:
       ip: {{ .Values.db.address }}
