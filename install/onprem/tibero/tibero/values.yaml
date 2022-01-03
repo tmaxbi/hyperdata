@@ -11,6 +11,10 @@ db:
 shmSize: 2Gi
 
 resources:
-  cpu: 2
-  memory: 4Gi
+  requests:
+    cpu: 2
+    memory: 4Gi
+  limits:
+    cpu: 2
+    memory: 4Gi
   storage: 40Gi
