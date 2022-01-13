@@ -1,0 +1,30 @@
+helmDefaults:
+  createNamespace: true
+  wait: true
+  recreatePods: false
+
+releases:
+- name: mlplatform
+  namespace: "{{ .Values.global.namespace }}"
+  version: 0.1.0
+  chart: ../../../charts/mlplatform
+  condition: mlplatform.enabled
+  values:
+  - registry:
+      address: {{ .Values.global.registry.name }}
+      secret: {{ .Values.global.registry.imagePullSecrets }}
+    kubernetes:
+      istio:
+        ingressgateway:
+          ip: {{ .Values.global.masterNodeIp }}
+    backend:
+      {{ toYaml .Values.mlplatform.backend | nindent 6 }}
+    frontend:
+      {{ toYaml .Values.mlplatform.frontend | nindent 6 }}
+    models:
+      {{ toYaml .Values.mlplatform.models | nindent 6 }}
+    automl:
+      {{ toYaml .Values.mlplatform.automl | nindent 6 }}
+    mllabs:
+      {{ toYaml .Values.mlplatform.mllabs | nindent 6 }}
+    

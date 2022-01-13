@@ -1,0 +1,4 @@
+docker.io/calico/kube-controllers:v3.21.2
+docker.io/calico/node:v3.21.2
+docker.io/calico/typha:v3.21.2
+quay.io/tigera/operator:v1.23.3

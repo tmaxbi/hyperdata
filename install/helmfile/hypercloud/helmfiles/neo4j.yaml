@@ -1,0 +1,15 @@
+helmDefaults:
+  createNamespace: true
+  wait: true
+  recreatePods: false
+
+releases:
+- name: neo4j
+  namespace: "{{ .Values.global.namespace }}"
+  version: 0.1.0
+  chart: ../../../charts/neo4j
+  condition: neo4j.enabled
+  values:
+  - imageTag: {{ .Values.neo4j.image.tag }}
+    resources:
+    {{ toYaml .Values.neo4j.resources | nindent 6 }}

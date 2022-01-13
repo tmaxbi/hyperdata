@@ -1,9 +1,0 @@
-installer/images/*
-installer/installer.yaml
-installer/template.yaml
-installer/hyperdata_config.properties
-installer/image_config.properties
-source/helm/charts
-source/helm/global_values.yaml
-source/helm/values.yaml
-source/helm/charts.yaml

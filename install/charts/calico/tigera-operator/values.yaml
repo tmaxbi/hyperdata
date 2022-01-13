@@ -1,0 +1,28 @@
+imagePullSecrets: {}
+
+installation:
+  enabled: true
+  kubernetesProvider: ""
+
+apiServer:
+  enabled: true
+
+certs:
+  node:
+    key:
+    cert:
+    commonName:
+  typha:
+    key:
+    cert:
+    commonName:
+    caBundle:
+
+# Configuration for the tigera operator
+tigeraOperator:
+  image: tigera/operator
+  version: v1.23.3
+  registry: quay.io
+calicoctl:
+  image: quay.io/docker.io/calico/ctl
+  tag: v3.21.2

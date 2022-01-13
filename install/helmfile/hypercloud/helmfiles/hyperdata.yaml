@@ -1,0 +1,26 @@
+helmDefaults:
+  createNamespace: true
+  wait: true
+  recreatePods: false
+
+releases:
+- name: hyperdata
+  namespace: "{{ .Values.global.namespace }}"
+  version: 0.1.0
+  chart: ../../../charts/hyperdata
+  condition: hyperdata.enabled
+  values:
+  - image: "{{ .Values.global.registry.name }}/hyperdata20.4_hd:{{ .Values.hyperdata.image.tag }}"
+    loadbalancer:
+      enabled: {{ .Values.nginx.loadBalancer.enabled }}
+      ip: {{ .Values.nginx.loadBalancer.ip }}
+    resources:
+    {{ toYaml .Values.hyperdata.resources | nindent 6 }}
+    sqlEditor: {{ .Values.hyperdata.sqlEditor.enabled }}
+{{ if .Values.nginx.loadBalancer.enabled }}
+    webserver:
+      ip: {{ .Values.nginx.loadBalancer.ip }}
+{{ else }}
+      ip: {{ .Values.global.masterNodeIp }}
+{{ end }}
+      port: {{ .Values.nginx.port }}

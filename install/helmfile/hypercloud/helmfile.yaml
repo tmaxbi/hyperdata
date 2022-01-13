@@ -1,0 +1,40 @@
+environments:
+  hyperdata:
+    values:
+    - environments/hyperdata_private.yaml.gotmpl
+---
+helmfiles:
+- path: helmfiles/nginx.yaml
+  values:
+  - global:
+    {{ toYaml .Values.global | nindent 6 }}
+  - nginx:
+    {{ toYaml .Values.nginx | nindent 6 }}
+- path: helmfiles/tibero.yaml
+  values:
+  - global:
+    {{ toYaml .Values.global | nindent 6 }}
+  - nginx:
+    {{ toYaml .Values.nginx | nindent 6 }}
+  - tibero:
+    {{ toYaml .Values.tibero | nindent 6 }}
+- path: helmfiles/hyperdata.yaml
+  values:
+  - global:
+    {{ toYaml .Values.global | nindent 6 }}
+  - nginx:
+    {{ toYaml .Values.nginx | nindent 6 }}
+  - hyperdata:
+    {{ toYaml .Values.hyperdata | nindent 6 }}
+- path: helmfiles/neo4j.yaml
+  values:
+  - global:
+    {{ toYaml .Values.global | nindent 6 }}
+  - neo4j:
+    {{ toYaml .Values.neo4j | nindent 6 }}
+- path: helmfiles/mlplatform.yaml
+  values:
+  - global:
+    {{ toYaml .Values.global | nindent 6 }}
+  - mlplatform:
+    {{ toYaml .Values.mlplatform | nindent 6 }}

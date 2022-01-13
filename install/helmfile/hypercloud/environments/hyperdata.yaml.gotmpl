@@ -1,0 +1,96 @@
+global:
+  # 해당 namespace에 hyperdata가 설치됨
+  namespace: hyperdata
+
+  # hyperdata가 설치되는 쿠버네티스 클러스터의 master node ip
+  masterNodeIp: 192.168.179.31
+
+  # hyperdata 관련 이미지들이 적재된 image registry 정보
+  registry:
+    name: 192.168.179.44:5000
+    imagePullSecrets: no-secret
+
+
+nginx:
+  enabled: true
+
+  # enabled = true일 경우,
+  ## ip는 nginx service의 LoadBalancerIP, port는 service의 port로 사용
+  # enabled = false일 경우,
+  ## ip는 사용되지 않음. port는 NodePort로 사용
+  loadBalancer:
+    enabled: true
+    ip: 192.168.179.38
+  port: 8080
+
+
+tibero:
+  enabled: true
+  image:
+    tag: 20210811_v1
+  # memory의 2분의 1 권장
+  shmSize: 2Gi
+  resources:
+    requests:
+      cpu: 2
+      memory: 4Gi
+    limits:
+      cpu: 2
+      memory: 4Gi
+    storage: 40Gi  
+
+
+hyperdata:
+  enabled: true
+  image:
+    tag: 20210820182035
+  resources:
+    requests:
+      cpu: 2
+      memory: 4Gi
+    limits:
+      cpu: 2
+      memory: 4Gi
+  sqlEditor:
+    enabled: true
+
+
+neo4j:
+  enabled: true
+  image:
+    tag: 4.0.1
+  resources:
+    requests:
+      cpu: 1
+      memory: 2Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+
+
+mlplatform:
+  enabled: true
+  backend:
+    image:
+      tag: 20211215_v1
+  frontend:
+    image:
+      tag: 21211117_v2
+  automl:
+    image:
+      tag: 20211116_v1
+  models:
+    recommendation:
+      image:
+        tag: 20211229_v1
+  mllab:
+    image:
+      tensorflow1:
+        tag: 20211027_v1
+      tensorflow2:
+        tag: 20211027_v1
+      pytorch: 
+        tag: 20211027_v1
+      statisticAnaylsis:
+        tag: 20211125_v1
+  

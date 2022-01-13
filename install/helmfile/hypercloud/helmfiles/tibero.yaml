@@ -1,0 +1,19 @@
+helmDefaults:
+  createNamespace: true
+  wait: true
+  recreatePods: false
+
+releases:
+- name: tibero
+  namespace: "{{ .Values.global.namespace }}"
+  version: 0.1.0
+  chart: ../../../charts/tibero
+  condition: tibero.enabled
+  values:
+  - image: "{{ .Values.global.registry.name }}/hyperdata20.4_tb:{{ .Values.tibero.image.tag }}"
+    loadbalancer:
+      enabled: {{ .Values.nginx.loadBalancer.enabled }}
+      ip: {{ .Values.nginx.loadBalancer.ip }}
+    shmSize: {{ .Values.tibero.shmSize }}
+    resources:
+    {{ toYaml .Values.tibero.resources | nindent 6 }}

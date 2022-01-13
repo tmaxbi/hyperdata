@@ -1,0 +1,43 @@
+helmDefaults:
+  createNamespace: true
+  wait: true
+  recreatePods: false
+
+releases:
+- name: nginx
+  namespace: "{{ .Values.global.namespace }}"
+  version: 1.0.0
+  chart: ../../../charts/nginx
+  condition: nginx.enabled
+  values:
+  - fullnameOverride: "{{ .Values.global.namespace }}-nginx"
+    ingressClassResource:
+      name: "{{ .Values.global.namespace }}-nginx"
+    controller:
+      image:
+        registry: {{ .Values.global.registry.name }}
+        image: ingress-nginx/controller
+        tag: v1.0.0
+        digest: ""
+      config:
+        use-http2: "false"
+    scope:
+      enabled: true
+      namespace: {{ .Values.global.namespace }}
+    rbac:
+      create: true
+    service:
+      enableHttp: false
+      enableHttps: true
+{{ if .Values.nginx.loadBalancer.enabled }}
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/allow-shared-ip: top
+      sessionAffinity: None
+      externalTrafficPolicy: Cluster
+      loadBalancerIP: {{ .Values.nginx.loadBalancer.ip }}
+      ports:
+        https: {{ .Values.nginx.port }}
+{{ else }}
+      type: NodePort
+{{ end }}
