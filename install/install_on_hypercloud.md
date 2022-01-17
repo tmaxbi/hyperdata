@@ -1,5 +1,6 @@
 # Hyperdata On HyperCloud 설치 가이드
 
+## 설치
 
 ### 1. 환경 구성
 ```
@@ -21,5 +22,22 @@ $ cd helmfile/hypercloud
 # 환경변수 파일을 열어 원하는 설치 형태에 맞게 수정
 $ vi environments/hyperdata.yaml.gotmpl
 
-$ helmfile sync
+$ helmfile -e hyperdata apply
+```
+
+## 업데이트
+```
+$ cd helmfile/hypercloud
+
+# 원하는 환경변수 수정
+$ vi environments/hyperdata.yaml.gotmpl
+
+$ helmfile -e hyperdata apply
+
+```
+
+## 삭제
+```
+# 네임스페이스 삭제 시 관련된 모든 리소스가 삭제됨
+$ kubectl delete ns hyperdata
 ```
