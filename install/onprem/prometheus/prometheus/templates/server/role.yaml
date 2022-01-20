@@ -1,0 +1,38 @@
+{{- if and .Values.server.enabled .Values.rbac.create .Values.server.namespaces -}}
+{{ range $.Values.server.namespaces -}}
+---
+apiVersion: {{ template "rbac.apiVersion" $ }}
+kind: Role
+metadata:
+  labels:
+    {{- include "prometheus.server.labels" $ | nindent 4 }}
+  name: {{ template "prometheus.server.fullname" $ }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - endpoints
+      - pods
+      - ingresses
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "extensions"
+      - "networking.k8s.io"
+    resources:
+      - ingresses/status
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+#  - nonResourceURLs:
+#      - "/metrics"
+#    verbs:
+#      - get
+{{ end -}}
+{{ end -}}

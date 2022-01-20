@@ -76,3 +76,4 @@ helm install -n metallb-system metallb metallb \
 
 ## Optional
 - [gpu-operator](./gpu-operator)
+- [prometheus](./prometheus)
