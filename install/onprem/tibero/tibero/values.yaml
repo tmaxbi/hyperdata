@@ -9,12 +9,13 @@ db:
   mountPath: /db
 
 shmSize: 2Gi
+memoryTarget: 4Gi
 
 resources:
   requests:
-    cpu: 2
-    memory: 4Gi
+    cpu: 4
+    memory: 8Gi
   limits:
-    cpu: 2
-    memory: 4Gi
+    cpu: 4
+    memory: 8Gi
   storage: 40Gi
