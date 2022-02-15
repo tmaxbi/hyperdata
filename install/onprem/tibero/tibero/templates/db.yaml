@@ -16,7 +16,7 @@ spec:
     - name: TOTAL_SHM_SIZE
       value: "{{ .Values.shmSize | replace "Gi" "" }}"
     - name: MEMORY_TARGET
-      value: "{{ .Values.resources.limits.memory | replace "Gi" "" }}"
+      value: "{{ .Values.memoryTarget | replace "Gi" "" }}"
     - name: LOG_BUFFER
       value: "300M"
     - name: LOG_GROUP
