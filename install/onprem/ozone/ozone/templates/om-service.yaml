@@ -23,21 +23,12 @@ spec:
   - port: 9874
     name: ui
   - port: 9862
-    {{- if eq .Values.om.service.type "NodePort" }}
-    nodePort: {{ .Values.om.service.nodePorts.om }}
-    {{- end }}
     name: om-port
   - port: 25100
-    {{- if eq .Values.om.service.type "NodePort" }}
-    nodePort: {{ .Values.om.service.nodePorts.ssvrListener }}
-    {{- end }}
     name: ssvr-lsnr
   - port: 15000
     name: coordinator
   - port: 2000
-    {{- if eq .Values.om.service.type "NodePort" }}
-    nodePort: {{ .Values.om.service.nodePorts.javaAgent }}
-    {{- end }}
     name: java-agent
   type: {{ .Values.om.service.type }}
   selector:
