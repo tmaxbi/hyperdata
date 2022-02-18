@@ -23,10 +23,6 @@ neo4j:
   password: tmax
   username: neo4j
 
-ssvr5:
-  SSVR5_LISTENER_PORT:
-  SSVR5_JAVA_AGENT_PORT:
-
 db:
   address: tiberolocaldns
   persistentVolumeClaimName: tibero-pvc-db
