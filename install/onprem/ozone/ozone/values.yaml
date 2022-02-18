@@ -19,6 +19,10 @@ om:
     size: 10Gi
   service:
     type: NodePort
+    nodePorts:
+      om: 31903
+      ssvrListener: 30445
+      javaAgent: 32305
     
 scm:
   replicas: 1
