@@ -20,9 +20,9 @@ om:
   service:
     type: NodePort
     nodePorts:
-      om: 31903
-      ssvrListener: 30445
-      javaAgent: 32305
+      om: 0
+      ssvrListener: 0
+      javaAgent: 0
     
 scm:
   replicas: 1
