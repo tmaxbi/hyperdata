@@ -11,4 +11,3 @@ jeusadmin -u jeus -p jeus "modify-web-engine-configuration -server adminServer -
 jeusadmin -u jeus -p jeus "disable-webadmin"
 $JEUS_HOME/bin/stopServer -host localhost:9736 -u jeus -p jeus
 # $JEUS_HOME/bin/startDomainAdminServer -u jeus -p jeus
-#
