@@ -1,5 +1,0 @@
-apiVersion: v2
-appVersion: v8.3
-name: tibero
-description: Tibero Helm chart for Kubernetes
-version: 0.1.0
