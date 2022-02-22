@@ -9,6 +9,8 @@ spec:
       app: hyperdata-hd
   template:
     metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
       labels:
         lb: hyperdata-hd
         app: hyperdata-hd
