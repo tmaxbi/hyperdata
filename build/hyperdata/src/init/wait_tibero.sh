@@ -6,7 +6,7 @@ set +e
 
 # 1. check until tibero init
 echo "Initialize hyperdata start."
-echo "Wait until the tibero is running. timeout 600 seconds."
+echo "Wait until the tibero is running. timeout 1200 seconds."
 start_time=$(date +%s)
 while true; do
   # check is tbprobe return zero
@@ -24,7 +24,7 @@ EOF
 
   cur_time=$(date +%s)
   time_diff=$((cur_time-start_time))
-  if [ $time_diff -gt 1000 ]; then
+  if [ $time_diff -gt 1200 ]; then
     echo "TBPROBE always failed. please check your tibero."
     exit 1
   fi
