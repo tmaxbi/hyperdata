@@ -1,13 +1,12 @@
 #!/bin/sh
 
+cp /deploy_src/src/hadoop/hadoop_classpath.conf ~/.bashrc
+source ~/.bashrc
+
 if [ -d $HADOOP_HOME ]; then 
   echo "Hadoop already exists."
-  cp /deploy_src/src/hadoop/hadoop_classpath.conf ~/.bashrc
-  echo "alias tlog='tail -f /db/tibero6/instance/tibero/log/slog/sys.log'" >> ~/.bashrc
-  source ~/.bashrc
 else 
   sh /deploy_src/src/hadoop/install.sh 
-  source ~/.bashrc
 fi
 
 if [ $PV_RECOVERY="Y" ]; then
