@@ -10,27 +10,31 @@
 #chown -R hyperdata:hyperdata /db
 #chown -R hyperdata:hyperdata /deploy_src
 
-if [ -d $HADOOP_HOME ]; then echo "Hadoop already exists.";
-cp /deploy_src/src/hadoop/hadoop_classpath2.conf ~/.bashrc;
+if [ -d $HADOOP_HOME ]; then 
+  echo "Hadoop already exists."
+  cp /deploy_src/src/hadoop/hadoop_classpath2.conf ~/.bashrc
 
-echo "alias tlog='tail -f /db/tibero6/instance/tibero/log/slog/sys.log'" >> ~/.bashrc
+  echo "alias tlog='tail -f /db/tibero6/instance/tibero/log/slog/sys.log'" >> ~/.bashrc
 
-source ~/.bashrc;
-#. /deploy_src/src/hadoop/hadoop_classpath.conf;
-else sh /deploy_src/src/hadoop/install.sh; fi
+  source ~/.bashrc
+  #. /deploy_src/src/hadoop/hadoop_classpath.conf
+else 
+  sh /deploy_src/src/hadoop/install.sh 
+fi
 
-
-if [ $PV_RECOVERY = 'Y' ]; then echo "Start PV Recovery and tbboot";
+if [ $PV_RECOVERY = 'Y' ]; then 
+  echo "Start PV Recovery and tbboot"
 
 else
-tar -xzf /deploy_src/src/tibero/*.tar.gz -C /db/
+  tar -xzf /deploy_src/src/tibero/*.tar.gz -C /db/
 
-if [ -d $TB_HOME/database ]; then 
-echo "Tibero already exists."; 
-sh /deploy_src/src/tibero/sync_hostip.sh;
-else sh /deploy_src/src/tibero/install.sh; fi
-tbboot;
-
+  if [ -d $TB_HOME/database ]; then 
+    echo "Tibero already exists."
+    sh /deploy_src/src/tibero/sync_hostip.sh
+  else 
+    sh /deploy_src/src/tibero/install.sh 
+  fi
+tbboot
 tbdown immediate
 source ~/.bashrc
 tbboot
