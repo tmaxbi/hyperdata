@@ -7,9 +7,10 @@ if [ -d $HADOOP_HOME ]; then
   source ~/.bashrc
 else 
   sh /deploy_src/src/hadoop/install.sh 
+  source ~/.bashrc
 fi
 
-if [ $PV_RECOVERY = 'Y' ]; then 
+if [ $PV_RECOVERY = "Y" ]; then 
   echo "Start PV Recovery and tbboot"
 else
   tar -xzf /deploy_src/src/tibero/*.tar.gz -C /db/
