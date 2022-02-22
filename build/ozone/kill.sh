@@ -4,6 +4,6 @@
 
 ssvr5-stop.sh
 
-if [ "$IS_OM" = "Y" ];then
-type5agent stop
+if [ "$IS_OM" = "Y" ]; then
+  type5agent stop
 fi
