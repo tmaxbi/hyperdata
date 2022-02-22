@@ -79,12 +79,10 @@ ENV LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_L
 
 
 #==================== 3) Set Tibero ENV ====================
-
 #COPY --chown=hyperdata:hyperdata src.tar.gz /deploy_src/src.tar.gz
 #RUN tar -xvf /deploy_src/src.tar.gz
 
 #==================== 4) Set Supervisor ENV ====================
-
 #RUN mkdir -p /etc/supervisor/conf.d
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
 RUN chmod 777 /deploy_src/src/boot.sh
