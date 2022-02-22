@@ -1,8 +1,8 @@
 #!/bin/bash
-export BACKEND_IP=`ifconfig|awk '{print $2}'|sed -n '2p'|awk -F ':' '{print $2}'`
-#tar -xzf /deploy_src/src/tibero/*.tar.gz -C /db/
-cp -r /deploy_src/src/client /db/
 
+export BACKEND_IP=`ifconfig|awk '{print $2}'|sed -n '2p'|awk -F ':' '{print $2}'`
+
+cp -r /deploy_src/src/client /db/
 cp /deploy_src/src/tibero/license.xml $TB_HOME/license/license.xml
 cp /deploy_src/src/tibero/tbdsn.tbr $TB_HOME/client/config/
 cp /deploy_src/src/tibero/*.tip $TB_HOME/config/
@@ -12,9 +12,9 @@ chmod 640 $TB_HOME/config/$TB_SID.tip
 chmod 640 $TB_HOME/client/config/tbdsn.tbr
 
 if [ -z $LSNR_INVITED_IP ]; then
-sed -i "s/LSNR_INVITED_IP=.*/#LSNR_INVITED_IP=/g" $TB_HOME/config/*.tip
+     sed -i "s/LSNR_INVITED_IP=.*/#LSNR_INVITED_IP=/g" $TB_HOME/config/*.tip
 else
-sed -i "s/LSNR_INVITED_IP=.*/LSNR_INVITED_IP=$LSNR_INVITED_IP/g" $TB_HOME/config/*.tip
+     sed -i "s/LSNR_INVITED_IP=.*/LSNR_INVITED_IP=$LSNR_INVITED_IP/g" $TB_HOME/config/*.tip
 fi
 
 if [ $TB_PORT ]; then
