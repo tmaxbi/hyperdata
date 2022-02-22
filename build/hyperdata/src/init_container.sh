@@ -4,7 +4,6 @@ set -e
 
 ## TODO: install_interactive.sh를 매번 돌리지 않아도 정상적으로 수행되도록 수정
 
-
 # set envs
 . $DEPLOY_HOME/set_envs.sh
 
@@ -36,4 +35,4 @@ if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
 
   ## stop jeus
   stopServer -host localhost:9736 -u jeus -p jeus
-  fi
+fi
