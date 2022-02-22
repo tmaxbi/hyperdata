@@ -9,6 +9,8 @@ spec:
       app: hyperdata-kca
   template:
     metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
       labels:
         lb: hyperdata-kca
         app: hyperdata-kca
