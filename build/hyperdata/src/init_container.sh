@@ -4,7 +4,7 @@ set -e
 
 ## TODO: install_interactive.sh를 매번 돌리지 않아도 정상적으로 수행되도록 수정
 
-while [ -f $TB_MOUNT_VOLUME_PATH/tibero6/bin/tbprobe ]
+while [ ! -f $TB_MOUNT_VOLUME_PATH/tibero6/bin/tbprobe ]
 do
   # set envs
   . $DEPLOY_HOME/set_envs.sh
@@ -38,4 +38,5 @@ do
     ## stop jeus
     stopServer -host localhost:9736 -u jeus -p jeus
   fi
+  break
 done
