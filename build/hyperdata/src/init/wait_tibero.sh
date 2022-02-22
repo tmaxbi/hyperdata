@@ -8,26 +8,26 @@ set +e
 echo "Initialize hyperdata start."
 echo "Wait until the tibero is running. timeout 1200 seconds."
 start_time=$(date +%s)
-while true; do
+while true; 
+do
   # check is tbprobe return zero
   code=$(tbprobe $TB_IP:$TB_PORT && echo $?)
   if [ "$code" = "0" ]; then
     # check is tibero sid is created
     tb_login_check=$(tbsql tibero/tmax@"(INSTANCE=(HOST=$TB_IP)(PORT=$TB_PORT)(DB_NAME=$TB_SID))" <<EOF
 exit;
-EOF
-    )
-    if [[ $tb_login_check == *"Connected to Tibero"* ]]; then
-      break
+EOF)
+    if [ $tb_login_check == *"Connected to Tibero"* ]; then
+        break
     fi
   fi
 
   cur_time=$(date +%s)
   time_diff=$((cur_time-start_time))
+  
   if [ $time_diff -gt 1200 ]; then
     echo "TBPROBE always failed. please check your tibero."
     exit 1
   fi
-
   sleep 30
 done
