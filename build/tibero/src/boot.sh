@@ -10,15 +10,15 @@ else
   source ~/.bashrc
 fi
 
-if [ $PV_RECOVERY = "Y" ]; then 
+if [ $PV_RECOVERY="Y" ]; then
   echo "Start PV Recovery and tbboot"
 else
   tar -xzf /deploy_src/src/tibero/*.tar.gz -C /db/
-  if [ -d $TB_HOME/database ]; then 
+  if [ -d $TB_HOME/database ]; then
     echo "Tibero already exists."
     sh /deploy_src/src/tibero/sync_hostip.sh
-  else 
-    sh /deploy_src/src/tibero/install.sh 
+  else
+    sh /deploy_src/src/tibero/install.sh
   fi
 tbboot
 tbdown immediate
