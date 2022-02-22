@@ -1,6 +1,6 @@
 #!/bin/bash
 # set -e 옵션은 에러가 발생했을 시, 더이상 진행하지 않고 bash를 종료하는 명령어입니다.
-set -e
+set +e
 
 ## TODO: install_interactive.sh를 매번 돌리지 않아도 정상적으로 수행되도록 수정
 
