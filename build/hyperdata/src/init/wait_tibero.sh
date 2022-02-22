@@ -24,7 +24,7 @@ EOF
 
   cur_time=$(date +%s)
   time_diff=$((cur_time-start_time))
-  if [ $time_diff -gt 600 ]; then
+  if [ $time_diff -gt 1000 ]; then
     echo "TBPROBE always failed. please check your tibero."
     exit 1
   fi
