@@ -2,6 +2,8 @@ FROM ubuntu:16.04
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
 #==================== 1) Set Package & Locale ====================
+ENV DEBCONF_NOWARNINGS yes
+
 RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y software-properties-common python-software-properties language-pack-ko curl
@@ -43,23 +45,23 @@ RUN mkdir -p /home/hyperdata \
  && echo "root:hyperdata1234!" | chpasswd
 
 ## mosquitto setting
-##RUN usermod -a -G hyperdata mosquitto \
-## && chown -R hyperdata:hyperdata /etc/mosquitto \
-## && chown hyperdata:hyperdata /usr/sbin/mosquitto \
-## && chown mosquitto:hyperdata /var/run/mosquitto
+RUN usermod -a -G hyperdata mosquitto \
+ && chown -R hyperdata:hyperdata /etc/mosquitto \
+ && chown hyperdata:hyperdata /usr/sbin/mosquitto \
+ && chown mosquitto:hyperdata /var/run/mosquitto
 
 #==================== 5) Change Owner ====================
-##COPY --chown=hyperdata:hyperdata src/java $DEPLOY_HOME/java \
-##  && --chown=hyperdata:hyperdata src/jeus $DEPLOY_HOME/jeus8 \
-##  && --chown=hyperdata:hyperdata src/hadoop $DEPLOY_HOME/hadoop \
-##  && --chown=hyperdata:hyperdata src/hyperdata $DEPLOY_HOME/hyperdata20 \
-##  && --chown=hyperdata:hyperdata src/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf \
-##  && --chown=hyperdata:hyperdata src/set_envs.sh $DEPLOY_HOME/set_envs.sh \
-##  && --chown=hyperdata:hyperdata src/init $DEPLOY_HOME/init \
-##  && --chown=hyperdata:hyperdata src/boot $DEPLOY_HOME/boot \
-##  && --chown=hyperdata:hyperdata src/init_container.sh $DEPLOY_HOME/init_container.sh \
-##  &&--chown=hyperdata:hyperdata src/boot.sh $DEPLOY_HOME/boot.sh
+COPY --chown=hyperdata:hyperdata src/java $DEPLOY_HOME/java \
+  && --chown=hyperdata:hyperdata src/jeus $DEPLOY_HOME/jeus8 \
+  && --chown=hyperdata:hyperdata src/hadoop $DEPLOY_HOME/hadoop \
+  && --chown=hyperdata:hyperdata src/hyperdata $DEPLOY_HOME/hyperdata20 \
+  && --chown=hyperdata:hyperdata src/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf \
+  && --chown=hyperdata:hyperdata src/set_envs.sh $DEPLOY_HOME/set_envs.sh \
+  && --chown=hyperdata:hyperdata src/init $DEPLOY_HOME/init \
+  && --chown=hyperdata:hyperdata src/boot $DEPLOY_HOME/boot \
+  && --chown=hyperdata:hyperdata src/init_container.sh $DEPLOY_HOME/init_container.sh \
+  &&--chown=hyperdata:hyperdata src/boot.sh $DEPLOY_HOME/boot.sh
   
 #==================== 6) Set Hadoop Symbolic Link =============
-##RUN rm -rf /etc/krb5.conf
-##RUN ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
+RUN rm -rf /etc/krb5.conf
+RUN ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
