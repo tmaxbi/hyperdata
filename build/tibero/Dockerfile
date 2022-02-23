@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
 #==================== 1) Install Package ====================
-ENV DEBCONF_NOWARNINGS yes
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
  && apt-get upgrade -y \
