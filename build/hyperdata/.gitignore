@@ -1,6 +1,0 @@
-src/hadoop/*
-!src/hadoop/krb5.conf
-src/hyperdata/*
-src/java/*
-src/jeus/*
-!.keep
