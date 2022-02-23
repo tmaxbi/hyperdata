@@ -18,14 +18,14 @@ ENV LANG=ko_KR.UTF-8
 RUN echo "Asia/Seoul" > /etc/timezone
 
 #==================== 2) Install Package ====================
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
+
 RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev g++ gcc autoconf openssl build-essential \
  libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb supervisor \
  apt-transport-https net-tools netcat expect nodejs acl jq maven mosquitto
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y krb5-config krb5-user
-
-RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
 
 #==================== 3) Set SSH ====================
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
