@@ -5,14 +5,15 @@ echo "alias tlog='tail -f /db/tibero6/instance/tibero/log/slog/sys.log'" >> ~/.b
 . ~/.bashrc
 
 if [ -d $HADOOP_HOME ]; then 
-  echo "Hadoop already exists."
+  echo "Hadoop already exists.";
 else 
   sh /deploy_src/src/hadoop/install.sh;
 fi
 
 tar -xzf /deploy_src/src/tibero/*.tar.gz -C /db/
+
 if [ -d $TB_HOME/database ]; then
-  echo "Tibero already exists."
+  echo "Tibero already exists.";
   sh /deploy_src/src/tibero/sync_hostip.sh;
 else
   sh /deploy_src/src/tibero/install.sh;
