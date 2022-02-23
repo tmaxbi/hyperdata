@@ -19,8 +19,8 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
  && service ssh restart
 
 #==================== 3) Unzip & Add Hyperdata User ====================
-RUN mkdir -p /db/client \
- && mkdir -p /etc/supervisor/conf.d
+##RUN mkdir -p /db/client \
+## && mkdir -p /etc/supervisor/conf.d
 
 COPY src.tar.gz /deploy_src/src.tar.gz
 RUN tar -xvf /deploy_src/src.tar.gz -C /deploy_src \
@@ -54,6 +54,6 @@ LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRA
 
 #==================== 5) Set Supervisor ENV ====================
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
-RUN chmod 777 /deploy_src/src/boot.sh
+RUN chmod +x /deploy_src/src/boot.sh
 USER hyperdata
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
