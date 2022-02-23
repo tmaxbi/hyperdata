@@ -5,7 +5,7 @@ MAINTAINER BIQA <BIQA@tmax.co.kr>
 RUN apt-get update \
  && apt-get upgrade -y
  
-RUN add-apt-repository universe \
+RUN apt-add-repository universe \
  && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa -y
  
 RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev g++ gcc autoconf openssl build-essential \
