@@ -13,12 +13,12 @@ fi
 tar -xzf /deploy_src/src/tibero/*.tar.gz -C /db/
 if [ -d $TB_HOME/database ]; then
   echo "Tibero already exists."
-  sh /deploy_src/src/tibero/sync_hostip.sh
+  sh /deploy_src/src/tibero/sync_hostip.sh;
 else
-  sh /deploy_src/src/tibero/install.sh
+  sh /deploy_src/src/tibero/install.sh;
 fi
 
-tbboot
+tbboot;
 tbdown immediate
 . ~/.bashrc
 tbboot
