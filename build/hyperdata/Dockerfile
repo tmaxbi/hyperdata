@@ -1,7 +1,15 @@
 FROM ubuntu:16.04
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
-#==================== 1) Install Package ====================
+#==================== 1) Set Env ====================
+RUN locale-gen ko_KR.UTF-8
+ENV LANG=ko_KR.UTF-8 \
+    DEBIAN_FRONTEND=noninteractive
+
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
+RUN echo "Asia/Seoul" > /etc/timezone
+
+#==================== 2) Install Package ====================
 RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y software-properties-common python-software-properties \
@@ -11,24 +19,17 @@ RUN apt-get update \
  libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb curl  supervisor \
  apt-transport-https net-tools netcat expect nodejs acl language-pack-ko jq maven krb5-config krb5-user mosquitto
 
-#==================== 2) Set SSH ====================
+#==================== 3) Set SSH ====================
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
  && sed -i 's/StrictModes yes/StrictModes no/g' /etc/ssh/sshd_config \
  && echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config \
  && echo "ClientAliveCountMax 99999" >> /etc/ssh/sshd_config \
  && service ssh restart
 
-#==================== 3) Set ENV ====================
-RUN locale-gen ko_KR.UTF-8
-ENV LANG=ko_KR.UTF-8 \
-    DEBIAN_FRONTEND=noninteractive
-
-RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
-RUN echo "Asia/Seoul" > /etc/timezone
-
+#==================== 4) Set Global Env ====================
 ENV DEPLOY_HOME=/home/hyperdata
 
-#==================== 4) Add Hyperdata User ====================
+#==================== 5) Add Hyperdata User ====================
 RUN mkdir -p /home/hyperdata \
  && useradd -d /home/hyperdata -s /bin/bash hyperdata \
  && chown -R hyperdata:hyperdata /home/hyperdata \
