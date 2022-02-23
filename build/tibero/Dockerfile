@@ -23,8 +23,7 @@ RUN mkdir -p /db/client \
  && mkdir -p /etc/supervisor/conf.d
 
 COPY src.tar.gz /deploy_src/src.tar.gz
-RUN tar -xvf /deploy_src/src.tar.gz \
- && chmod 777 /deploy_src/src/java/install.sh \
+RUN tar -xvf /deploy_src/src.tar.gz -C /deploy_src \
  && sh /deploy_src/src/java/install.sh
 
 RUN useradd -d /db -s /bin/bash hyperdata \
