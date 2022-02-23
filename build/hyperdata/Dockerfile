@@ -4,7 +4,7 @@ MAINTAINER BIQA <BIQA@tmax.co.kr>
 #==================== 1) Set Package & Locale ====================
 RUN apt-get update \
  && apt-get upgrade -y \
- && apt-get install -y software-properties-common python-software-properties language-pack-ko
+ && apt-get install -y software-properties-common python-software-properties language-pack-ko curl
 
 RUN apt-add-repository universe \
  && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa -y
@@ -19,7 +19,7 @@ RUN echo "Asia/Seoul" > /etc/timezone
 
 #==================== 2) Install Package ====================
 RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev g++ gcc autoconf openssl build-essential \
- libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb curl supervisor \
+ libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb supervisor \
  apt-transport-https net-tools netcat expect nodejs acl jq maven krb5-config krb5-user mosquitto
 
 #==================== 3) Set SSH ====================
