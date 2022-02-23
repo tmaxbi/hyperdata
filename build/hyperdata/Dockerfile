@@ -43,13 +43,13 @@ RUN mkdir -p /home/hyperdata \
  && echo "root:hyperdata1234!" | chpasswd
 
 ## mosquitto setting
-RUN usermod -a -G hyperdata mosquitto \
+##RUN usermod -a -G hyperdata mosquitto \
  && chown -R hyperdata:hyperdata /etc/mosquitto \
  && chown hyperdata:hyperdata /usr/sbin/mosquitto \
  && chown mosquitto:hyperdata /var/run/mosquitto
 
 #==================== 5) Change Owner ====================
-COPY --chown=hyperdata:hyperdata src/java $DEPLOY_HOME/java \
+##COPY --chown=hyperdata:hyperdata src/java $DEPLOY_HOME/java \
   && --chown=hyperdata:hyperdata src/jeus $DEPLOY_HOME/jeus8 \
   && --chown=hyperdata:hyperdata src/hadoop $DEPLOY_HOME/hadoop \
   && --chown=hyperdata:hyperdata src/hyperdata $DEPLOY_HOME/hyperdata20 \
@@ -61,5 +61,5 @@ COPY --chown=hyperdata:hyperdata src/java $DEPLOY_HOME/java \
   &&--chown=hyperdata:hyperdata src/boot.sh $DEPLOY_HOME/boot.sh
   
 #==================== 6) Set Hadoop Symbolic Link =============
-RUN rm -rf /etc/krb5.conf
-RUN ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
+##RUN rm -rf /etc/krb5.conf
+##RUN ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
