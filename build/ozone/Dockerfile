@@ -12,8 +12,8 @@ COPY ssvr5*.tar.gz /opt/hadoop/ssvr5.tar.gz
 WORKDIR /opt/hadoop
 
 RUN tar -xvf ssvr5.tar.gz \
- && mv /opt/hadoop/ssvr5_* /opt/hadoop/ssvr5
- && sudo chown hadoop:users /opt/hadoop/boot.sh
+ && mv /opt/hadoop/ssvr5_* /opt/hadoop/ssvr5 \
+ && sudo chown hadoop:users /opt/hadoop/boot.sh \ 
  && sudo chown -R hadoop:users /opt/hadoop/ssvr5
 
 # ENTRYPOINT ["/bin/sh", "-c", "/opt/hadoop/boot.sh"]
