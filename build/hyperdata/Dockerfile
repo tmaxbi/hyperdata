@@ -7,13 +7,12 @@ RUN apt-get update \
  && apt-get install -y software-properties-common python-software-properties language-pack-ko curl
 
 RUN apt-add-repository universe \
- && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa -y
+ && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa -y \
+ && apt-get update
 
 RUN locale-gen ko_KR.UTF-8
-
 ENV LANG=ko_KR.UTF-8
 
-RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
 RUN echo "Asia/Seoul" > /etc/timezone
 
 #==================== 2) Install Package ====================
@@ -22,7 +21,9 @@ RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev
  apt-transport-https net-tools netcat expect nodejs acl jq maven mosquitto
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get install -y krb5-config krb5-user 
+RUN apt-get install -y krb5-config krb5-user
+
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
 
 #==================== 3) Set SSH ====================
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
