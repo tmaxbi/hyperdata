@@ -10,16 +10,14 @@ else
   sh /deploy_src/src/hadoop/install.sh;
 fi
 
-if [ $PV_RECOVERY="Y" ]; then
-  echo "Start PV Recovery and tbboot"
+tar -xzf /deploy_src/src/tibero/*.tar.gz -C /db/
+if [ -d $TB_HOME/database ]; then
+  echo "Tibero already exists."
+  sh /deploy_src/src/tibero/sync_hostip.sh
 else
-  tar -xzf /deploy_src/src/tibero/*.tar.gz -C /db/
-  if [ -d $TB_HOME/database ]; then
-    echo "Tibero already exists."
-    sh /deploy_src/src/tibero/sync_hostip.sh
-  else
-    sh /deploy_src/src/tibero/install.sh
-  fi
+  sh /deploy_src/src/tibero/install.sh
+fi
+
 tbboot
 tbdown immediate
 . ~/.bashrc
