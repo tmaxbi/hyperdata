@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
-#==================== 1) Set Env ====================
+#==================== 1) Set Package & Locale ====================
 RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y software-properties-common python-software-properties language-pack-ko
@@ -9,10 +9,10 @@ RUN apt-get update \
 RUN apt-add-repository universe \
  && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa 
 
+RUN locale-gen ko_KR.UTF-8
+
 ENV LANG=ko_KR.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
- 
-RUN locale-gen ko_KR.UTF-8
 
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
 RUN echo "Asia/Seoul" > /etc/timezone
