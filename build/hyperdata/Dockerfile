@@ -3,14 +3,13 @@ MAINTAINER BIQA <BIQA@tmax.co.kr>
 
 #==================== 1) Install Package ====================
 RUN apt-get update \
- && apt-get upgrade -y
- 
-RUN apt-add-repository universe \
- && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa -y
- 
-RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev g++ gcc autoconf openssl build-essential \
-libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb curl software-properties-common python-software-properties supervisor \
-apt-transport-https net-tools netcat expect nodejs acl language-pack-ko jq maven krb5-config krb5-user mosquitto
+ && apt-get upgrade -y \
+ && apt-get install -y software-properties-common python-software-properties \
+ && apt-add-repository universe \
+ && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa -y \
+ && apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev g++ gcc autoconf openssl build-essential \
+ libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb curl  supervisor \
+ apt-transport-https net-tools netcat expect nodejs acl language-pack-ko jq maven krb5-config krb5-user mosquitto
 
 #==================== 2) Set SSH ====================
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
