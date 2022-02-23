@@ -7,7 +7,7 @@ RUN apt-get update \
  && apt-get install -y software-properties-common python-software-properties language-pack-ko
 
 RUN apt-add-repository universe \
- && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa 
+ && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa -y
 
 RUN locale-gen ko_KR.UTF-8
 
