@@ -2,6 +2,8 @@ FROM ubuntu:14.04
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
 #==================== 1) Install Package ====================
+ENV DEBCONF_NOWARNINGS yes
+
 RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y openssh-server unzip libedit-dev libncurses-dev g++ gcc autoconf openssl \
