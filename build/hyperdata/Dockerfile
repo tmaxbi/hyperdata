@@ -51,9 +51,9 @@ RUN usermod -a -G hyperdata mosquitto \
  && chown mosquitto:hyperdata /var/run/mosquitto
 
 #==================== 5) Change Owner ====================
-COPY --chown=hyperdata:hyperdata src/java $DEPLOY_HOME/java \
-  && --chown=hyperdata:hyperdata src/jeus $DEPLOY_HOME/jeus8 \
-  && --chown=hyperdata:hyperdata src/hadoop $DEPLOY_HOME/hadoop \
+COPY --chown=hyperdata:hyperdata src/java $DEPLOY_HOME/java 
+COPY --chown=hyperdata:hyperdata src/jeus $DEPLOY_HOME/jeus8 
+COPY --chown=hyperdata:hyperdata src/hadoop $DEPLOY_HOME/hadoop \
   && --chown=hyperdata:hyperdata src/hyperdata $DEPLOY_HOME/hyperdata20 \
   && --chown=hyperdata:hyperdata src/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf \
   && --chown=hyperdata:hyperdata src/set_envs.sh $DEPLOY_HOME/set_envs.sh \
