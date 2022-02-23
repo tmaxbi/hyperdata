@@ -19,8 +19,8 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
  && service ssh restart
 
 #==================== 3) Unzip & Add Hyperdata User ====================
-##RUN mkdir -p /db/client \
-## && mkdir -p /etc/supervisor/conf.d
+RUN mkdir -p /db/client \
+ && mkdir -p /etc/supervisor/conf.d
 
 COPY src.tar.gz /deploy_src/src.tar.gz
 RUN tar -xvf /deploy_src/src.tar.gz -C /deploy_src \
