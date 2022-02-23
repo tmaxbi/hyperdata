@@ -6,25 +6,23 @@ RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y openssh-server unzip libedit-dev libncurses-dev g++ gcc autoconf openssl \
  build-essential libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb curl software-properties-common \
- python-software-properties acl supervisor language-pack-ko
+ python-software-properties acl supervisor language-pack-ko \
+ && locale-gen ko_KR.UTF-8
 
+#==================== 2) Set SSH ====================
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
  && sed -i 's/StrictModes yes/StrictModes no/g' /etc/ssh/sshd_config \
  && echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config \
  && echo "ClientAliveCountMax 99999" >> /etc/ssh/sshd_config \
  && service ssh restart
 
-RUN locale-gen ko_KR.UTF-8
-
+#==================== 3) Unzip & Add Hyperdata User ====================
 RUN mkdir -p /db/client \
- && mkdir -p /deploy_scr/src
+ && mkdir -p /etc/supervisor/conf.d
 
 COPY src.tar.gz /deploy_src/src.tar.gz
-RUN tar -xvf /deploy_src/src.tar.gz
-
-RUN sh /deploy_src/src/java/install.sh
-
-RUN mkdir -p /etc/supervisor/conf.d
+RUN tar -xvf /deploy_src/src.tar.gz \
+ && sh /deploy_src/src/java/install.sh
 
 RUN useradd -d /db -s /bin/bash hyperdata \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
@@ -32,7 +30,7 @@ RUN useradd -d /db -s /bin/bash hyperdata \
  && chown -R hyperdata:hyperdata /db \
  && chown -R hyperdata:hyperdata /deploy_src
 
-#==================== 2) Set ENV ====================
+#==================== 4) Set ENV ====================
 ENV LANG=ko_KR.UTF-8 \
 JAVA_HOME=/usr/local/jdk1.8.0_172 \
 PATH=$JAVA_HOME/bin:$PATH \
@@ -52,7 +50,7 @@ HADOOP_OPTS="${HADOOP_OPTS} -Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" \
 PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin \
 LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH
 
-#==================== 4) Set Supervisor ENV ====================
+#==================== 5) Set Supervisor ENV ====================
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
 RUN chmod 777 /deploy_src/src/boot.sh
 USER hyperdata
