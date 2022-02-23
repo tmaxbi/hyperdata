@@ -8,7 +8,8 @@ set +e
 echo "Initialize hyperdata start."
 echo "Wait until the tibero is running. timeout 600 seconds."
 start_time=$(date +%s)
-while true; do
+while true; 
+do
   # check is tbprobe return zero
   code=$(tbprobe $TB_IP:$TB_PORT && echo $?)
   if [ "$code" = "0" ]; then
