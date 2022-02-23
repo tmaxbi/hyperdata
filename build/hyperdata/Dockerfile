@@ -11,8 +11,7 @@ RUN apt-add-repository universe \
 
 RUN locale-gen ko_KR.UTF-8
 
-ENV LANG=ko_KR.UTF-8 \
-    DEBIAN_FRONTEND=noninteractive
+ENV LANG=ko_KR.UTF-8
 
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
 RUN echo "Asia/Seoul" > /etc/timezone
@@ -20,7 +19,10 @@ RUN echo "Asia/Seoul" > /etc/timezone
 #==================== 2) Install Package ====================
 RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev g++ gcc autoconf openssl build-essential \
  libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb supervisor \
- apt-transport-https net-tools netcat expect nodejs acl jq maven krb5-config krb5-user mosquitto
+ apt-transport-https net-tools netcat expect nodejs acl jq maven mosquitto
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get install -y krb5-config krb5-user 
 
 #==================== 3) Set SSH ====================
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
