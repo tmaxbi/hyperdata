@@ -5,7 +5,7 @@ set +e
 
 # set envs
 cp $DEPLOY_HOME/set_envs.sh ~/.bashrc
-source ~/.bashrc
+. ~/.bashrc
 #. $DEPLOY_HOME/set_envs.sh
 
 # 1. boot jeus
