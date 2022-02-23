@@ -60,7 +60,7 @@ COPY --chown=hyperdata:hyperdata src/java $DEPLOY_HOME/java \
   && --chown=hyperdata:hyperdata src/init $DEPLOY_HOME/init \
   && --chown=hyperdata:hyperdata src/boot $DEPLOY_HOME/boot \
   && --chown=hyperdata:hyperdata src/init_container.sh $DEPLOY_HOME/init_container.sh \
-  &&--chown=hyperdata:hyperdata src/boot.sh $DEPLOY_HOME/boot.sh
+  && --chown=hyperdata:hyperdata src/boot.sh $DEPLOY_HOME/boot.sh
   
 #==================== 6) Set Hadoop Symbolic Link =============
 RUN rm -rf /etc/krb5.conf
