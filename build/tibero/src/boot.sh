@@ -18,7 +18,6 @@ if [ -d $TB_HOME/database ]; then
 else
   sh /deploy_src/src/tibero/install.sh;
 fi
-
 tbboot;
 tbdown immediate;
 tbboot;
