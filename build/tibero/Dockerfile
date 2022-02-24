@@ -19,15 +19,15 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
  && service ssh restart
 
 #==================== 3) Using Hyperdata User ====================
-RUN useradd -d /db -s /bin/bash hyperdata \
+RUN useradd -d /db -s /bin/bash hyperdata -m \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd 
 
-USER hyperdata
 COPY --chown=hyperdata:hyperdata src.tar.gz /deploy_src/src.tar.gz
 
-RUN mkdir -p /db/client \
- && mkdir -p /etc/supervisor/conf.d \
+USER hyperdata
+
+RUN mkdir -p /etc/supervisor/conf.d \
  && mkdir -p /deploy_src \
  && tar -xvf /deploy_src/src.tar.gz -C /deploy_src \
 
