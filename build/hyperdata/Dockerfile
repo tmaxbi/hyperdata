@@ -38,13 +38,10 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
 ENV DEPLOY_HOME=/home/hyperdata
 
 #==================== 5) Add Hyperdata User ====================
-
-RUN useradd -d /home/hyperdata -s /bin/bash hyperdata \
+RUN useradd -d /home/hyperdata -s /bin/bash hyperdata -m \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd
  
-RUN useradd -d /home/hyperdata -s /bin/bash hyperdata -m
-
 ## mosquitto setting
 RUN usermod -a -G hyperdata mosquitto \
  && chown -R hyperdata:hyperdata /etc/mosquitto \
