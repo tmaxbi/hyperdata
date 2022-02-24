@@ -18,20 +18,22 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
  && echo "ClientAliveCountMax 99999" >> /etc/ssh/sshd_config \
  && service ssh restart
 
-#==================== 3) Unzip & Add Hyperdata User ====================
-RUN mkdir -p /db/client \
- && mkdir -p /etc/supervisor/conf.d \
- && mkdir -p /deploy_src
-
+#==================== 3) Using Hyperdata User ====================
 RUN useradd -d /db -s /bin/bash hyperdata \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
- && echo "root:hyperdata1234!" | chpasswd \
- && chown -R hyperdata:hyperdata /db \
- && chown -R hyperdata:hyperdata /deploy_src
+ && echo "root:hyperdata1234!" | chpasswd 
 
+USER hyperdata
 COPY --chown=hyperdata:hyperdata src.tar.gz /deploy_src/src.tar.gz
-RUN tar -xvf /deploy_src/src.tar.gz -C /deploy_src \
- && sh /deploy_src/src/java/install.sh
+
+RUN mkdir -p /db/client \
+ && mkdir -p /etc/supervisor/conf.d \
+ && mkdir -p /deploy_src \
+ && tar -xvf /deploy_src/src.tar.gz -C /deploy_src \
+
+#==================== 4) JDK Install ====================
+USER root
+RUN sh /deploy_src/src/java/install.sh
 
 #==================== 4) Set ENV ====================
 ENV LANG=ko_KR.UTF-8 \
@@ -55,6 +57,5 @@ LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRA
 
 #==================== 5) Set Supervisor ENV ====================
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
-RUN chmod +x /deploy_src/src/boot.sh
 USER hyperdata
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
