@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
 #==================== 1) Set Package & Locale ====================
-ENV DEBCONF_NOWARNINGS yes
+ENV DEBCONF_NOWARNINGS=yes
 
 RUN apt-get update \
  && apt-get upgrade -y \
@@ -38,11 +38,12 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
 ENV DEPLOY_HOME=/home/hyperdata
 
 #==================== 5) Add Hyperdata User ====================
-RUN mkdir -p /home/hyperdata \
- && useradd -d /home/hyperdata -s /bin/bash hyperdata \
- && chown -R hyperdata:hyperdata /home/hyperdata \
+
+RUN useradd -d /home/hyperdata -s /bin/bash hyperdata \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd
+ 
+RUN useradd -d /home/hyperdata -s /bin/bash hyperdata -m
 
 ## mosquitto setting
 RUN usermod -a -G hyperdata mosquitto \
