@@ -22,7 +22,7 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
 RUN mkdir -p /db/client \
  && mkdir -p /etc/supervisor/conf.d
 
-COPY src.tar.gz /deploy_src/src.tar.gz
+COPY -chown=hyperdata:hyperdata src.tar.gz /deploy_src/src.tar.gz
 RUN tar -xvf /deploy_src/src.tar.gz -C /deploy_src \
  && sh /deploy_src/src/java/install.sh
 
