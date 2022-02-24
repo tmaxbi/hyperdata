@@ -29,7 +29,7 @@ USER hyperdata
 
 RUN mkdir -p /etc/supervisor/conf.d \
  && mkdir -p /deploy_src \
- && tar -xvf /deploy_src/src.tar.gz -C /deploy_src \
+ && tar -xvf /deploy_src/src.tar.gz -C /deploy_src 
 
 #==================== 4) JDK Install ====================
 USER root
