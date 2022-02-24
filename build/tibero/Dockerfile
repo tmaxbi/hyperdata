@@ -20,7 +20,8 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
 
 #==================== 3) Unzip & Add Hyperdata User ====================
 RUN mkdir -p /db/client \
- && mkdir -p /etc/supervisor/conf.d
+ && mkdir -p /etc/supervisor/conf.d \
+ && mkdir -p /deploy_src
 
 RUN useradd -d /db -s /bin/bash hyperdata \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
