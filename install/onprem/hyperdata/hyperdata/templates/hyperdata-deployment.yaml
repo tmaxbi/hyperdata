@@ -19,7 +19,7 @@ spec:
       - image: {{ .Values.image }}
         name: hyperdata-initcon-hd-hd
         command: ["/bin/bash", "-c"]
-        args: ["${DEPLOY_HOME}/init_container.sh 2>&1 | tee -a ${TB_MOUNT_VOLUME_PATH}/cmdlog_hyperdata; exit ${PIPESTATUS[0]}"]
+        args: ["su - hyperdata -c "${DEPLOY_HOME}/init_container.sh 2>&1 | tee -a ${TB_MOUNT_VOLUME_PATH}/cmdlog_hyperdata; exit ${PIPESTATUS[0]}""]
         imagePullPolicy: Always
         envFrom:
         - configMapRef:
