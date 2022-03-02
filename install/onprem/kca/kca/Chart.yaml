@@ -3,4 +3,4 @@ name: kca
 description: Flask Server for KCA features
 type: application
 version: 0.1.0
-appVersion: 8.3.6
+appVersion: v20.4.0
