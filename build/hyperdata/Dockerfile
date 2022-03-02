@@ -29,6 +29,7 @@ RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y krb5-config krb5-user \
  && rm -rf /etc/krb5.conf
+
 ### 3) Set SSH 
 
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
@@ -61,6 +62,3 @@ USER hyperdata
 RUN mv $DEPLOY_HOME/jeus $DEPLOY_HOME/jeus8 \
  && mv $DEPLOY_HOME/hyperdata $DEPLOY_HOME/hyperdata20 \
  && mv $DEPLOY_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
- 
-### 8) Set Hadoop Symbolic Link =============
-RUN ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
