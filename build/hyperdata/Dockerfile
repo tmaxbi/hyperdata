@@ -62,3 +62,7 @@ USER hyperdata
 RUN mv $DEPLOY_HOME/jeus $DEPLOY_HOME/jeus8 \
  && mv $DEPLOY_HOME/hyperdata $DEPLOY_HOME/hyperdata20 \
  && mv $DEPLOY_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
+ 
+ ### 8) Set Symbolic Link
+ USER root
+ RUN ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
