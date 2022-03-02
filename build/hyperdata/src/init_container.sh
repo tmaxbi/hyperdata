@@ -35,4 +35,8 @@ if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
 
   ## stop jeus
   stopServer -host localhost:9736 -u jeus -p jeus
+  
+  ## set permission
+  chown -R hyperdata:hyperdata $TB_MOUNT_VOLUME_PATH
+  chown -R hyperdata:hyperdata $DEPLOY_HOME
 fi
