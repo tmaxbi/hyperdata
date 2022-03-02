@@ -60,6 +60,9 @@ spec:
     - containerPort: 9089
       name: svdb-gw
       protocol: TCP
+    - containerPort: 9101
+      name: hive-gw
+      protocol: TCP
     resources:
       limits:
         cpu: {{ .Values.resources.limits.cpu }}
