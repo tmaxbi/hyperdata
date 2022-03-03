@@ -8,8 +8,8 @@ RUN sudo yum install -y libaio lrzsz openssh-server openssh-clients unzip bind-u
 ENV DEPLOY_HOME=/opt/hadoop
 
 ### 3) src Copy
-COPY --chown hadoop:users boot.sh $DEPLOY_HOME/boot.sh
-COPY --chown hadoop:users kill.sh $DEPLOY_HOME/kill.sh
+COPY --chown=hadoop:users boot.sh $DEPLOY_HOME/boot.sh
+COPY --chown=hadoop:users kill.sh $DEPLOY_HOME/kill.sh
 COPY ssvr5*.tar.gz $DEPLOY_HOME/ssvr5.tar.gz
 
 RUN tar -xvf ssvr5.tar.gz -C $DEPLOY_HOME \
