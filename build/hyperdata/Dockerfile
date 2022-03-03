@@ -27,8 +27,7 @@ RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev
  apt-transport-https net-tools netcat expect nodejs acl jq maven mosquitto
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get install -y krb5-config krb5-user \
- && rm -rf /etc/krb5.conf
+RUN apt-get install -y krb5-config krb5-user
 
 ### 3) Set SSH 
 
@@ -57,12 +56,11 @@ RUN usermod -a -G hyperdata mosquitto \
 
 ### 7) src copy
 
-COPY --chown=hyperdata:hyperdata src $DEPLOY_HOME
-USER hyperdata
+COPY src $DEPLOY_HOME
 RUN mv $DEPLOY_HOME/jeus $DEPLOY_HOME/jeus8 \
  && mv $DEPLOY_HOME/hyperdata $DEPLOY_HOME/hyperdata20 \
  && mv $DEPLOY_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
  
  ### 8) Set Symbolic Link
- USER root
- RUN ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
+RUN rm -rf /etc/krb5.conf \
+ && ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
