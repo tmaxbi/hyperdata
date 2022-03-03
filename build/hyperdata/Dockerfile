@@ -57,3 +57,6 @@ RUN mv $DEPLOY_HOME/jeus $DEPLOY_HOME/jeus8 \
 ### 8) Set Symbolic Link
 RUN rm -rf /etc/krb5.conf \
  && ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
+ 
+### 9) Login User
+USER hyperdata
