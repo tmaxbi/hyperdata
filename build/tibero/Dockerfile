@@ -2,7 +2,6 @@ FROM ubuntu:14.04
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
 ### 1) Set apt-get & Locale
-
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
@@ -13,7 +12,6 @@ RUN apt-get update \
  && locale-gen ko_KR.UTF-8
 
 ### 2) Set SSH
-
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
  && sed -i 's/StrictModes yes/StrictModes no/g' /etc/ssh/sshd_config \
  && echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config \
@@ -26,21 +24,14 @@ RUN useradd -d /db -s /bin/bash hyperdata -m \
  && echo "root:hyperdata1234!" | chpasswd 
 
 ### 4) src Copy
-
-COPY --chown=hyperdata:hyperdata src.tar.gz /deploy_src/src.tar.gz
-
-USER hyperdata
-RUN mkdir -p /deploy_src \
- && tar -xvf /deploy_src/src.tar.gz -C /deploy_src 
+COPY src.tar.gz /deploy_src/src.tar.gz
+RUN tar -xvf /deploy_src/src.tar.gz -C /deploy_src 
 
 ### 5) Set Supervisor, JDK
-
-USER root
 Run mkdir -p /etc/supervisor/conf.d \
  && sh /deploy_src/src/java/install.sh
 
 ### 6) Set ENV
-
 ENV LANG=ko_KR.UTF-8 \
 JAVA_HOME=/usr/local/jdk1.8.0_172 \
 PATH=$JAVA_HOME/bin:$PATH \
@@ -60,9 +51,9 @@ HADOOP_OPTS="${HADOOP_OPTS} -Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" \
 PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin \
 LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH
 
-### 7) Set Supervisor Env
+### 7) Change Owner
+RUN chown -R hyperdata:hyperdata /deploy_src
 
+### 7) Set Supervisor Env
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
-USER hyperdata
-RUN chmod +x /deploy_src/src/boot.sh
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
