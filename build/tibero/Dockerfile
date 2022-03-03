@@ -54,6 +54,7 @@ LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRA
 ### 7) Change Owner
 RUN chown -R hyperdata:hyperdata /deploy_src
 
-### 7) Set Supervisor Env
+### 8) Set Supervisor Env
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
+USER hyperdata
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
