@@ -1,19 +1,19 @@
 FROM 192.168.179.44:5000/ozone_base:20220110_v1
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
+### 1) Set yum Package
 RUN sudo yum install -y libaio lrzsz openssh-server openssh-clients unzip bind-utils
 
-USER hadoop
+### 2) Set Global Env
+ENV DEPLOY_HOME=/opt/hadoop
 
-COPY boot.sh /opt/hadoop/boot.sh
-COPY kill.sh /opt/hadoop/kill.sh
-COPY ssvr5*.tar.gz /opt/hadoop/ssvr5.tar.gz
+### 3) src Copy
+COPY boot.sh $DEPLOY_HOME/boot.sh
+COPY kill.sh $DEPLOY_HOME/kill.sh
+COPY ssvr5*.tar.gz $DEPLOY_HOME/ssvr5.tar.gz
 
-WORKDIR /opt/hadoop
+RUN tar -xvf ssvr5.tar.gz -C $DEPLOY_HOME \
+ && mv $DEPLOY_HOME/ssvr5_* $DEPLOY_HOME/ssvr5 \
+ && chown -R hadoop:hadoop $DEPLOY_HOME
 
-RUN tar -xvf ssvr5.tar.gz \
- && mv /opt/hadoop/ssvr5_* /opt/hadoop/ssvr5 \
- && sudo chown hadoop:users /opt/hadoop/boot.sh \ 
- && sudo chown -R hadoop:users /opt/hadoop/ssvr5
-
-# ENTRYPOINT ["/bin/sh", "-c", "/opt/hadoop/boot.sh"]
+## ENTRYPOINT ["/bin/sh", "-c", "/opt/hadoop/boot.sh"]
