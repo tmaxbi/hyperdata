@@ -59,9 +59,7 @@ RUN rm -rf /etc/krb5.conf \
  && ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
 
 ### 9) Change Owner
-RUN chown -R hyperdata:hyperdata $TB_MOUNT_VOLUME_PATH \
- && chown -R hyperdata:hyperdata $DEPLOY_HOME
+RUN chown -R hyperdata:hyperdata $DEPLOY_HOME
  
 ### 10) Login User
 USER hyperdata
-
