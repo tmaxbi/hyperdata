@@ -14,6 +14,8 @@ COPY ssvr5*.tar.gz $DEPLOY_HOME/ssvr5.tar.gz
 
 RUN tar -xvf ssvr5.tar.gz -C $DEPLOY_HOME \
  && mv $DEPLOY_HOME/ssvr5_* $DEPLOY_HOME/ssvr5 \
- && chown -R hadoop:users $DEPLOY_HOME
+ && chown hadoop:users $DEPLOY_HOME/boot.sh \
+ && chown hadoop:users $DEPLOY_HOME/kill.sh \
+ && chown -R hadoop:users $DEPLOY_HOME/ssvr5
 
 ## ENTRYPOINT ["/bin/sh", "-c", "/opt/hadoop/boot.sh"]
