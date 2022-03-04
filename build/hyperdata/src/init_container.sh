@@ -4,9 +4,6 @@ set -e
 
 ## TODO: install_interactive.sh를 매번 돌리지 않아도 정상적으로 수행되도록 수정
 
-# set envs
-cp $SRC_HOME/hadoop/hadoop_classpath.conf ~/.bashrc
-
 # 1. check until tibero init
 bash $SRC_HOME/init/wait_tibero.sh
 
