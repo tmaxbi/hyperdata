@@ -6,7 +6,7 @@
 export LANG=ko_KR.UTF-8
 
 ## Volume env
-export TB_MOUNT_VOLUME_PATH=/db
+export TB_VOLUME=/db
 
 ## JAVA env
 export JAVA_HOME=/usr/local/jdk1.8.0_172
