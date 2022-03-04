@@ -2,7 +2,7 @@
 
 # set environment variables
 ## java env
-export JAVA_HOME=$DEPLOY_HOME/java
+export JAVA_HOME=/usr/local/jdk1.8.0_172
 export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=$JAVA_HOME/jre/lib:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
 export CATALINA_OPTS=Djava.awt.headless=true
