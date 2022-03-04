@@ -2,7 +2,8 @@ FROM ubuntu:16.04
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
 ### 1) Set apt-get & Locale
-ENV DEBCONF_NOWARNINGS=yes
+ENV DEBCONF_NOWARNINGS=yes \
+SRC_HOME=/src
 
 RUN apt-get update \
  && apt-get upgrade -y \
@@ -46,7 +47,7 @@ RUN usermod -a -G hyperdata mosquitto \
  && chown mosquitto:hyperdata /var/run/mosquitto
 
 ### 6) src copy
-COPY --chown=hyperdata:hyperdata src /db/hd/
+COPY --chown=hyperdata:hyperdata src $SRC_HOME
 USER hyperdata
 RUN mv /db/hd/jeus $HOME/jeus8 \
  && mv /db/hd/hyperdata $HOME/hyperdata20 \
