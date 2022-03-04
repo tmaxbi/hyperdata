@@ -54,7 +54,8 @@ COPY --chown=hyperdata:hyperdata src $SRC_HOME
 RUN cp $SRC_HOME/env ~/.bashrc
 
 ## USER hyperdata
-RUN mv $SRC_HOME/jeus $JEUS_HOME \
+RUN mkdir -p $JEUS_HOME \
+ && mv $SRC_HOME/jeus $JEUS_HOME \
  && mv $SRC_HOME/hyperdata $HD_HOME \
  && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
  
