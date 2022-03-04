@@ -46,15 +46,15 @@ LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRA
 ### 5) src Copy
 COPY --chown=hyperdata:hyperdata src.tar.gz /db/src.tar.gz
 USER hyperdata
-RUN tar -xf /db/src.tar.gz -C /db \
+RUN tar -xf /db/src.tar.gz -C /db/tb/ \
  && rm -rf /db/src.tar.gz
 
 ### 6) Set Supervisor, JDK
 USER root
-RUN sh /db/src/java/install.sh
+RUN sh /db/tb/src/java/install.sh
 
 ### 8) Set Supervisor Env
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
 USER hyperdata
-RUN chmod +x /db/src/boot.sh
+RUN chmod +x /db/tb/src/boot.sh
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
