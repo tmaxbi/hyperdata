@@ -25,23 +25,20 @@ RUN useradd -d /db -s /bin/bash hyperdata -m \
 
 ### 4) Set ENV
 ENV LANG=ko_KR.UTF-8 \
-JAVA_HOME=/usr/local/jdk1.8.0_172 \
-PATH=$JAVA_HOME/bin:$PATH \
-CLASSPATH=.:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar \
 CATALINA_OPTS=Djava.awt.headless=true \
+JAVA_HOME=/usr/local/jdk1.8.0_172 \
 CLI_HOME=/db/client \
 TB_HOME=/db/tibero6 \
 TB_SID=tibero \
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:$TB_HOME/lib:$TB_HOME/client/lib:$JAVA_HOME/jre/lib/amd64/server:$CLI_HOME/oracle_lib \
-PATH=$PATH:$TB_HOME/bin:$TB_HOME/client/bin \
 HADOOP_HOME=/db/hadoop-2.9.2 \
 HADOOP_MAPRED_HOME=$HADOOP_HOME \
 HADOOP_HDFS_HOME=$HADOOP_HOME \
 HADOOP_YARN_HOME=$HADOOP_HOME \ 
 HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native \
 HADOOP_OPTS="${HADOOP_OPTS} -Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" \
-PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin \
-LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH \
+PATH=$PATH:$JAVA_HOME/bin:$TB_HOME/bin:$TB_HOME/client/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin \
+CLASSPATH=$CLASSPATH:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar \
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:/usr/lib:$TB_HOME/lib:$TB_HOME/client/lib:$JAVA_HOME/jre/lib/amd64/server:$CLI_HOME/oracle_lib \
 SRC_HOME=/src
 
 ### 5) src Copy
