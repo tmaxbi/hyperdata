@@ -8,7 +8,7 @@ set -e
 cp $SRC_HOME/hadoop/hadoop_classpath.conf ~/.bashrc
 
 # 1. check until tibero init
-bash $HOME/init/wait_tibero.sh
+bash $SRC_HOME/init/wait_tibero.sh
 
 # 2. init hyperdata
 if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
@@ -16,13 +16,13 @@ if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
   echo "Cannot find hyperdata schema version file. regard uninitialized."
   
   ## init hadoop
-  bash $HOME/init/hadoop.sh
+  bash $SRC_HOME/init/hadoop.sh
   
   ## init jeus
-  bash $HOME/init/jeus.sh
+  bash $SRC_HOME/init/jeus.sh
    
   ## init hyperdata
-  bash $HOME/init/hyperdata.sh
+  bash $SRC_HOME/init/hyperdata.sh
   
   ## save schema version in Tibero PVC
   echo $HD_SCHEMA_VERSION > $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION
