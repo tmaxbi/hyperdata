@@ -41,21 +41,18 @@ HADOOP_YARN_HOME=$HADOOP_HOME \
 HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native \
 HADOOP_OPTS="${HADOOP_OPTS} -Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" \
 PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin \
-LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH
+LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH \
+SRC_HOME=/db/src
 
 ### 5) src Copy
-
-RUN mkdir -p /db/tb \
- && chown -R hyperdata:hyperdata /db/tb
- 
-COPY --chown=hyperdata:hyperdata src /db/tb/src
+COPY --chown=hyperdata:hyperdata src $HOME/src
 
 ### 6) Set Supervisor, JDK
 USER root
-RUN sh /db/tb/src/java/install.sh
+RUN sh $SRC_HOME/java/install.sh
 
 ### 8) Set Supervisor Env
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
 USER hyperdata
-RUN chmod +x /db/tb/src/boot.sh
+RUN chmod +x $SRC_HOME/boot.sh
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
