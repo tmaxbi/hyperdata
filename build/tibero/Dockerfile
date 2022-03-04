@@ -36,7 +36,7 @@ RUN cp $SRC_HOME/env ~/.bashrc
 RUN sh $SRC_HOME/java/install.sh
 
 ### 7) Set Supervisor Env
-COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
+COPY --chown=hyperdata:hyperdata $SRC_HOME/supervisord.conf /etc/supervisor/supervisord.conf
 USER hyperdata
 RUN chmod +x $SRC_HOME/boot.sh
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
