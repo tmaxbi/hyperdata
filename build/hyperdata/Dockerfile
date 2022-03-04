@@ -75,7 +75,7 @@ SRC_HOME=/src
 ### 7) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
 USER hyperdata
-RUN mv $SRC_HOME/jeus $JEUS_HOME \
+RUN mv $SRC_HOME/jeus /db/jeus8 \
  && mv $SRC_HOME/hyperdata $HD_HOME \
  && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
  
