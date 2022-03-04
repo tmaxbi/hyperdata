@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-. $HOME/set_envs.sh
-
 mkdir -p $JEUS_HOME
 cp -rp $HOME/jeus8/* $JEUS_HOME
 
