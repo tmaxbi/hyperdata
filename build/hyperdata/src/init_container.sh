@@ -5,10 +5,10 @@ set -e
 ## TODO: install_interactive.sh를 매번 돌리지 않아도 정상적으로 수행되도록 수정
 
 # set envs
-. $DEPLOY_HOME/set_envs.sh
+. $HOME/set_envs.sh
 
 # 1. check until tibero init
-bash $DEPLOY_HOME/init/wait_tibero.sh
+bash $HOME/init/wait_tibero.sh
 
 # 2. init hyperdata
 if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
@@ -16,13 +16,13 @@ if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
   echo "Cannot find hyperdata schema version file. regard uninitialized."
   
   ## init hadoop
-  bash $DEPLOY_HOME/init/hadoop.sh
+  bash $HOME/init/hadoop.sh
   
   ## init jeus
-  bash $DEPLOY_HOME/init/jeus.sh
+  bash $HOME/init/jeus.sh
    
   ## init hyperdata
-  bash $DEPLOY_HOME/init/hyperdata.sh
+  bash $HOME/init/hyperdata.sh
   
   ## save schema version in Tibero PVC
   echo $HD_SCHEMA_VERSION > $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION
@@ -35,8 +35,4 @@ if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
 
   ## stop jeus
   stopServer -host localhost:9736 -u jeus -p jeus
-  
-  ## set permission
-  chown -R hyperdata:hyperdata $TB_MOUNT_VOLUME_PATH
-  chown -R hyperdata:hyperdata $DEPLOY_HOME
 fi
