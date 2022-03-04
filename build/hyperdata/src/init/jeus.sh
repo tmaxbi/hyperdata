@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-. $DEPLOY_HOME/set_envs.sh
+. $HOME/set_envs.sh
 
 mkdir -p $JEUS_HOME
-cp -rp $DEPLOY_HOME/jeus8/* $JEUS_HOME
+cp -rp $HOME/jeus8/* $JEUS_HOME
 
 chmod -R 755 $JEUS_HOME/lib/etc/ant/bin
 cd $JEUS_HOME/setup
