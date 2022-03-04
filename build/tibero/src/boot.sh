@@ -6,7 +6,7 @@ else
   sh $SRC_HOME/hadoop/install.sh;
 fi
 
-tar -xzf $SRC_HOME/tibero/*.tar.gz -C $TB_MOUNT_VOLUME_PATH/
+tar -xzf $SRC_HOME/tibero/*.tar.gz -C $TB_VOLUME/
 
 if [ -d $TB_HOME/database ]; then
   echo "Tibero already exists."
