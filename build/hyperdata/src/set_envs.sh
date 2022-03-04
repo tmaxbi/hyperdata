@@ -20,7 +20,7 @@ export ANT_HOME=$JEUS_HOME/lib/etc/ant
 export PATH=$PATH:$ANT_HOME/bin:$JEUS_HOME/bin
 
 ## proobject env
-export PROOBJECT_HOME=$DEPLOY_HOME/proobject7
+export PROOBJECT_HOME=$HOME/proobject7
 
 ## hadoop env
 export HADOOP_VOLUME=$TB_MOUNT_VOLUME_PATH
@@ -60,7 +60,7 @@ do
 done
 
 ## hyperdata env
-export HD_HOME=$DEPLOY_HOME/hyperdata20
+export HD_HOME=$HOME/hyperdata20
 export SCHEMA_VERSION_FILE=$HD_HOME/HD_SCHEMA_VERSION
 export HD_VERSION=20
 export HD_SCHEMA_VERSION=20.4.0
