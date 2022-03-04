@@ -45,6 +45,7 @@ RUN usermod -a -G hyperdata mosquitto \
 
 ### 6) Set ENV
 ENV LANG=ko_KR.UTF-8 \
+TB_MOUNT_VOLUME_PATH=/db \
 CATALINA_OPTS=Djava.awt.headless=true \
 JAVA_HOME=/usr/local/jdk1.8.0_172 \
 TB_HOME=$TB_MOUNT_VOLUME_PATH/tibero6 \
