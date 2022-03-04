@@ -46,7 +46,7 @@ RUN usermod -a -G hyperdata mosquitto \
 
 ### 6) Set ENV
 ENV SRC_HOME=/src \
-JEUS_HOME=$TB_MOUNT_VOLUME_PATH/jeus8 \
+JEUS_HOME=/db/jeus8 \
 HD_HOME=/home/hyperdata
 
 ### 7) src copy
