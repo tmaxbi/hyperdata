@@ -21,6 +21,7 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
 ### 3) Set ENV
 ENV LANG=ko_KR.UTF-8 \
 CATALINA_OPTS=Djava.awt.headless=true \
+TB_MOUNT_VOLUME_PATH=/db \
 SRC_HOME=/src
 
 ### 4) Add Hyperdata User
