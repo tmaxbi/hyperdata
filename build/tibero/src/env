@@ -23,3 +23,6 @@ export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 export HADOOP_OPTS="${HADOOP_OPTS} -Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" 
 export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/hadoop/lib/native/:/usr/lib:$HADOOP_HOME/lib/native/
+
+## alias
+alias tlog='tail -f /db/tibero6/instance/tibero/log/slog/sys.log'
