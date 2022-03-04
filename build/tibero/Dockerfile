@@ -46,7 +46,7 @@ LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRA
 ### 5) src Copy
 COPY --chown=hyperdata:hyperdata src.tar.gz /db/src.tar.gz
 USER hyperdata
-RUN tar -xvf /db/src.tar.gz -C /db \
+RUN tar -xf /db/src.tar.gz -C /db \
  && rm -rf /db/src.tar.gz
 
 ### 6) Set Supervisor, JDK
