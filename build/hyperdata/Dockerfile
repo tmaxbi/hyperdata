@@ -34,31 +34,28 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
  && echo "ClientAliveCountMax 99999" >> /etc/ssh/sshd_config \
  && service ssh restart
 
-### 5) Add Hyperdata User
+### 4) Add Hyperdata User
 RUN useradd -d /home/hyperdata -s /bin/bash hyperdata -m \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd
  
-## 6) mosquitto setting
+## 5) mosquitto setting
 RUN usermod -a -G hyperdata mosquitto \
  && chown -R hyperdata:hyperdata /etc/mosquitto \
  && chown hyperdata:hyperdata /usr/sbin/mosquitto \
  && chown mosquitto:hyperdata /var/run/mosquitto
 
-### 7) src copy
-COPY --chown=hyperdata:hyperdata src /db/
+### 6) src copy
+COPY --chown=hyperdata:hyperdata src /db/hd/
 USER hyperdata
-RUN mv /db/jeus $HOME/jeus8 \
- && mv /db/hyperdata $HOME/hyperdata20 \
- && mv /db/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
+RUN mv /db/hd/jeus $HOME/jeus8 \
+ && mv /db/hd/hyperdata $HOME/hyperdata20 \
+ && mv /db/hd/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
  
 ### 8) Set Symbolic Link
 USER root
 RUN rm -rf /etc/krb5.conf \
- && ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
-
-### 9) Change Owner
-RUN chown -R hyperdata:hyperdata $DEPLOY_HOME
+ && ln -s /db/hd/krb5_conf/krb5.conf /etc/krb5.conf
 
 ### 10) Login User
 USER hyperdata
