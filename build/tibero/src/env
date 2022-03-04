@@ -2,6 +2,9 @@
 
 # set environment variables
 
+## locale env
+export LANG=ko_KR.UTF-8
+
 ## Volume env
 export TB_MOUNT_VOLUME_PATH=/db
 
