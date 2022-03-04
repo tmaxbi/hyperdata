@@ -2,10 +2,10 @@
 
 export BACKEND_IP=`ifconfig|awk '{print $2}'|sed -n '2p'|awk -F ':' '{print $2}'`
 
-cp -r /deploy_src/src/client /db/
-cp /deploy_src/src/tibero/license.xml $TB_HOME/license/license.xml
-cp /deploy_src/src/tibero/tbdsn.tbr $TB_HOME/client/config/
-cp /deploy_src/src/tibero/*.tip $TB_HOME/config/
+cp -r /db/src/client /db/
+cp /db/src/tibero/license.xml $TB_HOME/license/license.xml
+cp /db/src/tibero/tbdsn.tbr $TB_HOME/client/config/
+cp /db/src/tibero/*.tip $TB_HOME/config/
 sed -i "s/HOST=localhost/HOST=${BACKEND_IP}/g" ${TB_HOME}/client/config/tbdsn.tbr
 
 chmod 640 $TB_HOME/config/$TB_SID.tip
