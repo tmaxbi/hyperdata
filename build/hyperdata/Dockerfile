@@ -22,7 +22,7 @@ RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add 
 
 RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev g++ gcc autoconf openssl build-essential \
  libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb supervisor \
- apt-transport-https net-tools netcat expect nodejs acl jq maven mosquitto
+ apt-transport-https net-tools netcat expect nodejs acl jq maven mosquitto lrzsz
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y krb5-config krb5-user
@@ -33,9 +33,6 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
  && echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config \
  && echo "ClientAliveCountMax 99999" >> /etc/ssh/sshd_config \
  && service ssh restart
-
-### 4) Set Global Env
-ENV DEPLOY_HOME=/home/hyperdata
 
 ### 5) Add Hyperdata User
 RUN useradd -d /home/hyperdata -s /bin/bash hyperdata -m \
@@ -49,12 +46,14 @@ RUN usermod -a -G hyperdata mosquitto \
  && chown mosquitto:hyperdata /var/run/mosquitto
 
 ### 7) src copy
-COPY --chown=hyperdata:hyperdata src $DEPLOY_HOME
-RUN mv $DEPLOY_HOME/jeus $DEPLOY_HOME/jeus8 \
- && mv $DEPLOY_HOME/hyperdata $DEPLOY_HOME/hyperdata20 \
- && mv $DEPLOY_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
+COPY --chown=hyperdata:hyperdata src /db/
+USER hyperdata
+RUN mv /db/jeus $HOME/jeus8 \
+ && mv /db/hyperdata $HOME/hyperdata20 \
+ && mv /db/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
  
 ### 8) Set Symbolic Link
+USER root
 RUN rm -rf /etc/krb5.conf \
  && ln -s /db/krb5_conf/krb5.conf /etc/krb5.conf
 
