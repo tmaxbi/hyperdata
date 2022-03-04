@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-mkdir -p $JEUS_HOME
-cp -rp $HOME/jeus8/* $JEUS_HOME
-
 chmod -R 755 $JEUS_HOME/lib/etc/ant/bin
 cd $JEUS_HOME/setup
 ant install
