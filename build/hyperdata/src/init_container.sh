@@ -8,7 +8,7 @@ set -e
 bash $SRC_HOME/init/wait_tibero.sh
 
 # 2. init hyperdata
-if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
+if [ ! -f $TB_VOLUME/HD_SCHEMA_VERSION ]; then
   # if no hyperdata version exists
   echo "Cannot find hyperdata schema version file. regard uninitialized."
   
@@ -22,7 +22,7 @@ if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
   bash $SRC_HOME/init/hyperdata.sh
   
   ## save schema version in Tibero PVC
-  echo $HD_SCHEMA_VERSION > $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION
+  echo $HD_SCHEMA_VERSION > $TB_VOLUME/HD_SCHEMA_VERSION
   
   ## stop proauth
   stopServer -host localhost:29736 -u jeus -p jeus
