@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-. $HOME/set_envs.sh
-
 export SKIP_RECREATE_SCHEMA="N"
 export SKIP_RECREATE_ROLE_AND_PERMISSION="N"
 export SKIP_RECREATE_ADMIN="N"
