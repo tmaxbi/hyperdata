@@ -30,9 +30,9 @@ RUN useradd -d /db -s /bin/bash hyperdata -m \
 
 ### 5) src Copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
+RUN cp $SRC_HOME/env ~/.bashrc
 
 ### 6) Set Supervisor, JDK
-USER root
 RUN sh $SRC_HOME/java/install.sh
 
 ### 7) Set Supervisor Env
