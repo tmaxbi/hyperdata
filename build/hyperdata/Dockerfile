@@ -49,14 +49,14 @@ RUN usermod -a -G hyperdata mosquitto \
 ### 6) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
 USER hyperdata
-RUN mv /db/hd/jeus $HOME/jeus8 \
- && mv /db/hd/hyperdata $HOME/hyperdata20 \
- && mv /db/hd/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
+RUN mv $SRC_HOME/jeus $HOME/jeus8 \
+ && mv $SRC_HOME/hyperdata $HOME/hyperdata20 \
+ && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
  
-### 8) Set Symbolic Link
+### 7) Set Symbolic Link
 USER root
 RUN rm -rf /etc/krb5.conf \
- && ln -s /db/hd/krb5_conf/krb5.conf /etc/krb5.conf
+ && ln -s $SRC_HOME/krb5_conf/krb5.conf /etc/krb5.conf
 
-### 10) Login User
+### 8) Login User
 USER hyperdata
