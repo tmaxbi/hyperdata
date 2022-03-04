@@ -42,7 +42,7 @@ HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native \
 HADOOP_OPTS="${HADOOP_OPTS} -Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" \
 PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin \
 LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH \
-SRC_HOME=/db/src
+SRC_HOME=/src
 
 ### 5) src Copy
 RUN mkdir -p $SRC_HOME
