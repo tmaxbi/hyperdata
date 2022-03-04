@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# set environment variables
+## JAVA env
+export JAVA_HOME=/usr/local/jdk1.8.0_172
+export PATH=$PATH:$JAVA_HOME/bin
+export CLASSPATH=$CLASSPATH:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/amd64/server
+
+## tibero env
+export CLI_HOME=$TB_MOUNT_VOLUME_PATH/client
+export TB_HOME=$TB_MOUNT_VOLUME_PATH/tibero6 
+export TB_SID=tibero
+export PATH=$PATH:$TB_HOME/bin:$TB_HOME/client/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TB_HOME/lib:$TB_HOME/client/lib:$CLI_HOME/oracle_lib
+
+## hadoop env 
+export HADOOP_HOME=$TB_MOUNT_VOLUME_PATH/hadoop-2.9.2
+export HADOOP_MAPRED_HOME=$HADOOP_HOME
+export HADOOP_HDFS_HOME=$HADOOP_HOME
+export HADOOP_YARN_HOME=$HADOOP_HOME
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+export HADOOP_OPTS="${HADOOP_OPTS} -Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" 
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/hadoop/lib/native/:/usr/lib:$HADOOP_HOME/lib/native/
