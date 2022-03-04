@@ -45,15 +45,17 @@ RUN usermod -a -G hyperdata mosquitto \
  && chown mosquitto:hyperdata /var/run/mosquitto
 
 ### 6) Set ENV
-ENV SRC_HOME=/src
+ENV SRC_HOME=/src \
+JEUS_HOME=$TB_MOUNT_VOLUME_PATH \
+HD_HOME=/home/hyperdata
 
 ### 7) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
 RUN cp $SRC_HOME/env ~/.bashrc
 
 ## USER hyperdata
-RUN mv $SRC_HOME/jeus $TB_MOUNT_VOLUME_PATH/jeus8 \
- && mv $SRC_HOME/hyperdata /home/hyperdata \
+RUN mv $SRC_HOME/jeus $JEUS_HOME \
+ && mv $SRC_HOME/hyperdata $HD_HOME \
  && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
  
 ### 8) Set Symbolic Link
