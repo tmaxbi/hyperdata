@@ -18,28 +18,15 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
  && echo "ClientAliveCountMax 99999" >> /etc/ssh/sshd_config \
  && service ssh restart
 
-### 3) Add Hyperdata User
+### 3) Set ENV
+ENV LANG=ko_KR.UTF-8 \
+CATALINA_OPTS=Djava.awt.headless=true \
+SRC_HOME=/src
+
+### 4) Add Hyperdata User
 RUN useradd -d /db -s /bin/bash hyperdata -m \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd 
-
-### 4) Set ENV
-ENV LANG=ko_KR.UTF-8 \
-CATALINA_OPTS=Djava.awt.headless=true \
-JAVA_HOME=/usr/local/jdk1.8.0_172 \
-CLI_HOME=/db/client \
-TB_HOME=/db/tibero6 \
-TB_SID=tibero \
-HADOOP_HOME=/db/hadoop-2.9.2 \
-HADOOP_MAPRED_HOME=$HADOOP_HOME \
-HADOOP_HDFS_HOME=$HADOOP_HOME \
-HADOOP_YARN_HOME=$HADOOP_HOME \ 
-HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native \
-HADOOP_OPTS="${HADOOP_OPTS} -Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" \
-PATH=$PATH:$JAVA_HOME/bin:$TB_HOME/bin:$TB_HOME/client/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin \
-CLASSPATH=$CLASSPATH:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar \
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:/usr/lib:$TB_HOME/lib:$TB_HOME/client/lib:$JAVA_HOME/jre/lib/amd64/server:$CLI_HOME/oracle_lib \
-SRC_HOME=/src
 
 ### 5) src Copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
@@ -48,7 +35,7 @@ COPY --chown=hyperdata:hyperdata src $SRC_HOME
 USER root
 RUN sh $SRC_HOME/java/install.sh
 
-### 8) Set Supervisor Env
+### 7) Set Supervisor Env
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
 USER hyperdata
 RUN chmod +x $SRC_HOME/boot.sh
