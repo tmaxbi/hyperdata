@@ -49,7 +49,7 @@ RUN usermod -a -G hyperdata mosquitto \
  && chown mosquitto:hyperdata /var/run/mosquitto
 
 ### 7) src copy
-COPY src $DEPLOY_HOME
+COPY --chown=hyperdata:hyperdata src $DEPLOY_HOME
 RUN mv $DEPLOY_HOME/jeus $DEPLOY_HOME/jeus8 \
  && mv $DEPLOY_HOME/hyperdata $DEPLOY_HOME/hyperdata20 \
  && mv $DEPLOY_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
