@@ -75,9 +75,9 @@ SRC_HOME=/src
 ### 7) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
 USER hyperdata
-RUN mv $SRC_HOME/jeus $JEUS_HOME \
- && mv $SRC_HOME/hyperdata $HD_HOME \
- && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
+##RUN mv $SRC_HOME/jeus $JEUS_HOME \
+## && mv $SRC_HOME/hyperdata $HD_HOME \
+## && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
  
 ### 8) Set Symbolic Link
 USER root
