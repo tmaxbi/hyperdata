@@ -1,9 +1,5 @@
 #!/bin/sh
 
-cp $SRC_HOME/hadoop/hadoop_classpath.conf ~/.bashrc
-echo "alias tlog='tail -f /db/tibero6/instance/tibero/log/slog/sys.log'" >> ~/.bashrc
-. ~/.bashrc
-
 if [ -d $HADOOP_HOME ]; then 
   echo "Hadoop already exists."
 else 
