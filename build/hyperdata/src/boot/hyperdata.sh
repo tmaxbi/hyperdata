@@ -1,7 +1,7 @@
 #!/bin/bash
 set +e
 
-. $DEPLOY_HOME/set_envs.sh
+. $HOME/set_envs.sh
 
 service mosquitto restart
 
