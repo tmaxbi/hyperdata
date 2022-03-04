@@ -44,6 +44,8 @@ PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin \
 LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH
 
 ### 5) src Copy
+USER hyperdata
+RUN mkdir -p /db/tb
 COPY --chown=hyperdata:hyperdata src /db/tb/src
 
 ### 6) Set Supervisor, JDK
