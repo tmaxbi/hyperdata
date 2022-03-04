@@ -49,6 +49,8 @@ ENV SRC_HOME=/src
 
 ### 7) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
+RUN cp $SRC_HOME/env ~/.bashrc
+
 ## USER hyperdata
 RUN mv $SRC_HOME/jeus $TB_MOUNT_VOLUME_PATH/jeus8 \
  && mv $SRC_HOME/hyperdata /home/hyperdata \
