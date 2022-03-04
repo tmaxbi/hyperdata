@@ -1,6 +1,10 @@
 #!/bin/bash
 
 # set environment variables
+
+## Volume env
+export TB_MOUNT_VOLUME_PATH=/db
+
 ## JAVA env
 export JAVA_HOME=/usr/local/jdk1.8.0_172
 export CATALINA_OPTS=Djava.awt.headless=true 
