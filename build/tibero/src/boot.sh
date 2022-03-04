@@ -1,22 +1,22 @@
 #!/bin/sh
 
-cp /db/tb/src/hadoop/hadoop_classpath.conf ~/.bashrc
+cp $SRC_HOME/hadoop/hadoop_classpath.conf ~/.bashrc
 echo "alias tlog='tail -f /db/tibero6/instance/tibero/log/slog/sys.log'" >> ~/.bashrc
 . ~/.bashrc
 
 if [ -d $HADOOP_HOME ]; then 
   echo "Hadoop already exists."
 else 
-  sh /db/tb/src/hadoop/install.sh;
+  sh $SRC_HOME/hadoop/install.sh;
 fi
 
-tar -xzf /db/tb/src/tibero/*.tar.gz -C /db/
+tar -xzf $SRC_HOME/tibero/*.tar.gz -C /db/
 
 if [ -d $TB_HOME/database ]; then
   echo "Tibero already exists."
-  sh /db/tb/src/tibero/sync_hostip.sh;
+  sh $SRC_HOME/tibero/sync_hostip.sh;
 else
-  sh /db/tb/src/tibero/install.sh;
+  sh $SRC_HOME/tibero/install.sh;
 fi
 
 tbboot;
