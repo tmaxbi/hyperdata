@@ -50,9 +50,11 @@ RUN tar -xvf /db/src.tar.gz -C /db \
  && rm -rf /db/src.tar.gz
 
 ### 6) Set Supervisor, JDK
+USER root
 RUN sh /db/src/java/install.sh
 
 ### 8) Set Supervisor Env
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf
+USER hyperdata
 RUN chmod +x /db/src/boot.sh
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
