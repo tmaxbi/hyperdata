@@ -7,12 +7,12 @@ export TB_VOLUME=/db
 export JAVA_HOME=$SRC_HOME/java
 export CATALINA_OPTS=Djava.awt.headless=true
 export PATH=$PATH:$JAVA_HOME/bin
+export CLASSPATH=$CLASSPATH:$JAVA_HOME/jre/lib:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
 
 ## jeus env
 export JEUS_HOME=$TB_VOLUME/jeus8
 export ANT_HOME=$JEUS_HOME/lib/etc/ant
 export PATH=$PATH:$ANT_HOME/bin:$JEUS_HOME/bin
-export CLASSPATH=$CLASSPATH:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:$JAVA_HOME/jre/lib/amd64/server
 
 ## tibero env
