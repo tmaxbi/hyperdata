@@ -1,5 +1,8 @@
 #!/bin/sh
 
+cp $SRC_HOME/env ~/.bashrc
+source ~/.bashrc
+
 if [ -d $HADOOP_HOME ]; then 
   echo "Hadoop already exists."
 else 
