@@ -52,17 +52,12 @@ HD_HOME=/home/hyperdata
 ### 7) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
 
-## 8) USER hyperdata
-USER hyperdata
-RUN mkdir -p $JEUS_HOME \
- && mv $SRC_HOME/jeus $JEUS_HOME \
- && mv $SRC_HOME/hyperdata $HD_HOME \
- && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
- 
-### 9) Set Symbolic Link
+### 8) Set Symbolic Link
 USER root
 RUN rm -rf /etc/krb5.conf \
  && ln -s $SRC_HOME/krb5_conf/krb5.conf /etc/krb5.conf
 
-### 10) Login User
+### 9) USER hyperdata
 USER hyperdata
+RUN mv $SRC_HOME/hyperdata $HD_HOME \
+ && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
