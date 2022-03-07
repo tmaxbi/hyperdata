@@ -51,7 +51,6 @@ HD_HOME=/home/hyperdata
 
 ### 7) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
-RUN cp $SRC_HOME/env ~/.bashrc
 
 ## USER hyperdata
 RUN mkdir -p $JEUS_HOME \
