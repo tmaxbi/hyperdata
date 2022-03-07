@@ -52,7 +52,7 @@ HD_HOME=/home/hyperdata
 ### 7) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
 
-## USER hyperdata
+## 8) USER hyperdata
 RUN mkdir -p $JEUS_HOME \
  && mv $SRC_HOME/jeus $JEUS_HOME \
  && mv $SRC_HOME/hyperdata $HD_HOME \
