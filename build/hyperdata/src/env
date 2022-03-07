@@ -4,7 +4,7 @@
 export TB_VOLUME=/db
 
 ## java env
-export JAVA_HOME=/usr/local/jdk1.8.0_172
+export JAVA_HOME=$SRC_HOME/java
 export CATALINA_OPTS=Djava.awt.headless=true
 export PATH=$PATH:$JAVA_HOME/bin
 
