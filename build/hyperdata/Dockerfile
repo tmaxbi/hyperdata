@@ -58,10 +58,10 @@ RUN mkdir -p $JEUS_HOME \
  && mv $SRC_HOME/hyperdata $HD_HOME \
  && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
  
-### 8) Set Symbolic Link
+### 9) Set Symbolic Link
 USER root
 RUN rm -rf /etc/krb5.conf \
  && ln -s $SRC_HOME/krb5_conf/krb5.conf /etc/krb5.conf
 
-### 9) Login User
+### 10) Login User
 USER hyperdata
