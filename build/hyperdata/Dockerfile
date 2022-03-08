@@ -47,7 +47,7 @@ RUN usermod -a -G hyperdata mosquitto \
 ### 6) Set ENV
 ENV SRC_HOME=/src \
 JEUS_HOME=$TB_VOLUME/jeus8 \
-HD_HOME=/home/hyperdata
+HD_HOME=/home/hyperdata/hyperdata20
 
 ### 7) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
@@ -59,5 +59,5 @@ RUN rm -rf /etc/krb5.conf \
 
 ### 9) USER hyperdata
 USER hyperdata
-RUN mv $SRC_HOME/hyperdata $HOME/hyperdata \
+RUN mv $SRC_HOME/hyperdata $HD_HOME \
 mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
