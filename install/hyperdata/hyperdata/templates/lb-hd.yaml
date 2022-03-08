@@ -1,0 +1,58 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hyperdata-lb-hd
+  labels:
+    lb: hyperdata-lb
+  {{ if .Values.loadbalancer.enabled }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: top
+  {{ end }}
+spec:
+  ports:
+    - name: ftp
+      port: 20
+      protocol: TCP
+      targetPort: 20
+    - name: ftp2
+      port: 21
+      protocol: TCP
+      targetPort: 21
+    - name: ssh
+      port: 22
+      protocol: TCP
+      targetPort: 22
+    - name: telnet
+      port: 23
+      protocol: TCP
+      targetPort: 23
+    - name: jeus-http
+      port: 9736
+      protocol: TCP
+      targetPort: 9736
+    - name: proauth-http
+      port: 28080
+      protocol: TCP
+      targetPort: 28080
+    - name: hd-web
+      port: 1408
+      protocol: TCP
+      targetPort: 1408
+    - name: supervdb
+      port: 48080
+      protocol: TCP
+      targetPort: 48080
+    - name: svdb-dblink
+      port: 9994
+      protocol: TCP
+      targetPort: 9994
+  selector:
+    lb: hyperdata-hd
+  {{ if .Values.loadbalancer.enabled }}
+  type: LoadBalancer
+  sessionAffinity: None
+  loadBalancerIP: {{ .Values.webserver.ip }}
+  externalTrafficPolicy: Cluster
+  {{ else }}
+  type: NodePort
+  {{ end }}

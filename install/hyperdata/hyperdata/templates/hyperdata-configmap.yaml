@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hyperdata-hd-configmap
+data:
+  # hyperdata uses this name as DNS
+  TB_IP: {{ .Values.db.address }}
+  TB_PORT: "8629"
+  TB_SID: tibero
+
+  # HLADMIN_IP:
+  # HLADMIN_PORT: "23000"
+  
+  RECOMMEND_SERVER_IP: svc-kca
+  RECOMMEND_SERVER_PORT: "5000"
+
+  # true or false
+  HD_AI_ON: "true"
+
+  # Hadoop Options
+  # HADOOP_ALIAS: 127.0.0.1 alias1 alias2
+
+  # Hyperdata Webserver Options
+  ## hyperdata uses this path as SAM FILE upload location
+  FILE_INPUT_DIR: {{ .Values.db.mountPath }}/input
+  FILE_OUTPUT_DIR: {{ .Values.db.mountPath }}/output
+  FILE_CONTAINER_DIR: {{ .Values.db.mountPath }}/meta
+  
+  
+  ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+  ## IS_HTTPS: "false"
+
+  # MQTT Options
+  USE_MQTT_LB: "Y"
+  NOTIFICATION_BROKER_IP: {{ .Values.webserver.ip }}
+  NOTIFICATION_BROKER_PORT: "{{ .Values.webserver.port }}"
+  NOTIFICATION_BROKER_WS_PORT: ""
+  ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
+  ## SSL_CERT_IP_ADDRESS: ""
+  
+  ## NEO4J
+  NEO4J_USERNAME: {{ .Values.neo4j.username }}
+  NEO4J_PASSWORD: {{ .Values.neo4j.password }}
+  NEO4J_IP: {{ .Values.neo4j.ip }}
+
+  ## SSVR5
+  SSVR5_LISTENER_PORT: "{{ .Values.ssvr5.SSVR5_LISTENER_PORT }}"
+  SSVR5_JAVA_AGENT_PORT: "{{ .Values.ssvr5.SSVR5_JAVA_AGENT_PORT }}"
+
+  ## tibero pv created in tibero helm chart
+  TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}
+  
+  ## SUPERVDB_UCS_PORT
+  SUPERVDB_PO_HOME: "{{ .Values.db.mountPath }}/supervdb_po_home"
+  SUPERVDB_PO_IP: "{{ .Values.webserver.ip }}"
+  SUPERVDB_UCS_PORT: "{{ .Values.loadbalancer.SUPERVDB_UCS_PORT }}"
+  
+  ## ML PLATFORM
+  ML_PLATFORM_IP: "{{ .Values.mlplatform.ip }}"
+  ML_PLATFORM_PORT: "{{ .Values.mlplatform.port }}"
+
+  # Y or N
+  {{- if .Values.sqlEditor.enabled }}
+  SQL_EDITOR_ENABLE: "Y"
+  {{- else }}
+  SQL_EDITOR_ENABLE: "N"
+  {{- end }}
+

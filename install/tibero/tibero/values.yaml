@@ -1,0 +1,21 @@
+image: 192.168.179.44:5000/hyperdata8.3_tb:20210811_v1
+
+loadbalancer:
+  enabled: true
+  ip: <YOUR EXTERNAL_IP or MASTER NODE's IP>
+
+db:
+  persistentVolumeClaimName: tibero-pvc-db
+  mountPath: /db
+
+shmSize: 2Gi
+memoryTarget: 4Gi
+
+resources:
+  requests:
+    cpu: 4
+    memory: 8Gi
+  limits:
+    cpu: 4
+    memory: 8Gi
+  storage: 40Gi

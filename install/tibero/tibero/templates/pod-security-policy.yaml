@@ -1,0 +1,19 @@
+{{ if not (lookup "policy/v1beta1" "PodSecurityPolicy" "" "tibero-security-policy") }}
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+ name: tibero-security-policy
+ annotations:
+  helm.sh/resource-policy: keep
+spec:
+  allowedUnsafeSysctls:
+  - kernel.sem
+  seLinux:
+    rule: 'RunAsAny'
+  runAsUser:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'RunAsAny'
+  fsGroup:
+    rule: 'RunAsAny'
+{{ end }}

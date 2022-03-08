@@ -1,0 +1,84 @@
+registry:
+  address: 192.168.179.44:5000
+  # imagePullSecret이 존재하지 않을 경우, knaive-serving은 동작하지 않는다.
+  secret: mlplatform-backend-secret
+
+
+hyperdata:
+  address: http://hyperdata-svc-hd:8080
+
+
+proauth:
+  address: http://hyperdata-lb-hd:28080
+
+kubernetes:
+  istio:
+    ingressgateway:
+      ip: 192.168.179.31
+      port: 31380
+      namespace: istio-system
+      service:
+        name: istio-ingressgateway
+
+
+backend:
+  image:
+    name: hyperdata20.4_mlplatform_backend
+    tag: 20210820_v1
+    imagePullPolicy: Always
+  resources:
+    requests:
+      cpu: 1
+      memory: 1G
+    limits:
+      cpu: 1
+      memory: 1G
+  volume:
+    storageClass: ceph-filesystem
+    size: 10Gi
+    mountPath: /mlplatform
+  private: false  
+
+frontend:
+  image:
+    name: hyperdata20.4_mlplatform_frontend
+    tag: 20210820_v1
+    imagePullPolicy: Always
+  service:
+    type: ClusterIP
+    nodePort: ""
+  resources:
+    requests:
+      cpu: 1
+      memory: 1G
+    limits:
+      cpu: 1
+      memory: 1G
+
+models:
+  recommendation:
+    image:
+      name: hyperdata20.4_mlplatform_recommendation
+      tag: 20210827_v1
+      imagePullPolicy: Always
+
+automl:
+  image:
+    name: hyperdata20.4_mlplatform_automl
+    tag: 20210827_v1
+
+mllab:
+  image:
+    tensorflow1:
+      name: mlplatform_notebook_tf_v1.15.2
+      tag: 20211020_v1
+    tensorflow2:
+      name: mlplatform_notebook_tf_v2.1.0
+      tag: 20211020_v1
+    pytorch:
+      name: mlplatform_notebook_torch_v1.6.0
+      tag: 20211008_v1
+    statisticAnalysis:
+      name: mlplatform_notebook_statistic_analysis_1.1.0
+      tag: latest
+    

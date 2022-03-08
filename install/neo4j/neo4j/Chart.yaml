@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: v4.2.4
+name: hd-gdb
+description: gdb helm chart for kubernetes
+version: 0.1.0

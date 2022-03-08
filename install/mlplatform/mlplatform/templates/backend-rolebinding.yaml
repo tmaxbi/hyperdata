@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: mlplatform-backend-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: mlplatform-backend-sa
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: mlplatform-backend-role
+  apiGroup: rbac.authorization.k8s.io

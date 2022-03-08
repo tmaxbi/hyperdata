@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlplatform-backend-deploy
+spec:
+  selector:
+    matchLabels:
+      app: mlplatform-backend-deploy
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        app: mlplatform-backend-deploy
+    spec:
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: mlplatform-backend-sa
+      containers:
+      - name: mlplatform-backend-con
+        image: "{{ .Values.registry.address }}/{{ .Values.backend.image.name }}:{{ .Values.backend.image.tag }}"
+        imagePullPolicy: {{ .Values.backend.image.imagePullPolicy }}
+        ports:
+        - containerPort: 18080
+          name: server-port
+        resources:
+          limits:
+            cpu: {{ .Values.backend.resources.limits.cpu }}
+            memory: {{ .Values.backend.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.backend.resources.requests.cpu }}
+            memory: {{ .Values.backend.resources.requests.memory }}
+        volumeMounts:
+        - name: application-prod-config
+          mountPath: /home/mlplatform/application-prod.properties
+          subPath: application-prod.properties
+        - name: mlplatform-backend-pvc
+          mountPath: {{ .Values.backend.volume.mountPath }}
+        - name: mlplatform-model-recommendation-configmap
+          mountPath: /home/mlplatform/python/predefinedai_template/source/recommendation/config/image_config.yaml
+          subPath: image_config.yaml
+      imagePullSecrets:
+      - name: {{ .Values.registry.secret }}
+      volumes:
+      - name: application-prod-config
+        configMap:
+          name: mlplatform-backend-deploy-configmap
+          items:
+          - key: "application-prod.properties"
+            path: "application-prod.properties"
+      - name: mlplatform-model-recommendation-configmap
+        configMap:
+          name: mlplatform-model-recommendation-configmap
+          items:
+          - key: "image_config.yaml"
+            path: "image_config.yaml"
+      - name: mlplatform-backend-pvc
+        persistentVolumeClaim:
+          claimName: mlplatform-backend-pvc

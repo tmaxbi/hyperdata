@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mlplatform-frontend-svc
+  labels:
+    app: mlplatform-frontend-svc
+spec:
+  ports:
+  - name: server-port
+    port: 80
+    {{ if eq .Values.frontend.service.type "NodePort" }}
+    nodePort: {{ required "frontend nodePort must be set if service type is 'NodePort'" .Values.frontend.service.nodePort }}
+    {{ end }}
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: mlplatform-frontend-deploy
+  type: {{ .Values.frontend.service.type }}

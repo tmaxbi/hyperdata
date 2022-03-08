@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlplatform-frontend-deploy
+spec:
+  selector:
+    matchLabels:
+      app: mlplatform-frontend-deploy
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        app: mlplatform-frontend-deploy
+    spec:
+      containers:
+      - name: mlplatform-frontend-con
+        image: "{{ .Values.registry.address }}/{{ .Values.frontend.image.name }}:{{ .Values.frontend.image.tag }}"
+        imagePullPolicy: {{ .Values.frontend.image.imagePullPolicy }}
+        ports:
+        - containerPort: 80
+          name: server-port
+        resources:
+          limits:
+            cpu: {{ .Values.frontend.resources.limits.cpu }}
+            memory: {{ .Values.frontend.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.frontend.resources.requests.cpu }}
+            memory: {{ .Values.frontend.resources.requests.memory }}
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d/nginx.conf
+          subPath: nginx.conf
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: mlplatform-frontend-deploy-configmap
+          items:
+          - key: "nginx.conf"
+            path: "nginx.conf"      
+      imagePullSecrets:
+      - name: {{ .Values.registry.secret }}

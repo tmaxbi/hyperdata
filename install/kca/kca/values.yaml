@@ -1,0 +1,9 @@
+image: kyeungseokkang/autoeda:8.3.6
+
+resources:
+  requests:
+    cpu: 1
+    memory: 1Gi
+  limits:
+    cpu: 1
+    memory: 1Gi

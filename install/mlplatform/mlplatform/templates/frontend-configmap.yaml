@@ -1,0 +1,56 @@
+apiVersion: v1
+data:
+  nginx.conf: |
+    upstream Frontend {
+        server 127.0.0.1;
+    }
+
+    upstream Backend {
+        server mlplatform-backend-svc:18080;
+    }
+
+    upstream IstioIngressGateway {
+        server {{ .Values.kubernetes.istio.ingressgateway.ip }}:{{ .Values.kubernetes.istio.ingressgateway.port }};
+    }
+
+    server {
+        listen 80;
+        server_name localhost;
+        root /app/dist;
+
+        location ~ ^/mlplatform/?(.*)?$ {
+          proxy_http_version 1.1;
+          proxy_pass http://Frontend/$1$is_args$args;
+        }
+    }
+
+    server {
+        server_name Frontend;
+        root /app/dist;
+        index index.html;
+
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+        location /api {
+            rewrite /api/(.*) /$1 break;
+            proxy_http_version 1.1;
+            proxy_pass http://Backend;
+        }
+
+        location /serving {
+            # nginx는 header값을 사용할 시,
+            # $http_{header key 이름}형태로 접근하며, header key를 lower_case, dash(-)를 underscore(_)로 변형함
+            # header = { "Serving-Host": ~~ } => $http_serving_host
+            proxy_set_header Host $http_serving_host;
+            proxy_http_version 1.1;
+            rewrite /serving/(.*) /$1 break;
+            proxy_pass http://IstioIngressGateway;
+        }
+    }
+
+
+kind: ConfigMap
+metadata:
+  name: mlplatform-frontend-deploy-configmap

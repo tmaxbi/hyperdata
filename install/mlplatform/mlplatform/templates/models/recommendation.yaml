@@ -1,0 +1,84 @@
+apiVersion: v1
+data:
+  image_config.yaml: |
+    train:
+      model: "Recommendation"
+      template:
+        image: {{ .Values.models.recommendation.image.name }}:{{ .Values.models.recommendation.image.tag }}
+        imagePullPolicy: "Always"
+        cpu: 4
+        memory: 4
+        gpu: 0
+        workingDir: "/root/recommendation_system"
+        # train은 항상 아래의 커맨드로 동작합니다. 변경할 수 없습니다.
+        # command: ["python", "train.py"]
+
+        # args 및 envs에 입력이 필요한 옵션들을 반드시 추가해야 합니다.
+        # key에 해당하는 value들은 default 값입니다.
+        args:
+          - type: str
+            name: column_info
+            default: ""
+            required: true
+            description: "column_info"
+          - type: str
+            name: models_info
+            default: ""
+            required: true
+            description: "models_info"
+        envs:
+
+    retrain:
+      # 재학습은 선택한 Workflow의 옵션들을 그대로 제공하게 되어 있습니다.
+      # 아래에 해당하는 옵션들만 수정할 수 있습니다.
+      template:
+        cpu: 4
+        memory: 4
+        gpu: 0
+        envs:
+
+    inference:
+      # 추론은 선택한 Workflow의 옵션들을 그대로 제공하게 되어 있습니다.
+      # 아래에 해당하는 옵션들만 수정할 수 있습니다.
+      template:
+        cpu: 2
+        memory: 2
+        gpu: 0
+        args:
+          - type: str
+            name: user_id
+            default: ""
+            required: true
+            description: "user_id"
+        envs:
+
+    serving:
+      # 서빙은 선택한 Workflow의 옵션들을 그대로 제공하게 되어 있습니다.
+      # 아래에 해당하는 옵션들만 수정할 수 있습니다.
+      # request 및 limit에 대한 자원 설정을 수정하지 않을 시, request limit 둘다 workflow에 할당되어있는 자원 값을 사용합니다.
+      template:
+        cpu: 2
+        memory: 2
+        gpu: 0
+        minReplicas: 1
+        maxReplicas: 1
+        args:
+          - type: str
+            name: "name"
+            description: "Serving model name"
+            default: "serving_default_name"
+            required: true
+          - type: column
+            name: id-column
+            required: true
+            description: "id-column"
+          - type: column
+            name: review-column
+            required: true
+            description: "review-column"
+        envs:
+
+
+kind: ConfigMap
+metadata:
+  name: mlplatform-model-recommendation-configmap

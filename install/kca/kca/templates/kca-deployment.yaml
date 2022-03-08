@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hyperdata-kca
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hyperdata-kca
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        lb: hyperdata-kca
+        app: hyperdata-kca
+    spec:
+      containers:
+      - image: {{ .Values.image }}
+        name: hyperdata-kca-con
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
+        ports:
+        - containerPort: 5000

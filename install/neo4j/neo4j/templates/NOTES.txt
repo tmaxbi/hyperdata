@@ -1,0 +1,10 @@
+
+We'll need to wait a few seconds for Neo4j to start.
+
+We need to see this line in our pod log:
+
+> Remote interface available at Remote interface available at http://localhost:7474/
+
+We can see the content of the logs by running the following command:
+
+kubectl logs -l "app.kubernetes.io/name=={{ template "neo4j.name" . }}"

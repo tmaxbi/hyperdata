@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hyperdata-hd-hd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hyperdata-hd
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        lb: hyperdata-hd
+        app: hyperdata-hd
+    spec:
+      initContainers:
+      - image: {{ .Values.image }}
+        name: hyperdata-initcon-hd-hd
+        command: ["/bin/bash", "-c"]
+        args: ["${SRC_HOME}/init_container.sh 2>&1 | tee -a ${TB_MOUNT_VOLUME_PATH}/cmdlog_hyperdata; exit ${PIPESTATUS[0]}"]
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: hyperdata-hd-configmap
+        resources:
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
+        volumeMounts:
+        - name: tz-seoul
+          mountPath: /etc/localtime
+        - name: pv-storage-tb
+          mountPath: {{ .Values.db.mountPath }}
+      containers:
+      - image: {{ .Values.image }}
+        command: ["/bin/bash", "-c"]
+        args: ["${SRC_HOME}/boot.sh 2>&1 | tee -a ${TB_MOUNT_VOLUME_PATH}/cmdlog_hyperdata; exit ${PIPESTATUS[0]}"]
+        imagePullPolicy: Always
+        name: hyperdata-con-hd-hd
+        envFrom:
+        - configMapRef:
+            name: hyperdata-hd-configmap
+        ports:
+        - containerPort: 20
+          name: hd-ftp1
+          protocol: TCP
+        - containerPort: 21
+          name: hd-ftp2
+          protocol: TCP
+        - containerPort: 22
+          name: hd-ssh
+          protocol: TCP
+        - containerPort: 9736
+          name: jeus-http
+          protocol: TCP
+        - containerPort: 8080
+          name: hd-http
+          protocol: TCP
+        - containerPort: 8081
+          name: spring
+          protocol: TCP
+        - containerPort: 1883
+          name: msqt-lsnr1
+          protocol: TCP
+        - containerPort: 2883
+          name: msqt-lsnr2
+          protocol: TCP
+        - containerPort: 1408
+          name: hd-web
+          protocol: TCP
+        - containerPort: 9994
+          name: svdb-dblink
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
+        volumeMounts:
+        - name: tz-seoul
+          mountPath: /etc/localtime
+        - name: pv-storage-tb
+          mountPath: {{ .Values.db.mountPath }}
+      volumes:
+      - name: tz-seoul
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Seoul
+      - name: pv-storage-tb
+        persistentVolumeClaim:
+          claimName: {{ .Values.db.persistentVolumeClaimName }}

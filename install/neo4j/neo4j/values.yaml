@@ -1,0 +1,226 @@
+# Default values for Neo4j.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+## This service is intended for clients running in kubernetes to connect to
+## the cluster.
+## Default: ClusterIP (headless)
+service:
+  type: ClusterIP
+  annotations: {}
+  labels: {}
+  loadBalancerSourceRanges: []
+
+# Specs for the Neo4j docker image
+image: "neo4j"
+## Image tag
+## Overrides .Chart.AppVersion
+imageTag: "4.0.1"
+imagePullPolicy: "IfNotPresent"
+# imagePullSecret: registry-secret
+
+# Create Role and RoleBinding
+rbac:
+  create: false
+
+serviceAccount:
+  create: true
+  annotations: {}
+  # If empty, name will be generated from the chart's fullname
+  name:
+
+## Node labels for pod assignment
+## ref: https://kubernetes.io/docs/user-guide/node-selection/
+nodeSelector: {}
+
+## Tolerations for pod assignment
+## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+## Affinity for pod assignment
+## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+
+## Labels to be added to pods
+podLabels: {}
+
+## Annotations to be added to pods
+podAnnotations: {}
+
+# Use password authentication
+authEnabled: true
+
+## Specify password for neo4j user
+## Defaults to a random 10-character alphanumeric string if not set and authEnabled is true
+neo4jPassword: "tmax"
+
+## Specify secret name containing the password for neo4j user
+# existingPasswordSecret
+## Specify the key in existingPasswordSecret, in which the password is contained
+# existingPasswordSecretKey
+
+persistentVolume:
+  ## whether or not persistence is enabled
+  ##
+  enabled: true
+
+  ## server data Persistent Volume mount root path
+  ##
+  mountPath: /data
+
+  ## server data Persistent Volume size
+  ##
+  size: 10Gi
+
+  ## server data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ## storageClass: "-"
+
+  ## Subdirectory of server data Persistent Volume to mount
+  ## Useful if the volume's root directory is not empty
+  ##
+  ## subPath: ""
+
+## specify additional volumes to mount in the Neo4j container, this can be used
+## to specify additional storage of material or to inject files from ConfigMaps
+## into the running container
+additionalVolumes: []
+## specify where the additional volumes are mounted in the Neo4j container
+additionalVolumeMounts: []
+terminationGracePeriodSeconds: 300
+
+## Pass extra environment variables to the Neo4j container.
+##
+extraVars:
+# - name: EXTRA_VAR_1
+#  value: extra-var-value-1
+# - name: EXTRA_VAR_2
+#   value: extra-var-value-2
+
+sidecarContainers: []
+## Additional containers to be added to the Neo4j pod.
+#  - name: my-sidecar
+#    image: nginx:latest
+
+initContainers: 
+## init containers to run before the Neo4j pod e.g. to install plugins
+#  - name: init-plugins
+#    image: "appropriate/curl:latest"
+#    imagePullPolicy: "IfNotPresent"
+#    volumeMounts:
+#    - name: plugins
+#      mountPath: /plugins
+#    command:
+#      - "/bin/sh"
+#      - "-c"
+#      - |
+#        curl -L https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/4.0.0.16/apoc-4.0.0.16-all.jar -O
+#        cp apoc-4.0.0.16-all.jar /plugins/
+#  - name: init-plugins
+#    image: "appropriate/curl:latest"
+#    imagePullPolicy: "IfNotPresent"
+#    volumeMounts:
+#    - name: plugins
+#      mountPath: /plugins
+#    command:
+#      - "/bin/sh"
+#      - "-c"
+#      - |
+#        curl -L https:github.com/neo4j-labs/neosemantics/releases/tag/4.2.0.1/neosemantics-4.2.0.1.jar -O
+#        cp neosemantics-4.2.0.1.jar /plugins/
+
+# - name: init-plugins
+#   image: "appropriate/curl:latest"
+#   imagePullPolicy: "IfNotPresent"
+#   volumeMounts:
+#   - name: plugins
+#     mountPath: /plugins
+#   command:
+#     - "/bin/sh"
+#     - "-c"
+#     - |
+#       curl -L https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/3.2.0.3/apoc-3.2.0.3-all.jar -O
+#       cp apoc-3.2.0.3-all.jar /plugins/
+
+resources: 
+  limits:
+    cpu: 1
+    memory: 2Gi
+  requests:
+    cpu: 1
+    memory: 2Gi
+
+# Readiness probes will send a kill signal to the container if
+# it fails enough times
+#readinessProbe:
+#  initialDelaySeconds: 60
+#  failureThreshold: 3
+#  timeoutSeconds: 2
+#  periodSeconds: 10
+#  tcpSocket:
+#    port: 7687
+
+#livenessProbe:
+#  initialDelaySeconds: 120
+#  periodSeconds: 10
+#  failureThreshold: 3
+#  timeoutSeconds: 2
+#  tcpSocket:
+#    port: 7687
+
+securityContext: {}
+# Following values for securityContext are possible/recommended, but depend on
+# volume and filesystem settings local to you
+#  runAsNonRoot: true
+#  runAsUser: 7474
+
+env:
+  JMXPORT: 1099
+
+exporters:
+  jmx:
+    enabled: false
+    image:
+      repository: bitnami/jmx-exporter
+      tag: 0.15.0
+      pullPolicy: IfNotPresent
+    config:
+      lowercaseOutputName: true
+      ## ref: https://github.com/prometheus/jmx_exporter/blob/master/example_configs/zookeeper.yaml
+      rules:
+        - pattern: ".*"
+      startDelaySeconds: 30
+    env: {}
+    resources: {}
+    path: /metrics
+    ports:
+      jmxxp:
+        containerPort: 5556
+        protocol: TCP
+    livenessProbe:
+      httpGet:
+        path: /metrics
+        port: jmxxp
+      initialDelaySeconds: 30
+      periodSeconds: 15
+      timeoutSeconds: 60
+      failureThreshold: 8
+      successThreshold: 1
+    readinessProbe:
+      httpGet:
+        path: /metrics
+        port: jmxxp
+      initialDelaySeconds: 30
+      periodSeconds: 15
+      timeoutSeconds: 60
+      failureThreshold: 8
+      successThreshold: 1
+    serviceMonitor:
+      interval: 30s
+      scrapeTimeout: 30s
+      scheme: http
