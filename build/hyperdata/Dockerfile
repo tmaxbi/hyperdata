@@ -59,5 +59,4 @@ RUN rm -rf /etc/krb5.conf \
 
 ### 9) USER hyperdata
 USER hyperdata
-RUN mv $SRC_HOME/hyperdata $HD_HOME \
- && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
+RUN mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
