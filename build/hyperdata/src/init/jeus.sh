@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-mv $SRC_HOME/jeus $TB_VOLUME/jeus8
+mv -f $SRC_HOME/jeus $TB_VOLUME/jeus8
 
 chmod -R 755 $JEUS_HOME/lib/etc/ant/bin
 cd $JEUS_HOME/setup
