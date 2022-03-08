@@ -22,7 +22,7 @@ export PATH=$PATH:$TB_HOME/bin:$TB_HOME/client/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TB_HOME/client/lib:$TB_HOME/lib
 
 ## hyperdata env
-export HD_HOME=/home/hyperdata
+export HD_HOME=/home/hyperdata/hyperdata20
 export HD_VERSION=20
 export HD_SCHEMA_VERSION=20.4.0
 export PATH=$PATH:
