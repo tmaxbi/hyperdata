@@ -50,7 +50,7 @@ JEUS_HOME=$TB_VOLUME/jeus8 \
 HD_HOME=/home/hyperdata
 
 ### 7) src copy
-COPY src $SRC_HOME
+COPY --chown=hyperdata:hyperdata src $SRC_HOME
 
 ### 8) Set Symbolic Link
 USER root
