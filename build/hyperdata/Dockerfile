@@ -39,7 +39,7 @@ JEUS_HOME=$TB_VOLUME/jeus8 \
 HD_HOME=/home/hyperdata/hyperdata20
 
 ### 5) Add Hyperdata User
-RUN adduser hyperdata \
+RUN useradd -m -s /bin/bash hyperdata \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd
   
