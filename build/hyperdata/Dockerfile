@@ -33,21 +33,21 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
  && echo "ClientAliveCountMax 99999" >> /etc/ssh/sshd_config \
  && service ssh restart
 
-### 4) Add Hyperdata User
-RUN useradd -d /home/hyperdata -s /bin/bash hyperdata -m \
- && echo "hyperdata:hyperdata1234!" | chpasswd \
- && echo "root:hyperdata1234!" | chpasswd
- 
-### 5) mosquitto setting
-RUN usermod -a -G hyperdata mosquitto \
- && chown -R hyperdata:hyperdata /etc/mosquitto \
- && chown hyperdata:hyperdata /usr/sbin/mosquitto \
- && chown mosquitto:hyperdata /var/run/mosquitto
-
-### 6) Set ENV
+### 4) Set ENV
 ENV SRC_HOME=/src \
 JEUS_HOME=$TB_VOLUME/jeus8 \
 HD_HOME=/home/hyperdata/hyperdata20
+
+### 5) Add Hyperdata User
+RUN useradd -d /home/hyperdata -s /bin/bash hyperdata -m \
+ && echo "hyperdata:hyperdata1234!" | chpasswd \
+ && echo "root:hyperdata1234!" | chpasswd
+  
+### 6) mosquitto setting
+RUN usermod -a -G hyperdata mosquitto -d $HD_HOME \
+ && chown -R hyperdata:hyperdata /etc/mosquitto \
+ && chown hyperdata:hyperdata /usr/sbin/mosquitto \
+ && chown mosquitto:hyperdata /var/run/mosquitto
 
 ### 7) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
