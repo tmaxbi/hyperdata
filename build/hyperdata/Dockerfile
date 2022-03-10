@@ -34,7 +34,7 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
  && service ssh restart
 
 ### 4) Add Hyperdata User
-RUN useradd -d /home/hyperdata -s /bin/bash hyperdata \
+RUN useradd -d /home/hyperdata -s /bin/bash hyperdata -m \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd
  
