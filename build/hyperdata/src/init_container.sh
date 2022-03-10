@@ -22,7 +22,7 @@ if [ ! -f $TB_VOLUME/HD_SCHEMA_VERSION ]; then
   bash $SRC_HOME/init/jeus.sh
    
   ## init hyperdata
-  bash $SRC_HOME/init/hyperdata.sh
+  ## bash $SRC_HOME/init/hyperdata.sh
   
   ## save schema version in Tibero PVC
   echo $HD_SCHEMA_VERSION > $TB_VOLUME/HD_SCHEMA_VERSION
