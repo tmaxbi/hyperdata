@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+source $SRC_HOME/env
+
 export SKIP_RECREATE_SCHEMA="N"
 export SKIP_RECREATE_ROLE_AND_PERMISSION="N"
 export SKIP_RECREATE_ADMIN="N"
