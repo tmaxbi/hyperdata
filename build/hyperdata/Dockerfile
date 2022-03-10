@@ -39,12 +39,12 @@ JEUS_HOME=$TB_VOLUME/jeus8 \
 HD_HOME=/home/hyperdata/hyperdata20
 
 ### 5) Add Hyperdata User
-RUN useradd -d /home/hyperdata -s /bin/bash hyperdata -m \
+RUN useradd -d /home/hyperdata -s /bin/bash -m hyperdata \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd
   
 ### 6) mosquitto setting
-RUN usermod -a -G hyperdata mosquitto -d $HD_HOME \
+RUN usermod -a -G hyperdata mosquitto \
  && chown -R hyperdata:hyperdata /etc/mosquitto \
  && chown hyperdata:hyperdata /usr/sbin/mosquitto \
  && chown mosquitto:hyperdata /var/run/mosquitto
