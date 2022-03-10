@@ -2,6 +2,8 @@
 # tibero가 init될때까지 tibero command가 실패할 수 있으므로, 실패해도 init container가 종료되지 않도록 set -e undo.
 set +e
 
+source $SRC_HOME/env
+
 # 1. check until tibero init
 echo "Initialize hyperdata start."
 echo "Wait until the tibero is running. timeout 1200 seconds."
