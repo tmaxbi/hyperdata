@@ -61,4 +61,4 @@ RUN rm -rf /etc/krb5.conf \
 USER hyperdata
 RUN mv $SRC_HOME/hyperdata $HD_HOME \
  && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf \
- && mv $SRC_HOME/env ~/.bashrc
+ && cp $SRC_HOME/env ~/.bashrc
