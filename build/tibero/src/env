@@ -9,7 +9,7 @@ export LANG=ko_KR.UTF-8
 export TB_VOLUME=/db
 
 ## JAVA env
-export JAVA_HOME=/usr/local/jdk1.8.0_172
+export JAVA_HOME=/usr/local/jdk
 export CATALINA_OPTS=Djava.awt.headless=true 
 export PATH=$PATH:$JAVA_HOME/bin
 export CLASSPATH=$CLASSPATH:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
