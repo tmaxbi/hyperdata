@@ -22,17 +22,17 @@ if [ ! -f $TB_VOLUME/HD_SCHEMA_VERSION ]; then
   bash $SRC_HOME/init/jeus.sh
    
   ## init hyperdata
-  ## bash $SRC_HOME/init/hyperdata.sh
+  bash $SRC_HOME/init/hyperdata.sh
   
   ## save schema version in Tibero PVC
-  ## echo $HD_SCHEMA_VERSION > $TB_VOLUME/HD_SCHEMA_VERSION
+  echo $HD_SCHEMA_VERSION > $TB_VOLUME/HD_SCHEMA_VERSION
   
   ## stop proauth
-  ## stopServer -host localhost:29736 -u jeus -p jeus
+  stopServer -host localhost:29736 -u jeus -p jeus
   
   ## stop hyperdata
-  ## stopServer -host localhost:19736 -u jeus -p jeus
+  stopServer -host localhost:19736 -u jeus -p jeus
 
   ## stop jeus
-  ## stopServer -host localhost:9736 -u jeus -p jeus
+  stopServer -host localhost:9736 -u jeus -p jeus
 fi
