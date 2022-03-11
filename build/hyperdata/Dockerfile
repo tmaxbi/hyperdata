@@ -40,7 +40,7 @@ HD_HOME=/home/hyperdata/hyperdata20
 
 ### 5) Add Hyperdata User
 RUN useradd -d /home/hyperdata -m -s /bin/bash hyperdata \
- && chmod a+w $HD_HOME \
+ && chmod a+w /home/hyperdata \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd
   
