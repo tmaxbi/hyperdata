@@ -1,6 +1,8 @@
 #!/bin/bash
 set +e
 
+source $SRC_HOME/env
+
 service mosquitto restart
 
 export SKIP_RECREATE_SCHEMA="Y"
