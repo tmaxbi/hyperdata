@@ -63,4 +63,4 @@ RUN mv $SRC_HOME/hyperdata $HD_HOME \
  && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf \
  && cp $SRC_HOME/env ~/.bashrc
  
-WORKDIR $TB_VOLUME/hyperdata
+WORKDIR $HOME
