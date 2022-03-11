@@ -35,8 +35,9 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/s
 
 ### 4) Set ENV
 ENV SRC_HOME=/src \
+HOME=/home/hyperdata \
 JEUS_HOME=$TB_VOLUME/jeus8 \
-HD_HOME=/home/hyperdata/hyperdata20
+HD_HOME=$HOME/hyperdata20
 
 ### 5) Add Hyperdata User
 RUN useradd -d /home/hyperdata -m -s /bin/bash hyperdata \
