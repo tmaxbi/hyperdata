@@ -1,6 +1,8 @@
 #!/bin/bash
 set +e
 
+source $SRC_HOME/env
+
 # startDomainAdminServer에서 에러가 발생하지 않아도, set -e 설정할 경우 터짐
 # error code를 반환하는 것으로 보임
 startDomainAdminServer -u jeus -p jeus
