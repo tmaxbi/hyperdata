@@ -1,5 +1,11 @@
 image: 192.168.179.44:5000/hyperdata8.3_virtualization:20211210_v1
 
+server:
+  port: 8100
+
+servlet:
+  contextPath: /hyperdata8
+
 db:
   address: tiberolocaldns
   port: 8629
