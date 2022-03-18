@@ -1,6 +1,11 @@
 apiVersion: v1
 data:
   application.yml: |
+    ##### Virtualization Module Address Info ############################
+    server:
+      port: {{ .Values.server.port }}
+    servlet:
+      context-path: {{ .Values.servlet.contextPath }}
     ##### Hyperdata Module Address Info ############################
     webserver:
       ip: {{ .Values.hyperdata.address }}

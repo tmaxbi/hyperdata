@@ -32,6 +32,8 @@
    --set pvc.mountpath=/db \
    --set logging.path=virtualization/logs
    ```
+   cf) 제대로 된 설치가 안 될시 helm 차트를 아래에 명령어에 따라서 삭제한 후 재가동한다.
+
 2.  Uninstall virtualization
 ```
 helm uninstall -n hyperdata virtualization-spring virtualization-spring
