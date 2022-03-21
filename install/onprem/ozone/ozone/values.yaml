@@ -10,32 +10,32 @@ om:
   replicas: 1
   resources:
     limits:
-      cpu: "4000m"
-      memory: "4000Mi"
+      cpu: "0"
+      memory: "0"
     requests:
-      cpu: "1000m"
-      memory: "500Mi"
+      cpu: "0"
+      memory: "0"
   storage:
-    size: 2Gi
+    size: 10Gi
   service:
     type: NodePort
     # om의 service type이 nodeport일 경우, 아래 nodeport를 사용
     nodePorts:
-      om: 31906
-      ssvrListener: 32301
-      javaAgent: 30441
+      om: 31903
+      ssvrListener: 30445
+      javaAgent: 32305
 
 scm:
   replicas: 1
   resources:
     limits:
-      cpu: "1000m"
-      memory: "4000Mi"
+      cpu: "0"
+      memory: "0"
     requests:
-      cpu: "500m"
-      memory: "500Mi"
+      cpu: "0"
+      memory: "0"
   storage:
-    size: 2Gi
+    size: 10Gi
   service:
     type: NodePort
 
@@ -43,25 +43,25 @@ datanode:
   replicas: 3
   resources:
     limits:
-      cpu: "4000m"
-      memory: "4000Mi"
+      cpu: "0"
+      memory: "0"
     requests:
-      cpu: "1000m"
-      memory: "500Mi"
+      cpu: "0"
+      memory: "0"
   storage:
-    size: 2Gi
+    size: 70Gi
 
 s3g:
   replicas: 1
   resources:
     limits:
-      cpu: "500m"
-      memory: "2000Mi"
+      cpu: "0"
+      memory: "0"
     requests:
-      cpu: "200m"
-      memory: "500Mi"
+      cpu: "0"
+      memory: "0"
   storage:
-    size: 2Gi
+    size: 10Gi
   service:
     type: NodePort
 

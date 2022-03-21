@@ -26,15 +26,19 @@ neo4j:
 ssvr5:
   SSVR5_LISTENER_PORT:
   SSVR5_JAVA_AGENT_PORT:
-
+  
 db:
   address: tiberolocaldns
   persistentVolumeClaimName: tibero-pvc-db
   mountPath: /db
 
 resources:
-  cpu: 2
-  memory: 4Gi
+  requests:
+    cpu: 2
+    memory: 4Gi
+  limits:
+    cpu: 2
+    memory: 4Gi
   
 mlplatform:
   ip: mlplatform-backend-svc

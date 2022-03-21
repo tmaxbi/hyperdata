@@ -42,6 +42,10 @@ spec:
       port: 9089
       protocol: TCP
       targetPort: 9089
+    - name: hive-gw
+      port: 9101
+      protocol: TCP
+      targetPort: 9101
   selector:
     lb: tibero-db
   {{ if .Values.loadbalancer.enabled }}

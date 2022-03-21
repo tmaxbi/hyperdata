@@ -16,7 +16,7 @@ spec:
     - name: TOTAL_SHM_SIZE
       value: "{{ .Values.shmSize | replace "Gi" "" }}"
     - name: MEMORY_TARGET
-      value: "{{ .Values.resources.memory | replace "Gi" "" }}"
+      value: "{{ .Values.resources.limits.memory | replace "Gi" "" }}"
     - name: LOG_BUFFER
       value: "300M"
     - name: LOG_GROUP
@@ -60,14 +60,17 @@ spec:
     - containerPort: 9089
       name: svdb-gw
       protocol: TCP
+    - containerPort: 9101
+      name: hive-gw
+      protocol: TCP
     resources:
       limits:
-        cpu: {{ .Values.resources.cpu }}
-        memory: {{ .Values.resources.memory }}
+        cpu: {{ .Values.resources.limits.cpu }}
+        memory: {{ .Values.resources.limits.memory }}
         nvidia.com/gpu: "0"
       requests:
-        cpu: {{ .Values.resources.cpu }}
-        memory: {{ .Values.resources.memory }}
+        cpu: {{ .Values.resources.requests.cpu }}
+        memory: {{ .Values.resources.requests.memory }}
         nvidia.com/gpu: "0"
     volumeMounts:
     - mountPath: {{ .Values.db.mountPath }}

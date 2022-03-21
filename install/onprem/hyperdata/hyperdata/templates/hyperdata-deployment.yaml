@@ -24,11 +24,11 @@ spec:
             name: hyperdata-hd-configmap
         resources:
           limits:
-            cpu: {{ .Values.resources.cpu }}
-            memory: {{ .Values.resources.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
           requests:
-            cpu: {{ .Values.resources.cpu }}
-            memory: {{ .Values.resources.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
         volumeMounts:
         - name: tz-seoul
           mountPath: /etc/localtime
@@ -76,11 +76,11 @@ spec:
           protocol: TCP
         resources:
           limits:
-            cpu: {{ .Values.resources.cpu }}
-            memory: {{ .Values.resources.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
           requests:
-            cpu: {{ .Values.resources.cpu }}
-            memory: {{ .Values.resources.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
         volumeMounts:
         - name: tz-seoul
           mountPath: /etc/localtime
