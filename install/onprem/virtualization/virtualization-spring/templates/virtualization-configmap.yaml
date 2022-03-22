@@ -4,8 +4,8 @@ data:
     ##### Virtualization Module Address Info ############################
     server:
       port: {{ .Values.server.port }}
-    servlet:
-      context-path: {{ .Values.servlet.contextPath }}
+      servlet:
+        context-path: {{ .Values.server.servlet.contextPath }}
     ##### Hyperdata Module Address Info ############################
     webserver:
       ip: {{ .Values.hyperdata.address }}
