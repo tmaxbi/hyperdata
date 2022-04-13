@@ -16,7 +16,8 @@ data:
 
   # true or false
   HD_AI_ON: "true"
-
+  HD_RTMODULE_ON: "true"
+  
   # Hadoop Options
   # HADOOP_ALIAS: 127.0.0.1 alias1 alias2
 
