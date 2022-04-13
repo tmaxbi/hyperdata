@@ -65,4 +65,11 @@ data:
   {{- else }}
   SQL_EDITOR_ENABLE: "N"
   {{- end }}
+  
+  # true or false
+  {{- if .Values.dataCollection.enabled }}
+  HD_RTMODULE_ON: "true"
+  {{- else }}
+  HD_RTMODULE_ON: "false"
+  {{- end }}
 
