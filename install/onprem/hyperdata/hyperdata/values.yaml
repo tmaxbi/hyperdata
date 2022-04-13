@@ -46,3 +46,6 @@ mlplatform:
 
 sqlEditor:
   enabled: false
+
+dataCollection:
+  enabled: false     
