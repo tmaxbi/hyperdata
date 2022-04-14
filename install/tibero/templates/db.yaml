@@ -14,9 +14,9 @@ spec:
     - name: MAX_SESSION_COUNT
       value: "40"
     - name: TOTAL_SHM_SIZE
-      value: "{{ .Values.shmSize }}"
+      value: "{{ .Values.shmSize | replace "Gi" "G" }}"
     - name: MEMORY_TARGET
-      value: "{{ .Values.memoryTarget }}"
+      value: "{{ .Values.memoryTarget | replace "Gi" "G" }}"
     - name: ARCHIVE_MODE
       value: "noarchivelog"
     - name: LOG_FILE_SIZE
