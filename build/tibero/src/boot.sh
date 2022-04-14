@@ -215,11 +215,11 @@ create_other_sql() {
     group_no3=`expr $group_no1 + 2`
 
 
-    echo "create undo tablespace undo${cnt} datafile '+DS0/undo00${cnt}.dtf' size 100M autoextend on next 10m;" >> $TB_HOME/hd/tac$cnt.sql
+    echo "create undo tablespace undo${cnt} datafile '+DS0/undo00${cnt}.dtf' size $UNDO_FILE_SIZE autoextend on next 10m;" >> $TB_HOME/hd/tac$cnt.sql
 
-    echo "alter database add logfile THREAD $cnt group $group_no1 '+DS0/log00${group_no1}.log' size 50M;" >> $TB_HOME/hd/tac$cnt.sql
-    echo "alter database add logfile THREAD $cnt group $group_no2 '+DS0/log00${group_no2}.log' size 50M;" >> $TB_HOME/hd/tac$cnt.sql
-    echo "alter database add logfile THREAD $cnt group $group_no3 '+DS0/log00${group_no3}.log' size 50M;" >> $TB_HOME/hd/tac$cnt.sql
+    echo "alter database add logfile THREAD $cnt group $group_no1 '+DS0/log00${group_no1}.log' size $LOG_FILE_SIZE;" >> $TB_HOME/hd/tac$cnt.sql
+    echo "alter database add logfile THREAD $cnt group $group_no2 '+DS0/log00${group_no2}.log' size $LOG_FILE_SIZE;" >> $TB_HOME/hd/tac$cnt.sql
+    echo "alter database add logfile THREAD $cnt group $group_no3 '+DS0/log00${group_no3}.log' size $LOG_FILE_SIZE;" >> $TB_HOME/hd/tac$cnt.sql
 
     echo "alter database ENABLE PUBLIC THREAD $cnt;" >> $TB_HOME/hd/tac$cnt.sql
     echo "quit;" >> $TB_HOME/hd/tac$cnt.sql
