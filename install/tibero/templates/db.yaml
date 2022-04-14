@@ -79,11 +79,11 @@ spec:
               cpu: {{ .Values.resources.requests.cpu }}
               memory: {{ .Values.resources.requests.memory }}
               nvidia.com/gpu: "0"
-            volumeMounts:
-              - mountPath: {{ .Values.db.mountPath }}
-                name: pv-storage
-              - name: tz-seoul
-                mountPath: /etc/localtime
+          volumeMounts:
+            - mountPath: {{ .Values.db.mountPath }}
+              name: pv-storage
+            - name: tz-seoul
+              mountPath: /etc/localtime
       securityContext:
         sysctls:
         - name: kernel.sem
