@@ -35,7 +35,9 @@ set_value() {
     export dd_bs=$(($TAS_DISK_SIZE * 1024))
 
     . $TB_VOLUME/cnt
-    export CM_SID=cm$cnt 
+    echo export CM_SID=cm$cnt >> ~/.bashrc
+    echo export TB_SID=tac$cnt >> ~/.bashrc
+    . ~/.bashrc
 }
 
 init_tb() {
