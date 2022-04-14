@@ -136,22 +136,18 @@ create_1st_sql() {
     done
     
     echo CREATE DISKSPACE DS0 $redun REDUNDANCY >> $TB_HOME/hd/tas$cnt.sql
-    echo CREATE DISKSPACE DS0 FORCE $redun REDUNDANCY >> $TB_HOME/hd/tas${cnt}_force.sql
     
     disk_no=1
     i=1
     while [ $i -le $TAS_REDUN  ]; do
         echo "FAILGROUP FG$i DISK" >> $TB_HOME/hd/tas$cnt.sql
-        echo "FAILGROUP FG$i DISK" >> $TB_HOME/hd/tas${cnt}_force.sql
-    
+
         j=1
         while [ $j -le `expr $TAS_DISK_CNT / $TAS_REDUN`  ]; do
             if [ $j -eq `expr $TAS_DISK_CNT / $TAS_REDUN`  ]; then
                 echo "'$TAS_DISK/disk$disk_no' NAME FG${i}_DISK${j}" >> $TB_HOME/hd/tas$cnt.sql
-                echo "'$TAS_DISK/disk$disk_no' NAME FG${i}_DISK${j}" >> $TB_HOME/hd/tas${cnt}_force.sql
             else
                 echo "'$TAS_DISK/disk$disk_no' NAME FG${i}_DISK${j}," >> $TB_HOME/hd/tas$cnt.sql
-                echo "'$TAS_DISK/disk$disk_no' NAME FG${i}_DISK${j}," >> $TB_HOME/hd/tas${cnt}_force.sql
             fi
             disk_no=`expr $disk_no + 1`
             j=$((j+1))
@@ -160,10 +156,7 @@ create_1st_sql() {
     done
     
     echo ";" >> $TB_HOME/hd/tas$cnt.sql
-    echo ";" >> $TB_HOME/hd/tas${cnt}_force.sql
-
     echo "quit;" >> $TB_HOME/hd/tas$cnt.sql
-    echo "quit;" >> $TB_HOME/hd/tas${cnt}_force.sql
 }
 
 create_1st() {
@@ -179,7 +172,6 @@ create_1st() {
     sleep 2
 
     tbsql sys/tibero@tas0 @$TB_HOME/hd/tas$cnt.sql
-    tbsql sys/tibero@tas0 @$TB_HOME/hd/tas${cnt}_force.sql
 
     cmrctl start cluster --name cls1
     sleep 2
