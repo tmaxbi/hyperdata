@@ -79,6 +79,7 @@ create_tac_tip() {
     echo THREAD=$cnt >> $TB_HOME/config/tac$cnt.tip
     echo UNDO_TABLESPACE=UNDO$cnt >> $TB_HOME/config/tac$cnt.tip
     echo DB_NAME=tac  >> $TB_HOME/config/tac$cnt.tip
+    echo SERVER_SIDE_LOAD_BALANCE=SHORT >> $TB_HOME/config/tac$cnt.tip
     echo LOCAL_CLUSTER_ADDR=$IP_ADDR  >> $TB_HOME/config/tac$cnt.tip
     echo CONTROL_FILES=+DS0/c1.ctl  >> $TB_HOME/config/tac$cnt.tip
     echo DB_CREATE_FILE_DEST=+DS0  >> $TB_HOME/config/tac$cnt.tip
