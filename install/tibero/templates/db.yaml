@@ -24,11 +24,11 @@ spec:
     - name: DATA_FILE_SIZE
       value: "200M"
     - name: USR_FILE_SIZE
-      value: "5G"
+      value: "200M"
     - name: TEMP_FILE_SIZE
-      value: "5G"
+      value: "200M"
     - name: UNDO_FILE_SIZE
-      value: "1G"
+      value: "200M"
     image: {{ .Values.image }}
     name: {{ .Release.Name }}-con-db-hd
     ports:
