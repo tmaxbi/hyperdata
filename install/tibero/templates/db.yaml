@@ -1,15 +1,16 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tibero-pod-db-hd
-  annotations:
-    rollme: {{ randAlphaNum 5 | quote }}
   labels:
-    lb: tibero-db
+    app: tibero-db
 spec:
+  replicas: 1
   hostname: tibero
   subdomain: tibero-svc-db
-  replicas: 1
+  selector:
+    matchLabels:
+      app: tibero-db
   containers:
   - env:
     - name: MAX_SESSION_COUNT
