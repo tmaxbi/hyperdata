@@ -11,30 +11,24 @@ spec:
   subdomain: tibero-svc-db
   containers:
   - env:
-    - name: TB_PORT
-      value: "8629"
     - name: MAX_SESSION_COUNT
       value: "40"
     - name: TOTAL_SHM_SIZE
-      value: "{{ .Values.shmSize | replace "Gi" "" }}"
+      value: "{{ .Values.shmSize | replace "Gi" "" }}G"
     - name: MEMORY_TARGET
-      value: "{{ .Values.memoryTarget | replace "Gi" "" }}"
-    - name: LOG_BUFFER
-      value: "300M"
-    - name: LOG_GROUP
-      value: "5"
+      value: "{{ .Values.memoryTarget | replace "Gi" "" }}G"
+    - name: ARCHIVE_MODE
+      value: "noarchivelog"
     - name: LOG_FILE_SIZE
       value: "200M"
-    - name: SYSTEM_FILE_SIZE
-      value: "1G"
+    - name: DATA_FILE_SIZE
+      value: "200M"
+    - name: USR_FILE_SIZE
+      value: "5G"
     - name: TEMP_FILE_SIZE
       value: "5G"
     - name: UNDO_FILE_SIZE
       value: "1G"
-    - name: USR_FILE_SIZE
-      value: "5G"
-    - name: DB_CHARACTER_SET
-      value: "UTF8"
     image: {{ .Values.image }}
     name: {{ .Release.Name }}-con-db-hd
     ports:
@@ -90,4 +84,3 @@ spec:
   - name: tz-seoul
     hostPath:
       path: /usr/share/zoneinfo/Asia/Seoul
-
