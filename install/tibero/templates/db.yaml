@@ -84,14 +84,14 @@ spec:
                 name: pv-storage
               - name: tz-seoul
                 mountPath: /etc/localtime
-            securityContext:
-              sysctls:
-              - name: kernel.sem
-                value: 10000 32000 10000 10000
-            volumes:
-              - name: pv-storage
-                persistentVolumeClaim:
-                  claimName: {{ .Release.Name }}-pvc-db
-              - name: tz-seoul
-                hostPath:
-                  path: /usr/share/zoneinfo/Asia/Seoul
+      securityContext:
+        sysctls:
+        - name: kernel.sem
+          value: 10000 32000 10000 10000
+      volumes:
+        - name: pv-storage
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-pvc-db
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul
