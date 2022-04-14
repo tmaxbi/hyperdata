@@ -3,7 +3,7 @@ image: 192.168.179.44:5000/hyperdata8.3_virtualization:20211210_v1
 server:
   port: 8100
   servlet:
-    contextPath: /hyperdata8
+    contextPath: /hyperdata20
 
 db:
   address: tiberolocaldns
@@ -19,15 +19,15 @@ resources:
   memory: 4Gi
 
 proauth:
-  address: lb-hd-dev40:28080
+  address: hyperdata-lb-hd:28080
 
 hyperdata:
-  address: svc-hd-dev40
+  address: hyperdata-svc-hd
   port: 8080
 
 loadBalancer:
   enabled: true
-  ip: 192.168.179.42 #하이퍼데이터 로드밸런서 ip랑 같아야 함
+  ip: 192.168.179.38 #하이퍼데이터 로드밸런서 ip랑 같아야 함
   extport: 8500
 
 logging:
