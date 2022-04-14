@@ -20,15 +20,15 @@ spec:
     - name: ARCHIVE_MODE
       value: "noarchivelog"
     - name: LOG_FILE_SIZE
-      value: "200M"
+      value: "50M"
     - name: DATA_FILE_SIZE
-      value: "200M"
+      value: "100M"
     - name: USR_FILE_SIZE
-      value: "200M"
+      value: "100M"
     - name: TEMP_FILE_SIZE
-      value: "200M"
+      value: "50M"
     - name: UNDO_FILE_SIZE
-      value: "200M"
+      value: "50M"
     - name: TAS_DISK_SIZE
       value: "2"
     - name: TAS_DISK_CNT
