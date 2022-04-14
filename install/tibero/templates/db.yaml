@@ -18,58 +18,58 @@ spec:
         - name: {{ .Release.Name }}-con-db-hd
           image: {{ .Values.image }}
           env : 
-          - name: MAX_SESSION_COUNT
-            value: "40"
-          - name: TOTAL_SHM_SIZE
-            value: "{{ .Values.shmSize | replace "Gi" "G" }}"
-          - name: MEMORY_TARGET
-            value: "{{ .Values.memoryTarget | replace "Gi" "G" }}"
-          - name: ARCHIVE_MODE
-            value: "noarchivelog"
-          - name: LOG_FILE_SIZE
-            value: "50M"
-          - name: DATA_FILE_SIZE
-            value: "100M"
-          - name: USR_FILE_SIZE
-            value: "100M"
-          - name: TEMP_FILE_SIZE
-            value: "50M"
-          - name: UNDO_FILE_SIZE
-            value: "50M"
-          - name: TAS_DISK_SIZE
-            value: "2"
-          - name: TAS_DISK_CNT
-            value: "4"
-          - name: TAS_REDUN
-            value: "2"
+            - name: MAX_SESSION_COUNT
+              value: "40"
+            - name: TOTAL_SHM_SIZE
+              value: "{{ .Values.shmSize | replace "Gi" "G" }}"
+            - name: MEMORY_TARGET
+              value: "{{ .Values.memoryTarget | replace "Gi" "G" }}"
+            - name: ARCHIVE_MODE
+              value: "noarchivelog"
+            - name: LOG_FILE_SIZE
+              value: "50M"
+            - name: DATA_FILE_SIZE
+              value: "100M"
+            - name: USR_FILE_SIZE
+              value: "100M"
+            - name: TEMP_FILE_SIZE
+              value: "50M"
+            - name: UNDO_FILE_SIZE
+              value: "50M"
+            - name: TAS_DISK_SIZE
+              value: "2"
+            - name: TAS_DISK_CNT
+              value: "4"
+            - name: TAS_REDUN
+              value: "2"
           ports:
-	  - containerPort: 8629
-	    name: tb-lsnr
-      	    protocol: TCP
-    	  - containerPort: 8630
-      	    name: tb-sp
-      	    protocol: TCP
-    	  - containerPort: 9999
-            name: ora-gw
-      	    protocol: TCP
-    	  - containerPort: 9095
-      	    name: nz-gw
-      	    protocol: TCP
-    	  - containerPort: 9093
-      	    name: iq-gw
-      	    protocol: TCP
-    	  - containerPort: 9091
-      	    name: ase-gw
-      	    protocol: TCP
-    	  - containerPort: 9777
-      	    name: my-gw
-      	    protocol: TCP
-    	  - containerPort: 9089
-      	    name: svdb-gw
-      	    protocol: TCP
-    	  - containerPort: 9101
-            name: hive-gw
-            protocol: TCP
+	    - containerPort: 8629
+              name: tb-lsnr
+              protocol: TCP
+    	    - containerPort: 8630
+              name: tb-sp
+              protocol: TCP
+            - containerPort: 9999
+              name: ora-gw
+              protocol: TCP
+            - containerPort: 9095
+              name: nz-gw
+              protocol: TCP
+            - containerPort: 9093
+              name: iq-gw
+              protocol: TCP
+            - containerPort: 9091
+              name: ase-gw
+              protocol: TCP
+            - containerPort: 9777
+              name: my-gw
+              protocol: TCP
+            - containerPort: 9089
+              name: svdb-gw
+              protocol: TCP
+            - containerPort: 9101
+              name: hive-gw
+              protocol: TCP
     	  resources:
       	    limits:
               cpu: {{ .Values.resources.limits.cpu }}
