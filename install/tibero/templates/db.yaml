@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tibero-db-deployment
+  name: tibero-db
   labels:
     app: tibero-db
 spec:
