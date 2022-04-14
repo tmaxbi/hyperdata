@@ -91,7 +91,7 @@ spec:
             volumes:
               - name: pv-storage
                 persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-pvc-db
+                  claimName: {{ .Release.Name }}-pvc-db
               - name: tz-seoul
-            hostPath:
-              path: /usr/share/zoneinfo/Asia/Seoul
+                hostPath:
+                  path: /usr/share/zoneinfo/Asia/Seoul
