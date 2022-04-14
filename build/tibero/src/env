@@ -8,6 +8,9 @@ export LANG=ko_KR.UTF-8
 ## Volume env
 export TB_VOLUME=/db
 
+## IP env
+export IP_ADDR=`grep  $(hostname) /etc/hosts | awk '{print $1}'`
+
 ## JAVA env
 export JAVA_HOME=/usr/local/jdk
 export CATALINA_OPTS=Djava.awt.headless=true 
@@ -17,6 +20,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/amd64/server
 
 ## tibero env
 export TB_HOME=$TB_VOLUME/tibero6 
+export CM_HOME=$TB_HOME
 export CLI_HOME=$TB_VOLUME/client
 export TB_SID=tibero
 export PATH=$PATH:$TB_HOME/bin:$TB_HOME/client/bin
