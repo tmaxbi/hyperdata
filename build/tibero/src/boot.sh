@@ -221,8 +221,8 @@ create_other_sql() {
 }
 
 create_other() {   
-    tbsql sys/tibero@tas$cnt @$TB_HOME/hd/tas$cnt.sql
-    tbsql sys/tibero@tac$cnt @$TB_HOME/hd/tac$cnt.sql
+    tbsql sys/tibero@tas0 @$TB_HOME/hd/tas$cnt.sql
+    tbsql sys/tibero@tac0 @$TB_HOME/hd/tac$cnt.sql
 
     tbcm -b
     sleep 2
