@@ -71,13 +71,13 @@ spec:
               name: hive-gw
               protocol: TCP
           resources:
-            limits:
-              cpu: {{ .Values.resources.limits.cpu }}
-              memory: {{ .Values.resources.limits.memory }}
-              nvidia.com/gpu: "0"
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
               memory: {{ .Values.resources.requests.memory }}
+              nvidia.com/gpu: "0"
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
               nvidia.com/gpu: "0"
           volumeMounts:
             - mountPath: {{ .Values.db.mountPath }}
