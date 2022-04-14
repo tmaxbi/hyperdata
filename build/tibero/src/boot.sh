@@ -24,22 +24,15 @@ set_value() {
         chmod +x $TB_VOLUME/cnt
     fi
 
-    ### Value.yaml 파일로 이동 필요
-    export tas_disk_size=2
-    export tas_disk_cnt=4
-    export tas_redun=2
-    export tas_disk=$TB_HOME/database
-    ##############################
-
-    if [ $tas_redun -eq 1 ]; then
+    if [ $TAS_REDUN -eq 1 ]; then
         redun="EXTERNAL"
-    elif [ $tas_redun -eq 2 ]; then
+    elif [ $TAS_REDUN -eq 2 ]; then
         redun="NORMAL"
     else
         redun="HIGH"
     fi
 
-    export dd_bs=$(($tas_disk_size * 1024))
+    export dd_bs=$(($TAS_DISK_SIZE * 1024))
 
     . $TB_VOLUME/cnt
     export CM_SID=cm$cnt 
@@ -63,8 +56,8 @@ create_tas_tip() {
     echo THREAD=$cnt >> $TB_HOME/config/tas$cnt.tip
     echo CM_PORT=11000 >> $TB_HOME/config/tas$cnt.tip
     echo LOCAL_CLUSTER_PORT=13000 >> $TB_HOME/config/tas$cnt.tip
-    echo TOTAL_SHM_SIZE=${TOTAL_SHM_SIZE}G >> $TB_HOME/config/tas$cnt.tip
-    echo MEMORY_TARGET=${MEMORY_TARGET}G >> $TB_HOME/config/tas$cnt.tip
+    echo TOTAL_SHM_SIZE=$TOTAL_SHM_SIZE >> $TB_HOME/config/tas$cnt.tip
+    echo MEMORY_TARGET=$MEMORY_TARGET >> $TB_HOME/config/tas$cnt.tip
     echo MAX_SESSION_COUNT=$MAX_SESSION_COUNT >> $TB_HOME/config/tas$cnt.tip
     echo CLUSTER_DATABASE=Y >> $TB_HOME/config/tas$cnt.tip
     echo BOOT_WITH_AUTO_DOWN_CLEAN=Y >> $TB_HOME/config/tas$cnt.tip
@@ -72,7 +65,7 @@ create_tas_tip() {
     echo _SLEEP_ON_SIG=Y >> $TB_HOME/config/tas$cnt.tip
     echo INSTANCE_TYPE=AS >> $TB_HOME/config/tas$cnt.tip
     echo AS_ALLOW_ONLY_RAW_DISKS=N >> $TB_HOME/config/tas$cnt.tip
-    echo AS_DISKSTRING='"'$tas_disk/*'"' >> $TB_HOME/config/tas$cnt.tip
+    echo AS_DISKSTRING='"'$TAS_DISK/*'"' >> $TB_HOME/config/tas$cnt.tip
     echo _ACF_NMGR_MAX_NODES=10 >>  $TB_HOME/config/tas$cnt.tip
 }
 
@@ -88,8 +81,8 @@ create_tac_tip() {
     echo CONTROL_FILES=+DS0/c1.ctl  >> $TB_HOME/config/tac$cnt.tip
     echo DB_CREATE_FILE_DEST=+DS0  >> $TB_HOME/config/tac$cnt.tip
     echo LOG_ARCHIVE_DEST=+DS0/archive  >> $TB_HOME/config/tac$cnt.tip
-    echo TOTAL_SHM_SIZE=${TOTAL_SHM_SIZE}G  >> $TB_HOME/config/tac$cnt.tip
-    echo MEMORY_TARGET=${MEMORY_TARGET}G  >> $TB_HOME/config/tac$cnt.tip
+    echo TOTAL_SHM_SIZE=$TOTAL_SHM_SIZE  >> $TB_HOME/config/tac$cnt.tip
+    echo MEMORY_TARGET=$MEMORY_TARGET  >> $TB_HOME/config/tac$cnt.tip
     echo MAX_SESSION_COUNT=$MAX_SESSION_COUNT >> $TB_HOME/config/tac$cnt.tip
     echo THROW_WHEN_GETTING_OSSTAT_FAIL=N >> $TB_HOME/config/tac$cnt.tip
     echo BOOT_WITH_AUTO_DOWN_CLEAN=Y >> $TB_HOME/config/tac$cnt.tip
@@ -111,34 +104,34 @@ create_1st_sql() {
     echo "maxinstances 10" >> $TB_HOME/hd/tac$cnt.sql
     echo "maxdatafiles 200" >> $TB_HOME/hd/tac$cnt.sql
     echo "character set UTF8" >> $TB_HOME/hd/tac$cnt.sql
-    echo "logfile group 0 '+DS0/log000.log' size 50m," >> $TB_HOME/hd/tac$cnt.sql
-    echo "group 1 '+DS0/log001.log' size 50m," >> $TB_HOME/hd/tac$cnt.sql
-    echo "group 2 '+DS0/log002.log' size 50m" >> $TB_HOME/hd/tac$cnt.sql
+    echo "logfile group 0 '+DS0/log000.log' size $LOG_FILE_SIZE," >> $TB_HOME/hd/tac$cnt.sql
+    echo "group 1 '+DS0/log001.log' size $LOG_FILE_SIZE," >> $TB_HOME/hd/tac$cnt.sql
+    echo "group 2 '+DS0/log002.log' size $LOG_FILE_SIZE" >> $TB_HOME/hd/tac$cnt.sql
     echo "maxloggroups 255" >> $TB_HOME/hd/tac$cnt.sql
     echo "maxlogmembers 8" >> $TB_HOME/hd/tac$cnt.sql
-    echo "noarchivelog" >> $TB_HOME/hd/tac$cnt.sql
-    echo "datafile '+DS0/system001.dtf' size 100M" >> $TB_HOME/hd/tac$cnt.sql
+    echo "$ARCHIVE_MODE" >> $TB_HOME/hd/tac$cnt.sql
+    echo "datafile '+DS0/system001.dtf' size $DATA_FILE_SIZE" >> $TB_HOME/hd/tac$cnt.sql
     echo "autoextend on next 10M maxsize unlimited" >> $TB_HOME/hd/tac$cnt.sql
     echo "default tablespace usr" >> $TB_HOME/hd/tac$cnt.sql
-    echo "datafile '+DS0/usr.dtf' size 100M" >> $TB_HOME/hd/tac$cnt.sql
+    echo "datafile '+DS0/usr.dtf' size $DATA_FILE_SIZE" >> $TB_HOME/hd/tac$cnt.sql
     echo "autoextend on next 10M" >> $TB_HOME/hd/tac$cnt.sql
     echo "extent management local autoallocate" >> $TB_HOME/hd/tac$cnt.sql
     echo "default temporary tablespace TEMP" >> $TB_HOME/hd/tac$cnt.sql
-    echo "tempfile '+DS0/temp001.dtf' size 100M" >> $TB_HOME/hd/tac$cnt.sql
+    echo "tempfile '+DS0/temp001.dtf' size $TEMP_FILE_SIZE" >> $TB_HOME/hd/tac$cnt.sql
     echo "autoextend on next 10M" >> $TB_HOME/hd/tac$cnt.sql
     echo "extent management local autoallocate" >> $TB_HOME/hd/tac$cnt.sql
     echo "undo tablespace UNDO0" >> $TB_HOME/hd/tac$cnt.sql
-    echo "datafile '+DS0/undo000.dtf' size 100M" >> $TB_HOME/hd/tac$cnt.sql
+    echo "datafile '+DS0/undo000.dtf' size $UNDO_FILE_SIZE" >> $TB_HOME/hd/tac$cnt.sql
     echo "autoextend on next 10M" >> $TB_HOME/hd/tac$cnt.sql
     echo "extent management local autoallocate;" >> $TB_HOME/hd/tac$cnt.sql
     echo "quit;" >> $TB_HOME/hd/tac$cnt.sql
     
-    mkdir -p $tas_disk
+    mkdir -p $TAS_DISK
     
     i=1
-    while [ $i -le $tas_disk_cnt ]; do
-        dd if=/dev/zero of=$tas_disk/disk$i bs=$dd_bs count=1048576
-        chmod 755 $tas_disk/disk$i
+    while [ $i -le $TAS_DISK_CNT ]; do
+        dd if=/dev/zero of=$TAS_DISK/disk$i bs=$dd_bs count=1048576
+        chmod 755 $TAS_DISK/disk$i
         i=$((i+1))
     done
     
@@ -147,18 +140,18 @@ create_1st_sql() {
     
     disk_no=1
     i=1
-    while [ $i -le $tas_redun  ]; do
+    while [ $i -le $TAS_REDUN  ]; do
         echo "FAILGROUP FG$i DISK" >> $TB_HOME/hd/tas$cnt.sql
         echo "FAILGROUP FG$i DISK" >> $TB_HOME/hd/tas${cnt}_force.sql
     
         j=1
-        while [ $j -le `expr $tas_disk_cnt / $tas_redun`  ]; do
-            if [ $j -eq `expr $tas_disk_cnt / $tas_redun`  ]; then
-                echo "'$tas_disk/disk$disk_no' NAME FG${i}_DISK${j}" >> $TB_HOME/hd/tas$cnt.sql
-                echo "'$tas_disk/disk$disk_no' NAME FG${i}_DISK${j}" >> $TB_HOME/hd/tas${cnt}_force.sql
+        while [ $j -le `expr $TAS_DISK_CNT / $TAS_REDUN`  ]; do
+            if [ $j -eq `expr $TAS_DISK_CNT / $TAS_REDUN`  ]; then
+                echo "'$TAS_DISK/disk$disk_no' NAME FG${i}_DISK${j}" >> $TB_HOME/hd/tas$cnt.sql
+                echo "'$TAS_DISK/disk$disk_no' NAME FG${i}_DISK${j}" >> $TB_HOME/hd/tas${cnt}_force.sql
             else
-                echo "'$tas_disk/disk$disk_no' NAME FG${i}_DISK${j}," >> $TB_HOME/hd/tas$cnt.sql
-                echo "'$tas_disk/disk$disk_no' NAME FG${i}_DISK${j}," >> $TB_HOME/hd/tas${cnt}_force.sql
+                echo "'$TAS_DISK/disk$disk_no' NAME FG${i}_DISK${j}," >> $TB_HOME/hd/tas$cnt.sql
+                echo "'$TAS_DISK/disk$disk_no' NAME FG${i}_DISK${j}," >> $TB_HOME/hd/tas${cnt}_force.sql
             fi
             disk_no=`expr $disk_no + 1`
             j=$((j+1))
@@ -179,7 +172,7 @@ create_1st() {
     sleep 2
 
     cmrctl add network --nettype private --ipaddr $IP_ADDR --portno 15000 --name net1
-    cmrctl add cluster --incnet net1  --cfile "+$tas_disk/*" --name cls1
+    cmrctl add cluster --incnet net1  --cfile "+$TAS_DISK/*" --name cls1
 
     export TB_SID=tas0 
     tbboot nomount
@@ -233,14 +226,14 @@ create_other_sql() {
 }
 
 create_other() {   
-    tbsql sys/tibero@tas0 @$TB_HOME/hd/tas$cnt.sql
-    tbsql sys/tibero@tac0 @$TB_HOME/hd/tac$cnt.sql
+    tbsql sys/tibero@tas$cnt @$TB_HOME/hd/tas$cnt.sql
+    tbsql sys/tibero@tac$cnt @$TB_HOME/hd/tac$cnt.sql
 
     tbcm -b
     sleep 2
 
     cmrctl add network --nettype private --ipaddr $IP_ADDR --portno 15000 --name net1
-    cmrctl add cluster --incnet net1  --cfile "+$tas_disk/*" --name cls1
+    cmrctl add cluster --incnet net1  --cfile "+$TAS_DISK/*" --name cls1
     
     cmrctl start cluster --name cls1
     sleep 2
