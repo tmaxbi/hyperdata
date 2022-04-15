@@ -38,6 +38,8 @@ set_value() {
     echo export CM_SID=cm$cnt >> ~/.bashrc
     echo export TB_SID=tac$cnt >> ~/.bashrc
     . ~/.bashrc
+
+    echo "export cnt=`expr $cnt + 1`" > $TB_VOLUME/cnt
 }
 
 init_tb() {
@@ -245,10 +247,6 @@ create_other() {
     sleep 5
 }
 
-update_cnt() {
-    echo "export cnt=`expr $cnt + 1`" > $TB_VOLUME/cnt
-}
-
 ### MAIN
 init_hdfs
 set_value
@@ -271,5 +269,3 @@ else
     create_1st_sql
     create_1st
 fi
-
-update_cnt
