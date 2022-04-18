@@ -1,5 +1,10 @@
 image: 192.168.179.44:5000/hyperdata8.3_virtualization:20211210_v1
 
+proxy:
+  bodysize: 1024m
+  # minutes
+  timeout: 1800
+
 server:
   port: 8100
   servlet:
