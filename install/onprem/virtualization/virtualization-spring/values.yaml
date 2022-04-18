@@ -37,3 +37,6 @@ loadBalancer:
 
 logging:
   path: virtualization/logs
+
+version:
+  major: 20
