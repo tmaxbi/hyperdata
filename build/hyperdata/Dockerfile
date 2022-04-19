@@ -55,7 +55,7 @@ COPY --chown=hyperdata:hyperdata src $SRC_HOME
 ### 8) Set Symbolic Link
 USER root
 RUN rm -rf /etc/krb5.conf \
- && ln -s $SRC_HOME/krb5_conf/krb5.conf /etc/krb5.conf
+ && ln -s $TB_VOLUME/krb5_conf/krb5.conf /etc/krb5.conf
 
 ### 9) USER hyperdata
 USER hyperdata
