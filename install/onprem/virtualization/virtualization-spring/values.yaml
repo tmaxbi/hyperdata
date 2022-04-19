@@ -5,11 +5,6 @@ proxy:
   # minutes
   timeout: 1800
 
-proxy:
-  bodysize: 1024m
-  # minutes
-  timeout: 1800
-
 server:
   port: 8100
   servlet:
@@ -42,3 +37,6 @@ loadBalancer:
 
 logging:
   path: virtualization/logs
+
+version:
+  major: 20
