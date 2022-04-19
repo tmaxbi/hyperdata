@@ -13,7 +13,7 @@ RUN apt-add-repository universe \
  && apt-get update
 
 RUN locale-gen ko_KR.UTF-8 \
- && echo "Asia/Seoul" > /etc/timezone
+ && timedatectl set-timezone 'Asia/Seoul'
 ENV LANG=ko_KR.UTF-8
 
 ### 2) Install Package 
