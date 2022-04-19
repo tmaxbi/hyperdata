@@ -64,6 +64,9 @@ spec:
           tcpSocket:
             port: 9861
           initialDelaySeconds: 30
+        env:
+        - name: TZ
+          value: Asia/Seoul
         envFrom:
         - configMapRef:
             name: config
