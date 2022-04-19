@@ -12,8 +12,9 @@ RUN apt-add-repository universe \
  && apt-add-repository ppa:mosquitto-dev/mosquitto-ppa -y \
  && apt-get update
 
-RUN locale-gen ko_KR.UTF-8 \
- && echo "Asia/Seoul" > /etc/timezone
+RUN locale-gen ko_KR.UTF-8
+RUN echo "Asia/Seoul" > /etc/timezone
+
 ENV LANG=ko_KR.UTF-8
 
 ### 2) Install Package 
