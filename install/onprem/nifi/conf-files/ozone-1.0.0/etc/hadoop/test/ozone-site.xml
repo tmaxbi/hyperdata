@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration>
+    <property>
+        <name>ozone.om.address</name>
+        <value>localhost</value>
+        <tag>OM, REQUIRED</tag>
+        <description>
+      The address of the Ozone OM service. This allows clients to discover
+      the address of the OM.
+    </description>
+    </property>
+    <property>
+        <name>ozone.metadata.dirs</name>
+	<value>/tmp/ozone-metadata/</value>
+        <tag>OZONE, OM, SCM, CONTAINER, STORAGE, REQUIRED</tag>
+        <description>
+      This setting is the fallback location for SCM, OM, Recon and DataNodes
+      to store their metadata. This setting may be used only in test/PoC
+      clusters to simplify configuration.
+
+      For production clusters or any time you care about performance, it is
+      recommended that ozone.om.db.dirs, ozone.scm.db.dirs and
+      dfs.container.ratis.datanode.storage.dir be configured separately.
+    </description>
+    </property>
+    <property>
+        <name>ozone.scm.client.address</name>
+        <value>localhost</value>
+        <tag>OZONE, SCM, REQUIRED</tag>
+        <description>
+      The address of the Ozone SCM client service. This is a required setting.
+
+      It is a string in the host:port format. The port number is optional
+      and defaults to 9860.
+    </description>
+    </property>
+    <property>
+        <name>ozone.scm.names</name>
+        <value>localhost</value>
+        <tag>OZONE, REQUIRED</tag>
+        <description>
+      The value of this property is a set of DNS | DNS:PORT | IP
+      Address | IP:PORT. Written as a comma separated string. e.g. scm1,
+      scm2:8020, 7.7.7.7:7777.
+      This property allows datanodes to discover where SCM is, so that
+      datanodes can send heartbeat to SCM.
+    </description>
+    </property>
+</configuration>

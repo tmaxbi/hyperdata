@@ -1,0 +1,584 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "apache-nifi.fullname" . }}
+  labels:
+    app: {{ include "apache-nifi.name" . | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  podManagementPolicy: {{ .Values.sts.podManagementPolicy }}
+  serviceName: {{ template "apache-nifi.fullname" . }}-headless
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "apache-nifi.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+{{- if .Values.sts.pod.annotations }}
+      annotations:
+{{ toYaml .Values.sts.pod.annotations | indent 8 }}
+{{- else }}
+      annotations:
+        security.alpha.kubernetes.io/sysctls: net.ipv4.ip_local_port_range=10000 65000
+{{- end }}
+      labels:
+        app: {{ include "apache-nifi.name" . | quote }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
+{{- if .Values.extraLabels }}
+{{ toYaml .Values.extraLabels | indent 8 }}
+{{- end }}
+    spec:
+{{- if .Values.sts.useHostNetwork }}
+      hostNetwork: {{ .Values.sts.useHostNetwork }}
+      dnsPolicy: ClusterFirstWithHostNet
+{{- end }}
+{{- if .Values.sts.hostAliases }}
+      hostAliases:
+{{ toYaml .Values.sts.hostAliases | indent 8 }}
+{{- end }}
+      serviceAccountName: {{ include "apache-nifi.serviceAccountName" . }}
+      {{- if eq .Values.sts.AntiAffinity "hard" }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - {{ include "apache-nifi.name" . | quote }}
+              topologyKey: "kubernetes.io/hostname"
+      {{- else if eq .Values.sts.AntiAffinity "soft" }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+             - weight: 1
+               podAffinityTerm:
+                 labelSelector:
+                    matchExpressions:
+                      - key: "app"
+                        operator: In
+                        values:
+                         - {{ include "apache-nifi.name" . | quote }}
+                 topologyKey: "kubernetes.io/hostname"
+      {{- end }}
+{{- if and .Values.affinity (and (ne .Values.sts.AntiAffinity "hard") (ne .Values.sts.AntiAffinity "soft")) }}
+      affinity:
+{{ toYaml .Values.affinity | indent 8 }}
+{{- end }}
+{{- if .Values.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+{{- end }}
+{{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+{{- end }}
+{{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+{{- end }}
+{{- if .Values.securityContext }}
+      securityContext:
+{{ toYaml .Values.securityContext | indent 8 }}
+{{- end }}
+      initContainers:
+{{- if .Values.properties.isNode }}
+      - name: zookeeper
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy | default "Always" | quote }}
+        image: "{{ .Values.sidecar.image }}:{{ .Values.sidecar.tag }}"
+        command:
+        - sh
+        - -c
+        - |
+          echo trying to contact {{ template "zookeeper.server" . }} {{ .Values.zookeeper.port }}
+          until nc -vzw 1 {{ template "zookeeper.server" . }} {{ .Values.zookeeper.port }}; do
+            echo "waiting for zookeeper..."
+            sleep 2
+          done
+{{- end }}
+
+{{- range $key, $value := .Values.initContainers }}
+      - name: {{ $key }}
+{{ toYaml $value | indent 8 }}
+{{- end }}
+      {{- if .Values.image.pullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecret }}
+      {{- end }}
+      containers:
+{{- if .Values.extraContainers }}
+{{- toYaml .Values.extraContainers | nindent 6 }}
+{{- end }}
+      - name: server
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command:
+        - bash
+        - -ce
+        - |
+          prop_replace () {
+            target_file=${NIFI_HOME}/conf/${3:-nifi.properties}
+            echo "updating ${1} in ${target_file}"
+            if egrep "^${1}=" ${target_file} &> /dev/null; then
+              sed -i -e "s|^$1=.*$|$1=$2|"  ${target_file}
+            else
+              echo ${1}=${2} >> ${target_file}
+            fi
+          }
+          mkdir -p ${NIFI_HOME}/config-data/conf
+{{- if .Values.sts.useHostNetwork }}
+          FQDN="0.0.0.0"
+{{- else }}
+          FQDN=$(hostname -f)
+{{- end }}
+
+          cat "${NIFI_HOME}/conf/nifi.temp" > "${NIFI_HOME}/conf/nifi.properties"
+
+{{- if .Values.auth.ldap.enabled }}
+          cat "${NIFI_HOME}/conf/authorizers.temp" > "${NIFI_HOME}/conf/authorizers.xml"
+          cat "${NIFI_HOME}/conf/login-identity-providers-ldap.xml" > "${NIFI_HOME}/conf/login-identity-providers.xml"
+{{- else if .Values.auth.oidc.enabled }}
+          prop_replace nifi.security.user.login.identity.provider ''
+          prop_replace nifi.security.user.authorizer managed-authorizer
+          prop_replace nifi.security.user.oidc.discovery.url {{ .Values.auth.oidc.discoveryUrl }}
+          prop_replace nifi.security.user.oidc.client.id {{ .Values.auth.oidc.clientId }}
+          prop_replace nifi.security.user.oidc.client.secret {{ .Values.auth.oidc.clientSecret }}
+          prop_replace nifi.security.user.oidc.claim.identifying.user {{ .Values.auth.oidc.claimIdentifyingUser }}
+          xmlstarlet ed --inplace --delete "//authorizers/authorizer[identifier='single-user-authorizer']" "${NIFI_HOME}/conf/authorizers.xml"
+          xmlstarlet ed --inplace --update "//authorizers/userGroupProvider/property[@name='Initial User Identity 1']" -v {{ .Values.auth.oidc.admin }} "${NIFI_HOME}/conf/authorizers.xml"
+          xmlstarlet ed --inplace --update "//authorizers/accessPolicyProvider/property[@name='Initial Admin Identity']" -v {{ .Values.auth.oidc.admin }} "${NIFI_HOME}/conf/authorizers.xml"
+{{- else if .Values.auth.singleUser.username }}
+          bin/nifi.sh set-single-user-credentials {{ .Values.auth.singleUser.username }} {{ .Values.auth.singleUser.password }}
+{{- end }}
+
+          if ! test -f /opt/nifi/data/flow.xml.gz && test -f /opt/nifi/data/flow.xml; then
+            gzip /opt/nifi/data/flow.xml
+          fi
+
+          # prop_replace nifi.remote.input.host ${FQDN}
+          prop_replace nifi.cluster.node.address ${FQDN}
+          prop_replace nifi.zookeeper.connect.string ${NIFI_ZOOKEEPER_CONNECT_STRING}
+          prop_replace nifi.web.http.host ${FQDN}
+
+{{- if .Values.properties.webProxyHost }}
+          # Update nifi.properties for web ui proxy hostname
+          prop_replace nifi.web.proxy.host {{ .Values.properties.webProxyHost }}
+{{- else }}
+          prop_replace nifi.web.proxy.host {{ template "apache-nifi.fullname" . }}.{{ .Release.Namespace }}.svc
+{{- end }}
+
+          if [ ! -r "${NIFI_HOME}/conf/nifi-cert.pem" ]
+          then
+            /opt/nifi/nifi-toolkit-current/bin/tls-toolkit.sh standalone \
+              -n '{{.Release.Name}}-nifi-0.{{.Release.Name}}-nifi-headless.{{.Release.Namespace}}.svc.cluster.local' \
+              -C '{{.Values.auth.admin}}' \
+              -o "${NIFI_HOME}/conf/" \
+              -P {{.Values.auth.SSL.truststorePasswd}} \
+              -S {{.Values.auth.SSL.keystorePasswd}} \
+              --nifiPropertiesFile /opt/nifi/nifi-current/conf/nifi.properties
+          fi
+
+{{- if .Values.properties.safetyValve }}
+  {{- range $prop, $val := .Values.properties.safetyValve }}
+          prop_replace {{ $prop }} "{{ $val }}" nifi.properties
+  {{- end }}
+{{- end }}
+
+          for f in "${NIFI_HOME}/conf/authorizers.xml" "${NIFI_HOME}/conf/login-identity-providers.xml" ${NIFI_HOME}/conf/nifi.properties
+          do
+            echo === $f ===
+            cat $f
+          done
+          echo === end of files ===
+
+          function offloadNode() {
+              FQDN=$(hostname -f)
+              echo "disconnecting node '$FQDN'"
+              baseUrl=http://${FQDN}:{{ .Values.properties.httpPort }}
+
+              keystore=${NIFI_HOME}/config-data/certs/keystore.jks
+              keystorePasswd=$(jq -r .keyStorePassword ${NIFI_HOME}/config-data/certs/config.json)
+              keyPasswd=$(jq -r .keyPassword ${NIFI_HOME}/config-data/certs/config.json)
+              truststore=${NIFI_HOME}/config-data/certs/truststore.jks
+              truststorePasswd=$(jq -r .trustStorePassword ${NIFI_HOME}/config-data/certs/config.json)
+
+              secureArgs=" --truststore ${truststore} --truststoreType JKS --truststorePasswd ${truststorePasswd} --keystore ${keystore} --keystoreType JKS --keystorePasswd ${keystorePasswd} --proxiedEntity "{{ .Values.auth.admin }}""
+
+              echo baseUrl ${baseUrl}
+              echo "gracefully disconnecting node '$FQDN' from cluster"
+              ${NIFI_TOOLKIT_HOME}/bin/cli.sh nifi get-nodes -ot json -u ${baseUrl} ${secureArgs} > nodes.json
+              nnid=$(jq --arg FQDN "$FQDN" '.cluster.nodes[] | select(.address==$FQDN) | .nodeId' nodes.json)
+              echo "disconnecting node ${nnid}"
+              ${NIFI_TOOLKIT_HOME}/bin/cli.sh nifi disconnect-node -nnid $nnid -u ${baseUrl} ${secureArgs}
+              echo ""
+              echo "get a connected node"
+              connectedNode=$(jq -r 'first(.cluster.nodes|=sort_by(.address)| .cluster.nodes[] | select(.status=="CONNECTED")) | .address' nodes.json)
+              baseUrl=http://${connectedNode}:{{ .Values.properties.httpPort }}
+              echo baseUrl ${baseUrl}
+              echo ""
+              echo "wait until node has state 'DISCONNECTED'"
+              while [[ "${node_state}" != "DISCONNECTED" ]]; do
+                  sleep 1
+                  ${NIFI_TOOLKIT_HOME}/bin/cli.sh nifi get-nodes -ot json -u ${baseUrl} ${secureArgs} > nodes.json
+                  node_state=$(jq -r --arg FQDN "$FQDN" '.cluster.nodes[] | select(.address==$FQDN) | .status' nodes.json)
+                  echo "state is '${node_state}'"
+              done
+              echo ""
+              echo "node '${nnid}' was disconnected"
+              echo "offloading node"
+              ${NIFI_TOOLKIT_HOME}/bin/cli.sh nifi offload-node -nnid $nnid -u ${baseUrl} ${secureArgs}
+              echo ""
+              echo "wait until node has state 'OFFLOADED'"
+              while [[ "${node_state}" != "OFFLOADED" ]]; do
+                  sleep 1
+                  ${NIFI_TOOLKIT_HOME}/bin/cli.sh nifi get-nodes -ot json -u ${baseUrl} ${secureArgs} > nodes.json
+                  node_state=$(jq -r --arg FQDN "$FQDN" '.cluster.nodes[] | select(.address==$FQDN) | .status' nodes.json)
+                  echo "state is '${node_state}'"
+              done
+          }
+
+          deleteNode() {
+              echo "deleting node"
+              ${NIFI_TOOLKIT_HOME}/bin/cli.sh nifi delete-node -nnid ${nnid} -u ${baseUrl} ${secureArgs}
+              echo "node deleted"
+          }
+
+          trap 'echo Received trapped signal, beginning shutdown...;offloadNode;./bin/nifi.sh stop;deleteNode;exit 0;' TERM HUP INT;
+          trap ":" EXIT
+
+          exec bin/nifi.sh run & nifi_pid="$!"
+          echo NiFi running with PID ${nifi_pid}.
+          wait ${nifi_pid}
+
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        ports:
+{{- if .Values.metrics.prometheus.enabled }}
+        - containerPort: {{ .Values.metrics.prometheus.port }}
+          name: metrics
+          protocol: TCP                  
+{{- end }}
+        - containerPort: {{ .Values.properties.httpsPort }}
+{{- if .Values.sts.hostPort }}
+          hostPort: {{ .Values.sts.hostPort }}
+{{- end }}
+          name: https
+          protocol: TCP
+        - containerPort: {{ .Values.properties.clusterPort }}
+          name: cluster
+          protocol: TCP
+        env:
+        - name: NIFI_ZOOKEEPER_CONNECT_STRING
+          value: {{ template "zookeeper.url" . }}
+{{- if not (or (.Values.auth.ldap.enabled) (.Values.auth.oidc.enabled)) }}
+        - name: NIFI_WEB_HTTPS_HOST
+          value: 0.0.0.0
+{{- end }}
+{{- if .Values.env }}
+{{ toYaml .Values.env | indent 8 }}
+{{- end }}
+{{- if .Values.envFrom }}
+        envFrom:
+{{ toYaml .Values.envFrom | indent 8 }}
+{{- end }}
+{{- if .Values.postStart }}
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", {{ .Values.postStart | quote }}]
+{{- end }}
+{{- if .Values.properties.isNode }}
+        readinessProbe:
+          initialDelaySeconds: 60
+          periodSeconds: 20
+          tcpSocket:
+            port: {{ .Values.properties.httpPort }}
+#           exec:
+#             command:
+#             - bash
+#             - -c
+#             - |
+# {{- if .Values.properties.httpsPort }}
+#               curl -kv \
+#                 --cert ${NIFI_HOME}/config-data/certs/admin/crt.pem --cert-type PEM \
+#                 --key ${NIFI_HOME}/config-data/certs/admin/key.pem --key-type PEM \
+#                 https://$(hostname -f):{{ .Values.properties.httpsPort }}/nifi-api/controller/cluster > $NIFI_BASE_DIR/data/cluster.state
+# {{- else }}
+#               curl -kv \
+#                 http://$(hostname -f):{{ .Values.properties.httpPort }}/nifi-api/controller/cluster > $NIFI_BASE_DIR/data/cluster.state
+# {{- end }}
+#               STATUS=$(jq -r ".cluster.nodes[] | select((.address==\"$(hostname -f)\") or .address==\"localhost\") | .status" $NIFI_BASE_DIR/data/cluster.state)
+
+#               if [[ ! $STATUS = "CONNECTED" ]]; then
+#                 echo "Node not found with CONNECTED state. Full cluster state:"
+#                 jq . $NIFI_BASE_DIR/data/cluster.state
+#                 exit 1
+#               fi
+{{- end }}
+        livenessProbe:
+          initialDelaySeconds: 90
+          periodSeconds: 60
+          tcpSocket:
+            port: {{ .Values.properties.httpPort }}
+        volumeMounts:
+          - name: "logs"
+            mountPath: /opt/nifi/nifi-current/logs
+          - name: "data"
+            mountPath: /opt/nifi/data
+          - name: "auth-conf"
+            mountPath: /opt/nifi/nifi-current/auth-conf/
+          - name: "config-data"
+            mountPath: /opt/nifi/nifi-current/config-data
+          - name: "flowfile-repository"
+            mountPath: /opt/nifi/flowfile_repository
+          - name: "content-repository"
+            mountPath: /opt/nifi/content_repository
+          - name: "provenance-repository"
+            mountPath: /opt/nifi/provenance_repository
+          - name: "bootstrap-conf"
+            mountPath: /opt/nifi/nifi-current/conf/bootstrap.conf
+            subPath: "bootstrap.conf"
+          - name: "nifi-properties"
+            mountPath: /opt/nifi/nifi-current/conf/nifi.temp
+            subPath: "nifi.temp"
+          - name: "authorizers-temp"
+            mountPath: /opt/nifi/nifi-current/conf/authorizers.temp
+            subPath: "authorizers.temp"
+          - name: "bootstrap-notification-services-xml"
+            mountPath: /opt/nifi/nifi-current/conf/bootstrap-notification-services.xml
+            subPath: "bootstrap-notification-services.xml"
+          - name: "login-identity-providers-ldap-xml"
+            mountPath: /opt/nifi/nifi-current/conf/login-identity-providers-ldap.xml
+            subPath: "login-identity-providers-ldap.xml"
+          - name: "state-management-xml"
+            mountPath: /opt/nifi/nifi-current/conf/state-management.xml
+            subPath: "state-management.xml"
+          - name: "zookeeper-properties"
+            mountPath: /opt/nifi/nifi-current/conf/zookeeper.properties
+            subPath: "zookeeper.properties"
+          - name: "flow-content"
+            mountPath: /opt/nifi/data/flow.xml
+            subPath: "flow.xml"
+          {{- range $secret := .Values.secrets }}
+            {{- if $secret.mountPath }}
+              {{- if $secret.keys }}
+                {{- range $key := $secret.keys }}
+          - name: {{ include "apache-nifi.fullname" $ }}-{{ $secret.name }}
+            mountPath: {{ $secret.mountPath }}/{{ $key }}
+            subPath: {{ $key }}
+            readOnly: true
+                {{- end }}
+              {{- else }}
+          - name: {{ include "apache-nifi.fullname" $ }}-{{ $secret.name }}
+            mountPath: {{ $secret.mountPath }}
+            readOnly: true
+              {{- end }}
+            {{- end }}
+          {{- end }}
+          {{- range $configmap := .Values.configmaps }}
+            {{- if $configmap.mountPath }}
+              {{- if $configmap.keys }}
+                {{- range $key := $configmap.keys }}
+          - name: {{ include "apache-nifi.fullname" $ }}-{{ $configmap.name }}
+            mountPath: {{ $configmap.mountPath }}/{{ $key }}
+            subPath: {{ $key }}
+            readOnly: true
+                {{- end }}
+              {{- else }}
+          - name: {{ include "apache-nifi.fullname" $ }}-{{ $configmap.name }}
+            mountPath: {{ $configmap.mountPath }}
+            readOnly: true
+              {{- end }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.extraVolumeMounts }}
+{{ toYaml .Values.extraVolumeMounts | indent 10 }}
+          {{- end }}
+      - name: app-log
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy | default "Always" | quote }}
+        image: "{{ .Values.sidecar.image }}:{{ .Values.sidecar.tag }}"
+        args: [tail, -n+1, -F, /var/log/nifi-app.log]
+        resources:
+{{ toYaml .Values.logresources | indent 10 }}
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log
+      - name: bootstrap-log
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy | default "Always" | quote }}
+        image: "{{ .Values.sidecar.image }}:{{ .Values.sidecar.tag }}"
+        args: [tail, -n+1, -F, /var/log/nifi-bootstrap.log]
+        resources:
+{{ toYaml .Values.logresources | indent 10 }}
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log
+      - name: user-log
+        imagePullPolicy: {{ .Values.sidecar.imagePullPolicy | default "Always" | quote }}
+        image: "{{ .Values.sidecar.image }}:{{ .Values.sidecar.tag }}"
+        args: [tail, -n+1, -F, /var/log/nifi-user.log]
+        resources:
+{{ toYaml .Values.logresources | indent 10 }}
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log
+      volumes:
+      - name: "bootstrap-conf"
+        configMap:
+          name: {{ template "apache-nifi.fullname" . }}-config
+          items:
+            - key: "bootstrap.conf"
+              path: "bootstrap.conf"
+      - name: "nifi-properties"
+        configMap:
+          name: {{ template "apache-nifi.fullname" . }}-config
+          items:
+            - key: "nifi.properties"
+              path: "nifi.temp"
+      - name: "authorizers-temp"
+        configMap:
+          name: {{ template "apache-nifi.fullname" . }}-config
+          items:
+            - key: "authorizers.xml"
+              path: "authorizers.temp"
+      - name: "bootstrap-notification-services-xml"
+        configMap:
+          name: {{ template "apache-nifi.fullname" . }}-config
+          items:
+            - key: "bootstrap-notification-services.xml"
+              path: "bootstrap-notification-services.xml"
+      - name: "login-identity-providers-ldap-xml"
+        configMap:
+          name: {{ template "apache-nifi.fullname" . }}-config
+          items:
+            - key: "login-identity-providers-ldap.xml"
+              path: "login-identity-providers-ldap.xml"
+      - name: "state-management-xml"
+        configMap:
+          name: {{ template "apache-nifi.fullname" . }}-config
+          items:
+            - key: "state-management.xml"
+              path: "state-management.xml"
+      - name: "zookeeper-properties"
+        configMap:
+          name: {{ template "apache-nifi.fullname" . }}-config
+          items:
+            - key: "zookeeper.properties"
+              path: "zookeeper.properties"
+      - name: "flow-content"
+        configMap:
+          name: {{ template "apache-nifi.fullname" . }}-config
+          items:
+            - key: "flow.xml"
+              path: "flow.xml"
+      {{- range .Values.secrets }}
+      - name: {{ include "apache-nifi.fullname" $ }}-{{ .name }}
+        secret:
+          secretName: {{ .name }}
+      {{- end }}
+      {{- range .Values.configmaps }}
+      - name: {{ include "apache-nifi.fullname" $ }}-{{ .name }}
+        configMap:
+          name: {{ .name }}
+      {{- end }}
+{{- if not .Values.persistence.enabled }}
+      - name: config-data
+        emptyDir: {}
+      - name: auth-conf
+        emptyDir: {}
+      - name: data
+        emptyDir: {}
+      - name: flowfile-repository
+        emptyDir: {}
+      - name: content-repository
+        emptyDir: {}
+      - name: provenance-repository
+        emptyDir: {}
+      - name: logs
+        emptyDir: {}
+{{- end }}
+{{- if .Values.extraVolumes }}
+{{ toYaml .Values.extraVolumes | indent 6 }}
+{{- end }}
+{{- if .Values.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: logs
+      spec:
+        accessModes:
+        {{- range .Values.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.logStorage.size }}
+    - metadata:
+        name: "config-data"
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.configStorage.size }}
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+        {{- range .Values.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.dataStorage.size }}
+    - metadata:
+        name: flowfile-repository
+      spec:
+        accessModes:
+        {{- range .Values.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.flowfileRepoStorage.size }}
+    - metadata:
+        name: content-repository
+      spec:
+        accessModes:
+        {{- range .Values.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.contentRepoStorage.size }}
+    - metadata:
+        name: provenance-repository
+      spec:
+        accessModes:
+        {{- range .Values.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.provenanceRepoStorage.size }}
+    - metadata:
+        name: auth-conf
+      spec:
+        accessModes:
+        {{- range .Values.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.authconfStorage.size }}
+{{- end }}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration>
+  <property>
+    <name>ozone.om.address</name>
+    <value>om:9862</value>
+    <tag>OM, REQUIRED</tag>
+    <description>
+      The address of the Ozone OM service. This allows clients to discover
+      the address of the OM.
+    </description>
+  </property>
+  <property>
+    <name>ozone.metadata.dirs</name>
+    <value>/tmp/ozone-metadata/</value>
+    <tag>OZONE, OM, SCM, CONTAINER, STORAGE, REQUIRED</tag>
+    <description>
+      This setting is the fallback location for SCM, OM, Recon and DataNodes
+      to store their metadata. This setting may be used only in test/PoC
+      clusters to simplify configuration.
+
+      For production clusters or any time you care about performance, it is
+      recommended that ozone.om.db.dirs, ozone.scm.db.dirs and
+      dfs.container.ratis.datanode.storage.dir be configured separately.
+    </description>
+  </property>
+  <property>
+    <name>ozone.scm.http-address</name>
+    <value>scm:9876</value>
+    <tag>OZONE, SCM, REQUIRED</tag>
+    <description>
+      The address of the Ozone SCM client service. This is a required setting.
+
+      It is a string in the host:port format. The port number is optional
+      and defaults to 9860.
+    </description>
+  </property>
+</configuration>
