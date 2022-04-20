@@ -25,38 +25,41 @@ RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y krb5-config krb5-user
 
-### 3) Set SSH 
+### 3) Set Timezone
+RUN echo "Asia/Seoul" > /etc/timezone
+
+### 4) Set SSH 
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
  && sed -i 's/StrictModes yes/StrictModes no/g' /etc/ssh/sshd_config \
  && echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config \
  && echo "ClientAliveCountMax 99999" >> /etc/ssh/sshd_config \
  && service ssh restart
 
-### 4) Set ENV
+### 5) Set ENV
 ENV SRC_HOME=/src \
 JEUS_HOME=$TB_VOLUME/jeus8 \
 HD_HOME=/home/hyperdata/hyperdata20
 
-### 5) Add Hyperdata User
+### 6) Add Hyperdata User
 RUN useradd -d /home/hyperdata -m -s /bin/bash hyperdata \
  && echo "hyperdata:hyperdata1234!" | chpasswd \
  && echo "root:hyperdata1234!" | chpasswd
   
-### 6) mosquitto setting
+### 7) mosquitto setting
 RUN usermod -a -G hyperdata mosquitto \
  && chown -R hyperdata:hyperdata /etc/mosquitto \
  && chown hyperdata:hyperdata /usr/sbin/mosquitto \
  && chown mosquitto:hyperdata /var/run/mosquitto
 
-### 7) src copy
+### 8) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
 
-### 8) Set Symbolic Link
+### 9) Set Symbolic Link
 USER root
 RUN rm -rf /etc/krb5.conf \
  && ln -s $TB_VOLUME/krb5_conf/krb5.conf /etc/krb5.conf
 
-### 9) USER hyperdata
+### 10) USER hyperdata
 USER hyperdata
 RUN mv $SRC_HOME/hyperdata $HD_HOME \
  && mv $SRC_HOME/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf \
