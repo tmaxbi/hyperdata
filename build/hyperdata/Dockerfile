@@ -53,6 +53,7 @@ RUN usermod -a -G hyperdata mosquitto \
 
 ### 8) src copy
 COPY --chown=hyperdata:hyperdata src $SRC_HOME
+RUN mv /usr/bin/java /usr/bin/java_old
 
 ### 9) Set Symbolic Link
 USER root
