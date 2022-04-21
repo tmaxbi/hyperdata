@@ -1,0 +1,59 @@
+name: Test-OIDC
+
+on:
+  push:
+  pull_request:
+    
+jobs:
+  test-oidc:
+    name: Test NiFi Helm Chart OIDC
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.4.1
+        with:
+          minikube version: 'v1.20.0'
+          kubernetes version: 'v1.20.2'
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y jq
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add dysnix https://dysnix.github.io/charts/
+          helm repo update
+          helm dep up
+      - name: Install test framework components
+        run: |
+          kubectl apply -f tests/04-oidc-test-framework
+          kubectl create configmap 04-oidc-login-test --from-file=tests/04-oidc-login-test.js 
+          kubectl wait --for=condition=Ready pod/browserless-0 --timeout=5m
+          kubectl wait --for=condition=Ready pod/keycloak-0 --timeout=5m
+          kubectl wait --for=condition=Ready pod/socks5-0 --timeout=5m
+          tests/04-oidc-keycloak-setup.bash
+      - name: Install Nifi
+        run: helm install nifi . -f tests/04-oidc-values.yaml
+      - name: Check deployment status
+        run: kubectl wait --for=condition=Ready pod/nifi-0 --timeout=20m
+      - name: Wait for NiFi web server to start
+        run: |
+          for n in [ 0 1 2 3 4 5 6 7 8 9 ]
+          do
+            if kubectl logs pod/nifi-0 -c app-log | grep 'JettyServer NiFi has started'
+            then
+              exit 0
+            fi
+            sleep 30
+          done
+          echo NiFi did not start for 300 seconds!
+          exit 1
+      - name: Check that OIDC login works
+        run: |
+          kubectl apply -f tests/04-oidc-mocha-job.yaml
+          while ! kubectl logs -f job/oidc-mocha
+          do
+            sleep 5
+          done
+          kubectl get job/oidc-mocha -o json | jq -e -r '.status.succeeded == 1'
