@@ -208,7 +208,7 @@ jvmMemory: 8g
 
 # Separate image for tailing each log separately and checking zookeeper connectivity
 sidecar:
-  image: busybox
+  image: 192.168.179.44:5000/busybox
   tag: "1.32.0"
   imagePullPolicy: "IfNotPresent"
 
