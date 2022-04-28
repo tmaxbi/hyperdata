@@ -6,7 +6,7 @@ replicaCount: 1
 ## ref: https://hub.docker.com/r/apache/nifi/
 ##
 image:
-  repository: 192.168.179.44:5000/hyperdata20.4_nifi
+  repository: 192.168.179.44:5000/hyperdata20.4.0.2.0_nifi
   tag: "20220421_v1"
   pullPolicy: "IfNotPresent"
 
@@ -208,7 +208,7 @@ jvmMemory: 8g
 
 # Separate image for tailing each log separately and checking zookeeper connectivity
 sidecar:
-  image: 192.168.179.44:5000/busybox
+  image: 192.168.179.44:5000/hyperdata20.4.0.2.0_busybox
   tag: "1.32.0"
   imagePullPolicy: "IfNotPresent"
 
