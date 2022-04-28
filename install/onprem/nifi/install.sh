@@ -59,21 +59,21 @@ done
 
 
 function dev_up() {
-  cond=$(helm repo list | grep "dysnix")
-  cond2=$(helm repo list | grep "bitnami")
-  if [[ -n $cond ]]; then
-   echo "dysnix repo already added"
-  else
-   helm repo add dysnix https://dysnix.github.io/charts/
-  fi
-  if [[ -n $cond2 ]]; then
-   echo "bitnami repo already added"
-  else
-   helm repo add bitnami https://charts.bitnami.com/bitnami 
-  fi
+ # cond=$(helm repo list | grep "dysnix")
+ # cond2=$(helm repo list | grep "bitnami")
+ # if [[ -n $cond ]]; then
+ #  echo "dysnix repo already added"
+ # else
+ #  helm repo add dysnix https://dysnix.github.io/charts/
+ # fi
+ # if [[ -n $cond2 ]]; then
+ #  echo "bitnami repo already added"
+ # else
+ #  helm repo add bitnami https://charts.bitnami.com/bitnami 
+ # fi
   cd ./helm-nifi
-  helm repo update
   helm dep up
+#  helm repo update
   cd ../
 }
 
