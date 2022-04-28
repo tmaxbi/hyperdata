@@ -31,7 +31,7 @@ Minifi-toolkit version=1.15.3 [minifi-toolkit download link](https://archive.apa
              -v {절대경로}/{데이터를 전송할 directory_name}:/opt/minifi/{데이터를 전송할 directory_name} 
              -v {절대경로}/{데이터를 백업할 directory_name}:/opt/minifi/{데이터를 백업할 directory_name}
              --name {데이터를 전송할 directory_name}
-             apache/nifi-minifi:1.16.0
+             192.168.179.44:5000/hyperdata20.4.0.2.0_nifi-minifi:1.16.0
 
   ```
   - 위 명령에서 -v 옵션에 들어가는 좌측과 우측 경로는 파일의 **절대경로**여야합니다.
