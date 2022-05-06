@@ -69,12 +69,8 @@ automl:
 
 mllab:
   image:
-    tensorflow1:
-      tag: 20211020_v1
-    tensorflow2:
-      tag: 20211020_v1
-    pytorch:
-      tag: 20211008_v1
-    statisticAnalysis:
-      tag: latest
+    tensorflow1: mlplatform_notebook_tf_v1.15.2:20211020_v1
+    tensorflow2: mlplatform_notebook_tf_v2.1.0:20211020_v1
+    pytorch: mlplatform_notebook_torch_v1.6.0:20211008_v1
+    statisticAnalysis: mlplatform_notebook_statistic_analysis_1.1.0:latest
     
