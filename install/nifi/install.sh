@@ -71,7 +71,8 @@ function dev_up() {
   else
    helm repo add bitnami https://charts.bitnami.com/bitnami 
   fi
-  cd ./helm-nifi
+  
+  cd $(dirname $(realpath $0))/helm-nifi
   helm repo update
   helm dep up
   cd ../
