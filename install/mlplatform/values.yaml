@@ -34,7 +34,7 @@ backend:
       cpu: 1
       memory: 1G
   volume:
-    storageClass: ceph-filesystem
+    storageClass: nfs
     size: 10Gi
     mountPath: /mlplatform
   private: false  
