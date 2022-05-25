@@ -2,10 +2,13 @@ FROM 192.168.179.44:5000/ozone_base:20220110_v1
 MAINTAINER BIQA <BIQA@tmax.co.kr>
 
 ### 1) Set yum Package
-RUN sudo yum install -y libaio lrzsz openssh-server openssh-clients unzip bind-utils
+RUN sudo yum install -y libaio lrzsz openssh-server openssh-clients unzip bind-utils &&\
+	sudo localedef -f UTF-8 -i ko_KR ko_KR.utf8
 
 ### 2) Set Global Env
-ENV DEPLOY_HOME=/opt/hadoop
+ENV DEPLOY_HOME=/opt/hadoop \
+	LANG=ko_KR.utf8 \
+	LC_ALL=ko_KR.utf8
 
 ### 3) src Copy
 COPY --chown=hadoop:users boot.sh $DEPLOY_HOME/boot.sh
