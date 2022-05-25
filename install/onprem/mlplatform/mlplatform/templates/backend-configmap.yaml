@@ -59,10 +59,10 @@ data:
     #################
     # mllab option #
     #################
-    mllab.image.tensorflow1-tag={{ .Values.mllab.image.tensorflow1.tag }}
-    mllab.image.tensorflow2-tag={{ .Values.mllab.image.tensorflow2.tag }}
-    mllab.image.pytorch-tag={{ .Values.mllab.image.pytorch.tag }}
-    mllab.image.statistic-analysis-tag={{ .Values.mllab.image.statisticAnalysis.tag }}
+    mllab.image.tensorflow1={{ .Values.mllab.image.tensorflow1.name }}:{{ .Values.mllab.image.tensorflow1.tag }}
+    mllab.image.tensorflow2={{ .Values.mllab.image.tensorflow2.name }}:{{ .Values.mllab.image.tensorflow2.tag }}
+    mllab.image.pytorch={{ .Values.mllab.image.pytorch.name }}:{{ .Values.mllab.image.pytorch.tag }}
+    mllab.image.statistic-analysis={{ .Values.mllab.image.statisticAnalysis.name }}:{{ .Values.mllab.image.statisticAnalysis.tag }}
 
 kind: ConfigMap
 metadata:
