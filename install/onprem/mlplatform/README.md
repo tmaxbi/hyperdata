@@ -35,6 +35,7 @@ helm install -n hyperdata mlplatform mlplatform \
 --set mllab.image.tensorflow2.tag=20211026_v1 \
 --set mllab.image.pytorch.name=mlplatform_notebook_torch_v1.6.0 \
 --set mllab.image.pytorch.tag=20211026_v1 \
+--set mllab.image.statisticAnalysis.name=mlplatform_notebook_statistic_analysis_1.1.0 \
 --set mllab.image.statisticAnalysis.tag=latest
 ```
 
