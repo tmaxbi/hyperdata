@@ -12,18 +12,6 @@ spec:
   tls:
     - secretName: istio.hyperdata-nginx-ingress-nginx
   rules:
-   - http:
-      paths:
-      - path: /hyperdata{{ .Values.version.major  }}/projects/(.*)
-        backend:
-          serviceName: hyperdata-virtualization-svc
-          servicePort: 8500
-   - http:
-      paths:
-      - path: /hyperdata{{ .Values.version.major  }}/dataobjects/(.*)
-        backend:
-          serviceName: hyperdata-virtualization-svc
-          servicePort: 8500
    -  http:
        paths:
        - path: /hyperdata{{ .Values.version.major }}/(.*)
