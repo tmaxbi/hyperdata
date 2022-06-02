@@ -20,8 +20,12 @@ pvc:
   mountPath: /db
 
 resources:
-  cpu: 2
-  memory: 4Gi
+  requests:
+    cpu: 2
+    memory: 4Gi
+  limits:
+    cpu: 2
+    memory: 4Gi
 
 proauth:
   address: hyperdata-lb-hd:28080
