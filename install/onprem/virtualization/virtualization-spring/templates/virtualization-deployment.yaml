@@ -20,9 +20,12 @@ spec:
             - containerPort: 8100
               name: server-port
           resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu}}
+              memory: {{ .Values.resources.limits.memory}}
             limits:
-              cpu: {{ .Values.resources.cpu }}
-              memory: {{ .Values.resources.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
           env:
             - name: LOGGING_PATH
               value: {{ .Values.pvc.mountPath }}/{{ .Values.logging.path }}
