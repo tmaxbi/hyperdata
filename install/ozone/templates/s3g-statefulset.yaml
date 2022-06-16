@@ -45,6 +45,9 @@ spec:
             path: /
             port: 9878
           initialDelaySeconds: 30
+        env:
+        - name: TZ
+          value: Asia/Seoul
         envFrom:
         - configMapRef:
             name: config

@@ -54,6 +54,8 @@ spec:
           value: "Y"
         - name: SCM_POD_IP
           value: scm-0.scm
+        - name: TZ
+          value: Asia/Seoul
         livenessProbe:
           tcpSocket:
             port: 9862

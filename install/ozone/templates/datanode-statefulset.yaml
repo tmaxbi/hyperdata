@@ -65,6 +65,8 @@ spec:
           value: "Y"
         - name: OM_POD_IP
           value: om-0.om
+        - name: TZ
+          value: Asia/Seoul
         envFrom:
         - configMapRef:
             name: config
