@@ -34,6 +34,11 @@ data:
     hyperdata.server.ishttps=false
     hyperdata.image.private.repository={{ .Values.registry.address }}
     hyperdata.image.private.secret={{ .Values.registry.secret }}
+    
+    ##########################
+    # virtualization options #
+    ##########################
+    virtualization.server.addr=http://hyperdata-virtualization-svc:8100
 
     ###################
     # proAuth options #
