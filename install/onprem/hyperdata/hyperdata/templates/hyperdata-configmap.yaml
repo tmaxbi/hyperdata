@@ -64,6 +64,9 @@ data:
   {{- else }}
   SQL_EDITOR_ENABLE: "N"
   {{- end }}
+
+  # SQL EDITOR WEB STUDIO
+  SQL_EDITOR_WEB_STUDIO_IP: {{ .Values.sqlEditor.web_studio_ip }}
   
   # true or false
   {{- if .Values.dataCollection.enabled }}
