@@ -46,6 +46,7 @@ mlplatform:
 
 sqlEditor:
   enabled: false
+  web_studio_ip: null
 
 dataCollection:
-  enabled: false     
+  enabled: false
