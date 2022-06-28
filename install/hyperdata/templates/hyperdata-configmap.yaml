@@ -59,7 +59,7 @@ data:
   ML_PLATFORM_IP: "{{ .Values.mlplatform.ip }}"
   ML_PLATFORM_PORT: "{{ .Values.mlplatform.port }}"
 
-  # Y or N
+  # SQL EDITOR ENABLE (Y or N)
   {{- if .Values.sqlEditor.enabled }}
   SQL_EDITOR_ENABLE: "Y"
   {{- else }}
@@ -67,7 +67,11 @@ data:
   {{- end }}
 
   # SQL EDITOR WEB STUDIO
+  {{- if .Values.sqlEditor.enabled }}
   SQL_EDITOR_WEB_STUDIO_IP: {{ .Values.sqlEditor.web_studio_ip }}
+  {{- else }}
+  SQL_EDITOR_WEB_STUDIO_IP: ""
+  {{- end }}
   
   # true or false
   {{- if .Values.dataCollection.enabled }}
