@@ -46,7 +46,7 @@ mlplatform:
 
 sqlEditor:
   enabled: false
-  web_studio_ip: 192.1.1.24
+  web_studio_ip: 192.1.1.224
 
 dataCollection:
-  enabled: false     
+  enabled: false
