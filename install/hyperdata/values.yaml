@@ -44,6 +44,13 @@ mlplatform:
   ip: mlplatform-backend-svc
   port: 18080
 
+customLogo:
+  enabled: false
+
+customAddon:
+  enabled: true
+  url: https://www.tmaxsoft.com/blog/
+
 sqlEditor:
   enabled: false
   web_studio_ip: null

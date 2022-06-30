@@ -26,9 +26,8 @@ data:
   FILE_OUTPUT_DIR: {{ .Values.db.mountPath }}/output
   FILE_CONTAINER_DIR: {{ .Values.db.mountPath }}/meta
   
-  
   ## DEPRECATED. No longer hyperdata uses HTTPS. instead Nginx redirect HTTPS as reverse proxy
-  ## IS_HTTPS: "false"
+  IS_HTTPS: "false"
 
   # MQTT Options
   USE_MQTT_LB: "Y"
@@ -51,7 +50,7 @@ data:
   TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}
   
   ## SUPERVDB_UCS_PORT
-  SUPERVDB_PO_HOME: "{{ .Values.db.mountPath }}/supervdb_po_home"
+  SUPERVDB_PO_HOME: {{ .Values.db.mountPath }}/supervdb_po_home
   SUPERVDB_PO_IP: "{{ .Values.webserver.ip }}"
   SUPERVDB_UCS_PORT: "{{ .Values.loadbalancer.SUPERVDB_UCS_PORT }}"
   
@@ -59,18 +58,28 @@ data:
   ML_PLATFORM_IP: "{{ .Values.mlplatform.ip }}"
   ML_PLATFORM_PORT: "{{ .Values.mlplatform.port }}"
 
-  # SQL EDITOR ENABLE (Y or N)
+  # HD_CUSTOM_LOGO_ON, Boolean
+  {{- if .Values.customLogo.enabled }}
+  HD_CUSTOM_LOGO_ON: "true"
+  {{- else }}
+  HD_CUSTOM_LOGO_ON: "false"
+  {{- end }}
+  
+  # HD_CUSTOM_ADDON_ON, Boolean
+  {{- if .Values.customAddon.enabled }}
+  HD_CUSTOM_ADDON_ON: "true"
+  {{- else }}
+  HD_CUSTOM_ADDON_ON: "false"
+  {{- end }}
+
+  # HD_CUSTOM_ADDON_URL, string
+  HD_CUSTOM_ADDON_URL: "{{ .Values.customAddon.url }}"
+
+  # Y or N
   {{- if .Values.sqlEditor.enabled }}
   SQL_EDITOR_ENABLE: "Y"
   {{- else }}
   SQL_EDITOR_ENABLE: "N"
-  {{- end }}
-
-  # SQL EDITOR WEB STUDIO
-  {{- if .Values.sqlEditor.enabled }}
-  SQL_EDITOR_WEB_STUDIO_IP: {{ .Values.sqlEditor.web_studio_ip }}
-  {{- else }}
-  SQL_EDITOR_WEB_STUDIO_IP: ""
   {{- end }}
   
   # true or false
