@@ -75,11 +75,18 @@ data:
   # HD_CUSTOM_ADDON_URL, string
   HD_CUSTOM_ADDON_URL: "{{ .Values.customAddon.url }}"
 
-  # Y or N
+  # SQL EDITOR ENABLE (Y or N)
   {{- if .Values.sqlEditor.enabled }}
   SQL_EDITOR_ENABLE: "Y"
   {{- else }}
   SQL_EDITOR_ENABLE: "N"
+  {{- end }}
+
+  # SQL EDITOR WEB STUDIO
+  {{- if .Values.sqlEditor.enabled }}
+  SQL_EDITOR_WEB_STUDIO_IP: {{ .Values.sqlEditor.web_studio_ip }}
+  {{- else }}
+  SQL_EDITOR_WEB_STUDIO_IP: ""
   {{- end }}
   
   # true or false
