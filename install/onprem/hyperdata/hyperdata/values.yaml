@@ -48,8 +48,8 @@ customLogo:
   enabled: false
 
 customAddon:
-  enabled: true
-  url: https://www.tmaxsoft.com/blog/
+  enabled: false
+  url: 
 
 sqlEditor:
   enabled: false
