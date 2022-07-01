@@ -38,7 +38,28 @@
 	--set image=192.168.179.44:5000/hyperdata/hyperdata20.4_hd_test:20210825_v1 \
 	--set sqlEditor.enable=N
 	```
-    
+
+    1.3 custom Logo 사용시
+    ```
+    helm install -n hyperdata hyperdata hyperdata \ 
+    --set customAddon.enabled="true"
+    ```
+
+    1.4 custom addon 사용 유무
+
+        1.4.1 custom addon 사용 시
+        ```
+        helm install -n hyperdata hyperdata hyperdata \ 
+        --set customAddon.enabled="true"
+        --set customAddon.url=${ADDON_URL}
+        ```
+
+        1.4.2 custom addon 미사용 시 : customAddon.enabled 값에 따라 customAddon.url는 자동으로 빈칸으로 할당됨.
+        ```
+        helm install -n hyperdata hyperdata hyperdata \ 
+        --set customAddon.enabled="false"
+        ```
+
 2. Uninstall hyperdata
 ```
 helm uninstall -n hyperdata hyperdata hyperdata
