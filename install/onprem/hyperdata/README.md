@@ -45,20 +45,12 @@
     --set customAddon.enabled="true"
     ```
 
-    1.4 custom addon 사용 유무
-
-        1.4.1 custom addon 사용 시
-        ```
-        helm install -n hyperdata hyperdata hyperdata \ 
-        --set customAddon.enabled="true"
-        --set customAddon.url=${ADDON_URL}
-        ```
-
-        1.4.2 custom addon 미사용 시 : customAddon.enabled 값에 따라 customAddon.url는 자동으로 빈칸으로 할당됨.
-        ```
-        helm install -n hyperdata hyperdata hyperdata \ 
-        --set customAddon.enabled="false"
-        ```
+    1.4 custom addon 사용 사용 시
+    ```
+    helm install -n hyperdata hyperdata hyperdata \ 
+    --set customAddon.enabled="true"
+    --set customAddon.url=${ADDON_URL}
+    ```
 
 2. Uninstall hyperdata
 ```
