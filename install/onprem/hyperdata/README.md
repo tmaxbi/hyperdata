@@ -42,13 +42,13 @@
     1.3 custom Logo 사용시
     ```
     helm install -n hyperdata hyperdata hyperdata \ 
-    --set customAddon.enabled="true"
+    --set customAddon.enabled=true
     ```
 
     1.4 custom addon 사용 사용 시
     ```
     helm install -n hyperdata hyperdata hyperdata \ 
-    --set customAddon.enabled="true"
+    --set customAddon.enabled=true
     --set customAddon.url=${ADDON_URL}
     ```
 
