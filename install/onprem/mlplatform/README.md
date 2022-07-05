@@ -29,9 +29,13 @@ helm install -n hyperdata mlplatform mlplatform \
 --set proauth.address=http://hyperdata-lb-hd:28080 \
 --set kubernetes.istio.ingressgateway.ip=192.168.179.31 \
 --set kubernetes.istio.ingressgateway.port=31380 \
+--set mllab.image.tensorflow1.name=mlplatform_notebook_tf_v1.15.2 \
 --set mllab.image.tensorflow1.tag=20211026_v1 \
+--set mllab.image.tensorflow2.name=mlplatform_notebook_tf_v2.1.0 \
 --set mllab.image.tensorflow2.tag=20211026_v1 \
+--set mllab.image.pytorch.name=mlplatform_notebook_torch_v1.6.0 \
 --set mllab.image.pytorch.tag=20211026_v1 \
+--set mllab.image.statisticAnalysis.name=mlplatform_notebook_statistic_analysis_1.1.0 \
 --set mllab.image.statisticAnalysis.tag=latest
 ```
 

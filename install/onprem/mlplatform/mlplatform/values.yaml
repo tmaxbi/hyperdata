@@ -70,11 +70,15 @@ automl:
 mllab:
   image:
     tensorflow1:
+      name: mlplatform_notebook_tf_v1.15.2
       tag: 20211020_v1
     tensorflow2:
+      name: mlplatform_notebook_tf_v2.1.0
       tag: 20211020_v1
     pytorch:
+      name: mlplatform_notebook_torch_v1.6.0
       tag: 20211008_v1
     statisticAnalysis:
+      name: mlplatform_notebook_statistic_analysis_1.1.0
       tag: latest
     

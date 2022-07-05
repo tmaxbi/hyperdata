@@ -58,11 +58,39 @@ data:
   ML_PLATFORM_IP: "{{ .Values.mlplatform.ip }}"
   ML_PLATFORM_PORT: "{{ .Values.mlplatform.port }}"
 
-  # Y or N
+  # HD_CUSTOM_LOGO_ON, Boolean
+  {{- if .Values.customLogo.enabled }}
+  HD_CUSTOM_LOGO_ON: "true"
+  {{- else }}
+  HD_CUSTOM_LOGO_ON: "false"
+  {{- end }}
+  
+  # HD_CUSTOM_ADDON_ON, Boolean
+  {{- if .Values.customAddon.enabled }}
+  HD_CUSTOM_ADDON_ON: "true"
+  {{- else }}
+  HD_CUSTOM_ADDON_ON: "false"
+  {{- end }}
+
+  # HD_CUSTOM_ADDON_URL, string
+  {{- if .Values.customAddon.enabled }}
+  HD_CUSTOM_ADDON_URL: "{{ .Values.customAddon.url }}"
+  {{- else }}
+  HD_CUSTOM_ADDON_URL: ""
+  {{- end }}
+
+  # SQL EDITOR ENABLE (Y or N)
   {{- if .Values.sqlEditor.enabled }}
   SQL_EDITOR_ENABLE: "Y"
   {{- else }}
   SQL_EDITOR_ENABLE: "N"
+  {{- end }}
+
+  # SQL EDITOR WEB STUDIO
+  {{- if .Values.sqlEditor.enabled }}
+  SQL_EDITOR_WEB_STUDIO_IP: {{ .Values.sqlEditor.web_studio_ip }}
+  {{- else }}
+  SQL_EDITOR_WEB_STUDIO_IP: ""
   {{- end }}
   
   # true or false
