@@ -76,7 +76,7 @@ data:
   {{- if .Values.customAddon.enabled }}
   HD_CUSTOM_ADDON_URL: "{{ .Values.customAddon.url }}"
   {{- else }}
-  HD_CUSTOM_ADDON_URL: 
+  HD_CUSTOM_ADDON_URL: ""
   {{- end }}
 
   # SQL EDITOR ENABLE (Y or N)
