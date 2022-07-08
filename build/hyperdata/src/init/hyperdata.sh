@@ -29,6 +29,7 @@ EOF
 mkdir -p $TB_VOLUME/input
 mkdir -p $TB_VOLUME/output
 mkdir -p $TB_VOLUME/meta
+mkdir -p $TB_VOLUME/logo
 
 ## create hyperdata dataobject directory
 tbsql hyperdata_ex/tmax@"(INSTANCE=(HOST=$TB_IP)(PORT=$TB_PORT)(DB_NAME=$TB_SID))" <<EOF
