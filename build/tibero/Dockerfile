@@ -84,7 +84,7 @@ ENV LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_L
 #RUN tar -xvf /deploy_src/src.tar.gz
 
 #==================== 4) make $TB_VOLUME/logo  ==================
-RUN mkdir -p $TB_VOLUME/logo
+RUN mkdir -p /db/logo
 
 #==================== 5) Set Supervisor ENV ====================
 
