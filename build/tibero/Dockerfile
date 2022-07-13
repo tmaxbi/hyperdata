@@ -33,7 +33,10 @@ COPY --chown=hyperdata:hyperdata src $SRC_HOME
 ### 6) Set Supervisor, JDK
 RUN sh $SRC_HOME/java/install.sh
 
-### 7) Set Supervisor Env
+### 7) make $TB_VOLUME/logo
+RUN mkdir -p /db/logo     
+
+### 8) Set Supervisor Env
 COPY --chown=hyperdata:hyperdata $SRC_HOME/supervisord.conf /etc/supervisor/supervisord.conf
 USER hyperdata
 RUN chmod +x $SRC_HOME/boot.sh
