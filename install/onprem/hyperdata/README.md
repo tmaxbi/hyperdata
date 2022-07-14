@@ -28,7 +28,7 @@
 	```
 	helm install -n hyperdata hyperdata hyperdata \ 
 	--set image=192.168.179.44:5000/hyperdata/hyperdata20.4_hd_test:20210825_v1 \
-	--set sqlEditor.enable=Y \
+	--set sqlEditor.enable=true \
 	--set web_studio_ip=${WEB STUDIO IP}
 	```
 
@@ -36,7 +36,7 @@
 	```
 	helm install -n hyperdata hyperdata hyperdata \ 
 	--set image=192.168.179.44:5000/hyperdata/hyperdata20.4_hd_test:20210825_v1 \
-	--set sqlEditor.enable=N
+	--set sqlEditor.enable=false
 	```
     
 2. Uninstall hyperdata
