@@ -100,3 +100,6 @@ data:
   HD_RTMODULE_ON: "false"
   {{- end }}
 
+  # Virtualization
+  VIRTUALIZATION_SVC_NAME: {{ .Values.virtualization.svc_name }}
+  VIRTUALIZATION_SVC_PORT: {{ .Values.virtualization.port }}

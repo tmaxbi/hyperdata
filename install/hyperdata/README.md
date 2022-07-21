@@ -25,19 +25,19 @@
     1.2 SQL EDITOR 사용 유무
 
         1.2.1 SQL EDITOR 사용시
-	```
-	helm install -n hyperdata hyperdata hyperdata \ 
-	--set image=192.168.179.44:5000/hyperdata/hyperdata20.4_hd_test:20210825_v1 \
-	--set sqlEditor.enable=true \
-	--set web_studio_ip=${WEB STUDIO IP}
-	```
+        ```
+        helm install -n hyperdata hyperdata hyperdata \ 
+        --set image=192.168.179.44:5000/hyperdata/hyperdata20.4_hd_test:20210825_v1 \
+        --set sqlEditor.enable=true \
+        --set web_studio_ip=${WEB STUDIO IP}
+        ```
 
-	1.2.2 SQL EDITOR 미사용시
-	```
-	helm install -n hyperdata hyperdata hyperdata \ 
-	--set image=192.168.179.44:5000/hyperdata/hyperdata20.4_hd_test:20210825_v1 \
-	--set sqlEditor.enable=false
-	```
+        1.2.2 SQL EDITOR 미사용시
+        ```
+        helm install -n hyperdata hyperdata hyperdata \ 
+        --set image=192.168.179.44:5000/hyperdata/hyperdata20.4_hd_test:20210825_v1 \
+        --set sqlEditor.enable=false
+        ```
 
     1.3 custom Logo 사용시
     ```
