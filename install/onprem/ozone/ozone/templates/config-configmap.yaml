@@ -34,3 +34,7 @@ data:
   OZONE-SITE.XML_ozone.csi.s3g.address: http://s3g-0.s3g:9878
   OZONE-SITE.XML_ozone.csi.socket: /var/lib/csi/csi.sock
   OZONE-SITE.XML_ozone.csi.owner: hadoop
+
+  ##################### ADDED
+  CORE-SITE.XML_fs.defaultFS: ofs://om-0.om/
+  HADOOP_CLASSPATH: /opt/hadoop/share/ozone/lib/hadoop-ozone-filesystem*.jar
