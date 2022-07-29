@@ -2,6 +2,8 @@
 Minifi version=1.16.0 \
 Minifi-toolkit version=1.15.3 [minifi-toolkit download link](https://archive.apache.org/dist/nifi/1.15.3/)
 
+**위 링크를 통해서 Minifi-toolkit를 다운받아주세요**
+
 ## Minifi 구동방법
 
 **1. Minifi 구동을 위한 설정파일**
@@ -10,6 +12,7 @@ Minifi-toolkit version=1.15.3 [minifi-toolkit download link](https://archive.apa
   - **Minifi Template flow를 minifi-toolkit을 이용해서 `config.yml`로 변경해줘야합니다.**
 
 **2. Minifi flow를 config.yml로 변환**
+  - 다운받은 Minifi-toolkit 압축을 풉니다.
   - 다운받은 template .xml파일을 config.yml로 변환  
   - `./bin/config.sh transform ./{minifi_template.xml} ./{config.yml}`
   - 첫번째 인자는 다운받은 minifi flow파일, 두번째 인자는 변환하여 저장하는 파일입니다.
@@ -37,9 +40,25 @@ Minifi-toolkit version=1.15.3 [minifi-toolkit download link](https://archive.apa
   - 위 명령에서 -v 옵션에 들어가는 좌측과 우측 경로는 파일의 **절대경로**여야합니다.
   - 다음 명령어로 minifi docker에 들어가서 `docker exec -it {containerID} /bin/sh`
   - `/opt/minifi/minifi-1.16.0/logs` 해당경로에서 로그를 확인하실 수 있습니다.
+
+**5. 데이터 수집 성공 여부 알람 기능 설정** 
+  - 데이터 수집 성공, 실패 관련 정보를 로그로 기록하고 해당 로그를 압축해서 이메일로 전송하는 기능을 제공하기에 사용자는 선택적으로 사용할 수 있습니다.
+  - 해당 기능을 사용하기 위해선 MinifiToOzoneFlow 템플릿 하위의 SendEmailFlow 하위로 들어가 putEmail 프로세서의 설정값을 설정해야 합니다.
+    - SMTP Username: SMTP 계정의 이메일 주소
+    - SMTP Password: SMTP 계정의 비밀번호
+    - From: 보내는 계정의 이메일 주소
+    - To: 받는 이메일 주소
+  - 해당 기능을 사용하기 위해선 SendEmailFlow 프로세스 그룹을 실행해야 합니다.
+  - 그 전에 SendEmailFlow의 putEmail 프로세서의 아래 속성값을 설정해야 합니다.
+    - SMTP Username: SMTP 계정의 이메일 주소 ex) xxx@gmail.com
+    - SMTP Password: SMTP 계정의 비밀번호 ex) 1234
+    - From: 보내는 계정의 이메일 주소 ex) xxx@gmail.com
+    - To: 받는 이메일 주소 ex) yyy@gmail.com
+- 속성값을 다 입력했다면, SendEmailFlow 프로세서 그룹을 실행합니다.
+
    
 
-~~**5. Minifi 재기동 없이 설정 변경**~~
+~~**6. Minifi 재기동 없이 설정 변경**~~
   - ~~Minifi 내에서 동작하는 flow 등의 설정 정보를 변경해야 할 때마다, 설정을 변경하고 재기동하는 것은 매우 번거롭습니다.~~
   - ~~이에 Minifi는 FileChangeIngestor 라는 방식으로 재기동없이 설정을 변경하는 방법을 제공하고 해당 설정은 bootstrap.conf에 아래와 같이 정의되어 있습니다.~~
 ```

@@ -7,7 +7,7 @@ replicaCount: 1
 ##
 image:
   repository: 192.168.179.44:5000/hyperdata20.4.0.2.0_nifi
-  tag: "20220421_v1"
+  tag: "20220725_v1"
   pullPolicy: "IfNotPresent"
 
   ## Optionally specify an imagePullSecret.
@@ -193,11 +193,10 @@ service:
 ##
 ingress:
   enabled: true
+  isHDnodePort: false # HyperData가 NodePort로 띄워져있는 경우 true
+  HDnodePort: 32049 # HyperData의 NodePort 번호
   annotations: 
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/configuration-snippet:
-      proxy_set_header X-ProxyScheme "https";
-      proxy_set_header X-ProxyPort "8080";
   tls: []
   hosts: ["*"]
   path: /nifi(/|$)(.*)
@@ -216,7 +215,7 @@ sidecar:
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
 persistence:
-  enabled: false
+  enabled: true
 
   # When creating persistent storage, the NiFi helm chart can either reference an already-defined
   # storage class by name, such as "standard" or can define a custom storage class by specifying
