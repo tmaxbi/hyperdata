@@ -30,3 +30,9 @@ spec:
          backend:
            serviceName: hyperdata-svc-hd
            servicePort: 8081
+   -  http:
+       paths:
+       - path: {{ .Values.customAddon.path }}
+         backend:
+           serviceName: hyperdata-external-hd
+           servicePort: {{ .Values.customAddon.externalPort }}
