@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hyperdata-external-hd
+spec:
+  type: ExternalName
+  externalName: {{ .Values.customAddon.externalHost }}
