@@ -83,7 +83,10 @@ ENV LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_L
 #COPY --chown=hyperdata:hyperdata src.tar.gz /deploy_src/src.tar.gz
 #RUN tar -xvf /deploy_src/src.tar.gz
 
-#==================== 4) Set Supervisor ENV ====================
+#==================== 4) make $TB_VOLUME/logo  ==================
+RUN mkdir -p /db/logo
+
+#==================== 5) Set Supervisor ENV ====================
 
 #RUN mkdir -p /etc/supervisor/conf.d
 COPY --chown=hyperdata:hyperdata /src/supervisord.conf /etc/supervisor/supervisord.conf

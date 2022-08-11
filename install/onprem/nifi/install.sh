@@ -151,12 +151,12 @@ function upload_template() {
     ROOTID=$(curl -s -X GET http://$(get_nodeip):$NIFIPORT/nifi-api/process-groups/root | jq -r '.id' 2> /dev/null)
     if [[ -n $ROOTID ]]; then
       echo "[Completed] Nifi finished initializing and waiting for Node initializing "
-      TEMPLATE=$(curl -s -X POST -F template=@./conf-files/MinifiToOzone.xml http://$(get_nodeip):$NIFIPORT/nifi-api/process-groups/$ROOTID/templates/upload | grep $ROOTID)
-      TEMPLATE2=$(curl -s -X POST -F template=@./conf-files/MinifiToOzone.xml http://$(get_nodeip):$NIFIPORT/nifi-api/process-groups/$ROOTID/templates/upload | grep "already") 
-      if [[ -n $TEMPLATE ]]; then
+      TemplateUpload=$(curl -s -X POST -F template=@./conf-files/MinifiToOzone.xml http://$(get_nodeip):$NIFIPORT/nifi-api/process-groups/$ROOTID/templates/upload | grep $ROOTID)
+      TemplateUploadAlreadyExists=$(curl -s -X POST -F template=@./conf-files/MinifiToOzone.xml http://$(get_nodeip):$NIFIPORT/nifi-api/process-groups/$ROOTID/templates/upload | grep "already") 
+      if [[ -n $TemplateUpload ]]; then
         echo "[Installed] Template for Minifi-Ozone flow is uploaded successfully"
         return 0
-      elif [[ -n $TEMPLATE2 ]]; then
+      elif [[ -n $TemplateUploadAlreadyExists ]]; then
         echo "[Installed] Template for Minifi-Ozone flow is already exist"
         return 0
       fi
