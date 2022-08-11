@@ -23,6 +23,8 @@ helm install -n hyperdata mlplatform mlplatform \
 --set frontend.image.tag=20210906_v1 \
 --set automl.image.name=hyperdata20.4_mlplatform_automl \
 --set automl.image.tag=20210827_v1 \
+--set serving.image.name=hyperdata20.4_mlplatform_serving \
+--set serving.image.tag=latest \
 --set models.recommendation.image.name=hyperdata20.4_mlplatform_recommendation \
 --set models.recommendation.image.tag=20210827_v1 \
 --set hyperdata.address=http://hyperdata-svc-hd:8080 \

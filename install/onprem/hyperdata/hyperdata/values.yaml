@@ -56,7 +56,10 @@ customLogo:
 
 customAddon:
   enabled: false
-  url: 
+  url: https://192.168.179.40:8080/java
+  path: /java
+  externalHost: 192.168.173.48
+  externalPort: 8090
 
 sqlEditor:
   enabled: false
@@ -64,3 +67,7 @@ sqlEditor:
 
 dataCollection:
   enabled: false
+
+virtualization:
+  svc_name: hyperdata-virtualization-svc
+  port: 8500

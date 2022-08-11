@@ -3,6 +3,8 @@
 {{- $fullName := include "apache-nifi.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
 {{- $ingressHttpsPort := .Values.service.httpPort -}}
+{{- $isHDnodePort := .Values.ingress.isHDnodePort -}}
+{{- $HDnodePort := .Values.ingress.HDnodePort -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -15,6 +17,14 @@ metadata:
     heritage: {{ .Release.Service | quote }}
 {{- with .Values.ingress.annotations }}
   annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet:
+      {{- if $isHDnodePort }}
+      proxy_set_header X-ProxyScheme "https";
+      proxy_set_header X-ProxyPort {{ $HDnodePort }};
+      {{- else }}
+      proxy_set_header X-ProxyScheme "https";
+      proxy_set_header X-ProxyPort "8080";
+      {{- end }}
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:

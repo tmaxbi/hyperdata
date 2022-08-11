@@ -1,0 +1,9 @@
+{{ if and (eq .Values.customAddon.enabled true) ( .Values.customAddon.path) ( .Values.customAddon.externalPort) (.Values.customAddon.externalHost) }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: hyperdata-external-hd
+spec:
+  type: ExternalName
+  externalName: {{ .Values.customAddon.externalHost }}
+{{ end }}

@@ -37,7 +37,7 @@ backend:
     storageClass: ceph-filesystem
     size: 10Gi
     mountPath: /mlplatform
-  private: false  
+  private: false
 
 frontend:
   image:
@@ -67,6 +67,11 @@ automl:
     name: hyperdata20.4_mlplatform_automl
     tag: 20210827_v1
 
+serving:
+  image:
+    name: hyperdata20.4_mlplatform_serving
+    tag: latest
+
 mllab:
   image:
     tensorflow1:
@@ -81,4 +86,3 @@ mllab:
     statisticAnalysis:
       name: mlplatform_notebook_statistic_analysis_1.1.0
       tag: latest
-    

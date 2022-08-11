@@ -34,7 +34,7 @@ data:
     hyperdata.server.ishttps=false
     hyperdata.image.private.repository={{ .Values.registry.address }}
     hyperdata.image.private.secret={{ .Values.registry.secret }}
-    
+
     ##########################
     # virtualization options #
     ##########################
@@ -60,7 +60,7 @@ data:
     # automl option #
     #################
     automl.image.name={{ .Values.automl.image.name }}:{{ .Values.automl.image.tag }}
-    
+
     #################
     # mllab option #
     #################
@@ -68,6 +68,11 @@ data:
     mllab.image.tensorflow2={{ .Values.mllab.image.tensorflow2.name }}:{{ .Values.mllab.image.tensorflow2.tag }}
     mllab.image.pytorch={{ .Values.mllab.image.pytorch.name }}:{{ .Values.mllab.image.pytorch.tag }}
     mllab.image.statistic-analysis={{ .Values.mllab.image.statisticAnalysis.name }}:{{ .Values.mllab.image.statisticAnalysis.tag }}
+
+    #################
+    # serving option #
+    #################
+    serving.image.name={{ .Values.serving.image.name }}:{{ .Values.serving.image.tag }}
 
 kind: ConfigMap
 metadata:
