@@ -45,3 +45,4 @@ spec:
           backend:
             serviceName: service-tibero-sd
             servicePort: 8001
+    {{ end }}
