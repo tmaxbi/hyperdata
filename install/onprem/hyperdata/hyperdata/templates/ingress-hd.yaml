@@ -38,3 +38,11 @@ spec:
            serviceName: hyperdata-external-hd
            servicePort: {{ .Values.customAddon.externalPort }}
     {{ end }}
+    {{ if (eq .Values.sqlEditor.enabled true) }}
+   -  http:
+        paths:
+          - path: /tiberowebstudio/(.*)
+          backend:
+            serviceName: service-tibero-sd
+            servicePort: 8000
+    {{ end }}
