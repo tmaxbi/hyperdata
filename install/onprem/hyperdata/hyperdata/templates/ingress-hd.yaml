@@ -44,5 +44,5 @@ spec:
           - path: /tiberowebstudio/(.*)
           backend:
             serviceName: service-tibero-sd
-            servicePort: 8001
+            servicePort: 8000
     {{ end }}
