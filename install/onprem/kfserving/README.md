@@ -10,6 +10,22 @@ kubectl apply -f namespace.yaml
 ```
 
 2. install kfserving
+
+kfserving agent tarfile 관련 bug로 tarfile 내 directory가 있으면 tarfile을 풀지 못하는 현상이 있습니다.
+이를 해결한 image를 별도로 dockering하여 QA image registry 했으니 agent-*.json 파일 내에 해당 image name을 입력하여 사용하여야 정상동작합니다.
+
+*example json*
+```
+{
+    "image" : "192.1.1.96:31234/kserve/agent:v0.6.0-bugfix",
+    "memoryRequest": "100Mi",
+    "memoryLimit": "1Gi",
+    "cpuRequest": "100m",
+    "cpuLimit": "1"
+}
+```
+
+
 ```
 helm install -n kfserving-system kfserving kfserving \
 --set modelsWebApp.image=kfserving/models-web-app:v0.6.0 \

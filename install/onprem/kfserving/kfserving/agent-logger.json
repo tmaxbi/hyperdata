@@ -1,0 +1,8 @@
+{
+    "image" : "192.1.1.96:31234/kserve/agent:v0.6.0-bugfix",
+    "memoryRequest": "100Mi",
+    "memoryLimit": "1Gi",
+    "cpuRequest": "100m",
+    "cpuLimit": "1",
+    "defaultUrl": "http://default-broker"
+}

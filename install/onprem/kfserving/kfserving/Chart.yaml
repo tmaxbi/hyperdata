@@ -5,3 +5,4 @@ version: 0.1.0
 description: Helm chart for deploying kfserving
 keywords:
   - kfserving
+  - inferenceservice-configmap
