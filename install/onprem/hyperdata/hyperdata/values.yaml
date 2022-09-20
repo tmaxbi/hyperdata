@@ -64,3 +64,6 @@ dataCollection:
 virtualization:
   svc_name: hyperdata-virtualization-svc
   port: 8500
+
+dbConnection:
+  useVdbOn: true
