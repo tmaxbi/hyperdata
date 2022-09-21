@@ -104,4 +104,4 @@ data:
   VIRTUALIZATION_SVC_NAME: {{ .Values.virtualization.svc_name }}
   VIRTUALIZATION_SVC_PORT: "{{ .Values.virtualization.port }}"
 
-  DB_CONNECTION_VDB_ON: {{ .Values.dbConnection.useVdbOn }}
+  DB_CONNECTION_VDB_ON: "{{ .Values.dbConnection.useVdbOn }}"
