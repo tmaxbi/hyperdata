@@ -10,6 +10,13 @@ proxy:
   # minutes
   timeout: 1800
 
+cors:
+  enable: false
+  #쿠키, authorization 헤더정보를 브라우저에 전달하기 위한 옵션
+  credential: false
+  #특정 도메인을 지정 할 수 있음 ex) localhost:8080
+  allowed-origin: *
+
 webserver:
   ip: 192.168.99.100
   port: 31370
