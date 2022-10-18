@@ -20,6 +20,10 @@ spec:
       port: 2883
       targetPort: 2883
       protocol: TCP
+    - name: dashboard
+      port: 8090
+      protocol: TCP
+      targetPort: 8090
   selector:
     lb: hyperdata-hd
   type: ClusterIP

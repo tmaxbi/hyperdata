@@ -76,6 +76,9 @@ spec:
         - containerPort: 9994
           name: svdb-dblink
           protocol: TCP
+        - containerPort: 8090
+          name: dashboard
+          protocol: TCP
         resources:
           limits:
             cpu: {{ .Values.resources.limits.cpu }}
