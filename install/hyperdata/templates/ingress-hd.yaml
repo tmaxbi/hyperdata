@@ -32,7 +32,7 @@ spec:
            servicePort: 8081
    -  http:
        paths:
-       - path: /hyperdata20-viewer/(.*)
+       - path: /hyperdata-viewer/(.*)
          backend:
            serviceName: hyperdata-svc-hd
            servicePort: 8090
