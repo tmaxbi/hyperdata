@@ -33,6 +33,9 @@ if [ ! -f $TB_MOUNT_VOLUME_PATH/HD_SCHEMA_VERSION ]; then
   ## stop hyperdata
   stopServer -host localhost:19736 -u jeus -p jeus
 
+  ## stop viewer
+  stopServer -host localhost:49736 -u jeus -p jeus
+
   ## stop jeus
   stopServer -host localhost:9736 -u jeus -p jeus
 fi
