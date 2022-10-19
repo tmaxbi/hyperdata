@@ -105,3 +105,6 @@ data:
   VIRTUALIZATION_SVC_PORT: "{{ .Values.virtualization.port }}"
 
   DB_CONNECTION_VDB_ON: "{{ .Values.dbConnection.useVdbOn }}"
+
+  # Visualization Dashboard Viewer
+  DASHBOARD_VIEWER_URL: "{{ .Values.webserver.ip }}:{{ .Values.webserver.port }}"
