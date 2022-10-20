@@ -29,8 +29,8 @@ kfserving agent tarfile 관련 bug로 tarfile 내 directory가 있으면 tarfile
 ```
 helm install -n kfserving-system kfserving kfserving \
 --set modelsWebApp.image=kfserving/models-web-app:v0.6.0 \
---set controller.image=gcr.io/kfserving/kfserving-controller:v0.6.0 \
---set manager.image=gcr.io/kubebuilder/kube-rbac-proxy:v0.4.0
+--set controller.image=kfserving/kfserving-controller:v0.6.1 \
+--set manager.image=kubebuilder/kube-rbac-proxy:v0.4.0
 ```
 
 3. enable kfserving
