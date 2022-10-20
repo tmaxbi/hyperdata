@@ -85,6 +85,7 @@ ENV LD_LIBRARY_PATH=/usr/local/hadoop/lib/native/:$HADOOP_HOME/lib/native/:$LD_L
 
 #==================== 4) make $TB_VOLUME/logo  ==================
 RUN mkdir -p /db/logo
+RUN mkdir -p /db/guide
 
 #==================== 5) Set Supervisor ENV ====================
 
