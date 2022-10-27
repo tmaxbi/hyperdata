@@ -1,5 +1,4 @@
-image: 192.168.179.31:5000/tb_studio:20221014_v2
-#image: 192.168.179.44:5000/tbstudio_web:20220916_v1
+image: 192.168.179.44:5000/tbstudio_web:20221028_v1
 
 proxy:
   bodysize: 10m
