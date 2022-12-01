@@ -8,7 +8,7 @@ RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y openssh-server unzip libedit-dev libncurses-dev g++ gcc autoconf openssl \
  build-essential libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb curl software-properties-common \
- python-software-properties acl supervisor language-pack-ko lrzsz \
+ python-software-properties acl supervisor language-pack-ko lrzsz tree \
  && locale-gen ko_KR.UTF-8
 
 ### 2) Set SSH
