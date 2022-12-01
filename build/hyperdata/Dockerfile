@@ -18,7 +18,7 @@ ENV LANG=ko_KR.UTF-8
 ### 2) Install Package 
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
 
-RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev g++ gcc autoconf openssl build-essential \
+RUN apt-get install -y openssh-server unzip moreutils libedit-dev libncurses-dev g++ gcc autoconf openssl build-essential tree \
  libicu-dev libcurl4-openssl-dev libaio-dev vim tar gdb supervisor \
  apt-transport-https net-tools netcat expect nodejs acl jq maven mosquitto lrzsz
 
