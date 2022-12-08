@@ -18,5 +18,5 @@ Nodejs version: v14.20.0
   ```
 2. uninstall tiberowebstudio
   ```
-  helm install -n hyperdata tbstudio 
+  helm uninstall -n hyperdata tbstudio 
   ```
