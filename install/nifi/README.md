@@ -22,6 +22,8 @@ HyperData, Ozone과 같은 Namespace에 배포되어야 합니다. \
 - **jvmMemory** (207번째 라인) 대용량 데이터 적재를 위해 메모리를 넉넉하게 잡아주세요 (기본옵션 2G -> 8G) 
 - **persistence.enabled** (218번째 라인) Nifi에 persistence storage를 부여합니다. \
    해당 옵션이 true이면 nifi pods가 종료되어도 기존 flow, template 파일이 보존됩니다. (기본옵션 false)
+- **ingress.isHDnodePort** (196번째 라인) nifi를 nodePort로 설치할시 true로 변경필요 (기본옵션 false)
+- **ingress.HDnodePort** (197번째 라인) ingress.isHDnodePort를 true로 설정한 경우 hyperdata svc 8080에 대응하는 nodePort 번호 입력
 
 ## Nifi 설치방법 및 사용법
 
