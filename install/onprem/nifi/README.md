@@ -22,6 +22,8 @@ HyperData, Ozone과 같은 Namespace에 배포되어야 합니다. \
 - **jvmMemory** (207번째 라인) 대용량 데이터 적재를 위해 메모리를 넉넉하게 잡아주세요 (기본옵션 2G -> 8G) 
 - **persistence.enabled** (218번째 라인) Nifi에 persistence storage를 부여합니다. \
    해당 옵션이 true이면 nifi pods가 종료되어도 기존 flow, template 파일이 보존됩니다. (기본옵션 false)
+- **ingress.isHDnodePort** (196번째 라인) nifi를 nodePort로 설치할시 true로 변경필요 (기본옵션 false)
+- **ingress.HDnodePort** (197번째 라인) ingress.isHDnodePort를 true로 설정한 경우 hyperdata svc 8080에 대응하는 nodePort 번호 입력
 
 ## Nifi 설치방법 및 사용법
 
@@ -46,7 +48,17 @@ HyperData, Ozone과 같은 Namespace에 배포되어야 합니다. \
   - 데이터를 수집하는 원격지들을 구분할 수 있도록 전역변수 Volume, Bucket, Institution, OzoneConfigUpdateID를 입력합니다. 
   - 변수를 다 입력했다면, Ozone Config UPDATE 프로세스 그룹을 오른쪽 클릭하여 실행시킵니다. 
 
-**4. Minifi Template 적용 및 Minifi 실행** 
+**4. 데이터 수집 성공 여부 알람 기능 설정**
+  - 데이터 수집 성공, 실패 관련 정보를 로그로 기록하고 해당 로그를 압축해서 이메일로 전송하는 기능을 제공하기에 사용자는 선택적으로 사용할 수 있습니다.
+  - 해당 기능을 사용하기 위해선 SendEmailFlow 프로세스 그룹을 실행해야 합니다.
+  - 그 전에 SendEmailFlow의 putEmail 프로세서의 아래 속성값을 설정해야 합니다.
+    * SMTP Username: SMTP 계정의 이메일 주소 ex) xxx@gmail.com
+    * SMTP Password: SMTP 계정의 비밀번호 ex) 1234
+    * From: 보내는 계정의 이메일 주소 ex) xxx@gmail.com
+    * To: 받는 이메일 주소 ex) yyy@gmail.com
+  - 속성값을 다 입력했다면, SendEmailFlow 프로세서 그룹을 실행합니다.
+
+**5. Minifi Template 적용 및 Minifi 실행** 
   - minifi 폴더안에 README.md와 minifi 가이드문서를 참고해주세요
 
 ## 자세한 설치와 적용방법은 docs 폴더를 참고하시길 바랍니다. ##
