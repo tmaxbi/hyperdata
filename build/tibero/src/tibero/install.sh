@@ -18,8 +18,8 @@ else
 fi
 
 if [ $TB_PORT ]; then
-     find $TB_HOME/config/ -name "*.tip" -exec sed -i "s/LISTENER_PORT=8629/LISTENER_PORT=$TB_PORT/g" {} \;
-     find $TB_HOME/client/config -name "*.tbr" -exec sed -i "s/PORT=8629/PORT=$TB_PORT/g" {} \;
+     find $TB_HOME/config/ -name "*.tip" -exec sed -i "s/LISTENER_PORT=.*/LISTENER_PORT=$TB_PORT/g" {} \;
+     find $TB_HOME/client/config -name "*.tbr" -exec sed -i "s/PORT=.*/PORT=$TB_PORT/g" {} \;
 fi
 
 if [ $MAX_SESSION_COUNT ]; then 
