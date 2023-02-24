@@ -98,3 +98,4 @@ spec:
       - name: pv-storage-tb
         persistentVolumeClaim:
           claimName: {{ .Values.db.persistentVolumeClaimName }}
+
