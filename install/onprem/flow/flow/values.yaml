@@ -1,0 +1,76 @@
+imagePullPolicy: IfNotPresent
+image: 192.168.179.44:5000/hyperdata20.4.0.6.0_flow:20230102_v1
+
+server:
+  port: 8081
+  servlet:
+    contextPath: /hyperdata20/flow
+
+webserver:
+  ip: 192.168.49.2
+  port: 8200
+
+proxy:
+  bodysize: 1024m
+  timeout: 1800 # minutes
+
+resources:
+  requests:
+    cpu: 2
+    memory: 2Gi
+  limits:
+    cpu: 6
+    memory: 4Gi
+
+pvc:
+  name: tibero-pvc-db
+  mountPath: /db
+
+loadBalancer:
+  enabled: true
+
+logging:
+  path: flow/logs
+
+svc:
+  hyperdata:
+    name: hyperdata-svc-hd
+    port: 8080
+  proauth:
+    name: hyperdata-lb-hd
+    port: 28080
+  virtualization:
+    name: hyperdata-virtualization-svc
+    port: 8500
+  mlplatform:
+    name: mlplatform-backend-svc
+    port: 18080
+
+db:
+  address: tiberolocaldns
+  port: 8629
+  sid: tibero
+
+db-connection-pool:
+  common:
+    query-timeout: 3600
+    wait-timeout: 3600
+  hyperdata:
+    max-active: 30
+    min-idle: 2
+    max-idle: 2
+    idle-timeout: 10
+  hyperdata_ex:
+    max-active: 30
+    min-idle: 2
+    max-idle: 2
+    idle-timeout: 10
+  hyperdata_editor:
+    max-active: 4
+    min-idle: 1
+    max-idle: 1
+    idle-timeout: 10
+
+flow:
+  save:
+    max-file-row: 20000
