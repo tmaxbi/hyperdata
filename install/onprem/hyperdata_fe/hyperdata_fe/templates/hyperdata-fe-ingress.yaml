@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+
+kind: Ingress
+metadata:
+  name: hyperdata-fe-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "{{ .Values.proxy.bodysize }}"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE";
+      add_header Access-Control-Allow-Credentials true;
+
+    #rewrte-target
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+spec:
+  tls:
+    - secretName: istio.hyperdata-nginx-ingress-nginx
+  rules:
+    - http:
+        paths:
+          - path: /hyperdata-rn(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: hyperdata-fe-svc
+                port:
+                  number: 80
