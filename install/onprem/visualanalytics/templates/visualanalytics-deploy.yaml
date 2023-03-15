@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hyperdata-visualanalytics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hyperdata-visualanalytics
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        lb: hyperdata-visualanalytics
+        app: hyperdata-visualanalytics
+    spec:
+      serviceAccountName: spark
+      initContainers:
+        - name: hyperdata-visualanalytics-init-con
+          image: alpine
+          command: [ "/bin/sh" ]
+          args: [ "-c", "mkdir -p {{ .Values.db.mountPath_saveOutput_temp_filePath }};chmod 777 {{ .Values.db.mountPath_saveOutput_temp_filePath }};" ]
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 0
+            privileged: true
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+          volumeMounts:
+            - name: tz-seoul
+              mountPath: /etc/localtime
+            - name: pv-storage-tb
+              mountPath: {{ .Values.db.mountPath }}
+          envFrom:
+            - configMapRef:
+                name: hyperdata-visualanalytics-config
+
+      containers:
+        - name: hyperdata-visualanalytics-con
+          image: {{ .Values.image }}
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: hyperdata-visualanalytics-config
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+          ports:
+            - containerPort: 8300
+              name: visualanalytics
+              protocol: TCP
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+          volumeMounts:
+            - name: tz-seoul
+              mountPath: /etc/localtime
+            - name: pv-storage-tb
+              mountPath: {{ .Values.db.mountPath }}
+      volumes:
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul
+        - name: pv-storage-tb
+          persistentVolumeClaim:
+            claimName: {{ .Values.db.persistentVolumeClaimName }}
