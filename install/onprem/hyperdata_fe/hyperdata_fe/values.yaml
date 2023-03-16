@@ -1,0 +1,17 @@
+image: bi33-repo:31313/hyperdata_fe:v0.0.28
+
+https:
+  enabled: true
+
+proxy:
+  bodysize: 1024m
+  # minutes
+  timeout: 1800
+
+resources:
+  requests:
+    cpu: 2
+    memory: 4Gi
+  limits:
+    cpu: 2
+    memory: 4Gi
