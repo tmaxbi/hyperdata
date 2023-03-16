@@ -1,8 +1,25 @@
 <!--- app-name: Keycloak -->
 # Keyclak 
 변경해야 하는 것
+
 repository, tag
-# helm install
+
+keycloak realm 세팅
+```
+## keycloak-script folder
+
+## configure-keycloak.sh
+sh configure-keycloak.sh
+```
+
+keycloak client credential secret 값 얻는 방법.
+```
+## client-secret.sh -- 
+sh client-secret.sh
+```
+위 명령어로 얻은 값을 configmap의 keycloak.credentials.secret값으로 변경해주어야함.
+
+## helm install
 ```
 helm install keycloak keycloak
 ```
