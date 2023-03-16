@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hyperdata-visualanalytics-service
+spec:
+  ports:
+    - name: visualanalytics
+      port: 8300
+      targetPort: 8300
+      protocol: TCP
+  selector:
+    lb: hyperdata-visualanalytics
+
+  {{ if .Values.loadbalancer.enabled }}
+  type: LoadBalancer
+  sessionAffinity: None
+  loadBalancerIP: {{ .Values.loadbalancer.ip }}
+  externalTrafficPolicy: Cluster
+  {{ else }}
+  type: ClusterIP
+  {{ end }}

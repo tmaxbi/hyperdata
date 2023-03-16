@@ -1,4 +1,4 @@
-image: 192.168.179.44:5000/hyperdata20.4_virtualization:20220415_v1
+image: 192.1.1.93:31234/hyperdata_v20.5_visual_analytics/vis:latest
 
 proxy:
   bodysize: 1024m
