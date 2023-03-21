@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ include "hyperdata-system.fullname" . }}-auth-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "{{ .Values.proxy.bodysize }}"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/auth-url: http://hyperdata-hyperdata-system:8100/hyperdata/api/v1/gateway/auth
+    nginx.ingress.kubernetes.io/auth-response-headers: hdUserRole,hdAdminRole,hdManagementPermission
+spec:
+  tls:
+    - secretName: istio.hyperdata-nginx-ingress-nginx
+  rules:
+    -  http:
+         paths:
+           - path: /hyperdata/api/v1/system/(.*)
+             backend:
+               serviceName: hyperdata-system-svc
+               servicePort: 8100
+    -  http:
+         paths:
+           - path: /hyperdata/api/v1/search/(.*)
+             backend:
+               serviceName: hyperdata-system-svc
+               servicePort: 8100

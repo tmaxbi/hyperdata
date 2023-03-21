@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ include "hyperdata-system.fullname" . }}-legacy-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "{{ .Values.proxy.bodysize }}"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
+spec:
+  tls:
+    - secretName: istio.hyperdata-nginx-ingress-nginx
+  rules:
+    -  http:
+         paths:
+           - path: /hyperdata/hd-auth/UserProjectRole
+             backend:
+               serviceName: hyperdata-system-svc
+               servicePort: 8100
+    -  http:
+         paths:
+           - path: /hyperdata/hd-auth/project/(.*)
+             backend:
+               serviceName: hyperdata-system-svc
+               servicePort: 8100
+    -  http:
+         paths:
+           - path: /hyperdata/hd-auth/project/(.*)
+             backend:
+               serviceName: hyperdata-system-svc
+               servicePort: 8100
+    -  http:
+         paths:
+           - path: /hyperdata/hd-auth/projectCreate/(.*)
+             backend:
+               serviceName: hyperdata-system-svc
+               servicePort: 8100
+    -  http:
+         paths:
+           - path: /hyperdata/web-service/makeProjectEmpty
+             backend:
+               serviceName: hyperdata-system-svc
+               servicePort: 8100
+    -  http:
+         paths:
+           - path: /hyperdata/web-service/projects/(.*)
+             backend:
+               serviceName: hyperdata-system-svc
+               servicePort: 8100
