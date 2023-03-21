@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "hyperdata-system.fullname" . }}-legacy-ingress
@@ -15,36 +15,54 @@ spec:
     -  http:
          paths:
            - path: /hyperdata/hd-auth/UserProjectRole
+             pathType: Prefix
              backend:
-               serviceName: hyperdata-system-svc
-               servicePort: 8100
+               service:
+                 name: {{ include "hyperdata-system.fullname" . }}-svc
+                 port:
+                   number: 8100
     -  http:
          paths:
            - path: /hyperdata/hd-auth/project/(.*)
+             pathType: Prefix
              backend:
-               serviceName: hyperdata-system-svc
-               servicePort: 8100
+               service:
+                 name: {{ include "hyperdata-system.fullname" . }}-svc
+                 port:
+                   number: 8100
     -  http:
          paths:
            - path: /hyperdata/hd-auth/project/(.*)
+             pathType: Prefix
              backend:
-               serviceName: hyperdata-system-svc
-               servicePort: 8100
+               service:
+                 name: {{ include "hyperdata-system.fullname" . }}-svc
+                 port:
+                   number: 8100
     -  http:
          paths:
            - path: /hyperdata/hd-auth/projectCreate/(.*)
+             pathType: Prefix
              backend:
-               serviceName: hyperdata-system-svc
-               servicePort: 8100
+               service:
+                 name: {{ include "hyperdata-system.fullname" . }}-svc
+                 port:
+                   number: 8100
     -  http:
          paths:
            - path: /hyperdata/web-service/makeProjectEmpty
+             pathType: Prefix
              backend:
-               serviceName: hyperdata-system-svc
-               servicePort: 8100
+               service:
+                 name: {{ include "hyperdata-system.fullname" . }}-svc
+                 port:
+                   number: 8100
     -  http:
          paths:
            - path: /hyperdata/web-service/projects/(.*)
+             pathType: Prefix
              backend:
-               serviceName: hyperdata-system-svc
-               servicePort: 8100
+               service:
+                 name: {{ include "hyperdata-system.fullname" . }}-svc
+                 port:
+                   number: 8100

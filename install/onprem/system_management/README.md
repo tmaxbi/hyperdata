@@ -23,6 +23,7 @@ bash client-secret.sh
 ## 레포지토리, tag, ozone, tibero 등 설정 필요
 helm install system_management system_management \
 --set serviceAccount.create=false
+--set keycloak.authServerUrl=http://keycloak:8888/
 --set keycloak.credentials.secret=KdfYES8btQcYpJNsFQ5Q02rFP3vqQW89 
 ```
 
