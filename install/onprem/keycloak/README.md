@@ -1,30 +1,33 @@
 <!--- app-name: Keycloak -->
-# Keyclak 
+
+# helm install
+## 선행조건
+- install postgresql
+- postgresql setting
+
+## install command
+```
+helm install keycloak keycloak \
+--set auth.adminUser=admin \
+--set auth.adminPassword=admin \
+--set postgresql.enabled=false \
+--set externalDatabase.host=postgresql \
+--set externalDatabase.port=5555 \
+--set externalDatabase.user=admin \
+--set externalDatabase.password=admin \
+--set externalDatabase.database=keycloak \
+--set ingress.enabled=true \
+--set service.type=NodePort \
+--set service.ports.http=8888
+```
+
 변경해야 하는 것
 
-repository, tag
+repository, tag, 등등. 아래문서 보고 변경
 
-keycloak realm 세팅
-```
-## keycloak-script folder
-
-## configure-keycloak.sh
-sh configure-keycloak.sh
-```
-
-keycloak client credential secret 값 얻는 방법.
-```
-## client-secret.sh -- 
-sh client-secret.sh
-```
-위 명령어로 얻은 값을 configmap의 keycloak.credentials.secret값으로 변경해주어야함.
-
-## helm install
-```
-helm install keycloak keycloak
-```
-
-기존 아티팩트 README
+---
+# Original keycloak helm Chart
+---
 # Keycloak packaged by Bitnami
 
 Keycloak is a high performance Java-based identity and access management solution. It lets developers add an authentication layer to their applications with minimum effort.
