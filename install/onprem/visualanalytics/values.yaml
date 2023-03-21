@@ -23,8 +23,8 @@ hyperdata:
   ip: hyperdata-svc-hd
   port: 8080
 
-loadbalancer:
-  enabled: false
+loadBalancer:
+  enabled: true
   SUPERVDB_UCS_PORT: 9994
   ip: 192.168.179.42
 
