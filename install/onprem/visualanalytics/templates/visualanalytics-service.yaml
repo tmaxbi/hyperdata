@@ -11,10 +11,10 @@ spec:
   selector:
     lb: hyperdata-visualanalytics
 
-  {{ if .Values.loadbalancer.enabled }}
+  {{ if .Values.loadBalancer.enabled }}
   type: LoadBalancer
   sessionAffinity: None
-  loadBalancerIP: {{ .Values.loadbalancer.ip }}
+  loadBalancerIP: {{ .Values.loadBalancer.ip }}
   externalTrafficPolicy: Cluster
   {{ else }}
   type: ClusterIP
