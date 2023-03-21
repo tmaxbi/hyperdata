@@ -1,5 +1,4 @@
-#image: 192.1.1.93:31234/hyperdata-ozone-v20.5:1.3.0
-image: apache/ozone:1.3.0
+image: 192.1.1.93:31234/hyperdata-ozone-v20.5:1.3.0
 
 #csi:
 #  registrar:
