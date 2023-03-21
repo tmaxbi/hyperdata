@@ -1,4 +1,5 @@
-image: 192.168.179.44:5000/hyperdata20.4_ozone:20211124_v1
+#image: 192.1.1.93:31234/hyperdata-ozone-v20.5:1.3.0
+image: apache/ozone:1.3.0
 
 #csi:
 #  registrar:
@@ -22,8 +23,6 @@ om:
     # om의 service type이 nodeport일 경우, 아래 nodeport를 사용
     nodePorts:
       om: 31903
-      ssvrListener: 30445
-      javaAgent: 32305
 
 scm:
   replicas: 1
@@ -49,7 +48,7 @@ datanode:
       cpu: "0"
       memory: "0"
   storage:
-    size: 70Gi
+    size: 100Gi
 
 s3g:
   replicas: 1
