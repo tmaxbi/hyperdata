@@ -19,7 +19,7 @@ function configureKeycloak() {
     GRANT_TYPE=password
     CLIENT_ID=admin-cli
     CREATE_REALM=./create-realm.json
-    KEYCLOAK_URL=http://localhost:8888
+    KEYCLOAK_URL=http://192.168.49.2:30252
     access_token=$( curl -d "client_id=$CLIENT_ID" -d "username=$USER" -d "password=$PASSWORD" -d "grant_type=$GRANT_TYPE" "$KEYCLOAK_URL/realms/master/protocol/openid-connect/token" | sed -n 's|.*"access_token":"\([^"]*\)".*|\1|p')
 
     echo "Access token : $access_token"

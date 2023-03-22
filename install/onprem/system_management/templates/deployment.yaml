@@ -20,8 +20,6 @@ spec:
       labels:
         {{- include "hyperdata-system.selectorLabels" . | nindent 8 }}
     spec:
-      imagePullSecrets:
-        - name: dockerhub
       serviceAccountName: {{ include "hyperdata-system.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -46,7 +44,7 @@ spec:
           configMap:
             name: {{ include "hyperdata-system.fullname" . }}
             items:
-              - key: "application-local.yml"
+              - key: "application.yml"
                 path: {{ .Values.applicationProperties }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

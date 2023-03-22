@@ -11,7 +11,7 @@ KEYCLOAK_PASSWORD=admin
 # login type
 GRANT_TYPE=password
 # Keycloak server URL
-KEYCLOAK_URL=http://localhost:8888
+KEYCLOAK_URL=http://192.168.49.2:30252/
 access_token=$( curl -d "client_id=$CLIENT_ID" -d "username=$KEYCLOAK_USERNAME" -d "password=$KEYCLOAK_PASSWORD" -d "grant_type=$GRANT_TYPE" "$KEYCLOAK_URL/realms/master/protocol/openid-connect/token" | sed -n 's|.*"access_token":"\([^"]*\)".*|\1|p')
 
 #echo "New access_token: ${access_token}"

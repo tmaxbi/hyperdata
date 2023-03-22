@@ -1,0 +1,181 @@
+# Default values for hyperdata-system.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: 192.1.1.93:31234/hyperdata_v20.5_system/system_management
+#  repository: harbor:31234/hyperdata_v20.5_system/system_management
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "73580b97"
+
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+# fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+# runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 8100
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+#   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+## added setting
+applicationProperties: "application.yml"
+
+proxy:
+  bodysize: 1024m
+  # minutes
+  timeout: 1800
+
+server:
+  port: 8100
+  servlet:
+    contextPath: /hyperdata
+logging:
+  config: classpath:logback-production.xml
+spring:
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+  datasource:
+    username: hyperdata
+    password: tmax
+    url: jdbc:tibero:thin:@tiberolocaldns:8629:tibero
+    driverClassName: com.tmax.tibero.jdbc.TbDriver
+    hikari:
+      jdbcUrl: jdbc:tibero:thin:@tiberolocaldns:8629:tibero
+      driverClassName: com.tmax.tibero.jdbc.TbDriver
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+  mail:
+    host: smtp.google.com
+    port: 587
+    properties:
+      mail:
+        debug: true
+        smtp:
+          connectionTimeout: 5000
+          auth: false
+          starttls:
+            enable: false
+          ssl:
+            enable: false
+    username: test@gmail.com
+    password: PASSWORD
+  mvc:
+    logRequestDetails: true
+    logResolvedException: true
+
+  jpa:
+    hibernate:
+      naming:
+        physicalStrategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicitStrategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    showSql: true
+    properties:
+      hibernate:
+        formatSql: true
+    databasePlatform: org.hibernate.dialect.Oracle10gDialect
+##### Web Server Config ########################################
+ws:
+  default: /home/systemmanagement/
+  profiles: /home/systemmanagement/profiles/
+### TIBERO
+tibero:
+  ip: tiberolocaldns
+  port: 8629
+  username: hyperdata
+  password: tmax
+  sid: tibero
+###Kubernetes
+kubernetes:
+  config:
+    type: kubernetes
+
+### keycloak ################
+keycloak:
+  enabled: true
+  realm: HyperDataRealm
+  authServerUrl: http://keycloak:30252/
+  sslRequired: none
+  resource: HyperDataLogin
+  credentials:
+    secret: SECRET
+  useResourceRoleMappings: true
+  bearerOnly: true
+### keycloak end ################
+
+##ozone##
+ozone:
+  config:
+    host: om
+    port: 9862
