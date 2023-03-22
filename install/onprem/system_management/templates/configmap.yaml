@@ -49,7 +49,6 @@ data:
 
       jpa:
         hibernate:
-          ddlAuto: {{ .Values.spring.jpa.hibernate.ddlAuto}}
           naming:
             physicalStrategy: {{ .Values.spring.jpa.hibernate.naming.physicalStrategy}}
             implicitStrategy: {{ .Values.spring.jpa.hibernate.naming.implicitStrategy}}

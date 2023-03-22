@@ -129,8 +129,8 @@ spring:
             enable: false
           ssl:
             enable: false
-    username: oper13357799@gmail.com
-    password: ldwkgiunmfzigfvl
+    username: test@gmail.com
+    password: PASSWORD
   mvc:
     logRequestDetails: true
     logResolvedException: true
@@ -169,7 +169,7 @@ keycloak:
   sslRequired: none
   resource: HyperDataLogin
   credentials:
-    secret: vfIdvQBtpNJ5fXG5lztNxT248MKNrV7n
+    secret: SECRET
   useResourceRoleMappings: true
   bearerOnly: true
 ### keycloak end ################

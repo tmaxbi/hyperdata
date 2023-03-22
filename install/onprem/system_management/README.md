@@ -20,7 +20,7 @@ bash client-secret.sh
 ```console
 ## path = ....../onprem 에서 실행
 ## EXAMPLE
-## 레포지토리, tag, ozone, tibero 등 설정 필요
+## repo, tag, ozone, tibero, mail, keycloak 등 설정 필요
 helm install system_management system_management \
 --set serviceAccount.create=false
 --set keycloak.authServerUrl=http://keycloak:8888/
