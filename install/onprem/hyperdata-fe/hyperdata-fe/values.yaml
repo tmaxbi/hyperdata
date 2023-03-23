@@ -1,4 +1,4 @@
-image: bi33-repo:31313/hyperdata_fe:v0.0.28
+image: 192.1.1.93:31234/hyperdata_v20.5_frontend/hyperdata-fe:latest
 
 https:
   enabled: true
