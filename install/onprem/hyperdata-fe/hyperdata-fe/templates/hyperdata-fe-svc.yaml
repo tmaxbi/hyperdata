@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: hyperdata_fe-svc
+  name: hyperdata-fe-svc
 spec:
   type: ClusterIP
   ports:
-    - name: hyperdata_fe-http
+    - name: hyperdata-fe-http
       port: 80
       targetPort: 80
   selector:
-    lb: hyperdata_fe
+    lb: hyperdata-fe
