@@ -15,7 +15,6 @@ spec:
         lb: hyperdata-visualanalytics
         app: hyperdata-visualanalytics
     spec:
-      serviceAccountName: spark
       initContainers:
         - name: hyperdata-visualanalytics-init-con
           image: alpine
