@@ -32,13 +32,3 @@ spec:
             backend:
               serviceName: hyperdata-visualanalytics-service
               servicePort: 8300
-          - path: {{ .Values.server.servlet.contextPath }}/api-docs(.*)
-            pathType: Prefix
-            backend:
-              serviceName: hyperdata-visualanalytics-service
-              servicePort: 8300
-          - path: {{ .Values.server.servlet.contextPath }}/swagger-ui(.*)
-            pathType: Prefix
-            backend:
-              serviceName: hyperdata-visualanalytics-service
-              servicePort: 8300

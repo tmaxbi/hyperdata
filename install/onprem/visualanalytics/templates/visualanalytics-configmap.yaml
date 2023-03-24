@@ -27,6 +27,9 @@ data:
   HYPERDATA_FILEPATH: {{ .Values.db.mountPath_filePath }}
   HYPERDATA_SAVEOUTPUT_FILEPATH: {{ .Values.db.mountPath_saveOutput_filePath }}
   HYPERDATA_SAVEOUTPUT_TEMP_FILEPATH: {{ .Values.db.mountPath_saveOutput_temp_filePath }}
+  HYPERDATA_SHARE_HOST: "{{ .Values.hyperdata.share.host_url }}"
+  HYPERDATA_SHARE_PORT: "{{ .Values.hyperdata.share.port }}"
+
   # spring datasource
   # tibero
   SPRING_DATASOURCE_HIKARI_TIBERO_IP: {{ .Values.db.address }}
