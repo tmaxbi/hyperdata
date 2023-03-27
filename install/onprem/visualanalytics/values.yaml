@@ -22,11 +22,13 @@ server:
 hyperdata:
   ip: hyperdata-svc-hd
   port: 8080
+  share:
+    host_url: "192.1.1.249"
+    port: "30303"
 
 loadBalancer:
   enabled: true
-  SUPERVDB_UCS_PORT: 9994
-  ip: 192.168.179.42
+  ip: 192.1.1.93
 
 loggingPath: /db/visualization
 
@@ -53,14 +55,6 @@ resources:
   limits:
     cpu: 2
     memory: 4Gi
-
-
-dataCollection:
-  enabled: false
-
-virtualization:
-  svc_name: hyperdata-virtualization-svc
-  port: 8500
 
 spark:
   partition:
