@@ -70,8 +70,18 @@ data:
       sid: {{ .Values.tibero.sid}}
     ###Kubernetes
     kubernetes:
-      config:
-        type: {{ .Values.kubernetes.config.type}}
+    config:
+      type: kubernetes
+    meta:
+      name:
+        namespace: {{ .Values.kubernetes.meta.name.namespace }}
+        rbac:
+          cluster-role: {{ .Values.kubernetes.meta.name.rbac.clusterRole}}
+          cluster-role-binding: {{ .Values.kubernetes.meta.name.rbac.clusterRoleBinding}}
+          service-account: {{ .Values.kubernetes.meta.name.rbac.serviceAccount}}
+        pvc:
+          ozone: {{ .Values.kubernetes.meta.name.pvc.ozone}}
+      replicas: {{ .Values.kubernetes.meta.replicas}}
 
     ### keycloak ################
     keycloak:
