@@ -38,9 +38,9 @@ data:
               connectionTimeout: {{ .Values.spring.mail.properties.mail.smtp.connectionTimeout}}
               auth: {{ .Values.spring.mail.properties.mail.smtp.auth}}
               starttls:
-                enable: {{ .Values.spring.mail.properties.mail.smtp.starttls}}
+                enable: {{ .Values.spring.mail.properties.mail.smtp.starttls.enable}}
               ssl:
-                enable: {{ .Values.spring.mail.properties.mail.smtp.ssl}}
+                enable: {{ .Values.spring.mail.properties.mail.smtp.ssl.enable}}
         username: {{ .Values.spring.mail.username}}
         password: {{ .Values.spring.mail.password}}
       mvc:
