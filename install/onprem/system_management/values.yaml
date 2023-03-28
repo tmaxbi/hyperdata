@@ -2,6 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+namespace: hyperdata-dev02
+
 replicaCount: 1
 
 image:
@@ -9,7 +11,7 @@ image:
 #  repository: harbor:31234/hyperdata_v20.5_system/system_management
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "73580b97"
+  tag: 5f091111
 
 
 
@@ -160,6 +162,16 @@ tibero:
 kubernetes:
   config:
     type: kubernetes
+  meta:
+    name:
+      namespace: hyperdata
+      rbac:
+        clusterRole: spark-cr
+        clusterRoleBinding: systemmanagement-project-clusterrolebinding-
+        serviceAccount: default
+      pvc:
+        ozone: data-datanode-0
+    replicas: 3
 
 ### keycloak ################
 keycloak:
@@ -179,3 +191,4 @@ ozone:
   config:
     host: om
     port: 9862
+
