@@ -164,7 +164,8 @@ kubernetes:
     type: kubernetes
   meta:
     name:
-      namespace: hyperdata
+      namespace: 
+        hyperdata: hyperdata
       rbac:
         clusterRole: spark-cr
         clusterRoleBinding: systemmanagement-project-clusterrolebinding-
