@@ -2,6 +2,10 @@ kind: Service
 apiVersion: v1
 metadata:
   name: hyperdata-visualanalytics-service
+  {{ if .Values.loadBalancer.enabled }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: top
+  {{ end }}
 spec:
   ports:
     - name: visualanalytics
