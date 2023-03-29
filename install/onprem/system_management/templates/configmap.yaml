@@ -75,7 +75,7 @@ data:
       meta:
         name:
           namespace:
-            hyperdata:  {{ .Values.kubernetes.meta.name.namespace.hyperdata }}
+            hyperdata:  {{ .Release.Namespace }}
           rbac:
             cluster-role: {{ .Values.kubernetes.meta.name.rbac.clusterRole}}
             cluster-role-binding: {{ .Values.kubernetes.meta.name.rbac.clusterRoleBinding}}
