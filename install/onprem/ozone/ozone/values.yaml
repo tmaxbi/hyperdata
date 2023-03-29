@@ -21,7 +21,7 @@ om:
     type: NodePort
     # om의 service type이 nodeport일 경우, 아래 nodeport를 사용
     nodePorts:
-      om: 31903
+      om: 0
 
 scm:
   replicas: 1
