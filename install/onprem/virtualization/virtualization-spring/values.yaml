@@ -27,9 +27,6 @@ resources:
     cpu: 2
     memory: 4Gi
 
-proauth:
-  address: hyperdata-lb-hd:28080
-
 hyperdata:
   address: hyperdata-svc-hd
   port: 8080
