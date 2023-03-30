@@ -1,5 +1,5 @@
 imagePullPolicy: IfNotPresent
-image: 192.168.179.44:5000/hyperdata20.4.0.6.0_flow:20230102_v1
+image: 192.168.179.44:5000/hyperdata20.4.0.6.0_flow:latest
 
 server:
   port: 8081
@@ -7,8 +7,8 @@ server:
     contextPath: /hyperdata20/flow
 
 webserver:
-  ip: 192.168.49.2
-  port: 8200
+  ip: 192.168.179.37
+  port: 8080
 
 proxy:
   bodysize: 1024m
@@ -50,6 +50,7 @@ db:
   address: tiberolocaldns
   port: 8629
   sid: tibero
+  show_sql: false
 
 db-connection-pool:
   common:
@@ -74,3 +75,27 @@ db-connection-pool:
 flow:
   save:
     max-file-row: 20000
+
+flow_engine:
+  datasource:
+    maxLifetime: 36000000
+    connectionTimeout: 36000000
+    maximumPoolSize: 100
+  executor:
+    queue_size: 10
+    core-pool-size: 10
+    max-pool-size: 100
+
+springdoc:
+  version: v1.0.0
+  api_docs:
+    path: /api-docs/json
+  default_consumes_media_type: application/json
+  default_produces_media_type: application/json
+  swagger_ui:
+    path: /api-docs
+    operations_sorter: alpha
+    tags_sorter: alpha
+    disable_swagger_default_url: true
+    display_query_params_without_oauth2: true
+    doc_expansion: none
