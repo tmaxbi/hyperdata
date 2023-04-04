@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export
 
 # **************** Global variables
 
