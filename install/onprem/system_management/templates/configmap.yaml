@@ -7,22 +7,22 @@ data:
     server:
       port: {{ .Values.server.port }}
       servlet:
-        contextPath: {{ .Values.server.servlet.contextPath }}
+        context-path: {{ .Values.server.servlet.contextPath }}
     logging:
       config: {{ .Values.logging.config }}
     spring:
       servlet:
         multipart:
-          maxFileSize: {{ .Values.spring.servlet.multipart.maxFileSize }}
-          maxRequestSize: {{ .Values.spring.servlet.multipart.maxRequestSize }}
+          max-file-size: {{ .Values.spring.servlet.multipart.maxFileSize }}
+          max-request-size: {{ .Values.spring.servlet.multipart.maxRequestSize }}
       datasource:
         username: {{ .Values.spring.datasource.username }}
         password: {{ .Values.spring.datasource.password }}
         url: {{ .Values.spring.datasource.url }}
-        driverClassName: {{ .Values.spring.datasource.driverClassName }}
+        driver-class-name: {{ .Values.spring.datasource.driverClassName }}
         hikari:
           jdbcUrl: {{ .Values.spring.datasource.hikari.jdbcUrl }}
-          driverClassName: {{ .Values.spring.datasource.hikari.driverClassName }}
+          driver-class-name: {{ .Values.spring.datasource.hikari.driverClassName }}
       rabbitmq:
         host: {{ .Values.spring.rabbitmq.host }}
         port: {{ .Values.spring.rabbitmq.port }}
@@ -35,7 +35,7 @@ data:
           mail:
             debug: {{ .Values.spring.mail.properties.mail.debug}}
             smtp:
-              connectionTimeout: {{ .Values.spring.mail.properties.mail.smtp.connectionTimeout}}
+              connection-timeout: {{ .Values.spring.mail.properties.mail.smtp.connectionTimeout}}
               auth: {{ .Values.spring.mail.properties.mail.smtp.auth}}
               starttls:
                 enable: {{ .Values.spring.mail.properties.mail.smtp.starttls.enable}}
@@ -44,19 +44,19 @@ data:
         username: {{ .Values.spring.mail.username}}
         password: {{ .Values.spring.mail.password}}
       mvc:
-        logRequestDetails: {{ .Values.spring.mvc.logRequestDetails}}
-        logResolvedException: {{ .Values.spring.mvc.logResolvedException}}
+        log-request-details: {{ .Values.spring.mvc.logRequestDetails}}
+        log-resolved-exception: {{ .Values.spring.mvc.logResolvedException}}
 
       jpa:
         hibernate:
           naming:
-            physicalStrategy: {{ .Values.spring.jpa.hibernate.naming.physicalStrategy}}
-            implicitStrategy: {{ .Values.spring.jpa.hibernate.naming.implicitStrategy}}
+            physical-strategy: {{ .Values.spring.jpa.hibernate.naming.physicalStrategy}}
+            implicit-strategy: {{ .Values.spring.jpa.hibernate.naming.implicitStrategy}}
         showSql: {{ .Values.spring.jpa.showSql}}
         properties:
           hibernate:
-            formatSql: {{ .Values.spring.jpa.properties.hibernate.formatSql}}
-        databasePlatform: {{ .Values.spring.jpa.databasePlatform}}
+            format-sql: {{ .Values.spring.jpa.properties.hibernate.formatSql}}
+        database-platform: {{ .Values.spring.jpa.databasePlatform}}
     ##### Web Server Config ########################################
     ws:
       default: {{ .Values.ws.default}}
@@ -75,7 +75,7 @@ data:
       meta:
         name:
           namespace:
-            hyperdata:  {{ .Release.Namespace }}
+            hyperdata: {{ .Release.Namespace }}
           rbac:
             cluster-role: {{ .Values.kubernetes.meta.name.rbac.clusterRole}}
             cluster-role-binding: {{ .Values.kubernetes.meta.name.rbac.clusterRoleBinding}}
@@ -88,13 +88,13 @@ data:
     keycloak:
       enabled: {{ .Values.keycloak.enabled}}
       realm: {{ .Values.keycloak.realm}}
-      authServerUrl: {{ .Values.keycloak.authServerUrl}}
-      sslRequired: {{ .Values.keycloak.sslRequired}}
+      auth-server-url: {{ .Values.keycloak.authServerUrl}}
+      ssl-required: {{ .Values.keycloak.sslRequired}}
       resource: {{ .Values.keycloak.resource}}
       credentials:
         secret: {{ .Values.keycloak.credentials.secret}}
-      useResourceRoleMappings: {{ .Values.keycloak.useResourceRoleMappings}}
-      bearerOnly: {{ .Values.keycloak.bearerOnly}}
+      use-resource-role-mappings: {{ .Values.keycloak.useResourceRoleMappings}}
+      bearer-only: {{ .Values.keycloak.bearerOnly}}
     ### keycloak end ################
 
     ##ozone##
