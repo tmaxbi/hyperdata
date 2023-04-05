@@ -21,14 +21,16 @@ data:
   SERVER_DO: "{{ .Values.server.do }}"
 
   # hyperdata
-  HYPERDATA_IP: {{ .Values.hyperdata.ip }}
-  HYPERDATA_PORT: "{{ .Values.hyperdata.port }}"
+  HYPERDATA_VIRTUALIZATION_NAME: {{ .Values.hyperdata_svc.virtualization.name }}
+  HYPERDATA_VIRTUALIZATION_PORT: {{ .Values.hyperdata_svc.virtualization.port }}
+  HYPERDATA_SYSTEM_NAME: {{ .Values.hyperdata_svc.system.name }}
+  HYPERDATA_SYSTEM_PORT: {{ .Values.hyperdata_svc.system.port }}
   HYPERDATA_HOME: {{ .Values.db.mountPath }}
   HYPERDATA_FILEPATH: {{ .Values.db.mountPath_filePath }}
   HYPERDATA_SAVEOUTPUT_FILEPATH: {{ .Values.db.mountPath_saveOutput_filePath }}
   HYPERDATA_SAVEOUTPUT_TEMP_FILEPATH: {{ .Values.db.mountPath_saveOutput_temp_filePath }}
-  HYPERDATA_SHARE_HOST: "{{ .Values.hyperdata.share.host_url }}"
-  HYPERDATA_SHARE_PORT: "{{ .Values.hyperdata.share.port }}"
+  HYPERDATA_SHARE_HOST: "{{ .Values.server.share.host_url }}"
+  HYPERDATA_SHARE_PORT: "{{ .Values.server.share.port }}"
 
   # spring datasource
   # tibero
