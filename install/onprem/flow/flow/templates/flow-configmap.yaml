@@ -8,12 +8,12 @@ data:
       hyperdata:
         ip: {{ .Values.svc.hyperdata.name }}
         port: {{ .Values.svc.hyperdata.port }}
-      proauth:
-        ip: {{ .Values.svc.proauth.name }}
-        port: {{ .Values.svc.proauth.port }}
       virtualization:
         ip: {{ .Values.svc.virtualization.name }}
         port: {{ .Values.svc.virtualization.port }}
+      management:
+        ip: {{ .Values.svc.management.name }}
+        port: {{ .Values.svc.management.port }}
       mlplatform:
         ip: {{ .Values.svc.mlplatform.name }}
         port: {{ .Values.svc.mlplatform.port }}
@@ -68,32 +68,3 @@ data:
     flow:
       save:
         max-file-row: {{ index .Values "flow" "save" "max-file-row" }}
-
-    ############################ SpringDoc Config ############################
-    springdoc:
-      version: {{ .Values.springdoc.version }}
-      api-docs:
-        path: {{ .Values.springdoc.api_docs.path }}
-      default-consumes-media-type: {{ .Values.springdoc.default_consumes_media_type }}
-      default-produces-media-type: {{ .Values.springdoc.default_produces_media_type }}
-      swagger-ui:
-        path: {{ .Values.springdoc.swagger_ui.path }}
-        operations-sorter: {{ .Values.springdoc.swagger_ui.operations_sorter }}
-        tags-sorter: {{ .Values.springdoc.swagger_ui.tags_sorter }}
-        disable-swagger-default-url: {{ .Values.springdoc.swagger_ui.disable_swagger_default_url }}
-        display-query-params-without-oauth2: {{ .Values.springdoc.swagger_ui.display_query_params_without_oauth2 }}
-        doc-expansion: {{ .Values.springdoc.swagger_ui.doc_expansion }}
-
-    ---
-    spring.config.activate.on-profile: prod
-    logging:
-      config: classpath:logback-prod.xml
-    ---
-    spring.config.activate.on-profile: default
-    logging:
-      config: classpath:logback-dev.xml
-    ---
-    spring.config.activate.on-profile: develop
-    logging:
-      config: classpath:logback-dev.xml
-
