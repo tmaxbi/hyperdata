@@ -36,12 +36,12 @@ svc:
   hyperdata:
     name: hyperdata-svc-hd
     port: 8080
-  proauth:
-    name: hyperdata-lb-hd
-    port: 28080
   virtualization:
     name: hyperdata-virtualization-svc
     port: 8500
+  management:
+    name: hyperdata-system-svc
+    port: 8100
   mlplatform:
     name: mlplatform-backend-svc
     port: 18080
@@ -75,27 +75,3 @@ db-connection-pool:
 flow:
   save:
     max-file-row: 20000
-
-flow_engine:
-  datasource:
-    maxLifetime: 36000000
-    connectionTimeout: 36000000
-    maximumPoolSize: 100
-  executor:
-    queue_size: 10
-    core-pool-size: 10
-    max-pool-size: 100
-
-springdoc:
-  version: v1.0.0
-  api_docs:
-    path: /api-docs/json
-  default_consumes_media_type: application/json
-  default_produces_media_type: application/json
-  swagger_ui:
-    path: /api-docs
-    operations_sorter: alpha
-    tags_sorter: alpha
-    disable_swagger_default_url: true
-    display_query_params_without_oauth2: true
-    doc_expansion: none
