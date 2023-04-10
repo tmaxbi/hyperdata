@@ -22,9 +22,9 @@ data:
 
   # hyperdata
   HYPERDATA_VIRTUALIZATION_NAME: {{ .Values.hyperdata_svc.virtualization.name }}
-  HYPERDATA_VIRTUALIZATION_PORT: {{ .Values.hyperdata_svc.virtualization.port }}
+  HYPERDATA_VIRTUALIZATION_PORT: "{{ .Values.hyperdata_svc.virtualization.port }}"
   HYPERDATA_SYSTEM_NAME: {{ .Values.hyperdata_svc.system.name }}
-  HYPERDATA_SYSTEM_PORT: {{ .Values.hyperdata_svc.system.port }}
+  HYPERDATA_SYSTEM_PORT: "{{ .Values.hyperdata_svc.system.port }}"
   HYPERDATA_HOME: {{ .Values.db.mountPath }}
   HYPERDATA_FILEPATH: {{ .Values.db.mountPath_filePath }}
   HYPERDATA_SAVEOUTPUT_FILEPATH: {{ .Values.db.mountPath_saveOutput_filePath }}
