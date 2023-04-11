@@ -26,16 +26,10 @@ pvc:
   name: tibero-pvc-db
   mountPath: /db
 
-loadBalancer:
-  enabled: true
-
 logging:
   path: flow/logs
 
 svc:
-  hyperdata:
-    name: hyperdata-svc-hd
-    port: 8080
   virtualization:
     name: hyperdata-virtualization-svc
     port: 8500

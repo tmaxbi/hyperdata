@@ -5,9 +5,6 @@ metadata:
 data:
   application.yml: |
     svc:
-      hyperdata:
-        ip: {{ .Values.svc.hyperdata.name }}
-        port: {{ .Values.svc.hyperdata.port }}
       virtualization:
         ip: {{ .Values.svc.virtualization.name }}
         port: {{ .Values.svc.virtualization.port }}

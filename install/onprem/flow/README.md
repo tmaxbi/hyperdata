@@ -11,22 +11,13 @@ curl http://192.168.179.44:5000/v2/hyperdata20.4.0.6.0_flow/tags/list
 
 ## Install
 
-1. LoadBalancer 사용시
+1. Flow Install
 
 ```
 helm install -n hyperdata flow flow \
 --set image=192.168.179.44:5000/${FLOW_IMG_NAME}:${FLOW_IMG_TAG} \
---set loadBalancer.enabled=true \
---set webserver.ip=${LOADBALANCER_IP}
-```
-
-2. NodePort 사용시
-
-```
-helm install -n hyperdata flow flow \
---set image=192.168.179.44:5000/${FLOW_IMG_NAME}:${FLOW_IMG_TAG} \
---set loadBalancer.enabled=false \
 --set webserver.ip=${MASTER_IP}
+
 ```
 
 ## Uninstall
