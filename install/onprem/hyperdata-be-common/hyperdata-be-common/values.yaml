@@ -1,0 +1,6 @@
+image: bi33-repo:31313/becommon:0410
+
+db:
+  mountPath: /db
+  # tibero headless service name
+  ip: tiberolocaldns
