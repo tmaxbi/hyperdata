@@ -127,9 +127,11 @@ helm install system_management system_management \
 # 기타 내용및 에러
 ## SMTP 설정
 Google SMTP 예제(고객사는 폐쇄망으로 쓸 수 없어 보임.)
+
 인증을 위한 PW 생성: https://kitty-geno.tistory.com/43
+
 시스템 helm chart value.yaml 설정
-~~
+```
 mail:
   host: smtp.gmail.com
   port: 587
@@ -145,7 +147,7 @@ mail:
           enable: false
   username: {메일계정 ex: oper13357799@gmail.com}
   password: {링크 따라 생성한 PW ex: abcdefghijklnmop }
-~~
+```
 ## 에러
 namespace systemmanagement-project-4 가 이미있는 에러 -> namespace systemmanagement-project-4를 지워줘야함.
 
