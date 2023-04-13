@@ -1,6 +1,7 @@
-image: bi33-repo:31313/becommon:0410
+image: 192.1.1.93:31234/hyperdata_v20.5_tibero/hyperdata_v20.5_be_common:230412_1569442a
 
 db:
   mountPath: /db
   # tibero headless service name
   ip: tiberolocaldns
+  persistentVolumeClaimName: tibero-pvc-db
