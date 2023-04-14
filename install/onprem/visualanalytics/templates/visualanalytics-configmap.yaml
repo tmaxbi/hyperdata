@@ -31,6 +31,7 @@ data:
   HYPERDATA_SAVEOUTPUT_TEMP_FILEPATH: {{ .Values.db.mountPath_saveOutput_temp_filePath }}
   HYPERDATA_SHARE_HOST: "{{ .Values.server.share.host_url }}"
   HYPERDATA_SHARE_PORT: "{{ .Values.server.share.port }}"
+  HYPERDATA_SAVE_MAX_ROW: "{{ .Values.download_max_row }}"
 
   # spring datasource
   # tibero

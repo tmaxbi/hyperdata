@@ -15,7 +15,7 @@ metadata:
       add_header Access-Control-Allow-Credentials true;
     # 1팀 인증 관련 설정
     nginx.ingress.kubernetes.io/auth-url: "http://hyperdata-system-svc.{{ .Release.Namespace }}.svc.cluster.local:8100/hyperdata/api/v1/gateway/auth"
-    nginx.ingress.kubernetes.io/auth-response-headers: hdVisualizationPermission
+    nginx.ingress.kubernetes.io/auth-response-headers: hdVisualizationPermission, hdAdminRole
 spec:
   tls:
     - secretName: istio.hyperdata-nginx-ingress-nginx
