@@ -12,13 +12,13 @@ spec:
     - name: thrift
       port: 9852
       targetPort: 9852
-      protocal: TCP
+      protocol: TCP
     - name: http
       protocol: TCP
       port: 10003
       targetPort: 10002
     - name: hiveserver2
-      protocal: TCP
+      protocol: TCP
       port: 10000
       targetPort: 10000
     - name: hcatalog

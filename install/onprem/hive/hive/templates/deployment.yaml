@@ -19,7 +19,6 @@ spec:
         command: ['sh', '-c', "until nslookup om.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for ozone manager; sleep 2; done"]
       - name: init-hadoop
         image: {{ .Values.image }}
-        imagePullPolicy: Never
         command: ["/bin/sh", "entrypoint.sh"]
         envFrom:
         - configMapRef:
@@ -29,7 +28,6 @@ spec:
         command: ['sh', '-c', "until nslookup mysql.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for meta DB; sleep 2; done"]
       - name: init-meta
         image: {{ .Values.image }}
-        imagePullPolicy: Never
         command: ["/bin/sh", "init.sh"]
         env:
         - name: HIVE_META_PASSWORD
@@ -42,7 +40,6 @@ spec:
             name: hive-config
       containers:
       - image: {{ .Values.image }}
-        imagePullPolicy: Never
         command: ["/bin/bash", "-c"]
         args: ["sh boot.sh; while true; do sleep 30; done;"]
         name: hive
