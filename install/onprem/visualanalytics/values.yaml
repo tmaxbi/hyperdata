@@ -22,6 +22,8 @@ server:
     host_url: "192.1.1.249"
     port: "30303"
 
+download_max_row: -1
+
 hyperdata_svc:
   virtualization:
     name:
