@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hyperdata-fe-svc-external
+spec:
+  type: ExternalName
+  externalName: {{ .Values.customAddon.externalHost }}
