@@ -29,7 +29,7 @@ hyperdata_svc:
     name:
       hyperdata-virtualization-svc
     port:
-      8100
+      8500
   system:
     name:
       system-management-hyperdata-system-svc
