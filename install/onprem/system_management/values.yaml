@@ -199,3 +199,9 @@ version: "{
   virtualization: 44444444,
   flow: 55555555
 }"
+###customAddonWidget###
+customAddon:
+  enabled: true
+  externalHost: 128.59.105.24
+  externalDetail: /~fdc/sample.html
+  externalPort: 80

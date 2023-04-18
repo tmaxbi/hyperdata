@@ -33,4 +33,11 @@ spec:
                  name: {{ include "hyperdata-system.fullname" . }}-svc
                  port:
                    number: 8100
-
+    -  http:
+         paths:
+           - path: /hyperdata-ex/widget(/|$)(.*)
+             pathType: Prefix
+             backend:
+               service:
+                 name: service-external
+                 port: {{ .Values.customAddon.externalPort }}
