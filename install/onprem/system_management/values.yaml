@@ -191,3 +191,9 @@ ozone:
     host: om
     port: 9862
 
+###customAddonWidget###
+customAddon:
+  enabled: true
+  externalHost: 128.59.105.24
+  externalDetail: /~fdc/sample.html
+  externalPort: 80
