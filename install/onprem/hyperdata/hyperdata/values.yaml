@@ -49,9 +49,10 @@ customLogo:
 
 customAddon:
   enabled: false
-  externalHost: 128.59.105.24
-  externalDetail: /~fdc/sample.html
-  externalPort: 80
+  url: https://192.168.179.40:8080/java
+  path: /java
+  externalHost: 192.168.173.48
+  externalPort: 8090
 
 sqlEditor:
   enabled: false
