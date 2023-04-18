@@ -40,4 +40,5 @@ spec:
              backend:
                service:
                  name: service-external
-                 port: {{ .Values.customAddon.externalPort }}
+                 port: 
+                   number: {{ .Values.customAddon.externalPort }}
