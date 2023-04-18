@@ -43,15 +43,14 @@ spec:
       - name: om
         image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
+        args:
+        - ozone
+        - om
         env:
         - name: WAITFOR
           value: scm-0.scm:9876
         - name: ENSURE_OM_INITIALIZED
           value: /data/metadata/om/current/VERSION
-        - name: IS_OM
-          value: "Y"
-        - name: SCM_POD_IP
-          value: scm-0.scm
         - name: TZ
           value: Asia/Seoul
         #livenessProbe:
@@ -72,8 +71,6 @@ spec:
             cpu: {{ .Values.om.resources.requests.cpu }}
             memory: {{ .Values.om.resources.requests.memory }}
       volumes: []
-#      nodeSelector:
-#        kubernetes.io/hostname: kubemaster
   volumeClaimTemplates:
   - metadata:
       name: data
