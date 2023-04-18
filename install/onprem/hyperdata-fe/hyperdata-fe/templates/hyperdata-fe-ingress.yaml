@@ -32,8 +32,10 @@ spec:
                 port:
                   number: 80
     -  http:
-         paths:
-           - path: /hyperdata-rn/widget
-             backend:
-               serviceName: hyperdata-fe-svc-external
-               servicePort: {{ .Values.customAddon.externalPort }}
+        paths:
+          - path: /hyperdata-ex/widget(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: hyperdata-fe-svc-external
+                port: {{ .Values.customAddon.externalPort }}
