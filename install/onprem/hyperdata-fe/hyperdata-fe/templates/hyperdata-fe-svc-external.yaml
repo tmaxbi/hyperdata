@@ -5,3 +5,8 @@ metadata:
 spec:
   type: ExternalName
   externalName: {{ .Values.customAddon.externalHost }}
+  ports:
+    - name: http
+      port: {{ .Values.customAddon.externalPort }}
+      protocol: TCP
+      targetPort: {{ .Values.customAddon.externalPort }}

@@ -17,6 +17,5 @@ resources:
     memory: 4Gi
 customAddon:
   enabled: false
-  url: https://192.168.179.40:8080/java
   externalHost: 128.59.105.24
-  externalPort: 8090
+  externalPort: 80
