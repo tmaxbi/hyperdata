@@ -15,7 +15,3 @@ resources:
   limits:
     cpu: 2
     memory: 4Gi
-customAddon:
-  enabled: false
-  externalHost: 128.59.105.24
-  externalPort: 80
