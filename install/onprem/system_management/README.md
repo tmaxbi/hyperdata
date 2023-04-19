@@ -22,8 +22,9 @@ bash client-secret.sh
 ## EXAMPLE
 ## repo, tag, ozone, tibero, mail, keycloak 등 설정 필요
 helm install system_management system_management \
---set serviceAccount.create=false
---set keycloak.credentials.secret=KdfYES8btQcYpJNsFQ5Q02rFP3vqQW89 
+--set serviceAccount.create=false \
+--set keycloak.credentials.secret=KdfYES8btQcYpJNsFQ5Q02rFP3vqQW89 \
+--set version={hyperdata:v20.5.1.0,system:11111111,visualization:22222222,front:33333333,virtualization:44444444,flow:55555555}
 ```
 
 ## Deploy parameters
@@ -62,66 +63,67 @@ helm install system_management system_management \
 
 
 ## Spring Config Parameter
-| Name                                                 | Description                                                              | Value                                      |
-|------------------------------------------------------|--------------------------------------------------------------------------|--------------------------------------------|
-| `applicationProperties`                              | The name of applicationProperties                                        | `application.yml`                                    |
-| `proxy.bodysize`                                     | The maximum allowed size of the client request body.                     | `1024m`                                |
-| `proxy.timeout`                                      | The timeout in seconds for transmitting a request to the proxied server. | `1800`              |
-| `server.port`                                        | Spring server HTTP port                                                  | `8100`                                         |
-| `server.servlet.contextPath`                         | Default API context                                                      | `/hyperdata`                               |
-| `logging.config`                                     | The Log configuration path                                               | `classpath:logback-production.xml`                                         |
-| `spring.servlet.multipart.maxFileSize`               | Maximum servlet multipart file size.                                     | `10MB`                                         |
-| `spring.servlet.multipart.maxRequestSize`            | Maximum servlet multipart request size.                                  | `10MB`                                         |
-| `spring.datasource.username`                         | User name of datasource                                                  | `hyperdata`                                         |
-| `spring.datasource.password`                         | Password of datasource                                                   | `tmax`                                         |
-| `spring.datasource.url`                              | The url of datasource                                                    | `jdbc:tibero:thin:@tiberolocaldns:8629:tibero`                                         |
-| `spring.datasource.driverClassName`                  | The class name of datasource                                             | `com.tmax.tibero.jdbc.TbDriver`                                         |
-| `spring.datasource.hikari.jdbcUrl`                   | The jdbc url of hikari db connection pool                                | `jdbc:tibero:thin:@tiberolocaldns:8629:tibero`                                     |
-| `spring.datasource.hikari.driverClassName`           | The class name of hikari db connection pool                              | `com.tmax.tibero.jdbc.TbDriver`                                     |
-| `spring.rabbitmq.host`                               | host of rabbitmq (**Now not used**)                                      | `rabbitmq`                                     |
-| `spring.rabbitmq.port`                               | port of rabbitmq (**Now not used**)                                      | `5672`                                     |
-| `spring.rabbitmq.username`                           | username of rabbitmq (**Now not used**)                                  | `guest`                                     |
-| `spring.rabbitmq.password`                           | password of rabbitmq (**Now not used**)                                  | `guest`                                         |
-| `spring.mail.host`                                   | Url of smtp host server                                                  | `smtp.gmail.com`                                         |
-| `spring.mail.port`                                   | port of smtp host server                                                 | `587`                                         |
-| `spring.mail.properties.mail.debug`                  | Enable Debug Log Level of Mail Library                                   | `true`                                         |
-| `spring.mail.properties.mail.smtp.connectionTimeout` | connection time out in smtp server                                       | `5000`                                         |
-| `spring.mail.properties.mail.smtp.auth`              | check smtp auth enable                                                   | `true`                                         |
-| `spring.mail.properties.mail.smtp.starttls.enable`   | enable smtp starttls                                                     | `true`                                     |
-| `spring.mail.properties.mail.smtp.ssl.enable`        | enable smtp ssl                                                          | `false`                                    |
-| `spring.mail.username`                               | username of smtp                                                         | `test@gmail.com`                           |
-| `spring.mail.password`                               | password of smtp                                                         | `PASSWORD`                                 |
-| `spring.mvc.logRequestDetails`                       | enable mvc logRequestDetails                                             | `true`                                     |
-| `spring.mvc.logResolvedException`                    | enable mvc logResolvedException                                          | `true`                                     |
-| `spring.jpa.hibernate.naming.physicalStrategy`       | enable physicalStrategy                                                  | `org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl` |
+| Name                                                 | Description                                                              | Value                                                                 |
+|------------------------------------------------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| `applicationProperties`                              | The name of applicationProperties                                        | `application.yml`                                                     |
+| `proxy.bodysize`                                     | The maximum allowed size of the client request body.                     | `1024m`                                                               |
+| `proxy.timeout`                                      | The timeout in seconds for transmitting a request to the proxied server. | `1800`                                                                |
+| `server.port`                                        | Spring server HTTP port                                                  | `8100`                                                                |
+| `server.servlet.contextPath`                         | Default API context                                                      | `/hyperdata`                                                          |
+| `logging.config`                                     | The Log configuration path                                               | `classpath:logback-production.xml`                                    |
+| `spring.servlet.multipart.maxFileSize`               | Maximum servlet multipart file size.                                     | `10MB`                                                                |
+| `spring.servlet.multipart.maxRequestSize`            | Maximum servlet multipart request size.                                  | `10MB`                                                                |
+| `spring.datasource.username`                         | User name of datasource                                                  | `hyperdata`                                                           |
+| `spring.datasource.password`                         | Password of datasource                                                   | `tmax`                                                                |
+| `spring.datasource.url`                              | The url of datasource                                                    | `jdbc:tibero:thin:@tiberolocaldns:8629:tibero`                        |
+| `spring.datasource.driverClassName`                  | The class name of datasource                                             | `com.tmax.tibero.jdbc.TbDriver`                                       |
+| `spring.datasource.hikari.jdbcUrl`                   | The jdbc url of hikari db connection pool                                | `jdbc:tibero:thin:@tiberolocaldns:8629:tibero`                        |
+| `spring.datasource.hikari.driverClassName`           | The class name of hikari db connection pool                              | `com.tmax.tibero.jdbc.TbDriver`                                       |
+| `spring.rabbitmq.host`                               | host of rabbitmq (**Now not used**)                                      | `rabbitmq`                                                            |
+| `spring.rabbitmq.port`                               | port of rabbitmq (**Now not used**)                                      | `5672`                                                                |
+| `spring.rabbitmq.username`                           | username of rabbitmq (**Now not used**)                                  | `guest`                                                               |
+| `spring.rabbitmq.password`                           | password of rabbitmq (**Now not used**)                                  | `guest`                                                               |
+| `spring.mail.host`                                   | Url of smtp host server                                                  | `smtp.gmail.com`                                                      |
+| `spring.mail.port`                                   | port of smtp host server                                                 | `587`                                                                 |
+| `spring.mail.properties.mail.debug`                  | Enable Debug Log Level of Mail Library                                   | `true`                                                                |
+| `spring.mail.properties.mail.smtp.connectionTimeout` | connection time out in smtp server                                       | `5000`                                                                |
+| `spring.mail.properties.mail.smtp.auth`              | check smtp auth enable                                                   | `true`                                                                |
+| `spring.mail.properties.mail.smtp.starttls.enable`   | enable smtp starttls                                                     | `true`                                                                |
+| `spring.mail.properties.mail.smtp.ssl.enable`        | enable smtp ssl                                                          | `false`                                                               |
+| `spring.mail.username`                               | username of smtp                                                         | `test@gmail.com`                                                      |
+| `spring.mail.password`                               | password of smtp                                                         | `PASSWORD`                                                            |
+| `spring.mvc.logRequestDetails`                       | enable mvc logRequestDetails                                             | `true`                                                                |
+| `spring.mvc.logResolvedException`                    | enable mvc logResolvedException                                          | `true`                                                                |
+| `spring.jpa.hibernate.naming.physicalStrategy`       | enable physicalStrategy                                                  | `org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl`  |
 | `spring.jpa.hibernate.naming.implicitStrategy`       | enable implicitStrategy                                                  | `org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl` |
-| `spring.jpa.showSql`                                 | Enable SQL showing in Log                                                | `true`                                     |
-| `spring.jpa.properties.hibernate.formatSql`          | enable hibernate formatSql                                               | `true`                                     |
-| `spring.jpa.databasePlatform`                        | jpa database databasePlatform                                            | `org.hibernate.dialect.Oracle10gDialect`   |
-| `ws.default`                                         | Configuration path of web server                                         | `/home/systemmanagement/`                  |
-| `ws.profiles`                                        | Configuration profiles path of web server                                | `/home/systemmanagement/profiles/`         |
-| `tibero.ip`                                          | tibero ip                                                                | `tiberolocaldns`                           |
-| `tibero.port`                                        | tibero port                                                              | `8629`                                     |
-| `tibero.username`                                    | tibero username                                                          | `hyperdata`                                |
-| `tibero.password`                                    | tibero password                                                          | `tmax`                                     |
-| `tibero.sid`                                         | tibero sid                                                               | `tibero`                                   |
-| `kubernetes.config.type`                             | Kubernetes config type                                                   | `kubernetes`                               |
-| `kubernetes.meta.name.namespace.hyperdata`           | name of hyperdata namespace                                              | `hyperdata`                                |
-| `kubernetes.meta.name.rbac.clusterRole`              | name of clusterRole                                                      | `spark-cr`                                 |
-| `kubernetes.meta.name.rbac.clusterRoleBinding`       | name of clusterRoleBinding                                               | `systemmanagement-project-clusterrolebinding-` |
-| `kubernetes.meta.name.rbac.serviceAccount`           | name of service account                                                  | `default`                                  |
-| `kubernetes.meta.name.pvc.ozone`                     | name of ozone pvc                                                        | `data-datanode-0`                          |
-| `kubernetes.meta.replicas`                           | the number of ozone replicas                                             | `3`                                        |
-| `keycloak.enabled`                                   | enable keycloak                                                          | `true`                                     |
-| `keycloak.realm`                                     | the name of realm                                                        | `HyperDataRealm`                           |
-| `keycloak.authServerUrl`                             | the name of realm                                                        | `http://keycloak:30252/`                   |
-| `keycloak.sslRequired`                               | keycloak ssl                                                             | `none`                                     |
-| `keycloak.resource`                                  | the name of keycloak client                                              | `HyperDataLogin`                           |
-| `keycloak.credentials.secret`                        | keycloak credentials secret                                              | `SECRET`                                   |
-| `keycloak.useResourceRoleMappings`                   | keycloak useResourceRoleMappings                                         | `true`                                     |
-| `keycloak.bearerOnly`                                | keycloak bearerOnly                                                      | `true`                                     |
-| `ozone.config.host`                                  | ozone host                                                               | `om`                                       |
-| `ozone.config.port`                                  | ozone port                                                               | `9862`                                     |
+| `spring.jpa.showSql`                                 | Enable SQL showing in Log                                                | `true`                                                                |
+| `spring.jpa.properties.hibernate.formatSql`          | enable hibernate formatSql                                               | `true`                                                                |
+| `spring.jpa.databasePlatform`                        | jpa database databasePlatform                                            | `org.hibernate.dialect.Oracle10gDialect`                              |
+| `ws.default`                                         | Configuration path of web server                                         | `/home/systemmanagement/`                                             |
+| `ws.profiles`                                        | Configuration profiles path of web server                                | `/home/systemmanagement/profiles/`                                    |
+| `tibero.ip`                                          | tibero ip                                                                | `tiberolocaldns`                                                      |
+| `tibero.port`                                        | tibero port                                                              | `8629`                                                                |
+| `tibero.username`                                    | tibero username                                                          | `hyperdata`                                                           |
+| `tibero.password`                                    | tibero password                                                          | `tmax`                                                                |
+| `tibero.sid`                                         | tibero sid                                                               | `tibero`                                                              |
+| `kubernetes.config.type`                             | Kubernetes config type                                                   | `kubernetes`                                                          |
+| `kubernetes.meta.name.namespace.hyperdata`           | name of hyperdata namespace                                              | `hyperdata`                                                           |
+| `kubernetes.meta.name.rbac.clusterRole`              | name of clusterRole                                                      | `spark-cr`                                                            |
+| `kubernetes.meta.name.rbac.clusterRoleBinding`       | name of clusterRoleBinding                                               | `systemmanagement-project-clusterrolebinding-`                        |
+| `kubernetes.meta.name.rbac.serviceAccount`           | name of service account                                                  | `default`                                                             |
+| `kubernetes.meta.name.pvc.ozone`                     | name of ozone pvc                                                        | `data-datanode-0`                                                     |
+| `kubernetes.meta.replicas`                           | the number of ozone replicas                                             | `3`                                                                   |
+| `keycloak.enabled`                                   | enable keycloak                                                          | `true`                                                                |
+| `keycloak.realm`                                     | the name of realm                                                        | `HyperDataRealm`                                                      |
+| `keycloak.authServerUrl`                             | the name of realm                                                        | `http://keycloak:30252/`                                              |
+| `keycloak.sslRequired`                               | keycloak ssl                                                             | `none`                                                                |
+| `keycloak.resource`                                  | the name of keycloak client                                              | `HyperDataLogin`                                                      |
+| `keycloak.credentials.secret`                        | keycloak credentials secret                                              | `SECRET`                                                              |
+| `keycloak.useResourceRoleMappings`                   | keycloak useResourceRoleMappings                                         | `true`                                                                |
+| `keycloak.bearerOnly`                                | keycloak bearerOnly                                                      | `true`                                                                |
+| `ozone.config.host`                                  | ozone host                                                               | `om`                                                                  |
+| `ozone.config.port`                                  | ozone port                                                               | `9862`                                                                |
+| `version`                                            | module                                                                   | `module: commit number`                                               |
 
 
 # 기타 내용및 에러

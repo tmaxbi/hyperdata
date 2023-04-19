@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hd-be-common-job
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  completions: 1
+  template:
+    metadata:
+      name: hd-be-common
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: hd-be-common-job-con
+          image: {{ .Values.image }}
+          imagePullPolicy: Always
+          command: [ "/bin/bash" ]
+          args: [ "-c", ". $SRC_HOME/init.sh" ]
+          securityContext:
+            runAsUser: 0
+            privileged: true
+          resources:
+            limits:
+              cpu: "200m"
+              memory: "512Mi"
+            requests:
+              cpu: "200m"
+              memory: "512Mi"
+          volumeMounts:
+            - mountPath: {{ .Values.db.mountPath }}
+              name: pv-storage
+          env:
+            - name: DB_PATH
+              value: {{ .Values.db.mountPath }}
+            - name: DB_IP
+              value: {{ .Values.db.ip }}
+            - name: SRC_HOME
+              value: "/HyperData"
+      volumes:
+        - name: pv-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.db.persistentVolumeClaimName }}

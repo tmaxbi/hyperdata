@@ -8,7 +8,8 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "{{ .Values.proxy.timeout }}"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
-    nginx.ingress.kubernetes.io/auth-url: hyperdata-system-svc:8100/hyperdata/api/v1/gateway/auth
+    # 1팀 인증 관련 설정
+    nginx.ingress.kubernetes.io/auth-url: "http://hyperdata-system-svc.{{ .Release.Namespace }}.svc.cluster.local:8100/hyperdata/api/v1/gateway/auth"
     nginx.ingress.kubernetes.io/auth-response-headers: hdUserRole,hdAdminRole,hdManagementPermission
 spec:
   tls:
@@ -32,3 +33,11 @@ spec:
                  name: {{ include "hyperdata-system.fullname" . }}-svc
                  port:
                    number: 8100
+    -  http:
+         paths:
+           - path: /hyperdata-ex/widget(/|$)(.*)
+             pathType: Prefix
+             backend:
+               service:
+                 name: service-external
+                 port: {{ .Values.customAddon.externalPort }}
