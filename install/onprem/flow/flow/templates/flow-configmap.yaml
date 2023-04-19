@@ -27,18 +27,6 @@ data:
       saveoutput_filepath: {{ .Values.pvc.mountPath }}/output
       saveoutput_temp_filepath: {{ .Values.pvc.mountPath }}/temp
 
-    ############################ Tibero Meta/Ex schema Config ############################
-    db:
-      hyperdata:
-        ip: {{ .Values.db.address }}
-        port: {{ .Values.db.port }}
-        sid: {{ .Values.db.sid }}
-        show-sql: {{ .Values.db.show_sql }}
-      hyperdata_ex:
-        ip: {{ .Values.db.address }}
-        port: {{ .Values.db.port }}
-        sid: {{ .Values.db.sid }}
-
     ############################ Connection Pool Config ############################
     db-connection-pool:
       common:
