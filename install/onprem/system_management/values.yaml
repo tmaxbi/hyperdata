@@ -191,14 +191,7 @@ ozone:
     host: om
     port: 9862
 
-version: "{
-  hyperdata: v20.5.1.0,
-  system: 11111111,
-  visualization: 22222222,
-  front: 33333333,
-  virtualization: 44444444,
-  flow: 55555555
-}"
+version: '{hyperdata: v20.5.1.0,system: 11111111,visualization: 22222222,front: 33333333,virtualization: 44444444,flow: 55555555}'
 ###customAddonWidget###
 customAddon:
   enabled: true

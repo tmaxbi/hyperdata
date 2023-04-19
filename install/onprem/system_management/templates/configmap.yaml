@@ -102,4 +102,4 @@ data:
       config:
         host: {{ .Values.ozone.config.host}}
         port: {{ .Values.ozone.config.port}}
-    version: {{ .Values.version }}
+    version: {{ .Values.version | toJson }}
