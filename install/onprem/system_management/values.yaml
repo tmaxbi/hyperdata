@@ -194,7 +194,6 @@ ozone:
 version: '{hyperdata: v20.5.1.0,system: 11111111,visualization: 22222222,front: 33333333,virtualization: 44444444,flow: 55555555}'
 ###customAddonWidget###
 customAddon:
-  enabled: true
   externalHost: 128.59.105.24
-  externalDetail: /~fdc/sample.html
+  externalDetail: https://192.168.6.15:31519/hyperdata-widget/~fdc/sample.html
   externalPort: 80

@@ -103,3 +103,5 @@ data:
         host: {{ .Values.ozone.config.host}}
         port: {{ .Values.ozone.config.port}}
     version: {{ .Values.version | toJson }}
+    customAddon:
+      url: {{ .Values.customAddon.externalDetail }}
