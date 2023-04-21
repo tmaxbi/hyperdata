@@ -19,3 +19,4 @@ resources:
 db:
   mountPath: /db
   persistentVolumeClaimName: tibero-pvc-db
+

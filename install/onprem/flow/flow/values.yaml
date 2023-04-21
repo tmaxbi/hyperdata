@@ -1,5 +1,5 @@
 imagePullPolicy: IfNotPresent
-image: 192.168.179.44:5000/hyperdata20.4.0.6.0_flow:20230102_v1
+image: 192.168.179.44:5000/hyperdata20.4.0.6.0_flow:latest
 
 server:
   port: 8081
@@ -7,8 +7,8 @@ server:
     contextPath: /hyperdata20/flow
 
 webserver:
-  ip: 192.168.49.2
-  port: 8200
+  ip: 192.168.179.37
+  port: 8080
 
 proxy:
   bodysize: 1024m
@@ -26,30 +26,19 @@ pvc:
   name: tibero-pvc-db
   mountPath: /db
 
-loadBalancer:
-  enabled: true
-
 logging:
   path: flow/logs
 
 svc:
-  hyperdata:
-    name: hyperdata-svc-hd
-    port: 8080
-  proauth:
-    name: hyperdata-lb-hd
-    port: 28080
   virtualization:
     name: hyperdata-virtualization-svc
     port: 8500
+  management:
+    name: hyperdata-system-svc
+    port: 8100
   mlplatform:
     name: mlplatform-backend-svc
     port: 18080
-
-db:
-  address: tiberolocaldns
-  port: 8629
-  sid: tibero
 
 db-connection-pool:
   common:

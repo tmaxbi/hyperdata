@@ -9,7 +9,7 @@ image:
 #  repository: harbor:31234/hyperdata_v20.5_system/system_management
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "73580b97"
+  tag: 5f091111
 
 
 
@@ -117,16 +117,16 @@ spring:
     username: guest
     password: guest
   mail:
-    host: smtp.google.com
+    host: smtp.gmail.com
     port: 587
     properties:
       mail:
         debug: true
         smtp:
           connectionTimeout: 5000
-          auth: false
+          auth: true
           starttls:
-            enable: false
+            enable: true
           ssl:
             enable: false
     username: test@gmail.com
@@ -160,6 +160,17 @@ tibero:
 kubernetes:
   config:
     type: kubernetes
+  meta:
+    name:
+      namespace:
+        hyperdata: hyperdata
+      rbac:
+        clusterRole: spark-cr
+        clusterRoleBinding: systemmanagement-project-clusterrolebinding-
+        serviceAccount: default
+      pvc:
+        ozone: data-datanode-0
+    replicas: 3
 
 ### keycloak ################
 keycloak:
@@ -179,3 +190,10 @@ ozone:
   config:
     host: om
     port: 9862
+
+version: '{hyperdata: v20.5.1.0,system: 11111111,visualization: 22222222,front: 33333333,virtualization: 44444444,flow: 55555555}'
+###customAddonWidget###
+customAddon:
+  externalHost: 128.59.105.24
+  externalDetail: https://192.168.6.15:31519/hyperdata-widget/~fdc/sample.html
+  externalPort: 80

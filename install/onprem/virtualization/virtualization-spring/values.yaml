@@ -1,4 +1,4 @@
-image: 192.1.1.93:31234/hyperdata_v20.5_visual_analytics/vis:latest
+image: 192.1.1.93:31234/hyperdata_v20.5_virtualization/hyperdata_v20.5_virtualization:latest
 
 proxy:
   bodysize: 1024m
@@ -26,9 +26,6 @@ resources:
   limits:
     cpu: 2
     memory: 4Gi
-
-proauth:
-  address: hyperdata-lb-hd:28080
 
 hyperdata:
   address: hyperdata-svc-hd

@@ -4,20 +4,13 @@ metadata:
   name: hyperdata-flow-configmap
 data:
   application.yml: |
-    ---
-    spring.config.activate.on-profile: prod
-    logging:
-      config: classpath:logback-prod.xml
     svc:
-      hyperdata:
-        ip: {{ .Values.svc.hyperdata.name }}
-        port: {{ .Values.svc.hyperdata.port }}
-      proauth:
-        ip: {{ .Values.svc.proauth.name }}
-        port: {{ .Values.svc.proauth.port }}
       virtualization:
         ip: {{ .Values.svc.virtualization.name }}
         port: {{ .Values.svc.virtualization.port }}
+      management:
+        ip: {{ .Values.svc.management.name }}
+        port: {{ .Values.svc.management.port }}
       mlplatform:
         ip: {{ .Values.svc.mlplatform.name }}
         port: {{ .Values.svc.mlplatform.port }}
@@ -33,17 +26,6 @@ data:
       filepath: {{ .Values.pvc.mountPath }}/input
       saveoutput_filepath: {{ .Values.pvc.mountPath }}/output
       saveoutput_temp_filepath: {{ .Values.pvc.mountPath }}/temp
-
-    ############################ Tibero Meta/Ex schema Config ############################
-    db:
-      hyperdata:
-        ip: {{ .Values.db.address }}
-        port: {{ .Values.db.port }}
-        sid: {{ .Values.db.sid }}
-      hyperdata_ex:
-        ip: {{ .Values.db.address }}
-        port: {{ .Values.db.port }}
-        sid: {{ .Values.db.sid }}
 
     ############################ Connection Pool Config ############################
     db-connection-pool:
