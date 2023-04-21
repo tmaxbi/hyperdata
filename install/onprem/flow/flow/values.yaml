@@ -40,12 +40,6 @@ svc:
     name: mlplatform-backend-svc
     port: 18080
 
-db:
-  address: tiberolocaldns
-  port: 8629
-  sid: tibero
-  show_sql: false
-
 db-connection-pool:
   common:
     query-timeout: 3600
