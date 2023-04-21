@@ -71,14 +71,14 @@ sleep 240
 install_keycloak $NAMESPACE $POSTGRESQL_IP
 NODE_PORT=$(kubectl get --namespace $NAMESPACE -o jsonpath="{.spec.ports[0].nodePort}" services keycloak)
 NODE_IP=$(kubectl get nodes --namespace $NAMESPACE -o jsonpath="{.items[0].status.addresses[0].address}")
-KEYCLOACK_URL=http://$NODE_IP:$NODE_PORT
+KEYCLOAK_URL=http://$NODE_IP:$NODE_PORT
 echo "KEYCLOAK_URL: " $KEYCLOAK_URL
 
 echo "WAIT UNTIL KEYCLOAK READY.."
 sleep 300
 
 # Execute keycloak-script 
-bash keycloak/keycloak-script/configure-keycloak.sh $KEYCLOACK_URL
+bash keycloak/keycloak-script/configure-keycloak.sh $KEYCLOAK_URL
 
 echo "WAIT UNTIL REALM READY.."
 sleep 120
@@ -88,7 +88,7 @@ echo "TOKEN: " $TOKEN
 
 echo "POSTGRESQL SERVICE IP: " $POSTGRESQL_IP
 echo "HYPERDATA-SYSTEM SERVICE_IP: " http://$NODE_IP:$NODE_PORT
-echo "KEYCLOACK_URL: : " $KEYCLOACK_URL
+echo "KEYCLOAK_URL: : " $KEYCLOAK_URL
 echo "TOKEN: " $TOKEN
 
 helm install hyperdata-system . -n $NAMESPACE --set image.repository=$REPOSITORY --set image.tag=$TAG --set keycloak.credentials.secret=$TOKEN --set keycloak.authServerUrl=$KEYCLOAK_URL
