@@ -15,3 +15,6 @@ resources:
   limits:
     cpu: 2
     memory: 4Gi
+    
+customLogo:
+  enabled: false
