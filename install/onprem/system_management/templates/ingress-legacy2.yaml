@@ -6,7 +6,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header Authorization "";
-    nginx.ingress.kubernetes.io/rewrite-target: /hyperdata/api/v1/hyperdata20/projects/200/push/meta
+    nginx.ingress.kubernetes.io/rewrite-target: /hyperdata/$1
     nginx.ingress.kubernetes.io/proxy-body-size: "{{ .Values.proxy.bodysize }}"
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "{{ .Values.proxy.timeout }}"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
@@ -17,7 +17,16 @@ spec:
   rules:
     -  http:
          paths:
-           - path: /api/v1/hyperdata20/projects/(\d+)/push/meta
+           - path: /(api/v1/hyperdata20/projects/\d+/push/meta)
+             pathType: Prefix
+             backend:
+               service:
+                 name: {{ include "hyperdata-system.fullname" . }}-svc
+                 port:
+                   number: 8100
+    -  http:
+         paths:
+           - path: /(api/v1/hyperdata20/projects/\d+/delete/meta/\d+)
              pathType: Prefix
              backend:
                service:
