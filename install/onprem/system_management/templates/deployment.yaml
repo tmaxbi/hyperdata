@@ -21,8 +21,6 @@ spec:
         {{- include "hyperdata-system.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "hyperdata-system.serviceAccountName" . }}
-      imagePullSecrets:
-        - name: docker-secret
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
