@@ -17,7 +17,7 @@ metadata:
 
     #rewrte-target
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /hyperdata-rn/autoLogin
+    nginx.ingress.kubernetes.io/rewrite-target: /autoLogin
 
 spec:
   tls:
