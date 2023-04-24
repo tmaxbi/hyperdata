@@ -15,3 +15,8 @@ resources:
   limits:
     cpu: 2
     memory: 4Gi
+
+db:
+  mountPath: /db
+  persistentVolumeClaimName: tibero-pvc-db
+

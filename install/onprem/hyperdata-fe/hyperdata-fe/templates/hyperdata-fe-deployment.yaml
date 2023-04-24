@@ -38,3 +38,15 @@ spec:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
               memory: {{ .Values.resources.requests.memory }}
+          volumeMounts:
+            - name: tz-seoul
+              mountPath: /etc/localtime
+            - name: pv-storage-tb
+              mountPath: {{ .Values.db.mountPath }}
+      volumes:
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul
+        - name: pv-storage-tb
+          persistentVolumeClaim:
+            claimName: {{ .Values.db.persistentVolumeClaimName }}
