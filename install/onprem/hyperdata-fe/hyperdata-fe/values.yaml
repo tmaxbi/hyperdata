@@ -18,3 +18,8 @@ resources:
     
 customLogo:
   enabled: false
+
+db:
+  mountPath: /db
+  persistentVolumeClaimName: tibero-pvc-db
+

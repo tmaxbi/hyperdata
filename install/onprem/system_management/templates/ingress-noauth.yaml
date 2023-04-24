@@ -23,13 +23,4 @@ spec:
                  name: {{ include "hyperdata-system.fullname" . }}-svc
                  port:
                    number: 8100
-    -  http:
-         paths:
-           - path: /hyperdata/api/v1/gateway/(.*)
-             pathType: Prefix
-             backend:
-               service:
-                 name: {{ include "hyperdata-system.fullname" . }}-svc
-                 port:
-                   number: 8100
 

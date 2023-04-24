@@ -39,6 +39,8 @@ spec:
               value: {{ .Values.db.ip }}
             - name: SRC_HOME
               value: "/HyperData"
+            - name: SCHEMA_VERSION
+              value: "{{ .Values.schema_version }}"
       volumes:
         - name: pv-storage
           persistentVolumeClaim:
