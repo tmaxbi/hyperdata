@@ -39,6 +39,8 @@ spec:
             - name: application-properties
               mountPath: /home/systemmanagement/config
               readOnly: true
+            - name: tibero-pvc-db
+              mountPath: {{ .Values.pvc.mountPath }}
       volumes:
         - name: application-properties
           configMap:
@@ -46,6 +48,9 @@ spec:
             items:
               - key: "application.yml"
                 path: {{ .Values.applicationProperties }}
+        - name: tibero-pvc-db
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvc.name }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

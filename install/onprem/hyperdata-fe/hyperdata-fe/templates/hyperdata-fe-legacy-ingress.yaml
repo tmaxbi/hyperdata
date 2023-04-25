@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 
 kind: Ingress
 metadata:
-  name: hyperdata-fe-ingress
+  name: hyperdata-fe-legacy-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: "{{ .Values.proxy.bodysize }}"
@@ -16,7 +16,8 @@ metadata:
       add_header Access-Control-Allow-Credentials true;
 
     #rewrte-target
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /autoLogin
 
 spec:
   tls:
@@ -24,7 +25,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /hyperdata-rn(/|$)(.*)
+          - path: /hyperdata20
             pathType: Prefix
             backend:
               service:

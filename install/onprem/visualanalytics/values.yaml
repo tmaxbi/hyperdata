@@ -18,13 +18,24 @@ server:
     contextPath: /hyperdata/v1
   home: /cnb
   do: /do
-
-hyperdata:
-  ip: hyperdata-svc-hd
-  port: 8080
   share:
     host_url: "192.1.1.249"
     port: "30303"
+
+download_max_row: -1
+
+hyperdata_svc:
+  virtualization:
+    name:
+      hyperdata-virtualization-svc
+    port:
+      8500
+  system:
+    name:
+      system-management-hyperdata-system-svc
+    port:
+      8100
+
 
 loadBalancer:
   enabled: true

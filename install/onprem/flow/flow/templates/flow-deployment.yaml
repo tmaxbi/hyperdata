@@ -27,6 +27,8 @@ spec:
               cpu: {{ .Values.resources.limits.cpu }}
               memory: {{ .Values.resources.limits.memory }}
           env:
+            - name: HD_HOME
+              value: {{ .Values.pvc.mountPath }}
             - name: LOGGING_PATH
               value: {{ .Values.pvc.mountPath }}/{{ .Values.logging.path }}
           volumeMounts:
