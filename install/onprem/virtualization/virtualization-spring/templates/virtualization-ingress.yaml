@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "{{ .Values.proxy.timeout }}"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
-    nginx.ingress.kubernetes.io/auth-url: hyperdata-system-svc:8100/hyperdata/api/v1/gateway/auth
+    nginx.ingress.kubernetes.io/auth-url: "http://hyperdata-system-svc.{{ .Release.Namespace }}.svc.cluster.local:8100/hyperdata/api/v1/gateway/auth"
     nginx.ingress.kubernetes.io/auth-response-headers: hdProjectName, hdUserRole, hdAdminRole, hdDBARole, hdManagementPermission, hdUsableDataPermission
 spec:
   tls:
