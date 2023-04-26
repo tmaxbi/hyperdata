@@ -10,14 +10,11 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
     nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/permanent-redirect: {{ .Values.legacy.redirect }}/hyperdata-rn/autoLogin/
     nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       add_header Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE";
       add_header Access-Control-Allow-Credentials true;
-
-    #rewrte-target
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /autoLogin
 
 spec:
   tls:
