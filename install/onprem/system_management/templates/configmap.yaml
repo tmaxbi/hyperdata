@@ -104,4 +104,5 @@ data:
         port: {{ .Values.ozone.config.port}}
     version: {{ .Values.version | toJson }}
     customAddon:
+      enable: {{ .Values.customAddon.enabled }}
       url: {{ .Values.customAddon.externalDetail }}
