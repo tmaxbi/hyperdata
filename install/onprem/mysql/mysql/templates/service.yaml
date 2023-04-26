@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mysql
 spec:
-  clusterI: None
+  clusterIp: None
   selector:
     app: mysql
   ports:
