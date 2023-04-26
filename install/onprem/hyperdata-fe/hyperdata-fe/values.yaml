@@ -23,3 +23,6 @@ db:
   mountPath: /db
   persistentVolumeClaimName: tibero-pvc-db
 
+legacy:
+  #redirect to
+  redirect: https://192.168.179.40:8080
