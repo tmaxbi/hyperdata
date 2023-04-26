@@ -13,14 +13,14 @@ spec:
   tls:
     - secretName: istio.hyperdata-nginx-ingress-nginx
   rules:
-    {{- if and (eq .Values.customAddon.enabled true) ( .Values.customAddon.path) ( .Values.customAddon.externalPort) }}
-    -  http:
-         paths:
-           - path: /hyperdata-widget(/|$)(.*)
-             pathType: Prefix
-             backend:
-               service:
-                 name: service-external
-                 port:
-                   number: {{ .Values.customAddon.externalPort }}
+    {{- if eq .Values.customAddon.enabled true}}
+    - http:
+        paths:
+          - path: /hyperdata-widget(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: service-external
+                port:
+                  number: {{ .Values.customAddon.externalPort }}
     {{- end }}
