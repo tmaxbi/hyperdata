@@ -26,3 +26,10 @@ spec:
             backend:
               serviceName: hyperdata-virtualization-svc
               servicePort: 8500
+    - http:
+        paths:
+          - path: /hyperdata{{ .Values.version.major  }}/common/(.*)
+            backend:
+              serviceName: hyperdata-virtualization-svc
+              servicePort: 8500
+              
