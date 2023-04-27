@@ -21,3 +21,10 @@
 .idea/
 *.tmproj
 .vscode/
+
+# custom
+keycloak/
+keycloak-script/
+postgresql/
+resources/
+install.sh
