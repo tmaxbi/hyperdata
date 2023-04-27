@@ -18,7 +18,10 @@ helm install keycloak keycloak \
 --set externalDatabase.database=keycloak \
 --set ingress.enabled=true \
 --set service.type=NodePort \
---set service.ports.http=8888
+--set service.ports.http=8888 \
+--set image.registry=biqa.tmax.com \
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/keycloak \
+--set image.tag=20230321_v1
 ```
 
 변경해야 하는 것
