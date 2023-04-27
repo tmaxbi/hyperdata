@@ -1,4 +1,4 @@
-image: 192.1.1.93:31234/hyperdata_v20.5_frontend/hyperdata-fe:latest
+image: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_front:20230427_562b0be6
 
 https:
   enabled: true
@@ -15,13 +15,13 @@ resources:
   limits:
     cpu: 2
     memory: 4Gi
-    
-customLogo:
-  enabled: false
 
 db:
   mountPath: /db
   persistentVolumeClaimName: tibero-pvc-db
+
+customLogo:
+  path: /usr/share/nginx/html/res/images/common/gnb
 
 legacy:
   #redirect to
