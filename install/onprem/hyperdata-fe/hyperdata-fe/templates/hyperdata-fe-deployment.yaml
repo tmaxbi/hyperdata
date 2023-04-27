@@ -19,6 +19,9 @@ spec:
         - name: hyperdata-fe-con
           image: {{ .Values.image }}
           imagePullPolicy: Always
+          env:
+            - name: HYPERDATA_FRONT_CUSTOM_LOGO_PATH
+              value: {{ .Values.customLogo.path }}
           securityContext:
             runAsUser: 0
           ports:
