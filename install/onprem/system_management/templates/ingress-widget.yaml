@@ -1,3 +1,4 @@
+{{- if eq .Values.customAddon.enabled true}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -13,7 +14,6 @@ spec:
   tls:
     - secretName: istio.hyperdata-nginx-ingress-nginx
   rules:
-    {{- if eq .Values.customAddon.enabled true}}
     - http:
         paths:
           - path: /hyperdata-widget(/|$)(.*)
@@ -23,4 +23,4 @@ spec:
                 name: service-external
                 port:
                   number: {{ .Values.customAddon.externalPort }}
-    {{- end }}
+{{- end }}
