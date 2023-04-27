@@ -57,6 +57,8 @@ data:
   
   # Spark
   SPARK_PARTITION_SHUFFLEPARTITION: "{{ .Values.spark.partition.shuffle_partition }}"
+  VIRTUALIZATION_HIVE_HOST: "hive"
+  VIRTUALIZATION_HIVE_PORT: "10000"
 
   # profile
   SPRING_PROFILES_ACTIVE: "production"
