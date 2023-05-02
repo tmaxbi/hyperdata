@@ -19,7 +19,10 @@ helm install postgresql postgresql \
 --set global.postgresql.auth.password=admin \ 
 --set global.postgresql.auth.database=keycloak \ 
 --set global.postgresql.service.ports.postgresql=5555 \ 
---set primary.livenessProbe.initialDelaySeconds=240 
+--set primary.livenessProbe.initialDelaySeconds=240 \
+--set image.registry=biqa.tmax.com \
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/postgresql \
+--set image.tag=15.2.0
 
 ex) helm install postgresql postgresql \ 
 -n hyperdata-dev01 \ 
@@ -28,7 +31,10 @@ ex) helm install postgresql postgresql \
 --set global.postgresql.auth.password=admin \ 
 --set global.postgresql.auth.database=keycloak \ 
 --set global.postgresql.service.ports.postgresql=5555 \ 
---set primary.livenessProbe.initialDelaySeconds=240
+--set primary.livenessProbe.initialDelaySeconds=240 \
+--set image.registry=biqa.tmax.com \
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/postgresql \
+--set image.tag=15.2.0
 ```
 
 # keycloack 설치
@@ -48,22 +54,28 @@ helm install keycloak keycloak \
 --set externalDatabase.database=keycloak \
 --set ingress.enabled=true \
 --set service.type=NodePort \
---set service.ports.http=8888
+--set service.ports.http=8888 \
+--set image.registry=biqa.tmax.com \
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/keycloak \
+--set image.tag=20230321_v1
 
 ex)
-helm install keycloak keycloak \\
--n hyperdata-dev01 \\
---set auth.adminUser=admin \\
---set auth.adminPassword=admin \\
---set postgresql.enabled=false \\
---set externalDatabase.host=10.233.29.187 \\
---set externalDatabase.port=5555 \\
---set externalDatabase.user=admin \\
---set externalDatabase.password=admin \\
---set externalDatabase.database=keycloak \\
---set ingress.enabled=true \\
---set service.type=NodePort \\
---set service.ports.http=8888
+helm install keycloak keycloak \
+-n hyperdata-dev01 \
+--set auth.adminUser=admin \
+--set auth.adminPassword=admin \
+--set postgresql.enabled=false \
+--set externalDatabase.host=10.233.29.187 \
+--set externalDatabase.port=5555 \
+--set externalDatabase.user=admin \
+--set externalDatabase.password=admin \
+--set externalDatabase.database=keycloak \
+--set ingress.enabled=true \
+--set service.type=NodePort \
+--set service.ports.http=8888 \
+--set image.registry=biqa.tmax.com \
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/keycloak \
+--set image.tag=20230321_v1
 
 ```
 
