@@ -59,7 +59,7 @@ spec:
         image: {{ .Values.image }}
         imagePullPolicy: IfNotPresent
         command: ["/bin/bash", "-c"]
-        args: ["(sleep 120; bash /opt/hadoop/boot.sh) & /opt/hadoop/libexec/entrypoint.sh ozone datanode & (ozone sh volume create /hyperdata; ozone sh bucket create /hyperdata/hive)"]
+        args: ["(sleep 120; bash /opt/hadoop/boot.sh) & /opt/hadoop/libexec/entrypoint.sh ozone datanode"]
         env:
         - name: IS_DATANODE
           value: "Y"
