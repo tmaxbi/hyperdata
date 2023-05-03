@@ -8,8 +8,8 @@ db:
   persistentVolumeClaimName: tibero-pvc-db
   mountPath: /db
 
-shmSize: 2Gi
-memoryTarget: 4Gi
+shmSize: 2G
+memoryTarget: 4G
 
 resources:
   requests:
