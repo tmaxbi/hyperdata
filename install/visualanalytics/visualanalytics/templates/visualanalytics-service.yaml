@@ -1,0 +1,25 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hyperdata-visualanalytics-service
+  {{ if .Values.loadBalancer.enabled }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: top
+  {{ end }}
+spec:
+  ports:
+    - name: visualanalytics
+      port: 8300
+      targetPort: 8300
+      protocol: TCP
+  selector:
+    lb: hyperdata-visualanalytics
+
+  {{ if .Values.loadBalancer.enabled }}
+  type: LoadBalancer
+  sessionAffinity: None
+  loadBalancerIP: {{ .Values.loadBalancer.ip }}
+  externalTrafficPolicy: Cluster
+  {{ else }}
+  type: ClusterIP
+  {{ end }}

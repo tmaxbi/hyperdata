@@ -1,8 +1,19 @@
-# Hyperdata 설치 가이드
+# Hyperdata OnPrem 설치 가이드
 
-본 문서는 Hyperdata를 설치하기 위한 가이드 문서입니다.
+## version
 
-현재 제공되는 설치 방법은 아래와 같습니다.
+- ubuntu 20.04 LTS
+- kubernetes 1.19.10
 
-1. [Hypercloud](./hypercloud)
-2. [Onprem](./onprem)
+## Install Order
+1. [nginx](./nginx)
+2. [tibero](./tibero)
+3. [hyperdata-be-common](./hyperdata-be-common)
+4. [ozone](./ozone)
+5. [mysql](./mysql)
+6. [hive](./hive)
+7. [hyperdata-fe](./hyperdata-fe)
+8. [system_management](./system_management)
+9. [virtualization](./virtualization)
+10. [flow](./flow)
+11. [visual_analytics](./visualanalytics)

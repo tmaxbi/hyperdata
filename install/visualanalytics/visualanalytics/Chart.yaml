@@ -1,0 +1,4 @@
+apiVersion: v2
+name: visualanalytics
+description: Spring visualanalytics Helm chart for Kubernetes
+version: 0.0.1

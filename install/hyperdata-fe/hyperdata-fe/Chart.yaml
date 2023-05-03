@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: v20.5.0
+name: hyperdata-fe
+description: Hyperdata Front End Helm chart for Kubernetes
+version: 0.1.0

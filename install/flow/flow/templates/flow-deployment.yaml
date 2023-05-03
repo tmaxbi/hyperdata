@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hyperdata-flow-deploy
+spec:
+  selector:
+    matchLabels:
+      app: hyperdata-flow-deploy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hyperdata-flow-deploy
+    spec:
+      containers:
+        - name: hyperdata-flow-spring-con
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.server.port }}
+              name: flow-port
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+          env:
+            - name: HD_HOME
+              value: {{ .Values.pvc.mountPath }}
+            - name: LOGGING_PATH
+              value: {{ .Values.pvc.mountPath }}/{{ .Values.logging.path }}
+          volumeMounts:
+            - name: application-yml-config
+              mountPath: /home/flow/application.yml
+              subPath: application.yml
+            - name: flow-pvc
+              mountPath: {{ .Values.pvc.mountPath }}
+      volumes:
+        - name: application-yml-config
+          configMap:
+            name: hyperdata-flow-configmap
+            items:
+              - key: "application.yml"
+                path: "application.yml"
+        - name: flow-pvc
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvc.name }}

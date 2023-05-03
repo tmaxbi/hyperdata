@@ -1,0 +1,65 @@
+imagePullPolicy: IfNotPresent
+image: biqa.tmax.com/v20.5/hyperdata20.5_flow:20230504_v1
+
+server:
+  port: 8081
+  servlet:
+    contextPath: /hyperdata20/flow
+
+webserver:
+  ip: 192.168.179.37
+  port: 8080
+
+proxy:
+  bodysize: 1024m
+  timeout: 1800 # minutes
+
+resources:
+  requests:
+    cpu: 2
+    memory: 2Gi
+  limits:
+    cpu: 6
+    memory: 4Gi
+
+pvc:
+  name: tibero-pvc-db
+  mountPath: /db
+
+logging:
+  path: flow/logs
+
+svc:
+  virtualization:
+    name: hyperdata-virtualization-svc
+    port: 8500
+  management:
+    name: hyperdata-system-svc
+    port: 8100
+  mlplatform:
+    name: mlplatform-backend-svc
+    port: 18080
+
+db-connection-pool:
+  common:
+    query-timeout: 3600
+    wait-timeout: 3600
+  hyperdata:
+    max-active: 30
+    min-idle: 2
+    max-idle: 2
+    idle-timeout: 10
+  hyperdata_ex:
+    max-active: 30
+    min-idle: 2
+    max-idle: 2
+    idle-timeout: 10
+  hyperdata_editor:
+    max-active: 4
+    min-idle: 1
+    max-idle: 1
+    idle-timeout: 10
+
+flow:
+  save:
+    max-file-row: 20000

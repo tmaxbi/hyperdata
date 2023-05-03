@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "hyperdata-system.fullname" . }}-noauth-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Authorization "";
+    nginx.ingress.kubernetes.io/proxy-body-size: "{{ .Values.proxy.bodysize }}"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
+spec:
+  tls:
+    - secretName: istio.hyperdata-nginx-ingress-nginx
+  rules:
+    -  http:
+         paths:
+           - path: /hyperdata/api/v1/web-service/(.*)
+             pathType: Prefix
+             backend:
+               service:
+                 name: {{ include "hyperdata-system.fullname" . }}-svc
+                 port:
+                   number: 8100
+

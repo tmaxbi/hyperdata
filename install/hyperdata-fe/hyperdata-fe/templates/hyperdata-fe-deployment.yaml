@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hyperdata-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hyperdata-fe
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        lb: hyperdata-fe
+        app: hyperdata-fe
+    spec:
+      containers:
+        - name: hyperdata-fe-con
+          image: {{ .Values.image }}
+          imagePullPolicy: Always
+          env:
+            - name: HYPERDATA_FRONT_CUSTOM_LOGO_PATH
+              value: {{ .Values.customLogo.path }}
+          securityContext:
+            runAsUser: 0
+          ports:
+            - containerPort: 80
+              name: fe-entry
+              protocol: TCP
+            - containerPort: 8080
+              name: fe-http
+              protocol: TCP
+            - containerPort: 8081
+              name: fe-viewer
+              protocol: TCP
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+          volumeMounts:
+            - name: tz-seoul
+              mountPath: /etc/localtime
+            - name: pv-storage-tb
+              mountPath: {{ .Values.db.mountPath }}
+      volumes:
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul
+        - name: pv-storage-tb
+          persistentVolumeClaim:
+            claimName: {{ .Values.db.persistentVolumeClaimName }}

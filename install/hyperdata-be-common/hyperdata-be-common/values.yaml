@@ -1,0 +1,9 @@
+image: biqa.tmax.com/v20.5/be_common:20230504_v1
+
+schema_version: 20.5
+
+db:
+  mountPath: /db
+  # tibero headless service name
+  ip: tiberolocaldns
+  persistentVolumeClaimName: tibero-pvc-db

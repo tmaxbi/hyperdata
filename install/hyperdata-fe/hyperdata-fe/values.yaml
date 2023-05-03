@@ -1,0 +1,28 @@
+image: biqa.tmax.com/v20.5/hyperdata20.5_front:20230504_v1
+
+https:
+  enabled: true
+
+proxy:
+  bodysize: 1024m
+  # minutes
+  timeout: 1800
+
+resources:
+  requests:
+    cpu: 2
+    memory: 4Gi
+  limits:
+    cpu: 2
+    memory: 4Gi
+
+db:
+  mountPath: /db
+  persistentVolumeClaimName: tibero-pvc-db
+
+customLogo:
+  path: /usr/share/nginx/html/res/images/common/gnb
+
+legacy:
+  #redirect to
+  redirect: https://192.168.179.40:8080

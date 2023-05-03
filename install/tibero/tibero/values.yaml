@@ -1,0 +1,21 @@
+image: biqa.tmax.com/v20.5/hyperdata20.5_tibero:20230504_v1
+
+loadbalancer:
+  enabled: true
+  ip: <YOUR EXTERNAL_IP or MASTER NODE's IP>
+
+db:
+  persistentVolumeClaimName: tibero-pvc-db
+  mountPath: /db
+
+shmSize: 2G
+memoryTarget: 4G
+
+resources:
+  requests:
+    cpu: 4
+    memory: 8Gi
+  limits:
+    cpu: 4
+    memory: 8Gi
+  storage: 40Gi

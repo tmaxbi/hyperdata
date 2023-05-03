@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hive-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hive
+  template:
+    metadata:
+      name: hive-pod
+      labels:
+        app: hive
+    spec:
+      initContainers:
+      - name: check-om
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup om.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for ozone manager; sleep 2; done"]
+      - name: init-hadoop
+        image: {{ .Values.image }}
+        command: ["/bin/sh", "entrypoint.sh"]
+        envFrom:
+        - configMapRef:
+            name: hive-config
+      - name: check-metadb
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup mysql.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for meta DB; sleep 2; done"]
+      - name: init-meta
+        image: {{ .Values.image }}
+        command: ["/bin/sh", "init.sh"]
+        env:
+        - name: HIVE_META_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: hive-secret
+              key: HIVE_META_PASSWORD
+        envFrom:
+        - configMapRef:
+            name: hive-config
+      containers:
+      - image: {{ .Values.image }}
+        command: ["/bin/bash", "-c"]
+        args: ["sh boot.sh; while true; do sleep 30; done;"]
+        name: hive
+        env:
+        - name: HIVE_META_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: hive-secret
+              key: HIVE_META_PASSWORD
+        envFrom:
+        - configMapRef:
+            name: hive-config
+        ports:
+        - containerPort: 9852
+          protocol: TCP
+        - containerPort: 10002
+          protocol: TCP
+

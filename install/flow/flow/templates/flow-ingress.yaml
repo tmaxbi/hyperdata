@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: hyperdata-flow-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "{{ .Values.proxy.bodysize }}"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/auth-url: "http://hyperdata-system-svc.{{ .Release.Namespace }}.svc.cluster.local:8100/hyperdata/api/v1/gateway/auth"
+    nginx.ingress.kubernetes.io/auth-response-headers: hdAdminRole, hdFlowPermission
+spec:
+  tls:
+    - secretName: istio.hyperdata-nginx-ingress-nginx
+  rules:
+    - http:
+        paths:
+          - path: {{ .Values.server.servlet.contextPath }}/(.*)
+            backend:
+              serviceName: hyperdata-flow-svc
+              servicePort: {{ .Values.webserver.port }}

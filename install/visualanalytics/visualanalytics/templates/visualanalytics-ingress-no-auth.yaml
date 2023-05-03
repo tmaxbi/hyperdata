@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: hyperdata-visualanalytics-ingress-no-auth
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "{{ .Values.proxy.bodysize }}"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT";
+      add_header Access-Control-Allow-Credentials true;
+    # rewrite 관련 설정
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: {{ .Values.server.servlet.contextPath }}/$1
+spec:
+  tls:
+    - secretName: istio.hyperdata-nginx-ingress-nginx
+  rules:
+    - http:
+        paths:
+          - path: {{ .Values.server.servlet.contextPath }}/no-auth/(.*)
+            pathType: Prefix
+            backend:
+              serviceName: hyperdata-visualanalytics-service
+              servicePort: 8300
