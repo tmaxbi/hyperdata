@@ -7,5 +7,10 @@ helm install -n hyperdata ozone ozone \
 --set datanode.storage.size=100Gi
 ```
 
+2. Uninstall ozone
+```
+helm uninstall -n hyperdata ozone ozone
+```
+
 ## ref
 - https://github.com/apache/ozone
