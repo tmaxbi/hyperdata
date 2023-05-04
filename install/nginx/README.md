@@ -30,7 +30,7 @@ kubectl create namespace hyperdata
     --set controller.service.loadBalancerIP=${NGINX_IP}
     ```
 
-    2.2. nodePort로 설치할 경우(현재 nodePort로 설치할 경우, mlplatform 미동작)
+    2.2. nodePort로 설치할 경우
     ```
     helm install -n hyperdata ingress-nginx ingress-nginx \
     --set fullnameOverride=hyperdata \
