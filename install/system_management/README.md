@@ -141,7 +141,7 @@ ex) helm install hyperdata-system . -n hyperdata \
 
 ```
 
-## 기타 내용및 에러
+# 기타 내용및 에러
 
 # SMTP 설정
 Google SMTP 예제(고객사는 폐쇄망으로 쓸 수 없어 보임.)
