@@ -140,3 +140,46 @@ ex) helm install hyperdata-system . -n hyperdata \
 --set kubernetes.meta.name.pvc.ozone=data-datanode-0 \
 
 ```
+
+## 기타 내용및 에러
+
+# SMTP 설정
+Google SMTP 예제(고객사는 폐쇄망으로 쓸 수 없어 보임.)
+인증을 위한 PW 생성: https://kitty-geno.tistory.com/43
+시스템 helm chart value.yaml 설정
+```
+mail:
+  host: smtp.gmail.com
+  port: 587
+  properties:
+    mail:
+      debug: true
+      smtp:
+        connectionTimeout: 5000
+        auth: true
+        starttls:
+          enable: true
+        ssl:
+          enable: false
+  username: {메일계정 ex: oper13357799@gmail.com}
+  password: {링크 따라 생성한 PW ex: abcdefghijklnmop }
+```
+
+# 에러
+namespace systemmanagement-project-4 가 이미있는 에러 -> namespace systemmanagement-project-4를 지워줘야함.
+
+clusterrolebinding systemmanagement-project-clusterrolebinding-4 가 이미있는 에러 -> clusterrolebinding systemmanagement-project-clusterrolebinding-4를 지워줘야함.
+```
+kubectl delete clusterrolebinding {clusterRoleBindingName}
+```
+ozone volumn이 이미 있는 에러 -> 아래 스크립트를 오존에서 실행해 없애줘야함.
+```
+ozone sh bucket delete /systemmanagement-project-volume-4/datasource
+ozone sh volume delete /systemmanagement-project-volume-4
+ozone sh bucket delete /management-home/datasource
+ozone sh volume delete /management-home
+```
+service acocunt가 spark-cr clusterrolebinding 권한이 없는 에러가 있을때.
+```
+kubectl create clusterrolebinding spark-cr --clusterrole=cluster-admin --serviceaccount={namespace}:{serviceAccountName}
+```
