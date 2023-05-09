@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: be-common-config
+data:
+  DB_PATH : "{{ .Values.db.mountPath }}"
+  DB_IP : "{{ .Values.db.ip }}"
+  SRC_HOME : "/HyperData"
+  SCHEMA_VERSION : "{{ .Values.schema_version }}"
+
+  ## for revision file
+  IMPLEMENTATION_VERSION: "{{ .Values.implementation_version }}"
+  IMPLEMENTATION_DATE: "{{ .Values.implementation_date }}"
+
+  REVISION_FRONT : "{{ .Values.hyperdata.revision.front }}"
+  REVISION_SYSTEM : "{{ .Values.hyperdata.revision.system }}"
+  REVISION_VIRTUAL : "{{ .Values.hyperdata.revision.virtualization }}"
+  REVISION_FLOW : "{{ .Values.hyperdata.revision.flow }}"
+  REVISION_VISUAL : "{{ .Values.hyperdata.revision.visualization }}"
+
+  INCLUDE_HOTFIX : "{{ .Values.include_hotfix }}"
