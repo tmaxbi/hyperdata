@@ -32,15 +32,9 @@ spec:
           volumeMounts:
             - mountPath: {{ .Values.db.mountPath }}
               name: pv-storage
-          env:
-            - name: DB_PATH
-              value: {{ .Values.db.mountPath }}
-            - name: DB_IP
-              value: {{ .Values.db.ip }}
-            - name: SRC_HOME
-              value: "/HyperData"
-            - name: SCHEMA_VERSION
-              value: "{{ .Values.schema_version }}"
+          envFrom:
+            - configMapRef:
+                name: be-common-config
       volumes:
         - name: pv-storage
           persistentVolumeClaim:
