@@ -101,6 +101,8 @@ server:
 logging:
   config: classpath:logback-production.xml
 spring:
+  profiles:
+    active: prod
   servlet:
     multipart:
       maxFileSize: 10MB
