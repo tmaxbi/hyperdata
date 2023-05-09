@@ -1,0 +1,23 @@
+image: 192.1.1.93:31234/hyperdata_v20.5_tibero/hyperdata_v20.5_be_common:230412_1569442a
+
+# hd version
+implementation_version: 20.5
+implementation_date: "2023/05/03"
+# sql schema version
+schema_version: 20.5
+
+hyperdata:
+  revision:
+    system: "system-revision"
+    virtualization: "virtualization-revision"
+    flow: "flow-revision"
+    visualization: "visualization-revision"
+
+include_hotfix: "hox fix versions"
+
+
+db:
+  mountPath: /db
+  # tibero headless service name
+  ip: tiberolocaldns
+  persistentVolumeClaimName: tibero-pvc-db
