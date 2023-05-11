@@ -194,7 +194,10 @@ ozone:
     host: om
     port: 9862
 
+<<<<<<< HEAD:install/system_management/values.yaml
 version: '{HyperData v20.5.0.0.0 (591a1f45)}'
+=======
+>>>>>>> f56be40 (version API 관련내용 제거):install/onprem/system_management/values.yaml
 ###customAddonWidget###
 customAddon:
   enabled: true
