@@ -10,7 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "{{ .Values.proxy.timeout }}"
     # 1팀 인증 관련 설정
     nginx.ingress.kubernetes.io/auth-url: "http://hyperdata-system-svc.{{ .Release.Namespace }}.svc.cluster.local:8100/hyperdata/api/v1/gateway/auth"
-    nginx.ingress.kubernetes.io/auth-response-headers: hdUserRole,hdAdminRole,hdManagementPermission
+    nginx.ingress.kubernetes.io/auth-response-headers: hdUserRole,hdAdminRole,hdManagementPermission,hdProjectManager
 spec:
   tls:
     - secretName: istio.hyperdata-nginx-ingress-nginx
