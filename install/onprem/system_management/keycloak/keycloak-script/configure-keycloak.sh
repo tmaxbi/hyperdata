@@ -19,6 +19,7 @@ function configureKeycloak() {
     GRANT_TYPE=password
     CLIENT_ID=admin-cli
     CREATE_REALM=keycloak/keycloak-script/createRealm.json
+    #CREATE_REALM=createRealm.json
     echo $CREATE_REALM
     KEYCLOAK_URL=$1
     echo $KEYCLOAK_URL
