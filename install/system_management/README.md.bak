@@ -24,7 +24,8 @@ helm install postgresql postgresql \
 --set image.repository=hyperdata20.5_rel/hyperdata20.5_system/postgresql \
 --set image.tag=15.2.0
 
-ex) helm install postgresql postgresql -n hyperdata \ 
+ex) helm install postgresql postgresql \ 
+-n hyperdata-dev01 \ 
 --set global.postgresql.auth.postgresPassword=admin \ 
 --set global.postgresql.auth.username=admin \ 
 --set global.postgresql.auth.password=admin \ 
@@ -32,8 +33,8 @@ ex) helm install postgresql postgresql -n hyperdata \
 --set global.postgresql.service.ports.postgresql=5555 \ 
 --set primary.livenessProbe.initialDelaySeconds=240 \
 --set image.registry=biqa.tmax.com \
---set image.repository=v20.5/hyperdata20.5_system/postgresql \
---set image.tag=20230504_v1
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/postgresql \
+--set image.tag=15.2.0
 ```
 
 # keycloack 설치
@@ -59,7 +60,8 @@ helm install keycloak keycloak \
 --set image.tag=20230321_v1
 
 ex)
-helm install keycloak keycloak -n hyperdata \
+helm install keycloak keycloak \
+-n hyperdata-dev01 \
 --set auth.adminUser=admin \
 --set auth.adminPassword=admin \
 --set postgresql.enabled=false \
@@ -72,8 +74,9 @@ helm install keycloak keycloak -n hyperdata \
 --set service.type=NodePort \
 --set service.ports.http=8888 \
 --set image.registry=biqa.tmax.com \
---set image.repository=v20.5/hyperdata20.5_system/keycloak \
---set image.tag=20230504_v1
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/keycloak \
+--set image.tag=20230321_v1
+
 ```
 
 externalDatabase.host 값은 postgresql ip:port 값으로 설정
