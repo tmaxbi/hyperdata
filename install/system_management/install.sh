@@ -9,7 +9,7 @@ function wait_until_installation(){
 	for ((i=0; i< timeout; i+=5)); do
                 echo "Waiting for ${i}s condition: \"$cond\""
                 var=$(eval "$cond")
-                if [[ -z $var ]]; then
+                if [[ -n $var ]]; then
                         echo "Condition met"
                         return 0
                 fi
@@ -32,7 +32,9 @@ function install_postgresql(){
 	--set global.postgresql.service.ports.postgresql=5555 \
 	--set primary.livenessProbe.initialDelaySeconds=240
 
+	#kubectl wait --for=condition=Ready pod/postgresql-0 -n $NAMESPACE
 	wait_until_installation "kubectl get po postgresql-0 -n $NAMESPACE | grep 1/1" 240
+	wait_until_installation "kubectl logs postgresql-0 -n $NAMESPACE | grep 'database system is ready to accept connections'" 240
 }
 
 function install_keycloak(){
@@ -53,7 +55,9 @@ function install_keycloak(){
 	--set service.type=NodePort \
 	--set service.ports.http=8888
 
-	wait_until_installation "kubectl get po keycloak-0 -n ${1} | grep 1/1" 240
+	#kubectl wait --for=condition=Ready pod/keycloak-0 -n $NAMESPACE 
+	wait_until_installation "kubectl get po keycloak-0 -n $NAMESPACE | grep 1/1" 240
+	wait_until_installation "kubectl logs keycloak-0 -n $NAMESPACE | grep 'org.keycloak.quarkus.runtime.KeycloakMain'" 240
 }
 
 NAMESPACE=$1
@@ -65,7 +69,7 @@ install_postgresql $NAMESPACE
 POSTGRESQL_IP=$(kubectl get service/postgresql -n $NAMESPACE -o jsonpath='{.spec.clusterIP}')
 
 echo "WAIT UNTIL POSTGRESQL READY.."
-sleep 240
+#sleep 240
 
 # Install keycloak and get values
 install_keycloak $NAMESPACE $POSTGRESQL_IP
@@ -75,21 +79,23 @@ KEYCLOAK_URL=http://$NODE_IP:$NODE_PORT
 echo "KEYCLOAK_URL: " $KEYCLOAK_URL
 
 echo "WAIT UNTIL KEYCLOAK READY.."
-sleep 300
+#sleep 300
 
 # Execute keycloak-script 
 bash keycloak/keycloak-script/configure-keycloak.sh $KEYCLOAK_URL
 
 echo "WAIT UNTIL REALM READY.."
-sleep 120
+#sleep 120
 
 TOKEN=$(bash keycloak/keycloak-script/client-secret.sh $KEYCLOAK_URL | cut -d ' ' -f 4)
 echo "TOKEN: " $TOKEN
 
+echo "-----------------------------------------"
 echo "POSTGRESQL SERVICE IP: " $POSTGRESQL_IP
 echo "HYPERDATA-SYSTEM SERVICE_IP: " http://$NODE_IP:$NODE_PORT
 echo "KEYCLOAK_URL: : " $KEYCLOAK_URL
 echo "TOKEN: " $TOKEN
+echo "-----------------------------------------"
 
 helm install hyperdata-system . -n $NAMESPACE --set image.repository=$REPOSITORY --set image.tag=$TAG --set keycloak.credentials.secret=$TOKEN --set keycloak.authServerUrl=$KEYCLOAK_URL
 
