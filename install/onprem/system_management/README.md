@@ -124,7 +124,7 @@ keycloak url
 
 - username, pwd : admin/admin 으로 접속 후 좌측 상단의 메뉴 클릭
 
-[./resources/keycloak-admin](./resources/keycloak-admin)
+![keycloak-admin](./resources/keycloak-admin)
 
 ## keycloak token 생성 스크립트 실행
 
@@ -136,7 +136,7 @@ bash client-secret.sh [keycloak url]
 
 위 명령어 실행 후 결과로 나오는 토큰 값을 시스템 모듈 설치 시 keycloak.secret 값으로 설정
 
-[./resources/keycloak-token](./resources/keycloak-token)
+![keycloak-token](./resources/keycloak-token)
 
 ## 시스템 모듈 설치
 
