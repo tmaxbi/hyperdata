@@ -166,8 +166,8 @@ kubernetes:
     type: kubernetes
   meta:
     name:
-      namespace:
-        hyperdata: hyperdata
+      #namespace:
+      #hyperdata: hyperdata
       rbac:
         clusterRole: spark-cr
         clusterRoleBinding: systemmanagement-project-clusterrolebinding-
@@ -180,7 +180,7 @@ kubernetes:
 keycloak:
   enabled: true
   realm: HyperDataRealm
-  authServerUrl: http://keycloak:30252/
+  authServerUrl: http://keycloak:8888/
   sslRequired: none
   resource: HyperDataLogin
   secret: SECRET
