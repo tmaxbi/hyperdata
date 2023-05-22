@@ -93,9 +93,9 @@ diagnosticMode:
 ## @param image.debug Specify if debug values should be set
 ##
 image:
-  registry: docker.io
-  repository: bitnami/postgresql
-  tag: 15.2.0-debian-11-r5
+  registry: biqa.tmax.com
+  repository: hyperdata20.5_rel/hyperdata20.5_system/postgresql
+  tag: 15.2.0
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
