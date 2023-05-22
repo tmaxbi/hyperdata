@@ -76,9 +76,9 @@ diagnosticMode:
 ## @param image.debug Specify if debug logs should be enabled
 ##
 image:
-  registry: docker.io
-  repository: bitnami/keycloak
-  tag: 20.0.5-debian-11-r4
+  registry: biqa.tmax.com
+  repository: hyperdata20.5_rel/hyperdata20.5_system/keycloak
+  tag: 20230321_v1
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
