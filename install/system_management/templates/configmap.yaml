@@ -94,7 +94,7 @@ data:
       ssl-required: {{ .Values.keycloak.sslRequired}}
       resource: {{ .Values.keycloak.resource}}
       credentials:
-        secret: {{ .Values.keycloak.credentials.secret}}
+        secret: {{ .Values.keycloak.secret}}
       use-resource-role-mappings: {{ .Values.keycloak.useResourceRoleMappings}}
       bearer-only: {{ .Values.keycloak.bearerOnly}}
     ### keycloak end ################

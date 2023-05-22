@@ -182,8 +182,9 @@ keycloak:
   authServerUrl: http://keycloak:30252/
   sslRequired: none
   resource: HyperDataLogin
-  credentials:
-    secret: SECRET
+  secret: SECRET
+  #credentials:
+  #  secret: SECRET
   useResourceRoleMappings: true
   bearerOnly: true
 ### keycloak end ################

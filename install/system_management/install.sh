@@ -3,7 +3,6 @@ function wait_until_installation(){
         cond=$1
         timeout=$2
         
-	
 	echo $cond $timeout
 
 	for ((i=0; i< timeout; i+=5)); do
@@ -21,7 +20,7 @@ function wait_until_installation(){
 
 function install_postgresql(){
 
-	echo "INSTALL POSTGRESQL NAMESPACE: " $1
+	echo "INSTALL POSTGRESQL NAMESPACE: " ${1}
 
 	helm install postgresql postgresql \
 	-n ${1} \
@@ -33,13 +32,13 @@ function install_postgresql(){
 	--set primary.livenessProbe.initialDelaySeconds=240
 
 	#kubectl wait --for=condition=Ready pod/postgresql-0 -n $NAMESPACE
-	wait_until_installation "kubectl get po postgresql-0 -n $NAMESPACE | grep 1/1" 240
-	wait_until_installation "kubectl logs postgresql-0 -n $NAMESPACE | grep 'database system is ready to accept connections'" 240
+	wait_until_installation "kubectl get po postgresql-0 -n ${1} | grep 1/1" 240
+	wait_until_installation "kubectl logs postgresql-0 -n ${1} | grep 'database system is ready to accept connections'" 240
 }
 
 function install_keycloak(){
 
-	echo "INSTALL KEYCLOAK NAMESPACE: " $1 "POSTGRESQL IP: " $2
+	echo "INSTALL KEYCLOAK NAMESPACE: " ${1} "POSTGRESQL IP: " ${2}
 
 	helm install keycloak keycloak \
 	-n ${1} \
@@ -56,8 +55,21 @@ function install_keycloak(){
 	--set service.ports.http=8888
 
 	#kubectl wait --for=condition=Ready pod/keycloak-0 -n $NAMESPACE 
-	wait_until_installation "kubectl get po keycloak-0 -n $NAMESPACE | grep 1/1" 240
-	wait_until_installation "kubectl logs keycloak-0 -n $NAMESPACE | grep 'org.keycloak.quarkus.runtime.KeycloakMain'" 240
+	wait_until_installation "kubectl get po keycloak-0 -n ${1} | grep 1/1" 240
+	wait_until_installation "kubectl logs keycloak-0 -n ${1} | grep 'org.keycloak.quarkus.runtime.KeycloakMain'" 240
+}
+
+function install_system(){
+
+	echo "INSTALL SYSTEM NAMESPACE: " ${1} "REPOSITORY: " ${2} "IMAGE TAG: " ${3} "KEYCLOAK SECRET: " ${4} "KEYCLOAK URL" ${5}
+
+	helm install hyperdata-system . \
+	-n ${1} \
+	--set image.repository=${2} \
+	--set image.tag=${3} \
+	--set keycloak.secret=${4} \
+	--set keycloak.authServerUrl=${5}
+
 }
 
 NAMESPACE=$1
@@ -97,7 +109,8 @@ echo "KEYCLOAK_URL: : " $KEYCLOAK_URL
 echo "TOKEN: " $TOKEN
 echo "-----------------------------------------"
 
-helm install hyperdata-system . -n $NAMESPACE --set image.repository=$REPOSITORY --set image.tag=$TAG --set keycloak.credentials.secret=$TOKEN --set keycloak.authServerUrl=$KEYCLOAK_URL
+# Install system and get values
+install_system $NAMESPACE $REPOSITORY $TAG $TOKEN $KEYCLOAK_URL
 
 
 
