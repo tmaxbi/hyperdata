@@ -94,8 +94,8 @@ diagnosticMode:
 ##
 image:
   registry: biqa.tmax.com
-  repository: hyperdata20.5_rel/hyperdata20.5_system/postgresql
-  tag: 15.2.0
+  repository: v20.5/hyperdata20.5_system/postgresql
+  tag: 20230504_v1
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
