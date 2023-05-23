@@ -77,8 +77,8 @@ diagnosticMode:
 ##
 image:
   registry: biqa.tmax.com
-  repository: hyperdata20.5_rel/hyperdata20.5_system/keycloak
-  tag: 20230321_v1
+  repository: v20.5/hyperdata20.5_system/keycloak
+  tag: 20230504_v1
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
