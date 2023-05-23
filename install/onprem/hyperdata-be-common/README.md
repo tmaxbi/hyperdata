@@ -30,7 +30,7 @@
 
    ```
    helm install -n hyperdata hyperdata-be-common hyperdata-be-common \
-   --set image=${HARBOR_URL}/${HARBOR_REPO}/${IMAGE_NAME}:${TAG}
+   --set image=${HARBOR_URL}/${HARBOR_REPO}/${IMAGE_NAME}:${TAG} \
    --set schema_version={schema_version}
    ```
 
