@@ -17,5 +17,3 @@ data:
   REVISION_VIRTUAL : "{{ .Values.hyperdata.revision.virtualization }}"
   REVISION_FLOW : "{{ .Values.hyperdata.revision.flow }}"
   REVISION_VISUAL : "{{ .Values.hyperdata.revision.visualization }}"
-
-  INCLUDE_HOTFIX : "{{ .Values.include_hotfix }}"
