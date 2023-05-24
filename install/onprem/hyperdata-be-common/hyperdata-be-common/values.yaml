@@ -13,8 +13,6 @@ hyperdata:
     flow: "flow-revision"
     visualization: "visualization-revision"
 
-include_hotfix: "hox fix versions"
-
 
 db:
   mountPath: /db
