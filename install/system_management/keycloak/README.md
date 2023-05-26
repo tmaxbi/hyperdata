@@ -7,11 +7,11 @@
 
 ## install command
 ```
-helm install keycloak keycloak -n [네임스페이스] \
+helm install keycloak keycloak \
 --set auth.adminUser=admin \
 --set auth.adminPassword=admin \
 --set postgresql.enabled=false \
---set externalDatabase.host=[postgresql svc Ip] \
+--set externalDatabase.host=postgresql \
 --set externalDatabase.port=5555 \
 --set externalDatabase.user=admin \
 --set externalDatabase.password=admin \
@@ -19,9 +19,9 @@ helm install keycloak keycloak -n [네임스페이스] \
 --set ingress.enabled=true \
 --set service.type=NodePort \
 --set service.ports.http=8888 \
---set image.registry=${HARBOR_URL} \
---set image.repository=${HARBOR_REPO}/${IMAGE_NAME} \
---set image.tag=${TAG}
+--set image.registry=biqa.tmax.com \
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/keycloak \
+--set image.tag=20230321_v1
 ```
 
 변경해야 하는 것
