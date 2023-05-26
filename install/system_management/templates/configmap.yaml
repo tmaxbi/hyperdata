@@ -12,7 +12,7 @@ data:
       config: {{ .Values.logging.config }}
     spring:
       profiles:
-        active: {{ .Values.spring.profiles.active }}
+        active: prod
       servlet:
         multipart:
           max-file-size: {{ .Values.spring.servlet.multipart.maxFileSize }}
