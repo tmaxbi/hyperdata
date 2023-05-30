@@ -1,5 +1,18 @@
 # hyperdata be common 
 
+### 실행 전 주의사항
+해당 가이드는 tibero가 제대로 설치되어 있음을 가정하고 있음.
+그 외에도 hyperdata-be-common이 db 스키마를 생성하기 위해서 /db/tibero6 폴더의 권한이 필요함
+
+```
+kubectl exec -it tibero-pod-db-hd /bin/bash -n [네임스페이스]
+# tibero pod에 접속
+
+chmod -R 777 /db/tibero6
+# 권한 부여
+
+```
+
 ### 실행 결과 확인 방법
 ** 실행 시 팟 생성 > 작업 완료 후 자동으로 삭제됨. ** \
 헬름 차트가 에러없이 설치 완료 됐다면 성공 \
