@@ -1,0 +1,24 @@
+replicaCount: 1
+
+# For deployment
+image:
+  automl: 192.1.4.247:32455/hyperdata/automl_total:test
+  doloader: 192.1.4.247:32455/hyperdata/automl_doloader:test
+  fe: 192.1.4.247:32455/hyperdata/automl_fe:test
+  xgb: 192.1.4.247:32455/hyperdata/automl_hpb_xgb:test
+  rf: 192.1.4.247:32455/hyperdata/automl_hpb_rf:test
+  downloader: 192.1.4.247:32455/hyperdata/automl_downloader:test
+  scheduler: 192.1.4.247:32455/hyperdata/automl_scheduler:test
+  woori: 192.1.4.247:32455/hyperdata/predefinedai_woori_text_classifiation_train:test
+  resultuploader: 192.1.4.247:32455/hyperdata/predefinedai_woori_text_classification_resultuploader:test
+  domainserving: 192.1.4.247:32455/hyperdata/predefinedai_text_classification_serving:test
+  wooriserving: 192.1.4.247:32455/hyperdata/predefinedai_woori_text_classification_serving:test
+
+imageSecret: hyperdata-ai-k-secret
+
+enableHttps: true
+loadbalancerAddr: 192.168.157.22
+kubeflowAddr: 192.1.4.247:32380
+
+backendSubDir: /automl/backend
+frontendSubDir: /automl/frontend

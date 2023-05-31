@@ -1,0 +1,36 @@
+image: 192.168.179.44:5000/hyperdata8.3_virtualization:20220318_v1
+
+server:
+  port: 8100
+
+servlet:
+  contextPath: /hyperdata8
+
+db:
+  address: lb-db-dev40
+#  mountPath: /db
+  port: 8629
+  sid: tibero
+
+pvc:
+  name: pvc-db-dev40
+  mountPath: /db
+
+resources:
+  cpu: 2
+  memory: 4Gi
+
+proauth:
+  address: lb-hd-dev40:28080
+
+hyperdata:
+  address: svc-hd-dev40
+  port: 8080
+
+loadBalancer:
+  enabled: true
+  ip: 192.168.179.40
+  extport: 8500
+
+logging:
+  path: virtualization/logs

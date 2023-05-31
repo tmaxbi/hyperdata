@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    lb: hl-dev37
+  name: pod-hl-hd-dev37
+  namespace: hyperdata-dev37
+spec:
+  containers:
+  - env:
+    - name: HL_PORT
+      value: "22000"
+    - name: HLADMIN_PORT
+      value: "23000"
+    - name: HLADMIN_IP
+      value: "127.0.0.1"
+    image: 192.168.179.44:5000/hyperdata8.3_hl:20201019_v3
+    imagePullPolicy: IfNotPresent
+    name: con-hl-hd-dev37
+    ports:
+    - containerPort: 23000
+      name: hl-admin
+      protocol: TCP
+    - containerPort: 1555
+      name: ll-adapter
+      protocol: TCP
+    - containerPort: 22006
+      name: sm-adapter1
+      protocol: TCP
+    - containerPort: 22007
+      name: sm-adapter2
+      protocol: TCP
+    - containerPort: 22008
+      name: sm-adapter3
+      protocol: TCP
+    - containerPort: 22009
+      name: sm-adapter4
+      protocol: TCP
+    resources:
+      limits:
+        cpu: "2"
+        memory: 8Gi
+        nvidia.com/gpu: "0"
+      requests:
+        cpu: "2"
+        memory: 8Gi
+        nvidia.com/gpu: "0"
+    volumeMounts:
+    - name: tz-seoul
+      mountPath: /etc/localtime
+  volumes:
+  - name: tz-seoul
+    hostPath:
+      path: /usr/share/zoneinfo/Asia/Seoul

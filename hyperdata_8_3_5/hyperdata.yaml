@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    lb: hd-dev41
+  name: pod-hd-hd-dev41
+  namespace: hyperdata-dev41
+spec:
+  containers:
+  - env:
+    - name: TB_PORT
+      value: "8629"
+    - name: TB_SID
+      value: tibero
+    - name: HLADMIN_PORT
+      value: "23000"
+    - name: KUBEFLOW_PORT
+      value: "31380"
+    - name: RECOMMEND_SERVER_PORT
+      value: "5000"
+    - name: KUBEFLOW_IP
+      value: 192.168.179.34
+    - name: KUBEFLOW_USER
+      value: root
+    - name: KUBEFLOW_PW
+      value: hyperdata1234!
+    - name: TB_IP
+      value: 192.168.179.41
+#    - name: HLADMIN_IP
+#      value: 10.244.48.82
+    - name: RECOMMEND_SERVER_IP
+      value: 10.244.18.24
+    - name: SKIP_RECREATE_SCHEMA #초기설치시"N"
+      value: "N"
+    - name: SKIP_RECREATE_ROLE_AND_PERMISSION
+      value: "N"
+    - name: SKIP_RECREATE_ADMIN
+      value: "N" 
+    - name: USE_REALTIME
+      value: "Y"
+    - name: SSH_PORT
+      value: "22"
+    - name: IS_PRIVATE_DOCKER
+      value: "false"
+    - name: IS_HYPER_CLOUD
+      value: "flase"
+    - name: PRIVATE_DOCKER_IP
+      value: "192.168.179.44"
+    - name: PRIVATE_DOCKER_PORT
+      value: "5000"
+    - name: SECRET_NAME
+      value: "no-secret"
+    - name: IS_HTTPS
+      value: "true"
+    - name: USE_AI
+      value: "true"
+    - name: AUTOML_FRONTEND
+      value: "192.168.179.41:8080/automl/frontend"
+    - name: AUTOML_BACKEND
+      value: "192.168.179.41:8080/automl/backend"
+    - name: AUTOML_NAMESPACE
+      value: "hyperdata-dev41" 
+    - name: HADOOP_ALIAS
+      value: "127.0.0.1 alias1 alias2"
+    - name: MARKANY_DRM_ENABLE
+      value: "OFF"
+    - name: MARKANY_DRM_INFO
+      value: "/db/input"
+#    - name: SSL_CERT_IP_ADDRESS
+#      value: "192.168.179.37"
+    image: 192.168.179.44:5000/hyperdata8.3_hd_v8.3.5hotpatch:20211216_v1
+    imagePullPolicy: IfNotPresent
+    name: con-hd-hd-dev41
+    ports:
+    - containerPort: 20
+      name: hd-ftp1
+      protocol: TCP
+    - containerPort: 21
+      name: hd-ftp2
+      protocol: TCP
+    - containerPort: 22
+      name: hd-ssh
+      protocol: TCP
+    - containerPort: 9736
+      name: jeus-http
+      protocol: TCP
+    - containerPort: 8080
+      name: hd-http
+      protocol: TCP
+    - containerPort: 8081
+      name: spring
+      protocol: TCP
+    - containerPort: 1883
+      name: msqt-lsnr1
+      protocol: TCP
+    - containerPort: 2883
+      name: msqt-lsnr2
+      protocol: TCP
+    - containerPort: 1408
+      name: hd-web
+      protocol: TCP
+    - containerPort: 18080
+      name: hdd-http
+      protocol: TCP
+    resources:
+      limits:
+        cpu: "8"
+        memory: 12Gi
+        nvidia.com/gpu: "0"
+      requests:
+        cpu: "8"
+        memory: 12Gi
+        nvidia.com/gpu: "0"
+    volumeMounts:
+    - name: tz-seoul
+      mountPath: /etc/localtime
+    - mountPath: /db
+      name: pv-storage
+#  imagePullSecrets:
+#  - name: harbor
+  volumes:
+  - name: tz-seoul
+    hostPath:
+      path: /usr/share/zoneinfo/Asia/Seoul
+  - name: pv-storage
+    persistentVolumeClaim:
+      claimName: pvc-db-dev41

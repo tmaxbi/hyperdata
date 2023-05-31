@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    lb: neo4j-dev40
+  name: pod-neo4j-hd-dev40
+  namespace: hyperdata-dev40
+spec:
+  containers:
+  - env:
+    - name: NEO4JLABS_PLUGINS
+      value: "["apoc", "n10s"]"
+    - name: NEO4J_AUTH
+      value: "neo4j/tmax"
+    - name: NEO4J_dbms_security_auth_enabled
+      value: "false"
+    image: neo4j:latest
+    imagePullPolicy: IfNotPresent
+    name: con-neo4j-hd-dev40
+    ports:
+    - containerPort: 7474
+      name: port1
+      protocol: TCP
+    - containerPort: 7687
+      name: port2
+      protocol: TCP
+    volumeMounts:
+    - name: tz-seoul
+      mountPath: /etc/localtime
+    - mountPath: /db
+      name: pv-storage
+  volumes:
+  - name: tz-seoul
+    hostPath:
+      path: /usr/share/zoneinfo/Asia/Seoul
+  - name: pv-storage
+    persistentVolumeClaim:
+      claimName: pvc-db-dev40

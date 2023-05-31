@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: hd-dev40
+  name: pvc-db-dev40
+  namespace: hyperdata-dev40
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 200Gi
+  storageClassName: csi-cephfs
+  volumeMode: Filesystem

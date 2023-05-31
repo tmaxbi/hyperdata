@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hyperdata-virtualization-svc
+  {{ if .Values.loadBalancer.enabled }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: top
+  {{ end }}
+spec:
+  ports:
+    - name: server-port
+      port: {{ .Values.loadBalancer.extport }}
+      targetPort: 8100
+      protocol: TCP
+  selector:
+    app: hyperdata-virtualization-deploy
+  {{ if .Values.loadBalancer.enabled }}
+  type: LoadBalancer
+  sessionAffinity: None
+  loadBalancerIP: {{ .Values.loadBalancer.ip }}
+  externalTrafficPolicy: Cluster
+  {{ else }}
+  type: NodePort
+  {{ end }}

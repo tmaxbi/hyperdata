@@ -1,0 +1,31 @@
+#image: 192.168.179.44:5000/hyperdata8.3_virtualization:20211210_v1
+image: 192.168.179.44:5000/hyperdata8.3_virtualization:20220318_v1
+
+db:
+  address: lb-db-dev41
+  mountPath: /db
+  port: 8629
+  sid: tibero
+
+pvc:
+  name: pvc-db-dev41
+  mountPath: /db
+
+resources:
+  cpu: 2
+  memory: 4Gi
+
+proauth:
+  address: http://hyperdata-lb-hd:28080
+
+hyperdata:
+  address: svc-hd-dev41
+  port: 8080
+
+loadBalancer:
+  enabled: true
+  ip: 192.168.179.41 #하이퍼데이터 로드밸런서 ip랑 같아야 함
+  extport: 8500
+
+logging:
+  path: virtualization/logs

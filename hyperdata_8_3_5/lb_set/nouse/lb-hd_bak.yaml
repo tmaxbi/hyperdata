@@ -1,0 +1,78 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: lb-hd-dev41
+  namespace: hyperdata-dev41
+  labels:
+    lb: lb-dev41
+  annotations:
+    metallb.universe.tf/allow-shared-ip: top
+spec:
+  ports:
+    - name: ftp
+      nodePort: 31014
+      port: 20
+      protocol: TCP
+      targetPort: 20
+    - name: ftp2
+      nodePort: 31024
+      port: 21
+      protocol: TCP
+      targetPort: 21
+    - name: ssh
+      nodePort: 31036
+      port: 22
+      protocol: TCP
+      targetPort: 22
+    - name: telnet
+      nodePort: 31044
+      port: 23
+      protocol: TCP
+      targetPort: 23
+#    - name: http
+#      nodePort: 31064
+#      port: 80
+#      protocol: TCP
+#      targetPort: 80
+#    - name: hd-http
+#      nodePort: 31084
+#      port: 8080
+#      protocol: TCP
+#      targetPort: 8080
+    - name: jeus-http
+      nodePort: 31089
+      port: 9736
+      protocol: TCP
+      targetPort: 9736
+    - name: proauth-http
+      nodePort: 31164
+      port: 28080
+      protocol: TCP
+      targetPort: 28080
+#    - name: msqt-lsnr1
+#      nodePort: 31174
+#      port: 1883
+#      protocol: TCP
+#      targetPort: 1883
+#    - name: msqt-lsnr2
+#      nodePort: 31204
+#      port: 2883
+#      protocol: TCP
+#      targetPort: 2883
+    - name: hd-web
+      nodePort: 31214
+      port: 1408
+      protocol: TCP
+      targetPort: 1408
+  selector:
+    lb: hd-dev41
+#  type: LoadBalancer
+#  sessionAffinity: None
+#  loadBalancerIP: 192.168.179.41
+#  externalTrafficPolicy: Cluster
+  type: NodePort
+#status:
+#  loadBalancer:
+#    ingress:
+#      - ip: 192.168.179.41
+

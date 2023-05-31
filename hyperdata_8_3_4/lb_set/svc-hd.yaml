@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-hd-dev40
+  namespace: hyperdata-dev40
+spec:
+  ports:
+    - name: hd-http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+    - name: spring
+      port: 8081
+      targetPort: 8081
+      protocol: TCP
+    - name: msqt-lsnr1
+      port: 1883
+      targetPort: 1883
+      protocol: TCP
+    - name: msqt-lsnr2
+      port: 2883
+      targetPort: 2883
+      protocol: TCP
+    - name: hdd-http
+      port: 18080
+      targetPort: 18080
+      protocol: TCP
+  selector:
+    lb: hd-dev40
+  type: ClusterIP
+

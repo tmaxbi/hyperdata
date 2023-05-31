@@ -1,0 +1,56 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: lb-db-dev41
+  namespace: hyperdata-dev41
+  annotations:
+    metallb.universe.tf/allow-shared-ip: top
+spec:
+  ports:
+    - name: tb-lsnr
+      nodePort: 31096
+      port: 8629
+      protocol: TCP
+      targetPort: 8629
+    - name: ora-gw
+      nodePort: 31081
+      port: 9999
+      protocol: TCP
+      targetPort: 9999
+    - name: nz-gw
+      nodePort: 31083
+      port: 9095
+      protocol: TCP
+      targetPort: 9095
+    - name: iq-gw
+      nodePort: 31087
+      port: 9093
+      protocol: TCP
+      targetPort: 9093
+    - name: ase-gw
+      nodePort: 31091
+      port: 9091
+      protocol: TCP
+      targetPort: 9091
+    - name: my-gw
+      nodePort: 31097
+      port: 9777
+      protocol: TCP
+      targetPort: 9777
+    - name: gp-gw
+      nodePort: 31099
+      port: 9097
+      protocol: TCP
+      targetPort: 9097
+  selector:
+    lb: db-dev41
+#  type: LoadBalancer
+#  sessionAffinity: None
+#  loadBalancerIP: 192.168.179.41
+#  externalTrafficPolicy: Cluster
+  type: NodePort
+#status:
+#  loadBalancer:
+#    ingress:
+#      - ip: 192.168.179.41
+
