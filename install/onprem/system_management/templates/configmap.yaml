@@ -11,6 +11,8 @@ data:
     logging:
       config: {{ .Values.logging.config }}
     spring:
+      config:
+        use-legacy-processing: true
       profiles:
         active: {{ .Values.spring.profiles.active }}
       servlet:
