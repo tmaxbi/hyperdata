@@ -11,8 +11,10 @@ data:
     logging:
       config: {{ .Values.logging.config }}
     spring:
+      config:
+        use-legacy-processing: true
       profiles:
-        active: prod
+        active: {{ .Values.spring.profiles.active }}
       servlet:
         multipart:
           max-file-size: {{ .Values.spring.servlet.multipart.maxFileSize }}
