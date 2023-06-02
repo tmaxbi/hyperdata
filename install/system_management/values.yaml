@@ -121,6 +121,7 @@ spring:
     username: guest
     password: guest
   mail:
+    enable: false
     host: smtp.gmail.com
     port: 587
     properties:
