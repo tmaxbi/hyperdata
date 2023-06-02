@@ -33,6 +33,7 @@ data:
         username: {{ .Values.spring.rabbitmq.username }}
         password: {{ .Values.spring.rabbitmq.password }}
       mail:
+        enable: {{ .Values.spring.mail.enable}}
         host: {{ .Values.spring.mail.host}}
         port: {{ .Values.spring.mail.port}}
         properties:
