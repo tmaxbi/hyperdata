@@ -15,3 +15,5 @@
 7. [virtualization](./virtualization)
 8. [flow](./flow)
 9. [visual_analytics](./visualanalytics)
+10. [hive](./hive)
+11. [mysql](./mysql)
