@@ -123,6 +123,7 @@ spring:
   mail:
     enable: false
     host: smtp.gmail.com
+    host2: smtp.gmail123.com
     port: 587
     properties:
       mail:
