@@ -22,10 +22,10 @@ pvc:
 resources:
   requests:
     cpu: 2
-    memory: 4Gi
+    memory: 5Gi
   limits:
     cpu: 2
-    memory: 4Gi
+    memory: 5Gi
 
 hyperdata:
   address: hyperdata-svc-hd
