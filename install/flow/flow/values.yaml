@@ -6,10 +6,6 @@ server:
   servlet:
     contextPath: /hyperdata20/flow
 
-webserver:
-  ip: 192.168.179.37
-  port: 8080
-
 proxy:
   bodysize: 1024m
   timeout: 1800 # minutes

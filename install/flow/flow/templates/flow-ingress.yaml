@@ -19,4 +19,4 @@ spec:
           - path: {{ .Values.server.servlet.contextPath }}/(.*)
             backend:
               serviceName: hyperdata-flow-svc
-              servicePort: {{ .Values.webserver.port }}
+              servicePort: 8080
