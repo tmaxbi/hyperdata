@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
     - name: server-port
-      port: {{ .Values.webserver.port }}
+      port: 8080
       targetPort: {{ .Values.server.port }}
       protocol: TCP
   selector:
