@@ -32,7 +32,7 @@ hyperdata_svc:
       8500
   system:
     name:
-      system-management-hyperdata-system-svc
+      hyperdata-system-svc
     port:
       8100
 
