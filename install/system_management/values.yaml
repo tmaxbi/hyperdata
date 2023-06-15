@@ -153,7 +153,7 @@ spring:
 ##### Web Server Config ########################################
 ws:
   default: /home/systemmanagement/
-  profiles: /home/systemmanagement/profiles/
+  profiles: /db/HyperData/system_avatars/
 ### TIBERO
 tibero:
   ip: tiberolocaldns
