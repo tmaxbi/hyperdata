@@ -1,0 +1,115 @@
+apiVersion: v1
+data:
+  classfication.yml: |
+    name: classification
+    algorithmConfigMap:
+      RandomForest:
+        algorithmName: RandomForest
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+          - step: inference
+            image: {{ .Values.solution.image }}
+      LightGBM:
+        algorithmName: LightGBM
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+          - step: inference
+            image: {{ .Values.solution.image }}
+      XGBoost:
+        algorithmName: XGBoost
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+          - step: inference
+            image: {{ .Values.solution.image }}
+      CatBoost:
+        algorithmName: CatBoost
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+          - step: inference
+            image: {{ .Values.solution.image }}
+    dataSpecMap:
+      inputData:
+        name: inputData
+        columnSpecs:
+          - targetColumn
+  regression.yml: |
+    name: regression
+    algorithmConfigMap:
+      RandomForest:
+        algorithmName: RandomForest
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+          - step: inference
+            image: {{ .Values.solution.image }}
+      LightGBM:
+        algorithmName: LightGBM
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+          - step: inference
+            image: {{ .Values.solution.image }}
+      XGBoost:
+        algorithmName: XGBoost
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+          - step: inference
+            image: {{ .Values.solution.image }}
+      CatBoost:
+        algorithmName: CatBoost
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+          - step: inference
+            image: {{ .Values.solution.image }}
+    dataSpecMap:
+      inputData:
+        name: inputData
+        columnSpecs:
+          - targetColumn
+  recommendation.yml: |
+    name: recommendation
+    algorithmConfigMap:
+      AutoFIS:
+        algorithmName: AutoFIS
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+          - step: inference
+            image: {{ .Values.solution.image }}
+    dataSpecMap:
+      userData:
+        name: userData
+        columnSpecs:
+          - idColumn
+      itemData:
+        name: itemData
+        columnSpecs:
+          - idColumn
+      interactionData:
+        name: interactionData
+        columnSpecs:
+          - timeColumn
+          - targetColumn
+  timeseries.yml: |
+    name: timeseries
+    algorithmConfigMap:
+      RandomForest:
+        algorithmName: AutoTS
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+    dataSpecMap:
+      inputData:
+        name: inputData
+        columnSpecs:
+          - timeColumn
+          - targetColumn
+kind: ConfigMap
+metadata:
+  name: mlplatform-solution-configmap

@@ -1,0 +1,30 @@
+server:
+  port: 18081
+
+mysql:
+  username: root
+  password: root
+  database: mlplatform
+  port: 3306
+
+loadBalancer:
+  enabled: false
+  ip: 192.1.1.99
+  export: 8501
+
+backend:
+  image: 192.1.1.88:31234/mlplatform/mlplatform_test:39
+  resources:
+    limits:
+      cpu: 1
+      memory: 1G
+    requests:
+      cpu: 1
+      memory: 1G
+  volume:
+    mountPath: /mlplatform
+    storageClass: ceph-filesystem
+    size: 10Gi
+
+solution:
+  image: 192.1.1.88:31234/train-test/test_automl_agent:0.131
