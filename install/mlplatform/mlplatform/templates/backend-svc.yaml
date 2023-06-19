@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mlplatform-backend-svc
+  labels:
+    app: mlplatform-backend-svc
+  {{ if .Values.loadBalancer.enabled }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: top
+spec:
+  ports:
+    - name: server-port
+      port: {{ .Values.loadBalancer.export }}
+      targetPort: {{ .Values.server.port }}
+      protocol: TCP
+  type: LoadBalancer
+  sessionAffinity: None
+  loadBalancerIP: {{ .Values.loadBalancer.ip }}
+  externalTrafficPolicy: Cluster
+  {{ else }}
+spec:
+  ports:
+    - name: http
+      port: {{ .Values.server.port }}
+      targetPort: http
+      protocol: TCP
+  type: NodePort
+  {{end}}
+  selector:
+    app: mlplatform-backend-deploy
+

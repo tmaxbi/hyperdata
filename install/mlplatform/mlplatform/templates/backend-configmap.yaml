@@ -1,0 +1,51 @@
+apiVersion: v1
+data:
+  application-docker.yml: |
+    server:
+      port: {{  .Values.server.port }}
+      shutdown: graceful
+
+    spring:
+      datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://mlplatform-mysql-svc:{{ .Values.mysql.port }}/mlplatform
+        username: {{ .Values.mysql.username }}
+        password: {{ .Values.mysql.password }}
+
+        hikari:
+          maximum-pool-size: 40
+
+      flyway:
+        url: jdbc:mysql://mlplatform-mysql-svc:{{ .Values.mysql.port }}/mlplatform
+        user: {{ .Values.mysql.username }}
+        password: {{ .Values.mysql.password }}
+        enabled: true
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        baseline-version: 0
+        baseline-on-migrate: true
+        locations: db/migration
+
+      jpa:
+        show-sql: true
+        open-in-view: false
+
+    kubernetes:
+      config:
+        type: kubernetes
+        serviceaccount-name: default
+        imagePullSecret: mlplatform-harbor-regcred
+
+    mlplatform:
+      mount-path: /home/mlplatform/
+
+    server-config:
+      mlplatform-address: http://mlplatform-backend-svc.hyperdata.svc.cluster.local:{{ .Values.server.port }}
+      hyperdata-address: http://hyperdata-virtualization-svc.hyperdata.svc.cluster.local:8500
+
+    solution:
+      config:
+        path: solution
+
+kind: ConfigMap
+metadata:
+  name: mlplatform-backend-deploy-configmap

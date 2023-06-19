@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlplatform-backend-deploy
+spec:
+  selector:
+    matchLabels:
+      app: mlplatform-backend-deploy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mlplatform-backend-deploy
+    spec:
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: mlplatform-backend-sa
+      containers:
+      - name: mlplatform-backend-con
+        image: {{ .Values.backend.image }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.server.port }}
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .Values.backend.resources.limits.cpu }}
+            memory: {{ .Values.backend.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.backend.resources.requests.cpu }}
+            memory: {{ .Values.backend.resources.requests.memory }}
+        volumeMounts:
+        - name: application-docker-config
+          mountPath: /home/mlplatform/application-docker.yml
+          subPath: application-docker.yml
+        - name: mlplatform-backend-pvc
+          mountPath: {{ .Values.backend.volume.mountPath }}
+        - name: solution-config
+          mountPath: "/home/mlplatform/solution"
+          readOnly: true
+      imagePullSecrets:
+      - name: mlplatform-backend-secret
+      volumes:
+      - name: application-docker-config
+        configMap:
+          name: mlplatform-backend-deploy-configmap
+      - name: solution-config
+        configMap:
+          name: mlplatform-solution-configmap
+      - name: mlplatform-backend-pvc
+        persistentVolumeClaim:
+          claimName: mlplatform-backend-pvc
