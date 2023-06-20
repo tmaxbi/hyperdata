@@ -191,6 +191,7 @@ Google SMTP 예제(폐쇄망의 경우 알맞게 수정 필요)
 
 ```
 mail:
+  enable: false
   host: smtp.gmail.com
   port: 587
   properties:
