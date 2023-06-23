@@ -31,3 +31,6 @@ solution:
 
 downloader:
   image: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/downloader:20230623_v1
+
+serving:
+  image: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/downloader:20230623_v1
