@@ -116,6 +116,7 @@ spring:
       jdbcUrl: jdbc:tibero:thin:@tiberolocaldns:8629:tibero
       driverClassName: com.tmax.tibero.jdbc.TbDriver
   rabbitmq:
+    enable: true
     host: rabbitmq
     port: 5672
     username: guest
