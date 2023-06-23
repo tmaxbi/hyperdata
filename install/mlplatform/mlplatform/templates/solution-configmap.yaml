@@ -36,6 +36,11 @@ data:
         name: inputData
         columnSpecs:
           - targetColumn
+    inferenceInputSpecMap:
+      inputData:
+        name: inputData
+        exceptColumnSpecs:
+          - targetColumn
   regression.yml: |
     name: regression
     algorithmConfigMap:
@@ -72,6 +77,11 @@ data:
         name: inputData
         columnSpecs:
           - targetColumn
+    inferenceInputSpecMap:
+      inputData:
+        name: inputData
+        exceptColumnSpecs:
+          - targetColumn
   recommendation.yml: |
     name: recommendation
     algorithmConfigMap:
@@ -96,11 +106,18 @@ data:
         columnSpecs:
           - timeColumn
           - targetColumn
+    inferenceInputSpecMap:
+      userData:
+        name: userData
+        exceptColumnSpecs: [ ]
+      itemData:
+        name: itemData
+        exceptColumnSpecs: [ ] 
   timeseries.yml: |
     name: timeseries
     algorithmConfigMap:
-      RandomForest:
-        algorithmName: AutoTS
+      TemporalFusionTransformer:
+        algorithmName: TemporalFusionTransformer
         algorithmImages:
           - step: train
             image: {{ .Values.solution.image }}
@@ -110,6 +127,30 @@ data:
         columnSpecs:
           - timeColumn
           - targetColumn
+          - groupColumn
+    inferenceInputSpecMap:
+      inputData:
+        name: 
+        exceptColumnSpecs:
+  unitimeseries.yml: |
+    name: unitimeseries
+    algorithmConfigMap:
+      UnivariateTimeseries:
+        algorithmName: UnivariateTimeseries
+        algorithmImages:
+          - step: train
+            image: {{ .Values.solution.image }}
+    dataSpecMap:
+      inputData:
+        name: inputData
+        columnSpecs:
+          - timeColumn
+          - targetColumn
+          - groupColumn
+    inferenceInputSpecMap:
+      inputData:
+        name: 
+        exceptColumnSpecs:
 kind: ConfigMap
 metadata:
   name: mlplatform-solution-configmap

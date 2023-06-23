@@ -13,7 +13,7 @@ loadBalancer:
   export: 8501
 
 backend:
-  image: 192.1.1.88:31234/mlplatform/mlplatform_test:39
+  image: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/backend:20230623_v1
   resources:
     limits:
       cpu: 1
@@ -27,4 +27,7 @@ backend:
     size: 10Gi
 
 solution:
-  image: 192.1.1.88:31234/train-test/test_automl_agent:0.131
+  image: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/agent:20230623_v1
+
+downloader:
+  image: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/downloader:20230623_v1

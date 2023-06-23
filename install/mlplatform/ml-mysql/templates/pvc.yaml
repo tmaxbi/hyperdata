@@ -11,4 +11,4 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: {{ .Values.mysql.volume.size }}
