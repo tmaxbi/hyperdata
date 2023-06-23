@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: mlplatform-mysql-pod
-      image: mysql:8.0.29
+      image: {{ .Values.mysql.image }}
       imagePullPolicy: "IfNotPresent"
       env:
         - name: MYSQL_ROOT_PASSWORD
@@ -19,11 +19,11 @@ spec:
           containerPort: {{ .Values.mysql.port }}
       resources:
         requests:
-          cpu: 2
-          memory: 2Gi
+          cpu: {{ .Values.mysql.resources.requests.cpu }}
+          memory: {{ .Values.mysql.resources.requests.memory }}
         limits:
-          cpu: 2
-          memory: 2Gi
+          cpu: {{ .Values.mysql.resources.limits.cpu }}
+          memory: {{ .Values.mysql.resources.limits.memory }}
       volumeMounts:
         - name: data
           mountPath: /var/lib/mysql

@@ -1,0 +1,17 @@
+mysql:
+  username: root
+  password: root
+  database: mlplatform
+  port: 3306
+  image: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/mysql:20230623_v1
+  resources:
+    requests:
+      cpu: 2
+      memory: 2G
+    limits:
+      cpu: 2
+      memory: 2G
+  volume:
+    size: 1G
+
+

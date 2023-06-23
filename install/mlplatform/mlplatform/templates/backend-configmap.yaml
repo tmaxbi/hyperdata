@@ -45,6 +45,8 @@ data:
     solution:
       config:
         path: solution
+    image:
+      downloader: {{ .Values.downloader.image }}
 
 kind: ConfigMap
 metadata:
