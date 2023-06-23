@@ -2,6 +2,7 @@ apiVersion: v1
 data:
   classfication.yml: |
     name: classification
+    servingImageName: {{ .Values.serving.image }}
     algorithmConfigMap:
       RandomForest:
         algorithmName: RandomForest
@@ -43,6 +44,7 @@ data:
           - targetColumn
   regression.yml: |
     name: regression
+    servingImageName: {{ .Values.serving.image }}
     algorithmConfigMap:
       RandomForest:
         algorithmName: RandomForest
@@ -84,6 +86,7 @@ data:
           - targetColumn
   recommendation.yml: |
     name: recommendation
+    servingImageName: {{ .Values.serving.image }}
     algorithmConfigMap:
       AutoFIS:
         algorithmName: AutoFIS
@@ -115,6 +118,7 @@ data:
         exceptColumnSpecs: [ ] 
   timeseries.yml: |
     name: timeseries
+    servingImageName: {{ .Values.serving.image }}
     algorithmConfigMap:
       TemporalFusionTransformer:
         algorithmName: TemporalFusionTransformer
@@ -134,6 +138,7 @@ data:
         exceptColumnSpecs:
   unitimeseries.yml: |
     name: unitimeseries
+    servingImageName: {{ .Values.serving.image }}
     algorithmConfigMap:
       UnivariateTimeseries:
         algorithmName: UnivariateTimeseries
