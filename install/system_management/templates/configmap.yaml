@@ -28,6 +28,7 @@ data:
           jdbcUrl: {{ .Values.spring.datasource.hikari.jdbcUrl }}
           driver-class-name: {{ .Values.spring.datasource.hikari.driverClassName }}
       rabbitmq:
+        enable: {{ .Values.spring.rabbitmq.enable }}
         host: {{ .Values.spring.rabbitmq.host }}
         port: {{ .Values.spring.rabbitmq.port }}
         username: {{ .Values.spring.rabbitmq.username }}
