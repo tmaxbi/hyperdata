@@ -48,13 +48,8 @@ db:
   port: 8629
   persistentVolumeClaimName: tibero-pvc-db
   mountPath: /db
-  mountPath_filePath: /db/input
-  mountPath_saveOutput_filePath: /db/output
-  mountPath_saveOutput_temp_filePath: /db/temp
   username: hyperdata
   password: tmax
-  username_ex: hyperdata_ex
-  password_ex: tmax
   sid: tibero
   driver_class_name: com.tmax.tibero.jdbc.TbDriver
   jdbc_url: jdbc:tibero:thin:@tiberolocaldns:8629:tibero

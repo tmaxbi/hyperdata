@@ -15,31 +15,6 @@ spec:
         lb: hyperdata-visualanalytics
         app: hyperdata-visualanalytics
     spec:
-      initContainers:
-        - name: hyperdata-visualanalytics-init-con
-          image: alpine
-          command: [ "/bin/sh" ]
-          args: [ "-c", "mkdir -p {{ .Values.db.mountPath_saveOutput_temp_filePath }};chmod 777 {{ .Values.db.mountPath_saveOutput_temp_filePath }};" ]
-          imagePullPolicy: IfNotPresent
-          securityContext:
-            runAsUser: 0
-            privileged: true
-          resources:
-            limits:
-              cpu: {{ .Values.resources.limits.cpu }}
-              memory: {{ .Values.resources.limits.memory }}
-            requests:
-              cpu: {{ .Values.resources.requests.cpu }}
-              memory: {{ .Values.resources.requests.memory }}
-          volumeMounts:
-            - name: tz-seoul
-              mountPath: /etc/localtime
-            - name: pv-storage-tb
-              mountPath: {{ .Values.db.mountPath }}
-          envFrom:
-            - configMapRef:
-                name: hyperdata-visualanalytics-config
-
       containers:
         - name: hyperdata-visualanalytics-con
           image: {{ .Values.image }}
