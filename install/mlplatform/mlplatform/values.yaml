@@ -7,6 +7,10 @@ mysql:
   database: mlplatform
   port: 3306
 
+rabbitmq:
+  username: MLAdmin
+  password: tmaxtower
+
 loadBalancer:
   enabled: false
   ip: 192.1.1.99

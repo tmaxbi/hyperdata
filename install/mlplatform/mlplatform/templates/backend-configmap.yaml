@@ -29,6 +29,12 @@ data:
         show-sql: true
         open-in-view: false
 
+      rabbitmq:
+        host: rabbitmq
+        port: 5672
+        username: {{ .Values.rabbitmq.username }}
+        password: {{ .Values.rabbitmq.password }}
+
     kubernetes:
       config:
         type: kubernetes
