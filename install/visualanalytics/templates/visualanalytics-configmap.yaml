@@ -26,9 +26,6 @@ data:
   HYPERDATA_SYSTEM_NAME: {{ .Values.hyperdata_svc.system.name }}
   HYPERDATA_SYSTEM_PORT: "{{ .Values.hyperdata_svc.system.port }}"
   HYPERDATA_HOME: {{ .Values.db.mountPath }}
-  HYPERDATA_FILEPATH: {{ .Values.db.mountPath_filePath }}
-  HYPERDATA_SAVEOUTPUT_FILEPATH: {{ .Values.db.mountPath_saveOutput_filePath }}
-  HYPERDATA_SAVEOUTPUT_TEMP_FILEPATH: {{ .Values.db.mountPath_saveOutput_temp_filePath }}
   HYPERDATA_SHARE_HOST: "{{ .Values.server.share.host_url }}"
   HYPERDATA_SHARE_PORT: "{{ .Values.server.share.port }}"
   HYPERDATA_SAVE_MAX_ROW: "{{ .Values.download_max_row }}"
@@ -42,19 +39,10 @@ data:
   SPRING_DATASOURCE_HIKARI_TIBERO_SID: {{ .Values.db.sid }}
   SPRING_DATASOURCE_HIKARI_TIBERO_JDBCURL: {{ .Values.db.jdbc_url }}
   SPRING_DATASOURCE_HIKARI_TIBERO_DRIVERCLASSNAME: {{ .Values.db.driver_class_name }}
-  # tibero-ex
-  SPRING_DATASOURCE_HIKARI_TIBEROEX_IP: {{ .Values.db.address }}
-  SPRING_DATASOURCE_HIKARI_TIBEROEX_PORT: "{{ .Values.db.port }}"
-  SPRING_DATASOURCE_HIKARI_TIBEROEX_USERNAME: {{ .Values.db.username_ex }}
-  SPRING_DATASOURCE_HIKARI_TIBEROEX_PASSWORD: {{ .Values.db.password_ex }}
-  SPRING_DATASOURCE_HIKARI_TIBEROEX_SID: {{ .Values.db.sid }}
-  SPRING_DATASOURCE_HIKARI_TIBEROEX_JDBCURL: {{ .Values.db.jdbc_url }}
-  SPRING_DATASOURCE_HIKARI_TIBEROEX_DRIVERCLASSNAME: {{ .Values.db.driver_class_name }}
 
   # DB connection pool 설정
   SPRING_DATASOURCE_HIKARI_TIBERO_MAXIMUMPOOLSIZE: "10"
-  SPRING_DATASOURCE_HIKARI_TIBEROEX_MAXIMUMPOOLSIZE: "10"
-  
+
   # Spark
   SPARK_PARTITION_SHUFFLEPARTITION: "{{ .Values.spark.partition.shuffle_partition }}"
   VIRTUALIZATION_HIVE_HOST: "hive"
@@ -73,9 +61,6 @@ data:
 
   # Hyperdata Webserver Options
   ## hyperdata uses this path as SAM FILE upload location
-  FILE_INPUT_DIR: {{ .Values.db.mountPath }}/input
-  FILE_OUTPUT_DIR: {{ .Values.db.mountPath }}/output
-  FILE_CONTAINER_DIR: {{ .Values.db.mountPath }}/meta
   LOGGING_PATH: {{ .Values.loggingPath }}
   ## tibero pv created in tibero helm chart
   TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}
