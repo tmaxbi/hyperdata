@@ -635,23 +635,20 @@ extraSecrets:
         ],
         "vhosts": [
                 {
-                        "name": "\/vhost1"
-                },
-                {
-                        "name": "\/vhost2"
+                        "name": "\/"
                 }
         ],
         "permissions": [
                 {
                         "user": "Admin",
-                        "vhost": "\/vhost1",
+                        "vhost": "\/",
                         "configure": ".*",
                         "write": ".*",
                         "read": ".*"
                 },
                 {
                         "user": "MLAdmin",
-                        "vhost": "\/vhost2",
+                        "vhost": "\/",
                         "configure": ".*",
                         "write": ".*",
                         "read": ".*"
