@@ -28,6 +28,10 @@ data:
       jpa:
         show-sql: true
         open-in-view: false
+        properties:
+          hibernate:
+            jdbc:
+              time_zone: Asia/Seoul
 
       rabbitmq:
         host: rabbitmq
