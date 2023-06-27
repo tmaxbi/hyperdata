@@ -139,9 +139,12 @@ bash client-secret.sh [keycloak url]
 ![keycloak-token](./resources/keycloak-token)
 ## rabbitmq 설치
 ```
-helm install rabbitmq .
-
+helm install rabbitmq rabbitmq \
+--set image.registry=biqa.tmax.com \
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/rabbitmq \
+--set image.tag=3.10-debian-11
 ```
+
 ## 시스템 모듈 설치
 
 ```

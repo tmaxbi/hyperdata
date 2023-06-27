@@ -1,5 +1,16 @@
 <!--- app-name: RabbitMQ -->
 
+# Install 
+```console
+helm install rabbitmq . \
+--set image.registry=biqa.tmax.com \
+--set image.repository=hyperdata20.5_rel/hyperdata20.5_system/rabbitmq \
+--set image.tag=3.10-debian-11
+```
+
+
+# 참고 기존 Bitnami helm 
+
 # RabbitMQ packaged by Bitnami
 
 RabbitMQ is an open source general-purpose message broker that is designed for consistent, highly-available messaging scenarios (both synchronous and asynchronous).
