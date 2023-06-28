@@ -51,6 +51,7 @@ data:
     server-config:
       mlplatform-address: http://mlplatform-backend-svc.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.server.port }}
       hyperdata-address: http://hyperdata-virtualization-svc.{{ .Release.Namespace }}.svc.cluster.local:8500
+      system-address: http://hyperdata-system-svc.{{ .Release.Namespace }}.svc.cluster.local:8100
 
     solution:
       config:
