@@ -48,8 +48,9 @@ data:
     mlplatform:
       mount-path: /home/mlplatform/
 
-    server-config:
-      mlplatform-address: http://mlplatform-backend-svc.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.server.port }}
+    server-config: {{ if .Values.loadBalancer.enabled }}
+      mlplatform-address: http://mlplatform-backend-svc.{{ .Release.Namespace }}.svc.cluster.local:8501 {{ else }}
+      mlplatform-address: http://mlplatform-backend-svc.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.server.port }} {{ end }}
       hyperdata-address: http://hyperdata-virtualization-svc.{{ .Release.Namespace }}.svc.cluster.local:8500
       system-address: http://hyperdata-system-svc.{{ .Release.Namespace }}.svc.cluster.local:8100
 
