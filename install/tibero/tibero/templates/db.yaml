@@ -44,27 +44,6 @@ spec:
     - containerPort: 8630
       name: tb-sp
       protocol: TCP
-    - containerPort: 9999
-      name: ora-gw
-      protocol: TCP
-    - containerPort: 9095
-      name: nz-gw
-      protocol: TCP
-    - containerPort: 9093
-      name: iq-gw
-      protocol: TCP
-    - containerPort: 9091
-      name: ase-gw
-      protocol: TCP
-    - containerPort: 9777
-      name: my-gw
-      protocol: TCP
-    - containerPort: 9089
-      name: svdb-gw
-      protocol: TCP
-    - containerPort: 9101
-      name: hive-gw
-      protocol: TCP
     resources:
       limits:
         cpu: {{ .Values.resources.limits.cpu }}

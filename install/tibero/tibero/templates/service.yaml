@@ -14,38 +14,6 @@ spec:
       port: 8629
       protocol: TCP
       targetPort: 8629
-    - name: ora-gw
-      port: 9999
-      protocol: TCP
-      targetPort: 9999
-    - name: nz-gw
-      port: 9095
-      protocol: TCP
-      targetPort: 9095
-    - name: iq-gw
-      port: 9093
-      protocol: TCP
-      targetPort: 9093
-    - name: ase-gw
-      port: 9091
-      protocol: TCP
-      targetPort: 9091
-    - name: my-gw
-      port: 9777
-      protocol: TCP
-      targetPort: 9777
-    - name: gp-gw
-      port: 9097
-      protocol: TCP
-      targetPort: 9097   
-    - name: svdb-gw
-      port: 9089
-      protocol: TCP
-      targetPort: 9089
-    - name: hive-gw
-      port: 9101
-      protocol: TCP
-      targetPort: 9101
   selector:
     lb: tibero-db
   {{ if .Values.loadbalancer.enabled }}
