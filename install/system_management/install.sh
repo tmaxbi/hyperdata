@@ -83,7 +83,6 @@ function install_rabbitmq() {
 
         #kubectl wait --for=condition=Ready pod/rabbitmq-0 -n $NAMESPACE
         wait_until_installation "kubectl get po rabbitmq-0 -n ${1} | grep 1/1" 240
-        #  wait_until_installation "kubectl logs rabbitmq-0 -n ${1} | grep"  240
 
 }
 
