@@ -72,6 +72,20 @@ function install_system(){
 
 }
 
+function install_rabbitmq() {
+        echo "INSTALL RABBITMQ NAMESPACE: " ${1} "RABBITMQ REGISTRY: " ${2} "RABBITMQ REPOSITORY: " ${3} "RABBITMQ TAG: " ${4}
+
+        helm install rabbitmq rabbitmq \
+        -n ${1} \
+        --set image.registry=${2} \
+        --set image.repository=${3} \
+        --set image.tag=${4}
+
+        #kubectl wait --for=condition=Ready pod/rabbitmq-0 -n $NAMESPACE
+        wait_until_installation "kubectl get po rabbitmq-0 -n ${1} | grep 1/1" 240
+
+}
+
 NAMESPACE=$1
 REPOSITORY=$2
 TAG=$3
@@ -98,6 +112,15 @@ bash keycloak/keycloak-script/configure-keycloak.sh $KEYCLOAK_URL
 
 echo "WAIT UNTIL REALM READY.."
 #sleep 120
+
+#Install rabbitmq and get values
+RM_REGISTRY="biqa.tmax.com"
+RM_REPOSITORY="hyperdata20.5_rel/hyperdata20.5_system/rabbitmq"
+RM_TAG="3.10-debian-11"
+
+install_rabbitmq $NAMESPACE $RM_REGISTRY $RM_REPOSITORY $RM_TAG
+
+echo "WAIT UNTIL RABBITMQ READY.."
 
 TOKEN=$(bash keycloak/keycloak-script/client-secret.sh $KEYCLOAK_URL | cut -d ' ' -f 4)
 echo "TOKEN: " $TOKEN
