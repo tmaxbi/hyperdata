@@ -113,7 +113,7 @@ bash keycloak/keycloak-script/configure-keycloak.sh $KEYCLOAK_URL
 echo "WAIT UNTIL REALM READY.."
 #sleep 120
 
-#Install rabbitmq and get value
+#Install rabbitmq and get values
 RM_REGISTRY="biqa.tmax.com"
 RM_REPOSITORY="hyperdata20.5_rel/hyperdata20.5_system/rabbitmq"
 RM_TAG="3.10-debian-11"
