@@ -456,7 +456,7 @@ sidecars: []
 service:
   ## @param service.type Kubernetes service type
   ##
-  type: LoadBalancer
+  type: NodePort
   ## @param service.http.enabled Enable http port on service
   ##
   http:
@@ -465,7 +465,7 @@ service:
   ## @param service.ports.https Keycloak service HTTPS port
   ##
   ports:
-    http: 80
+    http: 8888
     https: 443
   ## @param service.nodePorts [object] Specify the nodePort values for the LoadBalancer and NodePort service types.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -520,7 +520,7 @@ service:
 ingress:
   ## @param ingress.enabled Enable ingress record generation for Keycloak
   ##
-  enabled: false
+  enabled: true
   ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
   ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
   ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
@@ -998,10 +998,10 @@ postgresql:
 ##
 externalDatabase:
   host: ""
-  port: 5432
-  user: bn_keycloak
-  database: bitnami_keycloak
-  password: ""
+  port: 5555
+  user: admin
+  database: keycloak
+  password: admin
   existingSecret: ""
   existingSecretPasswordKey: ""
 
