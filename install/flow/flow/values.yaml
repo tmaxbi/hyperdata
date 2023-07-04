@@ -34,7 +34,7 @@ svc:
     port: 8100
   mlplatform:
     name: mlplatform-backend-svc
-    port: 8080
+    port: 18081
 
 db-connection-pool:
   common:
