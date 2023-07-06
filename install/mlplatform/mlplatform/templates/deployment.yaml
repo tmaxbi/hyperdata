@@ -23,6 +23,9 @@ spec:
         - containerPort: {{ .Values.server.port }}
           name: http
           protocol: TCP
+        env:
+          - name: TZ
+            value: "Asia/Seoul"
         resources:
           limits:
             cpu: {{ .Values.backend.resources.limits.cpu }}
