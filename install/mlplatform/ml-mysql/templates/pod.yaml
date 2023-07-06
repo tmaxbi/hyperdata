@@ -14,6 +14,8 @@ spec:
           value: {{ .Values.mysql.username }}
         - name: MYSQL_DATABASE
           value: {{ .Values.mysql.database }}
+        - name: TZ
+          value: Asia/Seoul
       ports:
         - name: mysql
           containerPort: {{ .Values.mysql.port }}
