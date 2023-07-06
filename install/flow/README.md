@@ -11,6 +11,11 @@ helm install -n hyperdata flow flow \
 
 ```
 
+### mlplatform 따른 유의사항
+- mlplatform가 NodePort일 때 18081(default) 포트 설정
+- mlplatform가 LoadBalancer일 때 8501 포트 설정
+  `--set svc.mlplatform.port=8501` 추가
+
 ## Uninstall
 
 ```
