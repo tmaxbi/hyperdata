@@ -42,7 +42,8 @@ data:
     kubernetes:
       config:
         type: kubernetes
-        serviceaccount-name: default
+        argo-serviceaccount-name: default
+        kserve-serviceaccount-name: kserve-sa
         imagePullSecret: mlplatform-harbor-regcred
 
     mlplatform:

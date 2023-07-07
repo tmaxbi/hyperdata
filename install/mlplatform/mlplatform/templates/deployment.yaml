@@ -43,7 +43,7 @@ spec:
           mountPath: "/home/mlplatform/solution"
           readOnly: true
       imagePullSecrets:
-      - name: mlplatform-backend-secret
+      - name: mlplatform-harbor-regcred
       volumes:
       - name: application-docker-config
         configMap:
