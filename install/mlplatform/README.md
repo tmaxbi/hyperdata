@@ -8,7 +8,14 @@
    --set mysql.image=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/mysql:20230623_v1
    ```
 
-   2.1 mlplatform - NodePort 사용시
+   2. enable registriesSkippingTagResolving
+   ```
+   kubectl get cm -n knative-serving config-deployment -o yaml | \
+   sed -z "s/\ndata:\n/\ndata:\n  registriesSkippingTagResolving: \"${REGISTRY_IP}:${REGISTRY_PORT}\"\n/g" | \
+   kubectl apply -f -
+   ```
+
+   3.1 mlplatform - NodePort 사용시
    ```
    helm install -n hyperdata mlplatform mlplatform \
    --set backend.image=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/backend:20230623_v1 \
@@ -17,7 +24,7 @@
    --set serving.image=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/kserve:20230704_v1 \
    ```
    
-   2.2 mlplatform - LoadBalancer 사용시
+   3.2 mlplatform - LoadBalancer 사용시
    ```
    helm install -n hyperdata mlplatform mlplatform \
    --set loadBalancer.enabled=true \
