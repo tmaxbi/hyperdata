@@ -1,7 +1,7 @@
 image: biqa.tmax.com/v20.5/hyperdata20.5_virtualization:20230504_v1
 
 proxy:
-  bodysize: 100Gi
+  bodysize: 1tb
   # minutes
   timeout: 1800
 
