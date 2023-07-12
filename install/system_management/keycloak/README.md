@@ -16,7 +16,6 @@ helm install keycloak keycloak \
 --set externalDatabase.user=admin \
 --set externalDatabase.password=admin \
 --set externalDatabase.database=keycloak \
---set ingress.enabled=true \
 --set service.type=NodePort \
 --set service.ports.http=8888 \
 --set image.registry=biqa.tmax.com \
