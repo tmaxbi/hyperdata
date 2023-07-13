@@ -16,6 +16,12 @@ loadBalancer:
   ip: 192.1.1.99
   export: 8501
 
+istio:
+  ingressgateway:
+    ip: 192.168.179.31
+    port: 31380
+
+
 backend:
   image: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/backend:20230623_v1
   resources:
@@ -27,7 +33,7 @@ backend:
       memory: 1G
   volume:
     mountPath: /mlplatform
-    storageClass: ceph-filesystem
+    storageClass: nfs
     size: 10Gi
 
 solution:
