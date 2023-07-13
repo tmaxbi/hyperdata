@@ -1,7 +1,7 @@
 image: 192.1.1.93:31234/hyperdata_v20.5_virtualization/hyperdata_v20.5_virtualization:latest
 
 proxy:
-  bodysize: 100Gi
+  bodysize: 1tb
   # minutes
   timeout: 1800
 
