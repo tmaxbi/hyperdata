@@ -70,7 +70,6 @@ helm install keycloak keycloak \\
 --set externalDatabase.user=admin \\
 --set externalDatabase.password=admin \\
 --set externalDatabase.database=keycloak \\
---set ingress.enabled=true \\
 --set service.type=NodePort \\
 --set service.ports.http=8888 \\
 --set image.registry=biqa.tmax.com \\
@@ -83,12 +82,11 @@ helm install keycloak keycloak \\
 --set auth.adminUser=admin \\
 --set auth.adminPassword=admin \\
 --set postgresql.enabled=false \\
---set externalDatabase.host=10.233.29.187 \\
+--set externalDatabase.host=postgresql \\
 --set externalDatabase.port=5555 \\
 --set externalDatabase.user=admin \\
 --set externalDatabase.password=admin \\
 --set externalDatabase.database=keycloak \\
---set ingress.enabled=true \\
 --set service.type=NodePort \\
 --set service.ports.http=8888 \\
 --set image.registry=biqa.tmax.com \\
