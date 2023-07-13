@@ -60,6 +60,11 @@ data:
         path: solution
     image:
       downloader: {{ .Values.downloader.image }}
+ 
+    gateway:
+      config:
+        ip: {{ .Values.istio.ingressgateway.ip }} 
+        port: {{ .Values.istio.ingressgateway.port }}
 
 kind: ConfigMap
 metadata:
