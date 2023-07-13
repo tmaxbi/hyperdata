@@ -22,6 +22,8 @@
    --set solution.image=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/agent:20230623_v1 \
    --set downloader.image=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/downloader:20230623_v1 \
    --set serving.image=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/kserve:20230704_v1 \
+   --set kubernetes.istio.ingressgateway.ip=192.168.179.31 \
+   --set kubernetes.istio.ingressgateway.port=31380 \
    ```
    
    3.2 mlplatform - LoadBalancer 사용시
@@ -33,6 +35,8 @@
    --set solution.image=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/agent:20230623_v1 \
    --set downloader.image=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/downloader:20230623_v1 \
    --set serving.image=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_mlplatform/kserve:20230704_v1 \
+   --set kubernetes.istio.ingressgateway.ip=192.168.179.31 \
+   --set kubernetes.istio.ingressgateway.port=31380 \
    ```
    cf) 제대로 된 설치가 안 될시 helm 차트를 아래에 명령어에 따라서 삭제한 후 재가동한다.
    mysql 파드가 정상적으로 실행 되기 전까지는 mlplatform 파드에서 에러 발생할 수 있지만 알아서 restart하니까 몇분 기다려야 함 
