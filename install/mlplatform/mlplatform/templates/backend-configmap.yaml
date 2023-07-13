@@ -63,8 +63,8 @@ data:
  
     gateway:
       config:
-        ip: {{ .Values.istio.ingressgateway.ip }} 
-        port: {{ .Values.istio.ingressgateway.port }}
+        ip: {{ .Values.kubernetes.istio.ingressgateway.ip }} 
+        port: {{ .Values.kubernetes.istio.ingressgateway.port }}
 
 kind: ConfigMap
 metadata:
