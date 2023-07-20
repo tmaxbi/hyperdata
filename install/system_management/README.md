@@ -17,7 +17,8 @@ install.sh가 실행하는 작업은 다음과 같습니다.
 2. keycloack 설치
 3. keycloak realm 설치 스크립트 실행
 4. keycloak token 생성 스크립트 실행
-5. system 모듈 설치
+5. rabbitmq 설치 
+6. system 모듈 설치
 
 각각의 작업을 따로 진행하고 싶을 경우 아래를 참고하면됩니다.
 
