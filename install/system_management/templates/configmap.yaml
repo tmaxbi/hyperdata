@@ -8,6 +8,9 @@ data:
       port: {{ .Values.server.port }}
       servlet:
         context-path: {{ .Values.server.servlet.contextPath }}
+      tomcat:
+        remoteip:
+          remote-ip-header: X-Forwarded-For
     logging:
       config: {{ .Values.logging.config }}
     spring:
