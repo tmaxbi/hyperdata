@@ -632,6 +632,11 @@ extraSecrets:
                   "name": "MLAdmin",
                   "password": "tmaxtower",
                   "tags": "administrator"
+          },
+          {
+                  "name": "VAdmin",
+                  "password": "tmaxtower",
+                  "tags": "administrator"
           }
         ],
         "vhosts": [
@@ -654,6 +659,13 @@ extraSecrets:
                         "write": ".*",
                         "read": ".*"
                 },
+                {
+                        "user": "VAdmin",
+                        "vhost": "\/",
+                        "configure": ".*",
+                        "write": ".*",
+                        "read": ".*"
+                }
         ],
         "parameters": [],
         "policies": [],
