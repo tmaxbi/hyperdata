@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+  name: connect-to-prometheus
+spec:
+  type: ExternalName
+  externalName: {{ .Values.prometheus.serviceName }}.{{ .Values.prometheus.namespace }}.svc.cluster.local
+  ports:
+  - port: {{ .Values.prometheus.port }}
