@@ -36,3 +36,4 @@ data:
 kind: ConfigMap
 metadata:
   name: virtualization-spring-configmap
+
