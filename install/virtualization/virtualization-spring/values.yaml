@@ -41,3 +41,7 @@ logging:
 
 version:
   major: 20
+
+rabbitmq:
+  username: VAdmin
+  password: tmaxtower
