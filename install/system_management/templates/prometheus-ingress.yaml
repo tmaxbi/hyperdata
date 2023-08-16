@@ -10,7 +10,7 @@ spec:
   - http:
       paths:
       - backend:
-          serviceName: connect-to-prometheus.yaml
+          serviceName: connect-to-prometheus
           servicePort: 9090
         path: /prometheus(/|$)(.*)
         pathType: Prefix

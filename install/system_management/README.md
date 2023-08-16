@@ -157,7 +157,11 @@ helm install hyperdata-system . \\
 --set keycloak.authServerUrl=[keycloak url] \\
 --set spring.rabbitmq.enable=[MQ 사용여부] \\
 --set spring.rabbitmq.username=[MQ 아이디] \\
---set spring.rabbitmq.password=[MQ 비밀번호]
+--set spring.rabbitmq.password=[MQ 비밀번호] \\
+--set prometheus.serviceName=[prometheus service name] \\
+--set prometheus.namespace=[prometheus namespace] \\
+--set prometheus.port=[prometheus service port]
+
 ex) helm install hyperdata-system . \\
 -n hyperdata-dev01 \\
 --set image.repository=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_system/system_management \\
@@ -165,7 +169,10 @@ ex) helm install hyperdata-system . \\
 --set keycloak.secret=gRsGkD1Y3xgY2x0bwJJJ3QWvk1Lp5cCB \\
 --set keycloak.authServerUrl=http://192.1.1.93:30552 \\
 --set spring.rabbitmq.username=Admin \\
---set spring.rabbitmq.password=tmaxtower
+--set spring.rabbitmq.password=tmaxtower \\
+--set prometheus.serviceName=prometheus-kube-prometheus-prometheus \\
+--set prometheus.namespace=monitoring \\
+--set prometheus.port=9090
 ```
 
 # 기타 내용 및 에러
