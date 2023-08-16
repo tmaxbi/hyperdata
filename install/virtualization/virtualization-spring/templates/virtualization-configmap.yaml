@@ -26,6 +26,14 @@ data:
       ip: {{ .Values.db.address }}
       port: {{ .Values.db.port }}
       sid: {{ .Values.db.sid }}
+    ### Spring
+    spring:
+      rabbitmq:
+        host: rabbitmq
+        port: 5672
+        username: {{ .Values.rabbitmq.username }}
+        password: {{ .Values.rabbitmq.password }}
 kind: ConfigMap
 metadata:
   name: virtualization-spring-configmap
+
