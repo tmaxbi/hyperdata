@@ -5,11 +5,11 @@
 replicaCount: 1
 
 image:
-  repository: 192.1.1.93:31234/hyperdata_v20.5_system/system_management
-#  repository: harbor:31234/hyperdata_v20.5_system/system_management
+  fullPath: biqa.tmax.com/hyperdata20.5_rel/hyperdata_v20.5_system/system_management:20230829_f68e8bf2
+  ## repository: harbor:31234/hyperdata_v20.5_system/system_management
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 5f091111
+  ## tag: 5f091111
 
 pvc:
   name: tibero-pvc-db
