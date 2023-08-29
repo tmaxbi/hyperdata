@@ -2,10 +2,8 @@
 
 # Install 
 ```console
-helm install rabbitmq . \
---set image.registry=biqa.tmax.com \
---set image.repository=hyperdata20.5_rel/hyperdata20.5_system/rabbitmq \
---set image.tag=3.10-debian-11
+helm install rabbitmq rabbitmq -n hyperdata \
+--set image.fullPath=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_system/rabbitmq:3.10-debian-11
 ```
 
 
