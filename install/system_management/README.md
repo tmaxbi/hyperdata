@@ -35,9 +35,7 @@ helm install postgresql postgresql \\
 --set global.postgresql.auth.database=keycloak \\
 --set global.postgresql.service.ports.postgresql=5555 \\
 --set primary.livenessProbe.initialDelaySeconds=240 \\
---set image.registry=biqa.tmax.com \\
---set image.repository=hyperdata20.5_rel/hyperdata20.5_system/postgresql \\
---set image.tag=15.2.0
+--set image.fullPath=[image path] \\
 
 ex) helm install postgresql postgresql \\
 -n hyperdata-dev01 \\
@@ -47,9 +45,7 @@ ex) helm install postgresql postgresql \\
 --set global.postgresql.auth.database=keycloak \\
 --set global.postgresql.service.ports.postgresql=5555 \\
 --set primary.livenessProbe.initialDelaySeconds=240 \\
---set image.registry=biqa.tmax.com \\
---set image.repository=hyperdata20.5_rel/hyperdata20.5_system/postgresql \\
---set image.tag=15.2.0
+--set image.fullPath=biqa.tmax.com/v20.5/hyperdata20.5_system/postgresql:20230504_v1
 
 ```
 
@@ -73,9 +69,7 @@ helm install keycloak keycloak \\
 --set externalDatabase.database=keycloak \\
 --set service.type=NodePort \\
 --set service.ports.http=8888 \\
---set image.registry=biqa.tmax.com \\
---set image.repository=hyperdata20.5_rel/hyperdata20.5_system/keycloak \\
---set image.tag=20230321_v1
+--set image.fullPath=[image path]
 
 ex)
 helm install keycloak keycloak \\
@@ -90,10 +84,7 @@ helm install keycloak keycloak \\
 --set externalDatabase.database=keycloak \\
 --set service.type=NodePort \\
 --set service.ports.http=8888 \\
---set image.registry=biqa.tmax.com \\
---set image.repository=hyperdata20.5_rel/hyperdata20.5_system/keycloak \\
---set image.tag=20230321_v1
-
+--set image.fullPath=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_system/keycloak:20230321_v1
 ```
 
 externalDatabase.host 값은 postgresql ip:port 값으로 설정
@@ -160,9 +151,8 @@ helm install hyperdata-system . \\
 --set spring.rabbitmq.password=[MQ 비밀번호]
 ex) helm install hyperdata-system . \\
 -n hyperdata-dev01 \\
---set image.repository=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_system/system_management \\
---set image.tag=20230415_bb649751_v2 \\
---set keycloak.secret=gRsGkD1Y3xgY2x0bwJJJ3QWvk1Lp5cCB \\
+--set image.fullPath=biqa.tmax.com/hyperdata20.5_rel/hyperdata_v20.5_system/system_management:20230829_f68e8bf2
+--set keycloak.secret=[secret] \\
 --set keycloak.authServerUrl=http://192.1.1.93:30552 \\
 --set spring.rabbitmq.username=Admin \\
 --set spring.rabbitmq.password=tmaxtower
