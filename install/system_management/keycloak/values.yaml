@@ -284,8 +284,12 @@ containerSecurityContext:
 ## @param resources.requests The requested resources for the Keycloak containers
 ##
 resources:
-  limits: {}
-  requests: {}
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
 ## Configure extra options for Keycloak containers' liveness, readiness and startup probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
 ## @param livenessProbe.enabled Enable livenessProbe on Keycloak containers

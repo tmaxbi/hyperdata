@@ -803,13 +803,17 @@ resources:
   ##    cpu: 1000m
   ##    memory: 2Gi
   ##
-  limits: {}
+  limits: 
+    cpu: 250m
+    memory: 256Mi
   ## Examples:
   ## requests:
   ##    cpu: 1000m
   ##    memory: 2Gi
   ##
-  requests: {}
+  requests:
+    cpu: 250m
+    memory: 256Mi
 
 ## Configure RabbitMQ containers' extra options for liveness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
