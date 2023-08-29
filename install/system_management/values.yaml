@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  fullPath: biqa.tmax.com/hyperdata20.5_rel/hyperdata_v20.5_system/system_management:20230829_f68e8bf2
+  fullPath: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_system/system_management:20230829_f68e8bf2
   ## repository: harbor:31234/hyperdata_v20.5_system/system_management
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -119,8 +119,8 @@ spring:
     enable: true
     host: rabbitmq
     port: 5672
-    username: guest
-    password: guest
+    username: Admin
+    password: tmaxtower
   mail:
     enable: false
     host: smtp.gmail.com

@@ -61,25 +61,22 @@ function install_keycloak(){
 
 function install_system(){
 
-	echo "INSTALL SYSTEM NAMESPACE: " ${1} "REPOSITORY: " ${2} "IMAGE TAG: " ${3} "KEYCLOAK SECRET: " ${4} "KEYCLOAK URL" ${5}
+	echo "INSTALL SYSTEM NAMESPACE: " ${1} "SYSTEM IMAGE FULL PATH: " ${2} "KEYCLOAK SECRET: " ${3} "KEYCLOAK URL" ${4}
 
 	helm install hyperdata-system . \
 	-n ${1} \
-	--set image.repository=${2} \
-	--set image.tag=${3} \
-	--set keycloak.secret=${4} \
-	--set keycloak.authServerUrl=${5}
+	--set image.fullPath=${2} \
+	--set keycloak.secret=${3} \
+	--set keycloak.authServerUrl=${4}
 
 }
 
 function install_rabbitmq() {
-        echo "INSTALL RABBITMQ NAMESPACE: " ${1} "RABBITMQ REGISTRY: " ${2} "RABBITMQ REPOSITORY: " ${3} "RABBITMQ TAG: " ${4}
+        echo "INSTALL RABBITMQ NAMESPACE: " ${1} "RABBITMQ IMAGE FULL PATH: " ${2}
 
         helm install rabbitmq rabbitmq \
         -n ${1} \
-        --set image.registry=${2} \
-        --set image.repository=${3} \
-        --set image.tag=${4}
+        --set image.fullPath=${2} \
 
         #kubectl wait --for=condition=Ready pod/rabbitmq-0 -n $NAMESPACE
         wait_until_installation "kubectl get po rabbitmq-0 -n ${1} | grep 1/1" 240
@@ -88,8 +85,7 @@ function install_rabbitmq() {
 
 
 NAMESPACE=$1
-REPOSITORY=$2
-TAG=$3
+IMAGE=$2
 
 # Install postgresql and get values
 install_postgresql $NAMESPACE
@@ -115,11 +111,11 @@ echo "WAIT UNTIL REALM READY.."
 #sleep 120
 
 #Install rabbitmq and get values
-RM_REGISTRY="biqa.tmax.com"
-RM_REPOSITORY="hyperdata20.5_rel/hyperdata20.5_system/rabbitmq"
-RM_TAG="3.10-debian-11"
-
-install_rabbitmq $NAMESPACE $RM_REGISTRY $RM_REPOSITORY $RM_TAG
+# RM_REGISTRY="biqa.tmax.com"
+# RM_REPOSITORY="hyperdata20.5_rel/hyperdata20.5_system/rabbitmq"
+# RM_TAG="3.10-debian-11"
+RM_IMAGE="biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_system/rabbitmq:3.10-debian-11"
+install_rabbitmq $NAMESPACE $RM_IMAGE
 
 echo "WAIT UNTIL RABBITMQ READY.."
 
@@ -134,7 +130,7 @@ echo "TOKEN: " $TOKEN
 echo "-----------------------------------------"
 
 # Install system and get values
-install_system $NAMESPACE $REPOSITORY $TAG $TOKEN $KEYCLOAK_URL
+install_system $NAMESPACE $IMAGE $TOKEN $KEYCLOAK_URL
 
 
 
