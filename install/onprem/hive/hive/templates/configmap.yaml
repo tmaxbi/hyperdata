@@ -5,7 +5,7 @@ metadata:
 data:
     OM_KUBE_DNS: om
     OM_PORT: "9874"
-    MYSQL_KUBE_DNS: mysql
+    MYSQL_KUBE_DNS: mlplatform-mysql-svc
     MYSQL_PORT: "3306"
     HIVE_META_DB: metastore
     HIVE_META_USER: root
