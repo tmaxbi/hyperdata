@@ -76,9 +76,10 @@ diagnosticMode:
 ## @param image.debug Specify if debug logs should be enabled
 ##
 image:
-  registry: biqa.tmax.com
-  repository: v20.5/hyperdata20.5_system/keycloak
-  tag: 20230504_v1
+  fullPath: biqa.tmax.com/v20.5/hyperdata20.5_system/keycloak/20230504_v1
+  ## registry: biqa.tmax.com
+  ## repository: v20.5/hyperdata20.5_system/keycloak
+  ## tag: 20230504_v1
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
