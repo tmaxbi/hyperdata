@@ -4,10 +4,7 @@ Return the proper image name
 {{ include "common.images.image" ( dict "imageRoot" .Values.path.to.the.image "global" .Values.global ) }}
 */}}
 {{- define "common.images.image" -}}
-{{- $registryName := .imageRoot.registry -}}
-{{- $repositoryName := .imageRoot.repository -}}
-{{- $separator := ":" -}}
-{{- $termination := .imageRoot.tag | toString -}}
+{{- $fullPath := .imageRoot.fullPath -}}
 {{- if .global }}
     {{- if .global.imageRegistry }}
      {{- $registryName = .global.imageRegistry -}}
@@ -17,7 +14,7 @@ Return the proper image name
     {{- $separator = "@" -}}
     {{- $termination = .imageRoot.digest | toString -}}
 {{- end -}}
-{{- printf "%s/%s%s%s" $registryName $repositoryName $separator $termination -}}
+{{- printf "%s" $fullPath -}}
 {{- end -}}
 
 {{/*

@@ -9,9 +9,7 @@ helm install postgresql postgresql \
 --set global.postgresql.auth.database=keycloak \
 --set global.postgresql.service.ports.postgresql=5555 \
 --set primary.livenessProbe.initialDelaySeconds=240 \
---set image.registry=biqa.tmax.com \
---set image.repository=hyperdata20.5_rel/hyperdata20.5_system/postgresql \
---set image.tag=15.2.0
+--set image.fullPath=biqa.tmax.com/v20.5/hyperdata20.5_system/postgresql:20230504_v1
 ```
 
 # PostgreSQL packaged by Bitnami

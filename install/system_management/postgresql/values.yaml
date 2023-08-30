@@ -93,9 +93,10 @@ diagnosticMode:
 ## @param image.debug Specify if debug values should be set
 ##
 image:
-  registry: biqa.tmax.com
-  repository: v20.5/hyperdata20.5_system/postgresql
-  tag: 20230504_v1
+  fullPath: biqa.tmax.com/v20.5/hyperdata20.5_system/postgresql:20230504_v1
+  ## registry: biqa.tmax.com
+  ## repository: v20.5/hyperdata20.5_system/postgresql
+  ## tag: 20230504_v1
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -441,7 +442,9 @@ primary:
   ## @param primary.resources.requests.cpu The requested cpu for the PostgreSQL Primary containers
   ##
   resources:
-    limits: {}
+    limits:
+      memory: 256Mi
+      cpu: 250m
     requests:
       memory: 256Mi
       cpu: 250m
