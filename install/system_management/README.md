@@ -84,7 +84,7 @@ helm install keycloak keycloak \\
 --set externalDatabase.database=keycloak \\
 --set service.type=NodePort \\
 --set service.ports.http=8888 \\
---set image.fullPath=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_system/keycloak:20230321_v1
+--set image.fullPath=biqa.tmax.com/v20.5/hyperdata20.5_system/keycloak:20230504_v1
 ```
 
 externalDatabase.host 값은 postgresql ip:port 값으로 설정
