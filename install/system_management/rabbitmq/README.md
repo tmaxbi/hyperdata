@@ -3,7 +3,7 @@
 # Install 
 ```console
 helm install rabbitmq rabbitmq -n hyperdata \
---set image.fullPath=biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_system/rabbitmq:3.10-debian-11
+--set image.fullPath=biqa.tmax.com/v20.5.0.3.0/hyperdata20.5_rabbitmq:20230721_v1
 ```
 
 
