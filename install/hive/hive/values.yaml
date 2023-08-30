@@ -1,1 +1,2 @@
-image: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_hiveozone:20230426_v1
+image-hive: biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_hiveozone:20230426_v1
+image-busybox: biqa.tmax.com/hyperdata20.5_rel/busybox:20230829_v1
