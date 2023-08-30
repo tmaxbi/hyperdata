@@ -72,11 +72,10 @@ function install_system(){
 }
 
 function install_rabbitmq() {
-        echo "INSTALL RABBITMQ NAMESPACE: " ${1} "RABBITMQ IMAGE FULL PATH: " ${2}
+        echo "INSTALL RABBITMQ NAMESPACE: " ${1}
 
         helm install rabbitmq rabbitmq \
-        -n ${1} \
-        --set image.fullPath=${2} \
+        -n ${1}
 
         #kubectl wait --for=condition=Ready pod/rabbitmq-0 -n $NAMESPACE
         wait_until_installation "kubectl get po rabbitmq-0 -n ${1} | grep 1/1" 240
@@ -111,11 +110,7 @@ echo "WAIT UNTIL REALM READY.."
 #sleep 120
 
 #Install rabbitmq and get values
-# RM_REGISTRY="biqa.tmax.com"
-# RM_REPOSITORY="hyperdata20.5_rel/hyperdata20.5_system/rabbitmq"
-# RM_TAG="3.10-debian-11"
-RM_IMAGE="biqa.tmax.com/hyperdata20.5_rel/hyperdata20.5_system/rabbitmq:3.10-debian-11"
-install_rabbitmq $NAMESPACE $RM_IMAGE
+install_rabbitmq $NAMESPACE
 
 echo "WAIT UNTIL RABBITMQ READY.."
 
