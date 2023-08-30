@@ -15,19 +15,19 @@ spec:
     spec:
       initContainers:
       - name: check-om
-        image: busybox:1.28
+        image: {{ .Values.image-busybox }}
         command: ['sh', '-c', "until nslookup om.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for ozone manager; sleep 2; done"]
       - name: init-hadoop
-        image: {{ .Values.image }}
+        image: {{ .Values.image-hive }}
         command: ["/bin/sh", "entrypoint.sh"]
         envFrom:
         - configMapRef:
             name: hive-config
       - name: check-metadb
-        image: busybox:1.28
+        image: {{ .Values.image-busybox }}
         command: ['sh', '-c', "until nslookup mysql.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for meta DB; sleep 2; done"]
       - name: init-meta
-        image: {{ .Values.image }}
+        image: {{ .Values.image-hive }}
         command: ["/bin/sh", "init.sh"]
         env:
         - name: HIVE_META_PASSWORD
@@ -39,7 +39,7 @@ spec:
         - configMapRef:
             name: hive-config
       containers:
-      - image: {{ .Values.image }}
+      - image: {{ .Values.image-hive }}
         command: ["/bin/bash", "-c"]
         args: ["sh boot.sh; while true; do sleep 30; done;"]
         name: hive
