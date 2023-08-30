@@ -7,6 +7,9 @@ kubectl create namespace hyperdata
 
 2. create nginx
 
+**values.yaml에 controller.image.registry/image/tag/digest, controller.admissionWebhooks.patch.image.registry/image/tag/digest 값을 직접 입력한 경우에는
+--set설정을 하지 않아도 됩니다.**
+
     2.1. metallb loadbalancer로 설치할 경우
     ```
     helm install -n hyperdata ingress-nginx ingress-nginx \
@@ -16,6 +19,10 @@ kubectl create namespace hyperdata
     --set controller.image.image=ingress-nginx/controller \
     --set controller.image.tag=v1.0.0 \
     --set controller.image.digest="" \
+    --set controller.admissionWebhooks.patch.image.registry=k8s.gcr.io \
+    --set controller.admissionWebhooks.patch.image.image=ingress-nginx/kube-webhook-certgen \
+    --set controller.admissionWebhooks.patch.image.tag=v1.0 \
+    --set controller.admissionWebhooks.patch.image.digest="" \
     --set controller.config.use-http2="false" \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=hyperdata \
@@ -39,6 +46,10 @@ kubectl create namespace hyperdata
     --set controller.image.image=ingress-nginx/controller \
     --set controller.image.tag=v1.0.0 \
     --set controller.image.digest="" \
+    --set controller.admissionWebhooks.patch.image.registry=k8s.gcr.io \
+    --set controller.admissionWebhooks.patch.image.image=ingress-nginx/kube-webhook-certgen \
+    --set controller.admissionWebhooks.patch.image.tag=v1.0 \
+    --set controller.admissionWebhooks.patch.image.digest="" \
     --set controller.config.use-http2="false" \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=hyperdata \
@@ -49,7 +60,7 @@ kubectl create namespace hyperdata
     --set controller.service.ports.https=8080
     ```
 
-3. Uninstall Nginx
+4. Uninstall Nginx
 ```
 helm uninstall -n hyperdata ingress-nginx ingress-nginx
 ```
