@@ -804,8 +804,8 @@ resources:
   ##    memory: 2Gi
   ##
   limits: 
-    cpu: 250m
-    memory: 256Mi
+    cpu: 500m
+    memory: 512Mi
   ## Examples:
   ## requests:
   ##    cpu: 1000m
