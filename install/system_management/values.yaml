@@ -119,8 +119,8 @@ spring:
     enable: true
     host: rabbitmq
     port: 5672
-    username: Admin
-    password: tmaxtower
+    username: guest
+    password: guest
   mail:
     enable: false
     host: smtp.gmail.com
