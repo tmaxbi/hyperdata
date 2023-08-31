@@ -9,7 +9,7 @@ tlsSecret:
   certFile: ssl-secret/tls.crt
   keyFile: ssl-secret/tls.key
   managedByLabel: Helm
-  releaseNameAnnotation: hyperdata-test-ingress-nginx3
+  releaseNameAnnotation: hyperdata-ingress-nginx
 
 image:
   repository: nginx
