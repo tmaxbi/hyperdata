@@ -7,8 +7,9 @@ kubectl create namespace hyperdata
 
 2. create nginx
 
-**values.yaml에 controller.image.registry/image/tag/digest, controller.admissionWebhooks.patch.image.registry/image/tag/digest 값을 직접 입력한 경우에는
---set설정을 하지 않아도 됩니다.**
+#### 유의사항
+   - values.yaml에 controller.image.registry/image/tag/digest, controller.admissionWebhooks.patch.image.registry/image/tag/digest 값을 직접 입력한 경우에는 --set설정을 하지 않으셔도 됩니다.
+   - nginx를 설치하기 전에 ssl-secret을 먼저 설치하셔야 됩니다.
 
     2.1. metallb loadbalancer로 설치할 경우
     ```
@@ -35,6 +36,7 @@ kubectl create namespace hyperdata
     --set controller.service.enableHttps=true \
     --set controller.service.ports.https=8080 \
     --set controller.service.loadBalancerIP=${NGINX_IP}
+    --set controller.extraArgs.default-ssl-certificate=hyperdata/ssl-secret
     ```
 
     2.2. nodePort로 설치할 경우
@@ -58,6 +60,7 @@ kubectl create namespace hyperdata
     --set controller.service.enableHttp=false \
     --set controller.service.enableHttps=true \
     --set controller.service.ports.https=8080
+    --set controller.extraArgs.default-ssl-certificate=hyperdata/ssl-secret
     ```
 
 4. Uninstall Nginx
