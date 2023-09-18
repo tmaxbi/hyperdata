@@ -4,7 +4,9 @@ metadata:
   name: be-common-config
 data:
   DB_PATH : "{{ .Values.db.mountPath }}"
-  DB_IP : "{{ .Values.db.ip }}"
+  TB_IP : "{{ .Values.db.ip }}"
+  TB_PORT: "{{ .Values.db.port }}"
+  TB_SID: "{{ .Values.db.sid }}"
   SRC_HOME : "/HyperData"
   SCHEMA_VERSION : "{{ .Values.schema_version }}"
 
