@@ -21,7 +21,6 @@ function delete_rabbitmq_pvc() {
     kubectl delete pvc -n ${NAMESPACE} -l app.kubernetes.io/name=rabbitmq
 }
 
-
 #  PVC 삭제 함수 호출
 delete_postgresql_pvc
 delete_rabbitmq_pvc
