@@ -114,3 +114,5 @@ data:
     customAddon:
       enable: {{ .Values.customAddon.enabled }}
       url: {{ .Values.customAddon.externalDetail }}
+    ml:
+      enable: {{ .Values.ml.enabled }}
