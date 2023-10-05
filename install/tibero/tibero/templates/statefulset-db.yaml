@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    rollme: {{ randAlphaNum 5 | quote }}
+  labels:
+    lb: tibero-db
+    #app: tibero
+  name: tibero-db-hd
+spec:
+  #hostname: tibero
+  #subdomain: tibero-svc-db
+  serviceName: "tibero"
+  selector:
+    matchLabels:
+      app: tibero
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tibero
+        lb: tibero-db
+    spec:
+      containers:
+      - env:
+        - name: TB_PORT
+          value: "8629"
+        - name: MAX_SESSION_COUNT
+          value: "40"
+        - name: TOTAL_SHM_SIZE
+          value: "{{ .Values.shmSize | replace "Gi" "" }}"
+        - name: MEMORY_TARGET
+          value: "{{ .Values.memoryTarget | replace "Gi" "" }}"
+        - name: LOG_BUFFER
+          value: "300M"
+        - name: LOG_GROUP
+          value: "5"
+        - name: LOG_FILE_SIZE
+          value: "200M"
+        - name: SYSTEM_FILE_SIZE
+          value: "1G"
+        - name: TEMP_FILE_SIZE
+          value: "5G"
+        - name: UNDO_FILE_SIZE
+          value: "1G"
+        - name: USR_FILE_SIZE
+          value: "5G"
+        - name: DB_CHARACTER_SET
+          value: "UTF8"
+        image: {{ .Values.image }}
+        name: {{ .Release.Name }}-con-db-hd
+        ports:
+        - containerPort: 8629
+          name: tb-lsnr
+          protocol: TCP
+        - containerPort: 8630
+          name: tb-sp
+          protocol: TCP
+        - containerPort: 9999
+          name: ora-gw
+          protocol: TCP
+        - containerPort: 9095
+          name: nz-gw
+          protocol: TCP
+        - containerPort: 9093
+          name: iq-gw
+          protocol: TCP
+        - containerPort: 9091
+          name: ase-gw
+          protocol: TCP
+        - containerPort: 9777
+          name: my-gw
+          protocol: TCP
+        - containerPort: 9089
+          name: svdb-gw
+          protocol: TCP
+        - containerPort: 9101
+          name: hive-gw
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+            nvidia.com/gpu: "0"
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
+            nvidia.com/gpu: "0"
+        volumeMounts:
+        - mountPath: {{ .Values.db.mountPath }}
+          name: pv-storage
+        - name: tz-seoul
+          mountPath: /etc/localtime
+      securityContext:
+        sysctls:
+        - name: kernel.sem
+          value: 10000 32000 10000 10000
+      volumes:
+      - name: pv-storage
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-pvc-db
+      - name: tz-seoul
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Seoul
+
