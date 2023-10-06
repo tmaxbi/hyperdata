@@ -18,6 +18,4 @@ db:
   mountPath: /db
   # tibero headless service name
   ip: tiberolocaldns
-  port: 8629
-  sid: tibero
   persistentVolumeClaimName: tibero-pvc-db
