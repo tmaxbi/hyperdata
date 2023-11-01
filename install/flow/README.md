@@ -16,6 +16,10 @@ helm install -n hyperdata flow flow \
 - mlplatform가 LoadBalancer일 때 8501 포트 설정
   `--set svc.mlplatform.port=8501` 추가
 
+### SQL Editor Preview 출력 컬럼 수 설정
+- 출력 컬럼수 sql-editor.preview-max-row 설정
+  ex) `--set sql-editor.preview-max-row=100` 추가
+
 ## Uninstall
 
 ```
