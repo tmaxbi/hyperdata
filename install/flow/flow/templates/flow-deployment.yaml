@@ -33,6 +33,7 @@ spec:
               value: {{ .Values.pvc.mountPath }}/{{ .Values.logging.path }}
             - name: JAVA_OPTIONS
               value: |
+                -XX:+ExitOnOutOfMemoryError
                 -XX:+UseContainerSupport
                 -XX:InitialRAMPercentage=60
           volumeMounts:
