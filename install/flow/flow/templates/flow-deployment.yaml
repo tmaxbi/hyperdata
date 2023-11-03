@@ -31,10 +31,6 @@ spec:
               value: {{ .Values.pvc.mountPath }}
             - name: LOGGING_PATH
               value: {{ .Values.pvc.mountPath }}/{{ .Values.logging.path }}
-            - name: JAVA_OPTIONS
-              value: |
-                -XX:+UseContainerSupport
-                -XX:InitialRAMPercentage=60
           volumeMounts:
             - name: application-yml-config
               mountPath: /home/flow/application.yml
