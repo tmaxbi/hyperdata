@@ -53,6 +53,3 @@ data:
     flow:
       save:
         max-file-row: {{ index .Values "flow" "save" "max-file-row" }}
-    sql-editor:
-      preview-max-row: {{ index .Values "sql-editor" "preview-max-row" }}
-

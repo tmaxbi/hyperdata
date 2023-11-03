@@ -59,6 +59,3 @@ db-connection-pool:
 flow:
   save:
     max-file-row: 20000
-sql-editor:
-  preview-max-row: 1000
-
