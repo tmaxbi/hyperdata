@@ -23,7 +23,7 @@ pvc:
   mountPath: /db
 
 logging:
-  path: HyperData/logs/flow
+  path: flow/logs
 
 svc:
   virtualization:
