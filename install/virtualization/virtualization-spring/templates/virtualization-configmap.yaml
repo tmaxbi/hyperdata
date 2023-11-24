@@ -28,6 +28,11 @@ data:
       sid: {{ .Values.db.sid }}
     ### Spring
     spring:
+      hive:
+        ip: {{ .Values.hive.ip }}
+        port: {{ .Values.hive.port }}
+        hcatalog-ip: {{ .Values.hive.hcatalog-ip }}
+        hcatalog-port: {{ .Values.hive.hcatalog-port }}
       rabbitmq:
         host: rabbitmq
         port: 5672
@@ -36,4 +41,3 @@ data:
 kind: ConfigMap
 metadata:
   name: virtualization-spring-configmap
-
