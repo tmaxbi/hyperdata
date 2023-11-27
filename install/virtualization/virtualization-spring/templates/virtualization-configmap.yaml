@@ -31,8 +31,8 @@ data:
       hive:
         ip: {{ .Values.hive.ip }}
         port: {{ .Values.hive.port }}
-        hcatalog-ip: {{ .Values.hive.hcatalog-ip }}
-        hcatalog-port: {{ .Values.hive.hcatalog-port }}
+        hcatalog_ip: {{ .Values.hive.hcatalog_ip }}
+        hcatalog_port: {{ .Values.hive.hcatalog_port }}
       rabbitmq:
         host: rabbitmq
         port: 5672
