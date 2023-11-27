@@ -45,8 +45,8 @@ version:
 hive:
   ip: localhost
   port: 10000
-  hcatalog-ip: localhost
-  hcatalog-port: 9083
+  hcatalog_ip: localhost
+  hcatalog_port: 9083
 
 rabbitmq:
   username: VAdmin
