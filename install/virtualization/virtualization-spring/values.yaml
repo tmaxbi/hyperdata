@@ -42,6 +42,12 @@ logging:
 version:
   major: 20
 
+hive:
+  ip: localhost
+  port: 10000
+  hcatalog_ip: localhost
+  hcatalog_port: 9083
+
 rabbitmq:
   username: VAdmin
   password: tmaxtower
