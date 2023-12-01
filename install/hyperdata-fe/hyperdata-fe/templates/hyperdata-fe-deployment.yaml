@@ -22,6 +22,8 @@ spec:
           env:
             - name: HYPERDATA_FRONT_CUSTOM_LOGO_PATH
               value: {{ .Values.customLogo.path }}
+            - name: LANGUAGE
+              value: {{ .Values.language }}
           securityContext:
             runAsUser: 0
           ports:
