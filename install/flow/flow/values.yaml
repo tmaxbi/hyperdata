@@ -40,7 +40,7 @@ svc:
     port: 8080
 
 db:
-  jdbc-url: jdbc:tibero:thin:@tiberolocaldns:8629:tibero
+  jdbc_url: jdbc:tibero:thin:@tiberolocaldns:8629:tibero
 
 db-connection-pool:
   common:
