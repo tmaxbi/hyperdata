@@ -1,0 +1,214 @@
+# Default values for Livy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global: {}
+
+image:
+  repository: biqa.tmax.com/livy/livy
+  tag: 231208
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+rbac:
+  create: true
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+sparkServiceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+service:
+  type: NodePort
+  port: 8080
+  # If not set, a name is generated using the fullname template
+  name:
+
+ingress:
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    #
+    # External auth with OAuth2: https://kubernetes.github.io/ingress-nginx/examples/auth/oauth-external-auth/#external-oauth-authentication
+    # nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+    # nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+    #
+    # Basic auth
+    # nginx.ingress.kubernetes.io/auth-type: basic
+    # nginx.ingress.kubernetes.io/auth-secret: secret-namespace/auth-secret
+    # nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+    #
+    # Rewrite target URI without basePath part: https://kubernetes.github.io/ingress-nginx/examples/rewrite/#rewrite
+    # nginx.ingress.kubernetes.io/rewrite-target: /$1
+  path: /
+  # path: /livy/?(.*) # Capture target URI part to remove basePath on `rewrite-target` above
+  hosts:
+  - livy.local # Set to endpoint hostname to accept requests to
+  tls: [] # Configure tls, Certmanager will do the work with Certs for you if properly configured
+  # - secretName: livy-tls
+  #   hosts:
+  #   - livy.local
+
+endpoint:
+  enabled: false
+
+imagePullSecrets: []
+# - name: image-pull-secret-name
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: autoscale-retain
+  #         operator: In
+  #         values:
+  #         - "true"
+
+## Persist data to a persistent volume
+persistence:
+  enabled: true
+  # subPath: ""
+
+  ## If defined, will use the existing PVC and will not create a new one.
+  # existingClaim: ""
+
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  storageClass: "nfs-client"
+  accessMode: ReadWriteOnce
+  size: 20Gi
+  annotations: {}
+  
+# 추가
+# Volume shares for spark external jars
+# it shares livy session dir where jars are uploaded by .uploadJar() api.
+volumeShare:
+  enabled: true
+  mountPath: /root/.livy-sessions
+  storageClass: "nfs-client"
+  accessMode: ReadWriteOnce
+  size: 20Gi
+  
+
+env:
+  ####################
+  # Defaults for Livy
+  LIVY_LIVY_UI_BASE1PATH: {value: ""} # eg.: `/livy`
+  LIVY_LIVY_SERVER_SESSION_TIMEOUT0CHECK: {value: "false"}
+  LIVY_LIVY_SERVER_SESSION_STATE0RETAIN_SEC: {value: "12h"}
+  LIVY_LIVY_SERVER_SESSION_MAX0CREATION: {value: "10"}
+  LIVY_LIVY_SERVER_RECOVERY_MODE: {value: "off"}
+  # LIVY_LIVY_SERVER_RECOVERY_STATE0STORE: {value: "filesystem"}
+  # LIVY_LIVY_SERVER_RECOVERY_STATE0STORE_URL: {value: "file:///tmp/livy/store/state"}
+  LIVY_LIVY_RSC_JARS: {value: 'local\:///opt/livy/rsc-jars/livy-thriftserver-session-0.8.0-incubating.jar,local\:///opt/livy/rsc-jars/netty-all-4.1.92.Final.jar,local\:///opt/livy/rsc-jars/kryo-shaded-4.0.2.jar,local\:///opt/livy/rsc-jars/minlog-1.3.0.jar,local\:///opt/livy/rsc-jars/livy-rsc-0.8.0-incubating.jar,local\:///opt/livy/rsc-jars/objenesis-2.5.1.jar,local\:///opt/livy/rsc-jars/livy-api-0.8.0-incubating.jar'}
+  LIVY_LIVY_REPL_JARS: {value: 'local\:///opt/livy/repl_2.12-jars/commons-codec-1.9.jar,local\:///opt/livy/repl_2.12-jars/livy-core_2.12-0.8.0-incubating.jar,local\:///opt/livy/repl_2.12-jars/livy-repl_2.12-0.8.0-incubating.jar,local\:///opt/livy/rsc-jars/kryo-shaded-4.0.2.jar,local\:///opt/livy/rsc-jars/minlog-1.3.0.jar,local\:///opt/livy/rsc-jars/objenesis-2.5.1.jar'}
+  # LIVY_LIVY_UI_HISTORY1SERVER1URL: {value: "https://cluster.example.com/history-server"} # to build links on Livy UI properly
+  LIVY_LIVY_FILE_LOCAL0DIR0WHITELIST: {value: "/root/.livy-sessions/"}
+  LIVY_SPARK_EVENT1LOG_ENABLED: {value: "false"}
+  #LIVY_SPARK_EVENT1LOG_DIR: {value: "file:///tmp/history-server"}
+  #####################
+  # Livy on Local Values
+  #LIVY_LIVY_SPARK_MASTER: {value: "local[4]"}
+  #####################
+  # Livy on Spark Standalone Cluster Values
+  #LIVY_LIVY_SPARK_MASTER: {value: "spark://master:7077"}
+  #LIVY_LIVY_SPARK_DEPLOY0MODE: {value: "client"}
+  #LIVY_SPARK_EXECUTOR_MEMORY: {value: "8G"}
+  #LIVY_SPARK_SHUFFLE_SERVICE_ENABLED: {value: "false"}
+  #LIVY_SPARK_DYNAMIC1ALLOCATION_ENABLED: {value: "false"}
+  #####################
+  # Livy on K8s Values
+  LIVY_LIVY_SPARK_MASTER: {value: "k8s://kubernetes.default.svc.cluster.local:443"}
+  LIVY_LIVY_SPARK_DEPLOY0MODE: {value: "cluster"}
+  LIVY_SPARK_KUBERNETES_FILE_UPLOAD_PATH: {value: "/root/.livy-sessions"}
+  #LIVY_SPARK_DRIVER_EXTRA1CLASS1PATH: {value: "/root/.livy-sessions/share/jars/livyjob.jar,/root/.livy-sessions/share/jars/SparkVirtualization.jar,/root/.livy-sessions/share/jars/spring-core-5.3.17.jar,/root/.livy-sessions/share/jars/spring-context-5.3.17.jar,/root/.livy-sessions/share/jars/spring-beans-5.3.17.jar,/root/.livy-sessions/share/jars/spring-tx-5.3.17.jar,/root/.livy-sessions/share/jars/spring-jdbc-5.3.17.jar,/root/.livy-sessions/share/jars/presto-jdbc-315.jar,/root/.livy-sessions/share/jars/sybase_jdbc_jconn4.jar,/root/.livy-sessions/share/jars/tibero6-jdbc.jar,/root/.livy-sessions/share/jars/sql-table-name-parser-0.0.5.jar"}
+  #LIVY_SPARK_EXECUTOR_EXTRA1CLASS1PATH: {value: "/root/.livy-sessions/share/jars/livyjob.jar,/root/.livy-sessions/share/jars/SparkVirtualization.jar,/root/.livy-sessions/share/jars/spring-core-5.3.17.jar,/root/.livy-sessions/share/jars/spring-context-5.3.17.jar,/root/.livy-sessions/share/jars/spring-beans-5.3.17.jar,/root/.livy-sessions/share/jars/spring-tx-5.3.17.jar,/root/.livy-sessions/share/jars/spring-jdbc-5.3.17.jar,/root/.livy-sessions/share/jars/presto-jdbc-315.jar,/root/.livy-sessions/share/jars/sybase_jdbc_jconn4.jar,/root/.livy-sessions/share/jars/tibero6-jdbc.jar,/root/.livy-sessions/share/jars/sql-table-name-parser-0.0.5.jar"}
+  LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE: {value: "biqa.tmax.com/livy/livy-spark:231208"}
+  LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1POLICY: {value: "IfNotPresent"}
+  LIVY_SPARK_KUBERNETES_DRIVER_ANNOTATION_CREATED0BY: {value: "livy"}
+  LIVY_SPARK_KUBERNETES_EXECUTOR_ANNOTATION_CREATED0BY: {value: "livy"}
+  LIVY_SPARK_KUBERNETES_DRIVER_LABEL_NAME: {value: "driver"}
+  LIVY_SPARK_KUBERNETES_EXECUTOR_LABEL_NAME: {value: "executor"}
+  #LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1SECRETS: {value: ""}
+  LIVY_SPARK_KUBERNETES_DRIVER_POD1Template1File: {value: "/root/.livy-sessions/driver.yaml"}
+  LIVY_SPARK_KUBERNETES_EXECUTOR_POD1Template1File: {value: "/root/.livy-sessions/executor.yaml"}
+  #
+  # Spark UI proxy configs
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_CREATE: {value: "false"}
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_HOST: {value: "cluster.example.com"}
+  #
+  # Authentication configs for Spark UI proxy
+  # External auth with OAuth2
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true;nginx.ingress.kubernetes.io/auth-url=https://$host/oauth2/auth;nginx.ingress.kubernetes.io/auth-signin=https://$host/oauth2/start?rd=$escaped_request_uri"}
+  # Basic auth
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true;nginx.ingress.kubernetes.io/auth-type=basic;nginx.ingress.kubernetes.io/auth-secret=secret-namespace/auth-secret;nginx.ingress.kubernetes.io/auth-realm=Authentication Required"}
+  #
+  # HTTPS for Spark UI proxy
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_PROTOCOL: {value: "https"}
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_TLS_SECRET1NAME: {value: "spark-cluster-tls"}
+  # 
+  # Additional Nginx Ingress configs for Spark UI proxy
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1CONF1SNIPPET: {value: ""}
+  #
+  # LIVY_ENV_VAR_FROM_CONFIG_MAP:
+  #   valueFrom:
+  #     configMapKeyRef:
+  #       name: myconfig
+  #       key: config.key
+  # LIVY_ENV_VAR_FROM_SECRET:
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: mysecret
+  #       key: secret.key
+  
+  
+envFrom: []
+# - configMapRef:
+#     name: env-configmap
+# - secretRef:
+#     name: env-secrets
+
+livyConf: {}
+#  fromConfigMap: "livy-conf-config-map"
+#  fromSecret: "livy-conf-secret"
+
+sparkDefaultsConf: {}
+# fromConfigMap: "spark-defaults-conf-config-map"
+# fromSecret: "spark-defaults-conf-secret"
+
+livyClientConf: {}
+# fromConfigMap: "livy-client-conf-config-map"
+# fromSecret: "livy-client-conf-secret"

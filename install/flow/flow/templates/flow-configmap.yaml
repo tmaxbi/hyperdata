@@ -14,6 +14,12 @@ data:
       mlplatform:
         ip: {{ .Values.svc.mlplatform.name }}
         port: {{ .Values.svc.mlplatform.port }}
+      livy:
+        ip: {{ .Values.svc.livy.name }}
+        port: {{ .Values.svc.livy.port }}
+
+    db:
+      jdbc-url: {{ .Values.db.jdbc-url }}
 
     ############################ Servlet Config ############################
     server:
@@ -55,4 +61,18 @@ data:
         max-file-row: {{ index .Values "flow" "save" "max-file-row" }}
     sql-editor:
       preview-max-row: {{ index .Values "sql-editor" "preview-max-row" }}
+      
+     
+    ############################ Livy Config ############################
+    livy:
+      spark:
+        driver:
+          cores: {{ index .Values "livy" "spark" "driver" "cores" }}
+          memory: {{ index .Values "livy" "spark" "driver" "memory" }}
+        executor:
+          instances: {{ index .Values "livy" "spark" "executor" "instances" }}
+          cores: {{ index .Values "livy" "spark" "executor" "cores" }}
+          memory: {{ index .Values "livy" "spark" "executor" "memory" }}
+        dynamicAllocation:
+          enabled: {{ index .Values "livy" "spark" "dynamicAllocation" "enabled" }}
 
