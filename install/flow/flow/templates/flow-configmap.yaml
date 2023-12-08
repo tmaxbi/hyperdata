@@ -19,7 +19,7 @@ data:
         port: {{ .Values.svc.livy.port }}
 
     db:
-      jdbc-url: {{ .Values.db.jdbc-url }}
+      jdbc-url: {{ .Values.db.jdbc_url }}
 
     ############################ Servlet Config ############################
     server:
