@@ -19,7 +19,7 @@ resources:
     memory: 4Gi
 
 pvc:
-  name: tibero-pvc-
+  name: tibero-pvc-db
   mountPath: /db
 
 logging:
