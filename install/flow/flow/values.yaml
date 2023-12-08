@@ -19,7 +19,7 @@ resources:
     memory: 4Gi
 
 pvc:
-  name: tibero-pvc-db
+  name: tibero-pvc-
   mountPath: /db
 
 logging:
@@ -35,6 +35,12 @@ svc:
   mlplatform:
     name: mlplatform-backend-svc
     port: 18081
+  livy:
+    name: livy
+    port: 8080
+
+db:
+  jdbc-url: jdbc:tibero:thin:@tiberolocaldns:8629:tibero
 
 db-connection-pool:
   common:
@@ -61,4 +67,15 @@ flow:
     max-file-row: 20000
 sql-editor:
   preview-max-row: 1000
+livy:
+  spark:
+    driver:
+      cores: 1
+      memory: 1g
+    executor:
+      instances: 3
+      cores: 1
+      memory: 1g
+    dynamicAllocation:
+      enabled: false
 
