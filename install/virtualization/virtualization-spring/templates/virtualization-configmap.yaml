@@ -1,5 +1,12 @@
 apiVersion: v1
 data:
+  METASTORE_DB: {{ .Values.metastore.db }}
+  METASTORE_IP: {{ .Values.metastore.ip }}
+  METASTORE_SID: {{ .Values.metastore.sid }}
+  METASTORE_PORT: {{ .Values.metastore.port }}
+  METASTORE_USERNAME: {{ .Values.metastore.username }}
+  METASTORE_PASSWORD: {{ .Values.metastore.password }}
+  
   application.yml: |
     ##### Virtualization Module Address Info ############################
     server:
