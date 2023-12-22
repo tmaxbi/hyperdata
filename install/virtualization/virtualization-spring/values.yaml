@@ -51,3 +51,11 @@ hive:
 rabbitmq:
   username: VAdmin
   password: tmaxtower
+
+metastore:
+  db: mysql
+  ip: 192.168.255.255
+  sid: metastore
+  port: 3306
+  username: root
+  password: root
