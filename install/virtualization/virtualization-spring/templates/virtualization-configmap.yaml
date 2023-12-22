@@ -38,6 +38,13 @@ data:
         port: 5672
         username: {{ .Values.rabbitmq.username }}
         password: {{ .Values.rabbitmq.password }}
+      metastore:
+        db: {{ .Values.metastore.db }}
+        ip: {{ .Values.metastore.ip }}
+        port: {{ .Values.metastore.port }}
+        sid: {{ .Values.metastore.sid }}
+        username: {{ .Values.metastore.username }}
+        password: {{ .Values.metastore.password }}
 kind: ConfigMap
 metadata:
   name: virtualization-spring-configmap
