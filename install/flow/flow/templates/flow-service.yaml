@@ -8,6 +8,10 @@ spec:
       port: 8080
       targetPort: {{ .Values.server.port }}
       protocol: TCP
+    - name: spark-ui-port
+      port: 4040
+      targetPort: 4040
+      protocol: TCP
   selector:
     app: hyperdata-flow-deploy
   type: NodePort
