@@ -23,6 +23,7 @@ spec:
             httpGet:
               path: /hyperdata20/flow/welcome
               port: 8081
+            initialDelaySeconds: 30
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
