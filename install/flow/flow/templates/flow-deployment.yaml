@@ -19,6 +19,10 @@ spec:
           ports:
             - containerPort: {{ .Values.server.port }}
               name: flow-port
+          livenessProbe:
+            httpGet:
+              path: /hyperdata20/flow/welcome
+              port: 8081
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
