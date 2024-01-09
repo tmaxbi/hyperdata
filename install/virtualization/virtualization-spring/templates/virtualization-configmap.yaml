@@ -45,7 +45,9 @@ data:
         port: {{ .Values.metastore.port }}
         username: {{ .Values.metastore.username }}
         password: {{ .Values.metastore.password }}
-        
+    spark:
+      fair:
+        path: /home/virtualization/fair.xml      
 kind: ConfigMap
 metadata:
   name: virtualization-spring-configmap
