@@ -36,6 +36,10 @@ svc:
     name: mlplatform-backend-svc
     port: 18081
 
+hostAlias:
+    ip: "192.168.220.220"
+    hostname: "k8s-19-worker04"
+
 db-connection-pool:
   common:
     query-timeout: 3600
