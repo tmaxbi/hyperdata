@@ -45,7 +45,11 @@ data:
         port: {{ .Values.metastore.port }}
         username: {{ .Values.metastore.username }}
         password: {{ .Values.metastore.password }}
-        
+      hdfs:
+        namenode_ip: {{ .Values.hdfs.namenode_ip }}
+        namenode_port: {{ .Values.hdfs.namenode_port }}
+
 kind: ConfigMap
 metadata:
   name: virtualization-spring-configmap
+
