@@ -1,0 +1,18 @@
+{{- if eq .Values.db.external true }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    helm.sh/resource-policy: keep
+  labels:
+    app: tibero-hd
+  name: {{ .Values.db.persistentVolumeClaimName }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.db.storageSize }}
+  storageClassName: nfs-client-111
+  volumeMode: Filesystem
+{{- end }}
