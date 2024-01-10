@@ -8,7 +8,7 @@ server:
 
 proxy:
   bodysize: 1024m
-  timeout: 1800 # minutes
+  timeout: 7200 # seconds
 
 resources:
   requests:
