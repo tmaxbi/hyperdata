@@ -48,6 +48,11 @@ data:
     spark:
       fair:
         path: /home/virtualization/fair.xml      
+      hdfs:
+        namenode_ip: {{ .Values.hdfs.namenode_ip }}
+        namenode_port: {{ .Values.hdfs.namenode_port }}
+
 kind: ConfigMap
 metadata:
   name: virtualization-spring-configmap
+
