@@ -12,6 +12,10 @@ spec:
       labels:
         app: hyperdata-virtualization-deploy
     spec:
+      hostAliases:
+      - ip: {{ .Values.hostAlias.ip }}
+        hostname:
+        - {{ .Values.hostAlias.hostname }}
       containers:
         - name: hyperdata-virtualization-spring-con
           image: {{ .Values.image }}
