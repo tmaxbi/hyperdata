@@ -48,6 +48,9 @@ data:
       hdfs:
         namenode_ip: {{ .Values.hdfs.namenode_ip }}
         namenode_port: {{ .Values.hdfs.namenode_port }}
+    spark:
+      fair:
+        path: /home/virtualization/fair.xml
 
 kind: ConfigMap
 metadata:

@@ -12,6 +12,10 @@ spec:
       labels:
         app: hyperdata-flow-deploy
     spec:
+      hostAliases:
+      - ip: {{ .Values.hostAlias.ip }}
+        hostnames:
+        - {{ .Values.hostAlias.hostname }}
       containers:
         - name: hyperdata-flow-spring-con
           image: {{ .Values.image }}
