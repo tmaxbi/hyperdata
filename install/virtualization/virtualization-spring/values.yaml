@@ -3,7 +3,7 @@ image: biqa.tmax.com/v20.5/hyperdata20.5_virtualization:20230504_v1
 proxy:
   bodysize: 0
   # minutes
-  timeout: 1800
+  timeout: 7200
 
 server:
   port: 8100
@@ -38,6 +38,10 @@ loadBalancer:
 
 logging:
   path: virtualization/logs
+
+hostAlias:
+  ip: "192.168.220.220"
+  hostname: "k8s-19-worker04"
 
 version:
   major: 20
