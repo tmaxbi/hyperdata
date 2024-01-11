@@ -3,7 +3,7 @@ image: 192.1.1.93:31234/hyperdata_v20.5_virtualization/hyperdata_v20.5_virtualiz
 proxy:
   bodysize: 0
   # minutes
-  timeout: 1800
+  timeout: 7200
 
 server:
   port: 8100
@@ -39,6 +39,10 @@ loadBalancer:
 logging:
   path: virtualization/logs
 
+hostAlias:
+  ip: "192.168.220.220"
+  hostname: "k8s-19-worker04"
+
 version:
   major: 20
 
@@ -52,6 +56,10 @@ rabbitmq:
   username: VAdmin
   password: tmaxtower
 
+hdfs:
+    namenode_ip: 192.168.120.149
+    namenode_port: 52525
+
 metastore:
   db: mysql
   ip: 192.168.255.255
@@ -59,3 +67,4 @@ metastore:
   port: 3306
   username: root
   password: root
+
