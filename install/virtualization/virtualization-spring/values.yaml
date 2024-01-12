@@ -37,7 +37,7 @@ loadBalancer:
   extport: 8500
 
 logging:
-  path: virtualization/logs
+  path: HyperData/logs/virtualization
 
 hostAlias:
   ip: "192.168.220.220"
