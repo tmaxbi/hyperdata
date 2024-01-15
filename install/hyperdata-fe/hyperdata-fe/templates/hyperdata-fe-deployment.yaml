@@ -15,6 +15,7 @@ spec:
         lb: hyperdata-fe
         app: hyperdata-fe
     spec:
+      securityContext: {{- toYaml .Values.securityContext | nindent 8 }}
       containers:
         - name: hyperdata-fe-con
           image: {{ .Values.image }}
