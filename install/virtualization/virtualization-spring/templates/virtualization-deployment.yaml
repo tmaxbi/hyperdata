@@ -12,6 +12,8 @@ spec:
       labels:
         app: hyperdata-virtualization-deploy
     spec:
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
       hostAliases:
       - ip: {{ .Values.hostAlias.ip }}
         hostnames:
