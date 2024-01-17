@@ -32,8 +32,8 @@ function install_postgresql(){
 	--set primary.livenessProbe.initialDelaySeconds=240
 
 	#kubectl wait --for=condition=Ready pod/postgresql-0 -n $NAMESPACE
-	wait_until_installation "kubectl get po postgresql-0 -n ${1} | grep 1/1" 240
-	wait_until_installation "kubectl logs postgresql-0 -n ${1} | grep 'database system is ready to accept connections'" 240
+	wait_until_installation "kubectl get po postgresql-0 -n ${1} | grep 1/1" 360
+	wait_until_installation "kubectl logs postgresql-0 -n ${1} | grep 'database system is ready to accept connections'" 360
 }
 
 function install_keycloak(){
@@ -55,8 +55,8 @@ function install_keycloak(){
 	--set service.ports.http=8888
 
 	#kubectl wait --for=condition=Ready pod/keycloak-0 -n $NAMESPACE 
-	wait_until_installation "kubectl get po keycloak-0 -n ${1} | grep 1/1" 240
-	wait_until_installation "kubectl logs keycloak-0 -n ${1} | grep 'org.keycloak.quarkus.runtime.KeycloakMain'" 240
+	wait_until_installation "kubectl get po keycloak-0 -n ${1} | grep 1/1" 360
+	wait_until_installation "kubectl logs keycloak-0 -n ${1} | grep 'org.keycloak.quarkus.runtime.KeycloakMain'" 360
 }
 
 function install_system(){
@@ -78,7 +78,7 @@ function install_rabbitmq() {
         -n ${1}
 
         #kubectl wait --for=condition=Ready pod/rabbitmq-0 -n $NAMESPACE
-        wait_until_installation "kubectl get po rabbitmq-0 -n ${1} | grep 1/1" 240
+        wait_until_installation "kubectl get po rabbitmq-0 -n ${1} | grep 1/1" 360
 
 }
 
