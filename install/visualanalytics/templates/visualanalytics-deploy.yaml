@@ -23,7 +23,7 @@ spec:
             - configMapRef:
                 name: hyperdata-visualanalytics-config
           securityContext:
-            runAsUser: 1000
+            runAsUser: 1001
             runAsGroup: 1000
             runAsNonRoot: true
           ports:
