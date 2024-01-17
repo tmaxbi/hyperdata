@@ -25,7 +25,9 @@ spec:
             - name: LANGUAGE
               value: {{ .Values.language }}
           securityContext:
-            runAsUser: 0
+            runAsNonRoot: true
+            runAsUser: 101
+
           ports:
             - containerPort: 80
               name: fe-entry
