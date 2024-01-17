@@ -12,6 +12,12 @@ spec:
       labels:
         app: hyperdata-flow-deploy
     spec:
+      hostAliases:
+      - ip: {{ .Values.hostAlias.ip }}
+        hostnames:
+        - {{ .Values.hostAlias.hostname }}
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
       containers:
         - name: hyperdata-flow-spring-con
           image: {{ .Values.image }}

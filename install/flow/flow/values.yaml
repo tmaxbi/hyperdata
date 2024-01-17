@@ -8,7 +8,7 @@ server:
 
 proxy:
   bodysize: 1024m
-  timeout: 1800 # minutes
+  timeout: 7200 # seconds
 
 resources:
   requests:
@@ -35,6 +35,15 @@ svc:
   mlplatform:
     name: mlplatform-backend-svc
     port: 18081
+
+hostAlias:
+    ip: "192.168.220.220"
+    hostname: "k8s-19-worker04"
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
 
 db-connection-pool:
   common:
