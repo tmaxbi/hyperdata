@@ -17,7 +17,7 @@ spec:
     spec:
       hostAliases:
       - ip: {{ .Values.hostAlias.ip }}
-        hostname:
+        hostnames:
         - {{ .Values.hostAlias.hostname }}
       containers:
         - name: hyperdata-visualanalytics-con
