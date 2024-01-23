@@ -43,6 +43,10 @@ loadBalancer:
 
 loggingPath: /db/visualization
 
+hostAlias:
+  ip: "192.168.220.220"
+  hostname: "k8s-19-worker04"
+
 db:
   address: tiberolocaldns
   port: 8629
