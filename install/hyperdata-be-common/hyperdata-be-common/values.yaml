@@ -1,18 +1,18 @@
 image: 192.1.1.93:31234/hyperdata_v20.5_tibero/hyperdata_v20.5_be_common:230412_1569442a
 
 # hd version
-implementation_version: 20.5.0.7.0
-implementation_date: "2023/12/26"
+implementation_version: 20.5.0.7.1
+implementation_date: "2024/01/29"
 # sql schema version
-schema_version: 20.5.0.7.0
+schema_version: 20.5.0.7.1
 
 hyperdata:
   revision:
-    system: "fdcb3ba4"
-    virtualization: "a9a8bcac"
-    flow: "7015149c"
-    visualization: "cf4f0173"
-    ml: "3201c9e6"
+    system: "fea2dc08"
+    virtualization: "ff867e34" # 20240129
+    flow: "5a039aec"
+    visualization: "44a505f7"
+    ml: "3201c9e6" # 20230802
 
 
 db:
