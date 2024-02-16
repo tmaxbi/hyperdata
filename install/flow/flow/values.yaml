@@ -71,3 +71,9 @@ flow:
 sql-editor:
   preview-max-row: 1000
 
+spark:
+  driver:
+    memory: 1g
+  executor:
+    cores: 1
+    instances: 3
