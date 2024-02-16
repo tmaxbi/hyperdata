@@ -41,7 +41,7 @@ loadBalancer:
   enabled: true
   ip: 192.1.1.93
 
-loggingPath: /db/visualization
+loggingPath: HyperData/logs/visualization
 
 hostAlias:
   ip: "192.168.220.220"
