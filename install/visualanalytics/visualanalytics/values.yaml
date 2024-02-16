@@ -9,7 +9,7 @@ https:
 proxy:
   bodysize: 1024m
   # minutes
-  timeout: 1800
+  timeout: 7200
 
 server:
   ip: 192.1.1.249
