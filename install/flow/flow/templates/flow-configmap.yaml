@@ -56,3 +56,10 @@ data:
     sql-editor:
       preview-max-row: {{ index .Values "sql-editor" "preview-max-row" }}
 
+    spark:
+      driver:
+        memory: {{ index .Values "spark" "driver" "memory" }}
+      executor:
+        cores: {{ index .Values "spark" "executor" "cores" }}
+        instances: {{ index .Values "spark" "executor" "instances" }}
+
