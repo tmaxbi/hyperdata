@@ -20,10 +20,19 @@ db:
   mountPath: /db
   persistentVolumeClaimName: tibero-pvc-db
 
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+
 customLogo:
   path: /usr/share/nginx/html/res/images/common/gnb
 
 language: ko
+
+manual:
+  path: /HyperData
+  filename: HyperData_20.5_User-Guide.pdf
 
 legacy:
   #redirect to

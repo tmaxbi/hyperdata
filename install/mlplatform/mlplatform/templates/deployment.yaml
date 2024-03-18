@@ -13,6 +13,9 @@ spec:
         app: mlplatform-backend-deploy
     spec:
       securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
         fsGroup: 1000
       serviceAccountName: mlplatform-backend-sa
       containers:

@@ -26,7 +26,14 @@ spec:
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecrets }}
-      {{- end }}
+      {{- end }}\
+      initContainers:
+      - name: init-chmod
+        image: busybox
+        command: ['sh', '-c', 'touch /db/HyperData/logs/system/systemmanagement.log && chown -R 1000:1000 /db/HyperData/logs/system/systemmanagement.log']
+        volumeMounts:
+          - name: tibero-pvc-db
+            mountPath: /db
       containers:
         - name: {{ .Chart.Name }}
           securityContext:

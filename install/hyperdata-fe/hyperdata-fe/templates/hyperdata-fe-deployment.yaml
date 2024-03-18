@@ -24,18 +24,19 @@ spec:
               value: {{ .Values.customLogo.path }}
             - name: LANGUAGE
               value: {{ .Values.language }}
+            - name: HYPERDATA_MANUAL_PATH
+              value: {{ .Values.manual.path }}
+            - name: HYPERDATA_MANUAL_FILENAME
+              value: {{ .Values.manual.filename }}
           securityContext:
-            runAsUser: 0
+            runAsNonRoot: true
+            runAsUser: 101
+
           ports:
-            - containerPort: 80
+            - containerPort: 8000
               name: fe-entry
               protocol: TCP
-            - containerPort: 8080
-              name: fe-http
-              protocol: TCP
-            - containerPort: 8081
-              name: fe-viewer
-              protocol: TCP
+            
           resources:
             limits:
               cpu: {{ .Values.resources.limits.cpu }}
