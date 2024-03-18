@@ -48,6 +48,8 @@ data:
     spark:
       fair:
         path: /home/virtualization/fair.xml      
+    logging:
+      config: /home/virtualization/log4j2-production.xml
 kind: ConfigMap
 metadata:
   name: virtualization-spring-configmap
