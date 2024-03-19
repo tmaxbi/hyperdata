@@ -68,3 +68,4 @@ metastore:
   username: root
   password: root
 
+loggingDate: 30d
