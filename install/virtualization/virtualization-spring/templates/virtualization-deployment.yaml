@@ -18,6 +18,13 @@ spec:
       - ip: {{ .Values.hostAlias.ip }}
         hostnames:
         - {{ .Values.hostAlias.hostname }}
+      initContainers:
+      - name: init-chmod
+        image: busybox
+        command: ['sh', '-c', 'chown -R 1000:1000 /db/HyperData/logs/virtualization/']
+        volumeMounts:
+          - name: virtualization-pvc
+            mountPath: {{ .Values.pvc.mountPath }}
       containers:
         - name: hyperdata-virtualization-spring-con
           image: {{ .Values.image }}
