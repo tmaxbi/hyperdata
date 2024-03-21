@@ -40,9 +40,8 @@ spec:
           env:
             - name: LOGGING_PATH
               value: {{ .Values.pvc.mountPath }}/{{ .Values.logging.path }}
-          env:
-            - name: LOGGING_DATE
-              value: {{ .Values.loggingDate }}
+            - name: LOGGING_DURATION
+              value: {{ .Values.logging.duration }}
 
           volumeMounts:
             - name: application-yml-config

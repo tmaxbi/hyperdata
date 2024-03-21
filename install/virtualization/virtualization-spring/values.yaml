@@ -38,6 +38,7 @@ loadBalancer:
 
 logging:
   path: HyperData/logs/virtualization
+  duration: 30d
 
 hostAlias:
   ip: "192.168.220.220"
@@ -67,5 +68,3 @@ metastore:
   port: 3306
   username: root
   password: root
-
-loggingDate: 30d
