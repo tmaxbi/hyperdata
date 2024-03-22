@@ -24,6 +24,7 @@ pvc:
 
 logging:
   path: HyperData/logs/flow
+  duration: 30d
 
 svc:
   virtualization:
