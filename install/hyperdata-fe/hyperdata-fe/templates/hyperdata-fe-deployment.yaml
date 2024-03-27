@@ -24,6 +24,10 @@ spec:
               value: {{ .Values.customLogo.path }}
             - name: LANGUAGE
               value: {{ .Values.language }}
+            - name: HYPERDATA_MANUAL_PATH
+              value: {{ .Values.manual.path }}
+            - name: HYPERDATA_MANUAL_FILENAME
+              value: {{ .Values.manual.filename }}
           securityContext:
             runAsNonRoot: true
             runAsUser: 101
