@@ -105,6 +105,7 @@ server:
     contextPath: /hyperdata
 logging:
   config: classpath:logback-production.xml
+  duration: 30d
 spring:
   profiles:
     active: prod

@@ -45,6 +45,8 @@ spec:
               value: |
                 -XX:+UseContainerSupport
                 -XX:InitialRAMPercentage=60
+            - name: LOGGING_DURATION
+	      value: {{ .Values.logging.duration }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
