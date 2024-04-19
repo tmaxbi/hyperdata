@@ -50,7 +50,7 @@ spec:
             - name: LOGGING_PATH
               value: {{ .Values.logging.path }}
             - name: LOGGING_DURATION
-              value: { { .Values.logging.duration } }
+              value: {{ .Values.logging.duration }}
       volumes:
         - name: tz-seoul
           hostPath:
