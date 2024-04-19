@@ -61,6 +61,6 @@ data:
 
   # Hyperdata Webserver Options
   ## hyperdata uses this path as SAM FILE upload location
-  LOGGING_PATH: {{ .Values.loggingPath }}
+#  LOGGING_PATH: {{ .Values.logging.path }}
   ## tibero pv created in tibero helm chart
   TB_MOUNT_VOLUME_PATH: {{ .Values.db.mountPath }}

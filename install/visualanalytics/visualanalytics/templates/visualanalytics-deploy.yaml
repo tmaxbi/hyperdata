@@ -46,6 +46,11 @@ spec:
               mountPath: /etc/localtime
             - name: pv-storage-tb
               mountPath: {{ .Values.db.mountPath }}
+          env:
+            - name: LOGGING_PATH
+              value: {{ .Values.logging.path }}
+            - name: LOGGING_DURATION
+              value: { { .Values.logging.duration } }
       volumes:
         - name: tz-seoul
           hostPath:
