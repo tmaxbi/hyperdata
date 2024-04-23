@@ -23,6 +23,8 @@ spec:
         volumeMounts:
           - name: virtualization-pvc
             mountPath: {{ .Values.pvc.mountPath }}
+        securityContext:
+          runAsUser: 0
       containers:
         - name: hyperdata-virtualization-spring-con
           image: {{ .Values.image }}
@@ -49,6 +51,10 @@ spec:
               subPath: application.yml
             - name: virtualization-pvc
               mountPath: {{ .Values.pvc.mountPath }}
+          securityContext:
+            runAsUser: 1000
+            runAsNonRoot: true
+            runAsGroup: 1000
       volumes:
         - name: application-yml-config
           configMap:
