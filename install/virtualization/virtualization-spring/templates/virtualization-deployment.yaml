@@ -19,7 +19,7 @@ spec:
       initContainers:
       - name: init-chmod
         image: {{ .Values.busyboxImage }}
-        command: ['sh', '-c', 'touch /db/HyperData/logs/virtualization/virtualization.log && chown -R 1000:1000 /db/HyperData/logs/virtualization/virtualization.log && touch /db/HyperData/logs/virtualization/spark/virtualization_spark.log && chown -R 1000:1000 /db/HyperData/logs/virtualization/spark/virtualization_spark.log && touch /db/HyperData/logs/virtualization/spring/virtualization_spring.log && chown -R 1000:1000 /db/HyperData/logs/virtualization/spring/virtualization_spring.log']
+        command: ['sh', '-c', 'chown -R 1000:1000 /db/HyperData/logs/virtualization/']
         volumeMounts:
           - name: virtualization-pvc
             mountPath: {{ .Values.pvc.mountPath }}
