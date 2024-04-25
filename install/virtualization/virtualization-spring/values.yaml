@@ -1,3 +1,4 @@
+busyboxImage: biqa.tmax.com/hyperdata20.5_rel/busybox:20230829_v1
 image: biqa.tmax.com/v20.5/hyperdata20.5_virtualization:20230504_v1
 
 proxy:
