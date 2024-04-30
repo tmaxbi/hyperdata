@@ -120,6 +120,8 @@ data:
       url: {{ .Values.customAddon.externalDetail }}
     ml:
       enable: {{ .Values.ml.enabled }}
+    download:
+      enable: {{ .Values.download.enabled }}
     monitoring:
       ip: {{ .Values.prometheus.serviceName }}.{{ .Values.prometheus.namespace }}.svc.cluster.local
       port: {{ .Values.prometheus.port }}
