@@ -214,7 +214,7 @@ customAddon:
 ml:
   enabled: true
 download:
-  enable: false
+  enabled: false
 imagePullSecrets: ""
 
 
