@@ -151,7 +151,8 @@ helm install hyperdata-system . \\
 --set spring.rabbitmq.password=[MQ 비밀번호] \\
 --set prometheus.serviceName=[prometheus service name] \\
 --set prometheus.namespace=[prometheus namespace] \\
---set prometheus.port=[prometheus service port]
+--set prometheus.port=[prometheus service port] \\
+--set download.enalbe=[user의 다운로드 가능 여부 (true or false)]
 
 ex) helm install hyperdata-system . \\
 -n hyperdata-dev01 \\
@@ -162,7 +163,8 @@ ex) helm install hyperdata-system . \\
 --set spring.rabbitmq.password=tmaxtower \\
 --set prometheus.serviceName=prometheus-kube-prometheus-prometheus \\
 --set prometheus.namespace=monitoring \\
---set prometheus.port=9090
+--set prometheus.port=9090 \\
+--set download.enalbe=true
 ```
 
 # 기타 내용 및 에러
