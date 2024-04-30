@@ -121,7 +121,7 @@ data:
     ml:
       enable: {{ .Values.ml.enabled }}
     download:
-      enable: {{ .Values.download.enabled }}
+      enable: {{ .Values.download.enable }}
     monitoring:
       ip: {{ .Values.prometheus.serviceName }}.{{ .Values.prometheus.namespace }}.svc.cluster.local
       port: {{ .Values.prometheus.port }}
