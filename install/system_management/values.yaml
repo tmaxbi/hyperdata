@@ -213,6 +213,8 @@ customAddon:
   externalPort: 80
 ml:
   enabled: true
+download:
+  enable: false
 imagePullSecrets: ""
 
 
