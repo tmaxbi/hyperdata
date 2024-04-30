@@ -66,9 +66,6 @@ db-connection-pool:
     max-idle: 1
     idle-timeout: 10
 
-flow:
-  save:
-    max-file-row: 20000
 sql-editor:
   preview-max-row: 1000
 
@@ -78,3 +75,5 @@ spark:
   executor:
     cores: 1
     instances: 3
+  save:
+    max-file-row: 100000

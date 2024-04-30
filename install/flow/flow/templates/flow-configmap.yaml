@@ -50,9 +50,6 @@ data:
         idle-timeout: {{ index .Values "db-connection-pool" "hyperdata_editor" "idle-timeout" }}
 
     ############################ Flow Config ############################
-    flow:
-      save:
-        max-file-row: {{ index .Values "flow" "save" "max-file-row" }}
     sql-editor:
       preview-max-row: {{ index .Values "sql-editor" "preview-max-row" }}
 
@@ -62,4 +59,6 @@ data:
       executor:
         cores: {{ index .Values "spark" "executor" "cores" }}
         instances: {{ index .Values "spark" "executor" "instances" }}
+      save:
+        max-file-row: {{ index .Values "spark" "save" "max-file-row" }}
 
