@@ -62,6 +62,10 @@ hdfs:
     namenode_ip: 192.168.120.149
     namenode_port: 52525
 
+spark:
+  download:
+    maxRowNum: 100000
+
 metastore:
   db: mysql
   ip: 192.168.255.255
