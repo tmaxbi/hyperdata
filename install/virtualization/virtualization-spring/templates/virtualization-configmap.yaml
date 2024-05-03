@@ -50,7 +50,9 @@ data:
         namenode_port: {{ .Values.hdfs.namenode_port }}
     spark:
       fair:
-        path: /home/virtualization/fair.xml      
+        path: /home/virtualization/fair.xml
+      download:
+        maxRowNum: {{ .Values.spark.download.maxRowNum }}
     logging:
       config: /home/virtualization/log4j2-production.xml
 kind: ConfigMap
