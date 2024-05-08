@@ -48,7 +48,7 @@ spec:
               mountPath: {{ .Values.db.mountPath }}
           env:
             - name: LOGGING_PATH
-              value: {{ .Values.logging.path }}
+              value: {{ .Values.db.mountPath }}/{{ .Values.logging.path }}
             - name: LOGGING_DURATION
               value: {{ .Values.logging.duration }}
       volumes:

@@ -42,7 +42,7 @@ loadBalancer:
   ip: 192.1.1.93
 
 logging:
-  path: db/HyperData/logs/visualization
+  path: HyperData/logs/visualization
   duration: 30d
 
 
